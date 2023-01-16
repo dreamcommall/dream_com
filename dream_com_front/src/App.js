@@ -1,6 +1,7 @@
 import React from "react";
 import AdvertisementTop from "./main/AdvertisementTop";
 import PopularProduct from "./main/PopularProduct";
+import AdvertisementMiddle from "./main/AdvertisementMiddle";
 
 function App() {
     return (
@@ -9,6 +10,7 @@ function App() {
                 <div className={"col"}>
                     <AdvertisementTop/>
                     <PopularProduct />
+                    <AdvertisementMiddle />
                 </div>
             </div>
         </div>
