@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import AdvertisementTop from "./main/AdvertisementTop";
+import PopularProduct from "./main/PopularProduct";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className={"container-fluid"}>
+            <div className={"row"}>
+                <div className={"col"}>
+                    <AdvertisementTop/>
+                    <PopularProduct />
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export default App;
