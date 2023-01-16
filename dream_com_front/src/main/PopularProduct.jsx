@@ -49,7 +49,7 @@ function PopularProduct() {
                 {
                     popularProductList.map(item => {
                         return (
-                            <div>
+                            <div key={item.key}>
                                 <PopularProductImg src={item.src} />
                                 <PopularProductContents name={item.name} price={item.price} />
                             </div>
