@@ -2,6 +2,7 @@ import React from "react";
 import AdvertisementTop from "./main/AdvertisementTop";
 import PopularProduct from "./main/PopularProduct";
 import AdvertisementMiddle from "./main/AdvertisementMiddle";
+import AdvertisementBridge from "./main/AdvertisementBridge";
 
 function App() {
     return (
@@ -11,6 +12,7 @@ function App() {
                     <AdvertisementTop/>
                     <PopularProduct />
                     <AdvertisementMiddle />
+                    <AdvertisementBridge />
                 </div>
             </div>
         </div>
