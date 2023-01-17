@@ -6,7 +6,7 @@ function RecommendProduct() {
     return (
         <div className={"container mt-3 my-5"}>
             <div className={"row"}>
-                <div className={"col d-flex justify-content-center"}>
+                <div className={"col d-flex justify-content-center px-0"}>
                     <RandomSpec />
                     <NewProduct />
                 </div>
