@@ -17,8 +17,8 @@
         touch-action: pan-y;
     -webkit-tap-highlight-color: transparent;
 
-    margin-left: -25px;
-    margin-right: -25px;
+    margin-left: -50px;
+    margin-right: -35px;
 }
 
 .slick-list

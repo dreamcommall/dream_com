@@ -3,6 +3,7 @@ import AdvertisementTop from "./main/AdvertisementTop";
 import PopularProduct from "./main/PopularProduct";
 import AdvertisementMiddle from "./main/AdvertisementMiddle";
 import AdvertisementBridge from "./main/AdvertisementBridge";
+import RecommendProduct from "./main/RecommendProduct";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                     <PopularProduct />
                     <AdvertisementMiddle />
                     <AdvertisementBridge />
+                    <RecommendProduct />
                 </div>
             </div>
         </div>
