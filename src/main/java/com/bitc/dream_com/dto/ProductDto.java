@@ -17,7 +17,5 @@ public class ProductDto {
     private String typeName;
     private int companyNum;
     private String companyName;
-    private int partNum;
-    private String partName;
     private String imgPath;
 }
