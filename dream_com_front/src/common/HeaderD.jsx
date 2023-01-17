@@ -6,24 +6,23 @@ import shopping from "../shopping-cart.png"
 import shoppingHover from "../shopping-cart hover.png"
 import heartIcon from "../heart.png"
 import heartHover from "../heart hover.png"
-import criminal from "../criminal-record.png"
-import criminalHover from "../criminal-record hover.png"
+
+import Keyword from "./Keyword";
 
 
 function HeaderD() {
     const [isUseHover, setUseHover] = useState(1);
     const [isShopHover, setShopHover] = useState(1);
     const [isHeartHover, setHeartHover] = useState(1);
-    const [isCriminalHover, setCriminalHover] = useState(1);
 
 
     return (
         <div>
             <div className={"container-center"} style={{textAlign: "center"}}>
-                <div className={"row"} style={{paddingLeft: "100px"}}>
+                <div className={"row"} style={{paddingLeft: "100px", marginBottom:"-10px", marginTop:"-20px"}}>
                     <div className={"col-sm-2"}>
                         <a>
-                            <img style={{width: "100px", paddingTop: "30px"}} src={"/images/mainLogo.png"}/>
+                            <img style={{width: "100px", paddingTop: "47px"}} src={"/images/mainLogo.png"}/>
                         </a>
                     </div>
                     <div className={"col-sm-4"} style={{paddingTop: "30px"}}>
@@ -32,11 +31,11 @@ function HeaderD() {
 
                     {/*인기 검색어 */}
                     <div className={"col-sm-3"} style={{paddingTop: "30px"}}>
-                        <h1>인기 검색어</h1>
+                        <Keyword/>
                     </div>
 
                     {/*마이 페이지 아이콘*/}
-                    <div className={"col-sm-3"}>
+                    <div className={"col-sm-3"} style={{marginLeft: "-44px"}}>
                         <div className={"col-md-1"} style={{
                             flex: "auto",
                             float: "left",
@@ -46,12 +45,13 @@ function HeaderD() {
                             paddingTop: "10%"
                         }}>
 
-                            <a><li style={{listStyle: "none"}}
+                            <a>
+                                <li style={{listStyle: "none", marginLeft:"-40px"}}
                                     onMouseOver={() => setUseHover(0)}
                                     onMouseOut={() => setUseHover(1)}
                                 >
 
-                                    <img style={{width: "45px", marginLeft: "10px"}} src={isUseHover ? useIcon : useHover}/>
+                                    <img style={{width: "45px"}} src={isUseHover ? useIcon : useHover}/>
                                 </li>
                             </a>
                             <a>
@@ -60,7 +60,8 @@ function HeaderD() {
                                     onMouseOut={() => setShopHover(1)}
                                 >
 
-                                    <img style={{width: "45px", marginLeft: "10px"}} src={isShopHover ? shopping : shoppingHover}/>
+                                    <img style={{width: "45px", marginLeft: "30px"}}
+                                         src={isShopHover ? shopping : shoppingHover}/>
                                 </li>
                             </a>
                             <a>
@@ -69,19 +70,10 @@ function HeaderD() {
                                     onMouseOut={() => setHeartHover(1)}
                                 >
 
-                                    <img style={{width: "45px", marginLeft: "10px"}} src={isHeartHover ? heartIcon : heartHover}/>
+                                    <img style={{width: "45px", marginLeft: "30px"}}
+                                         src={isHeartHover ? heartIcon : heartHover}/>
                                 </li>
                             </a>
-                            <a>
-                                <li style={{listStyle: "none"}}
-                                    onMouseOver={() => setCriminalHover(0)}
-                                    onMouseOut={() => setCriminalHover(1)}
-                                >
-
-                                    <img style={{width: "45px", marginLeft: "10px"}} src={isCriminalHover ? criminal : criminalHover}/>
-                                </li>
-                            </a>
-
                         </div>
                     </div>
 
