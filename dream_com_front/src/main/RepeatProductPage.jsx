@@ -1,5 +1,6 @@
 import React from "react";
 import {Carousel} from "react-bootstrap";
+import "../fonts/fontStyle.css"
 
 const repeatProductPageStyle = {
     width : "100%",
@@ -10,7 +11,7 @@ const repeatProductPageStyle = {
 }
 
 const hotKeywordWrapperStyle = {
-    marginTop : 250
+    marginTop : 225
 }
 
 // 서버와 통신하기전 테스트 용도
@@ -39,14 +40,14 @@ function RepeatProductPage() {
             <div className={"row"}>
                 <div className={"col d-flex"} style={repeatProductPageStyle}>
                     <div>
-                        <h3 className={"mx-4 mt-3 mb-4"}>데스크탑 * 서버</h3>
-                        <p className={"mx-4"}>전체보기 ></p>
+                        <h3 className={"mx-4 mt-3 mb-4 nanumSquareR-font-XLarge"}>데스크탑 * 서버</h3>
+                        <p className={"mx-4 nanumSquareR-font-XNormal"}>전체보기 ></p>
                         <div style={hotKeywordWrapperStyle}>
-                            <p style={{color : "red"}} className={"mx-4"}>제조사 목록</p>
+                            <p style={{color : "red"}} className={"mx-4 nanumSquareR-font-normal"}>제조사 목록</p>
                             {
                                 companyList.map(item =>  {
                                     return (
-                                        <p className={"mx-4"}># {item.company}</p>
+                                        <p className={"mx-4 nanumSquareR-font-normal"}># {item.company}</p>
                                     );
                                 })
                             }
@@ -61,7 +62,7 @@ function RepeatProductPage() {
                                             <img src={item.src} alt={""} />
                                             <div style={{position : "relative", bottom : 75, fontSize : 20, backgroundColor : "#5A5A5A", height : 35}}
                                                     className={"d-flex justify-content-center align-items-center"}>
-                                                <span style={{color : "white"}}>{item.name}</span>
+                                                <span style={{color : "white"}} className={"nanumSquareR-font-XNormal"}>{item.name}</span>
                                             </div>
                                         </Carousel.Item>
                                     );

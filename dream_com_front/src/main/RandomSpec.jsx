@@ -1,4 +1,5 @@
 import React from "react";
+import "../fonts/fontStyle.css"
 
 const randomSpecWrapperSize = {
     border : "2px solid #EBEBEB",
@@ -33,7 +34,7 @@ function RandomSpec() {
             <div className={"mx-3"}>
                 <hr className={"mt-0 mb-4"} />
             </div>
-            <h5 className={"text-center mb-4"}>가성비 최강 {specInfo.company}</h5>
+            <h5 className={"text-center mb-4 nanumSquareR-font-XNormal"}>가성비 최강 {specInfo.company}</h5>
             <div className={"d-flex mb-0"}>
                 <img width={225} height={225} className={"ms-3 pe-2"} src={"/images/MainRollingBanner_139003.jpg"} />
                 <div>
@@ -42,7 +43,7 @@ function RandomSpec() {
                             specInfo.specList.map(item => {
                                 return (
                                     <li style={randomSpecListStyle}>
-                                        <div style={specInfoSize} className={"d-flex align-items-center justify-content-center mb-3"}>{item}</div>
+                                        <div style={specInfoSize} className={"d-flex align-items-center justify-content-center mb-3 nanumSquareR-font-normal"}>{item}</div>
                                     </li>
                                 );
                             })
@@ -50,8 +51,8 @@ function RandomSpec() {
                     </ul>
                 </div>
             </div>
-            <p className={"mx-3 mb-1"}>제품설명입니다.</p>
-            <p className={"mx-3"}>가격입니다.</p>
+            <p className={"mx-3 mb-1 nanumSquareR-font-normal"}>제품설명입니다.</p>
+            <p className={"mx-3 nanumSquareR-font-normal"}>가격입니다.</p>
         </div>
     );
 }

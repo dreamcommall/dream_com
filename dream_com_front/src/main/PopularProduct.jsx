@@ -5,6 +5,7 @@ import "./slick-theme.css"
 import PopularProductImg from "./PopularProductImg";
 import PopularProductContents from "./PopularProductContents";
 import axios from "axios";
+import "../fonts/fontStyle.css"
 
 const settings = {
     dots: false,
@@ -40,9 +41,9 @@ function PopularProduct() {
     return (
         <div className={"container mt-5"}>
             <div className={"d-flex justify-content-between"}>
-                <h2 className={"mb-4"}>현시간 인기상품</h2>
+                <h2 className={"mb-4 nanumSquareR-font-XLarge"}>현시간 인기상품</h2>
                 <div className={"d-flex align-items-center"}>
-                    <h5>전체보기</h5>
+                    <h5 className={"nanumSquareR-font-large"}>전체보기</h5>
                 </div>
             </div>
             <Slider {...settings}>

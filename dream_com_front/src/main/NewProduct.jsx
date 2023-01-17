@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import "./slick.css"
 import "./slick-theme.css"
 import NewProductContents from "./NewProductContents";
+import "../fonts/fontStyle.css"
 
 const newProductWrapperStyle = {
     width : 850,
@@ -41,7 +42,7 @@ function NewProduct() {
         <div style={newProductWrapperStyle}>
             <div className={"d-flex justify-content-start my-3"}>
                 <img width={20} height={30} src={"/images/fire.png"} className={"mx-3"} />
-                <h4>따끈따끈한 신상품</h4>
+                <h4 className={"nanumSquareR-font-large"}>따끈따끈한 신상품</h4>
             </div>
             <div style={sliderStyle}>
                 <Slider {...settings}>

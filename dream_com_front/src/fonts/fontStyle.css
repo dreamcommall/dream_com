@@ -1,0 +1,24 @@
+@font-face {
+    font-family: "NanumSquareR";
+    src: url("./NanumFontSetup_TTF_SQUARE/NanumSquareR.ttf");
+}
+
+.nanumSquareR-font-normal {
+    font-size: 18px;
+    font-family: NanumSquareR;
+}
+
+.nanumSquareR-font-XNormal {
+    font-size: 21px;
+    font-family: NanumSquareR;
+}
+
+.nanumSquareR-font-large {
+    font-size: 24px;
+    font-family: NanumSquareR;
+}
+
+.nanumSquareR-font-XLarge {
+    font-size: 32px;
+    font-family: NanumSquareR;
+}
