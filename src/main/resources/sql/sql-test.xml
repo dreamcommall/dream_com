@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bitc.dream_com.mapper.TestMapper">
-    <select id="getProductData" resultType="com.bitc.dream_com.dto.ProductDto">
+
+<!--    제품 테이블 최신 5개 불러오기-->
+<!--    최종 수정일 2023-01-16-->
+<!--    최종 작성자 : 양민호-->
+    <select id="getRecentProduct" resultType="com.bitc.dream_com.dto.ProductDto">
         select * from product pr join category ca on pr.product_num = ca.product_num
                                  join product_type pt on ca.type_num = pt.type_num
                                  join company co on ca.company_num = co.company_num
@@ -9,6 +13,9 @@
         order by product_createDt desc limit 5;
     </select>
 
+    <!--    제품 테이블 최신 10개 불러오기-->
+    <!--    최종 수정일 2023-01-16-->
+    <!--    최종 작성자 : 양민호-->
     <select id="getProductData10" resultType="com.bitc.dream_com.dto.ProductDto">
         select * from product pr join category ca on pr.product_num = ca.product_num
                                  join product_type pt on ca.type_num = pt.type_num
@@ -17,7 +24,65 @@
         order by product_createDt desc limit 10;
     </select>
 
+    <!--    제품 테이블에서 랜덤 1개 불러오기-->
+    <!--    최종 수정일 2023-01-17-->
+    <!--    최종 작성자 : 양민호-->
+    <select id="getRandomProduct" resultType="com.bitc.dream_com.dto.ProductDto">
+        select * from product pr join category ca on pr.product_num = ca.product_num
+                                 join product_type pt on ca.type_num = pt.type_num
+                                 join company co on ca.company_num = co.company_num
+                                 join product_img pi on pr.product_num = pi.product_num
+        order by rand() limit 1;
+    </select>
+
+    <!--    제품 성능 불러오기-->
+    <!--    최종 수정일 2023-01-17-->
+    <!--    최종 작성자 : 양민호-->
+    <select id="getProductSpec" resultType="com.bitc.dream_com.dto.SpecDto">
+        select * from spec sp join part pt on sp.part_num = pt.part_num
+                 where product_num = #{productNum};
+    </select>
+
+<!--    제품 테이블 업데이트 (관리자 페이지 완성 시 사용됨, where절 변수 재설정필요)-->
+<!--    최종 수정일 2023-01-16-->
+<!--    최종 작성자 : 양민호-->
     <update id="updateProduct" parameterType="com.bitc.dream_com.dto.ProductDto">
         update product set product_num = #{num}, product_title = #{title}, product_name = #{name}, product_price = #{price}, product_discount = #{discount}, inventory_quantity = #{quantity}, product_createDt = now(), delivery_info = #{delivery}, click_count = #{click} where product_num = 12345
     </update>
+
+    <!--    클릭 수 높은 제품 10개 불러오기-->
+    <!--    최종 수정일 2023-01-17-->
+    <!--    최종 작성자 : 양민호-->
+    <select id="getTopClickedProduct" resultType="com.bitc.dream_com.dto.ProductDto">
+        select * from product order by click_count desc limit 10
+    </select>
+
+<!--    스케줄러 3시간마다 hitcount 데이터 비우기-->
+<!--    최종 수정일 2023-01-17-->
+<!--    최종 작성자 : 양민호-->
+    <delete id="deleteHitCount">
+        delete from hitcount;
+    </delete>
+
+
+<!--    스케줄러 3시간마다 hitcount 테이블 내용 업데이트-->
+<!--    최종 수정일 2023-01-17-->
+<!--    최종 작성자 : 양민호-->
+    <insert id="updateClickCount" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";" >
+            insert into hitcount(product_num, count, update_time) values(#{item.productNum}, #{item.clickCount}, now())
+        </foreach>
+    </insert>
+
+
+<!--    상세페이지 상품 정보 불러오기-->
+<!--    최종 수정일 2023-01-17-->
+<!--    최종 작성자 : 양민호-->
+    <select id="getFullProduct" resultType="com.bitc.dream_com.dto.ProductDto">
+        select * from product pr join category ca on pr.product_num = ca.product_num
+                                 join product_type pt on ca.type_num = pt.type_num
+                                 join company co on ca.company_num = co.company_num
+                                 join product_img pi on pr.product_num = pi.product_num
+        where pr.product_num = #{productNum};
+    </select>
 </mapper>
