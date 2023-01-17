@@ -3,6 +3,8 @@ import {Carousel} from "react-bootstrap";
 import "../fonts/fontStyle.css"
 import RepeatProductContents from "./RepeatProductContents";
 
+// 작성자 : MoonNight285
+// 반복으로 보여주는 박스영역 디자인
 const repeatProductPageStyle = {
     width : "100%",
     height : 565,
@@ -11,10 +13,13 @@ const repeatProductPageStyle = {
     padding : 0
 }
 
+// 작성자 : MoonNight285
+// 제조사 명단 보여주는 부분
 const hotKeywordWrapperStyle = {
     marginTop : 225
 }
 
+// 작성자 : MoonNight285
 // 서버와 통신하기전 테스트 용도
 const companyList = [
     {company : "제조사1"}, {company : "제조사2"}, {company : "제조사3"},
@@ -35,6 +40,8 @@ const subProductInfoList = [
     {key : 5, name : "상품6 이름입니다.", price : "상품6 가격입니다.", discountPercent : "12", src : "/images/MainRollingBanner_139003.jpg"},
 ]
 
+// 작성자 : MoonNight285
+// 스크롤 할때마다 반복적으로 카테고리별로 상품의 정보를 보여줄 컴포넌트
 function RepeatProductPage() {
     return (
         <div className={"container my-5"}>

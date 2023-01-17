@@ -7,6 +7,7 @@ import PopularProductContents from "./PopularProductContents";
 import axios from "axios";
 import "../fonts/fontStyle.css"
 
+// slick 캐러셀 옵션 설정
 const settings = {
     dots: false,
     infinite: true,
@@ -15,6 +16,7 @@ const settings = {
     slidesToScroll: 1
 };
 
+// 현시간 인기상품을 보여주는 컴포넌트
 function PopularProduct() {
     const [popularProductList, setPopularProductList] = useState([]);
     

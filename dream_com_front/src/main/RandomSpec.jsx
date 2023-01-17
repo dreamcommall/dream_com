@@ -1,16 +1,22 @@
 import React, {useEffect, useState} from "react";
 import "../fonts/fontStyle.css"
 
+// 작성자 : MoonNight285
+// 랜덤으로 추천해주는 견적의 박스영역의 디자인
 const randomSpecWrapperSize = {
     border : "2px solid #EBEBEB",
     width : 435,
     height : 435
 }
 
+// 작성자 : MoonNight285
+// 랜덤으로 추천해주는 스펙의 리스트 스타일 수정
 const randomSpecListStyle = {
     listStyleType : "none"
 }
 
+// 작성자 : MoonNight285
+// 랜덤으로 추천해주는 스펙의 리스트안에 들어가는 박스 스타일 수정
 const specInfoSize = {
     width: 125,
     height: 30,
@@ -18,12 +24,15 @@ const specInfoSize = {
     borderRadius : 15
 }
 
+// 작성자 : MoonNight285
+// 랜덤으로 추천해줄때 사용되는 문구설정
 const randomSpecComment = [
     "가성비 최강",
     "가격/스펙 모두 만족하는",
     "요즘 핫한"
 ]
 
+// 작성자 : MoonNight285
 // 나중에 서버에서 가져온걸로 대체
 const specInfo = {
     company : "AMD",
@@ -32,6 +41,8 @@ const specInfo = {
     discountPercent : 7
 }
 
+// 작성자 : MoonNight285
+// 랜덤으로 견적을 추천해주는 컴포넌트
 function RandomSpec() {
     const [randomComment, setRandomComment] = useState("");
 
