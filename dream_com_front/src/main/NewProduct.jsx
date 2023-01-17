@@ -1,23 +1,27 @@
 import React from "react";
-import PopularProductImg from "./PopularProductImg";
-import PopularProductContents from "./PopularProductContents";
 import Slider from "react-slick";
 import "./slick.css"
 import "./slick-theme.css"
 import NewProductContents from "./NewProductContents";
 import "../fonts/fontStyle.css"
 
+// 작성자 : MoonNight285
+// 신규등록 상품을 감싸는 부모 태그의 넓이 및 배경색 조절
 const newProductWrapperStyle = {
     width : 850,
     height : 435,
     backgroundColor : "#f7f9fa"
 }
 
+// 작성자 : MoonNight285
+// 신규등록 상품을 보여주는 캐러셀의 크기, 아이템의 위치를 조절
 const sliderStyle = {
     width : "85%",
     marginLeft: 65
 }
 
+// 작성자 : MoonNight285
+// slick 캐러셀 옵션 설정
 const settings = {
     dots: false,
     infinite: true,
@@ -28,6 +32,7 @@ const settings = {
     autoplaySpeed: 10000
 };
 
+// 작성자 : MoonNight285
 // 서버와 통신하기전 테스트 용도
 const newProductList = [
     {src : "/images/MainRollingBanner_139003.jpg", company : "제조사1", content : "상품내용1", price : "상품가격1", discountPercent : "5"},
@@ -37,6 +42,8 @@ const newProductList = [
     {src : "/images/MainRollingBanner_139003.jpg", company : "제조사5", content : "상품내용5", price : "상품가격5", discountPercent : "25"},
 ]
 
+// 작성자 : MoonNight285
+// 신규등록 상품을 보여주는 컴포넌트
 function NewProduct() {
     return (
         <div style={newProductWrapperStyle}>
