@@ -1,6 +1,7 @@
 import React from "react";
 import {Carousel} from "react-bootstrap";
 import "../fonts/fontStyle.css"
+import RepeatProductContents from "./RepeatProductContents";
 
 const repeatProductPageStyle = {
     width : "100%",
@@ -40,10 +41,10 @@ function RepeatProductPage() {
             <div className={"row"}>
                 <div className={"col d-flex"} style={repeatProductPageStyle}>
                     <div>
-                        <h3 className={"mx-4 mt-3 mb-4 nanumSquareR-font-XLarge"}>데스크탑 * 서버</h3>
+                        <h3 className={"mx-4 mt-3 mb-4 nanumSquareB-font-XLarge"}>데스크탑 * 서버</h3>
                         <p className={"mx-4 nanumSquareR-font-XNormal"}>전체보기 ></p>
                         <div style={hotKeywordWrapperStyle}>
-                            <p style={{color : "red"}} className={"mx-4 nanumSquareR-font-normal"}>제조사 목록</p>
+                            <p style={{color : "red"}} className={"mx-4 nanumSquareB-font-normal"}>제조사 목록</p>
                             {
                                 companyList.map(item =>  {
                                     return (
@@ -76,29 +77,11 @@ function RepeatProductPage() {
                                 subProductInfoList.map(item => {
                                     if (item.key == 1) {
                                         return (
-                                            <div className={"text-center"} style={{padding : 10, border : "1px solid #EBEBEB"}}>
-                                                <p className={"mt-2 mb-1"}>{item.name}</p>
-                                                <div className={"d-flex justify-content-center"}>
-                                                    {
-                                                        item.discountPercent == 0 ? <p /> : <p style={{color : "red"}}>{item.discountPercent}%</p>
-                                                    }
-                                                    <p className={"mx-1 mb-3"}>{item.price}</p>
-                                                </div>
-                                                <img width={179} height={179} src={item.src}/>
-                                            </div>
+                                            <RepeatProductContents style={{padding : 10, border : "1px solid #EBEBEB"}} item={item} />
                                         );
                                     } else if(item.key < 3) {
                                         return (
-                                            <div className={"text-center"} style={{padding : 10, borderBottom : "1px solid #EBEBEB"}}>
-                                                <p className={"mt-2 mb-1"}>{item.name}</p>
-                                                <div className={"d-flex justify-content-center"}>
-                                                    {
-                                                        item.discountPercent == 0 ? <p /> : <p style={{color : "red"}}>{item.discountPercent}%</p>
-                                                    }
-                                                    <p className={"mx-1 mb-3"}>{item.price}</p>
-                                                </div>
-                                                <img width={179} height={179} src={item.src}/>
-                                            </div>
+                                            <RepeatProductContents style={{padding : 10, borderBottom : "1px solid #EBEBEB"}} item={item} />
                                         );
                                     }
                                 })
@@ -109,29 +92,11 @@ function RepeatProductPage() {
                                 subProductInfoList.map(item => {
                                     if (item.key == 4) {
                                         return (
-                                            <div className={"text-center"} style={{padding : 10, border : "1px solid #EBEBEB", borderBottom : "none"}}>
-                                                <p className={"mt-2 mb-1"}>{item.name}</p>
-                                                <div className={"d-flex justify-content-center"}>
-                                                    {
-                                                        item.discountPercent == 0 ? <p /> : <p style={{color : "red"}}>{item.discountPercent}%</p>
-                                                    }
-                                                    <p className={"mx-1 mb-3"}>{item.price}</p>
-                                                </div>
-                                                <img width={179} height={179} src={item.src}/>
-                                            </div>
+                                            <RepeatProductContents style={{padding : 10, border : "1px solid #EBEBEB", borderBottom : "none"}} item={item} />
                                         );
                                     } else if (item.key >= 3) {
                                         return (
-                                            <div className={"text-center"} style={{padding : 10, borderTop : "1px solid #EBEBEB"}}>
-                                                <p className={"mt-2 mb-1"}>{item.name}</p>
-                                                <div className={"d-flex justify-content-center"}>
-                                                    {
-                                                        item.discountPercent == 0 ? <p /> : <p style={{color : "red"}}>{item.discountPercent}%</p>
-                                                    }
-                                                    <p className={"mx-1 mb-3"}>{item.price}</p>
-                                                </div>
-                                                <img width={179} height={179} src={item.src}/>
-                                            </div>
+                                            <RepeatProductContents style={{padding : 10, borderTop : "1px solid #EBEBEB"}} item={item} />
                                         );
                                     }
                                 })

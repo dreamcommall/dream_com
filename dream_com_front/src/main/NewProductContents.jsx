@@ -31,7 +31,7 @@ function NewProductContents({src, company, content, price, discountPercent}) {
             <p style={commonStyle} className={"mb-1 nanumSquareR-font-normal"}>{content}</p>
             <div style={commonStyle} className={"d-flex justify-content-between me-1"}>
                 {
-                    discountPercent == 0 ? <p /> : <p style={{color : "red"}} className={"nanumSquareR-font-normal"}>{discountPercent}% 할인</p>
+                    discountPercent == 0 ? <p /> : <p style={{color : "red"}} className={"nanumSquareB-font-normal"}>{discountPercent}% 할인</p>
                 }
                 <p className={"nanumSquareR-font-normal"}>{price}</p>
             </div>

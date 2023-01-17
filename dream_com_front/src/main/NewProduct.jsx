@@ -42,7 +42,7 @@ function NewProduct() {
         <div style={newProductWrapperStyle}>
             <div className={"d-flex justify-content-start my-3"}>
                 <img width={20} height={30} src={"/images/fire.png"} className={"mx-3"} />
-                <h4 className={"nanumSquareR-font-large"}>따끈따끈한 신상품</h4>
+                <h4 className={"nanumSquareB-font-large"}>따끈따끈한 신상품</h4>
             </div>
             <div style={sliderStyle}>
                 <Slider {...settings}>

@@ -3,6 +3,27 @@
     src: url("./NanumFontSetup_TTF_SQUARE/NanumSquareR.ttf");
 }
 
+@font-face {
+    font-family: "NanumSquareB";
+    src: url("./NanumFontSetup_TTF_SQUARE/NanumSquareB.ttf");
+}
+
+@font-face {
+    font-family: "NanumGothic";
+    src: url("./NanumGothic/NanumGothic.ttf");
+}
+
+@font-face {
+    font-family: "PureunJeonnamR";
+    src: url("./PureunJeonnam/PureunJeonnam.ttf");
+}
+
+@font-face {
+    font-family: "PureunJeonnamB";
+    src: url("./PureunJeonnam/PureunJeonnam-Bold.ttf");
+}
+
+/* 나눔 스퀘어 기본 */
 .nanumSquareR-font-normal {
     font-size: 18px;
     font-family: NanumSquareR;
@@ -21,4 +42,113 @@
 .nanumSquareR-font-XLarge {
     font-size: 32px;
     font-family: NanumSquareR;
+}
+
+.nanumSquareR-font-XXLarge {
+    font-size: 40px;
+    font-family: NanumSquareR;
+}
+
+/* 나눔 스퀘어 굵게 */
+.nanumSquareB-font-normal {
+    font-size: 18px;
+    font-family: NanumSquareB;
+}
+
+.nanumSquareB-font-XNormal {
+    font-size: 21px;
+    font-family: NanumSquareB;
+}
+
+.nanumSquareB-font-large {
+    font-size: 24px;
+    font-family: NanumSquareB;
+}
+
+.nanumSquareB-font-XLarge {
+    font-size: 32px;
+    font-family: NanumSquareB;
+}
+
+.nanumSquareB-font-XXLarge {
+    font-size: 40px;
+    font-family: NanumSquareB;
+}
+
+/* 나눔고딕 기본 */
+.nanumGothic-font-normal {
+    font-size: 18px;
+    font-family: NanumGothic;
+}
+
+.nanumGothic-font-XNormal {
+    font-size: 21px;
+    font-family: NanumGothic;
+}
+
+.nanumGothic-font-large {
+    font-size: 24px;
+    font-family: NanumGothic;
+}
+
+.nanumGothic-font-XLarge {
+    font-size: 32px;
+    font-family: NanumGothic;
+}
+
+.nanumGothic-font-XXLarge {
+    font-size: 40px;
+    font-family: NanumGothic;
+}
+
+/* 푸른전남 기본 */
+.pureunJeonnamR-font-normal {
+    font-size: 18px;
+    font-family: PureunJeonnamR;
+}
+
+.pureunJeonnamR-font-XNormal {
+    font-size: 21px;
+    font-family: PureunJeonnamR;
+}
+
+.pureunJeonnamR-font-large {
+    font-size: 24px;
+    font-family: PureunJeonnamR;
+}
+
+.pureunJeonnamR-font-XLarge {
+    font-size: 32px;
+    font-family: PureunJeonnamR;
+}
+
+.pureunJeonnamR-font-XXLarge {
+    font-size: 40px;
+    font-family: PureunJeonnamR;
+}
+
+/* 푸른전남 굵게 */
+.pureunJeonnamB-font-normal {
+    font-size: 18px;
+    font-family: PureunJeonnamB;
+}
+
+.pureunJeonnamB-font-XNormal {
+    font-size: 21px;
+    font-family: PureunJeonnamB;
+}
+
+.pureunJeonnamB-font-large {
+    font-size: 24px;
+    font-family: PureunJeonnamB;
+}
+
+.pureunJeonnamB-font-XLarge {
+    font-size: 32px;
+    font-family: PureunJeonnamB;
+}
+
+.pureunJeonnamB-font-XXLarge {
+    font-size: 40px;
+    font-family: PureunJeonnamB;
 }

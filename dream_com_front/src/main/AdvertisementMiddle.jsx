@@ -41,7 +41,7 @@ function AdvertisementMiddle() {
         <div className={"container my-4"}>
             <div className={"d-flex justify-content-center"}>
                 <div className={"me-4"}>
-                    <h4 className={"mb-3 nanumSquareR-font-large"}>{advertisementTitle1}</h4>
+                    <h4 className={"mb-3 nanumSquareB-font-large"}>{advertisementTitle1}</h4>
                     <Carousel fade indicators={false} onSelect={(idx) => updateInfo1(idx)}>
                         {
                             advertisementInfoList.map(item => {
@@ -63,7 +63,7 @@ function AdvertisementMiddle() {
                     </Carousel>
                 </div>
                 <div className={"ms-4"}>
-                    <h4 className={"mb-3 nanumSquareR-font-large"}>{advertisementTitle2}</h4>
+                    <h4 className={"mb-3 nanumSquareB-font-large"}>{advertisementTitle2}</h4>
                     <Carousel fade indicators={false} onSelect={(idx) => updateInfo2(idx)}>
                         {
                             advertisementInfoList.map(item => {

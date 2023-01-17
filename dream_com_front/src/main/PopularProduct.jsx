@@ -22,7 +22,8 @@ function PopularProduct() {
         // 프론트에서 임시로 테스트 용도
         let temp = [];
         for(let i = 0; i < 20; ++i) {
-            temp.push({key : i, src : "/images/MainRollingBanner_139003.jpg", name : `상품제목${i}`, price : `상품가격${i}`});
+            temp.push({key : i, src : "/images/MainRollingBanner_139003.jpg", name : `상품제목${i}`, price : `상품가격${i}`,
+                discountPercent : i});
             setPopularProductList(temp);
         }
         
@@ -41,23 +42,25 @@ function PopularProduct() {
     return (
         <div className={"container mt-5"}>
             <div className={"d-flex justify-content-between"}>
-                <h2 className={"mb-4 nanumSquareR-font-XLarge"}>현시간 인기상품</h2>
+                <h2 className={"mb-4 nanumSquareB-font-XLarge"}>현시간 인기상품</h2>
                 <div className={"d-flex align-items-center"}>
-                    <h5 className={"nanumSquareR-font-large"}>전체보기</h5>
+                    <h5 className={"nanumSquareB-font-large"}>전체보기 ></h5>
                 </div>
             </div>
-            <Slider {...settings}>
-                {
-                    popularProductList.map(item => {
-                        return (
-                            <div key={item.key}>
-                                <PopularProductImg src={item.src} />
-                                <PopularProductContents name={item.name} price={item.price} />
-                            </div>
-                        );
-                    })
-                }
-            </Slider>
+            <div style={{width : "97%"}} className={"ms-4"}>
+                <Slider {...settings}>
+                    {
+                        popularProductList.map(item => {
+                            return (
+                                <div key={item.key}>
+                                    <PopularProductImg src={item.src} />
+                                    <PopularProductContents name={item.name} price={item.price} discountPercent={item.discountPercent} />
+                                </div>
+                            );
+                        })
+                    }
+                </Slider>
+            </div>
         </div>
     );
 }
