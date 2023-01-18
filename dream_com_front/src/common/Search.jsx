@@ -12,7 +12,7 @@ function Search() {
                 className="me-2"
                 aria-label="Search"
             />
-            <Button type={"button"} style={{backgroundColor:"white", border:"none"}}><img style={{width:"63%", paddingRight:"10px", marginLeft:"-20px",marginTop:"10px"}}  src={"/images/search.png"}/></Button>
+            <Button type={"button"} style={{backgroundColor:"white", border:"none"}}><img style={{width:"63%", paddingRight:"10px", marginLeft:"-30px",marginTop:"10px"}}  src={"/images/search.png"}/></Button>
 
         </Form>
     );
