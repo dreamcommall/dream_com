@@ -1,6 +1,8 @@
 import React from "react";
 import "../fonts/fontStyle.css"
 
+// 작성자 : MoonNight285
+// 히스토리 박스의 스타일을 조정
 const historyBoxStyle = {
     width : 100,
     height : 400,
@@ -9,10 +11,13 @@ const historyBoxStyle = {
     position : "fixed",
     zIndex : 1000,
     backgroundColor : "white",
-    top : 450,
+    top : 390,
     left : 1775
 }
 
+// 작성자 : MoonNight285
+// 히스토리 박스를 그려주는 컴포넌트
+// itemList => 최신 데이터를 기준으로 방문했던 상품의 이미지를 리스트로 받아옴(최대 4개 표시)
 function HistoryBox({itemList}) {
     return (
         <div style={historyBoxStyle}>

@@ -7,8 +7,7 @@ import AdvertisementBridge from "./AdvertisementBridge";
 import RecommendProduct from "./RecommendProduct";
 import RepeatProductPage from "./RepeatProductPage";
 import Loading from "../common/Loading";
-import HistoryBox from "../common/HistoryBox";
-import ToTopButton from "../common/ToTopButton";
+import SidebarApp from "../common/SidebarApp";
 
 // 작성자 : MoonNight285
 // 서버와 통신하기전 테스트 용도
@@ -35,13 +34,6 @@ const subProductInfoList = [
 const sampleRepeatContentList = [
     {key : 0, categoryName : "데스크탑 * PC", companyList : companyList, mainProductInfoList : mainProductInfoList, subProductInfoList : subProductInfoList},
     {key : 1, categoryName : "노트북", companyList : companyList, mainProductInfoList : mainProductInfoList, subProductInfoList : subProductInfoList},
-]
-
-const historyItemList = [
-    {key : 0, src : "/images/MainRollingBanner_139003.jpg"},
-    {key : 1, src : "/images/MainRollingBanner_139003.jpg"},
-    {key : 2, src : "/images/MainRollingBanner_139003.jpg"},
-    {key : 3, src : "/images/MainRollingBanner_139003.jpg"}
 ]
 
 // 작성자 : MoonNight285
@@ -74,8 +66,7 @@ function MainPageApp() {
             <div className={"row"}>
                 <div className={"col"}>
                     <Loading />
-                    <HistoryBox itemList={historyItemList}/>
-                    <ToTopButton />
+                    <SidebarApp />
                     <AdvertisementTop/>
                     <PopularProduct />
                     <AdvertisementMiddle />

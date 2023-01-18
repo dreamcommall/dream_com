@@ -1,17 +1,21 @@
 import React from "react";
 import "../fonts/fontStyle.css"
 
+// 작성자 : MoonNight285
+// 화면의 최상단으로 올라가는 버튼의 스타일
 const toTopButtonStyle = {
-    width : 75,
-    height : 75,
+    width : 90,
+    height : 50,
     backgroundColor : "#FFD8D8",
     color : "black",
-    borderRadius : "50%",
+    borderRadius : "10%",
     position : "fixed",
-    top : 863,
-    left : 1785
+    top : 800,
+    left : 1780
 }
 
+// 작성자 : MoonNight285
+// 화면의 최상단으로 올라가는 버튼을 그려주는 컴포넌트
 function ToTopButton() {
     return (
         <div style={toTopButtonStyle}>
