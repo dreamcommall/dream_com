@@ -27,9 +27,9 @@ const specInfoSize = {
 // 작성자 : MoonNight285
 // 랜덤으로 추천해줄때 사용되는 문구설정
 const randomSpecComment = [
-    "가성비 최강",
-    "가격/스펙 모두 만족하는",
-    "요즘 핫한"
+    {key : 0, title : "가성비 최강"},
+    {key : 1, title : "가격/스펙 모두 만족하는"},
+    {key : 2, title : "요즘 핫한"}
 ]
 
 // 작성자 : MoonNight285
@@ -37,7 +37,7 @@ const randomSpecComment = [
 const specInfo = {
     company : "AMD",
     src : "/images/MainRollingBanner_139003.jpg",
-    specList : ["스펙1", "스펙2", "스펙3", "스펙4", "스펙5"],
+    specList : [{key : 0, spec : "스펙1"}, {key : 1, spec : "스펙2"}, {key : 2, spec : "스펙3"}, {key : 3, spec : "스펙4"}, {key : 4, spec : "스펙5"}],
     discountPercent : 7
 }
 
@@ -48,7 +48,7 @@ function RandomSpec() {
 
     useEffect(() => {
         const randomIdx = Number.parseInt(((Math.random() - 0.1) * (randomSpecComment.length)).toString());
-        setRandomComment(randomSpecComment[randomIdx]);
+        setRandomComment(randomSpecComment[randomIdx].title);
     }, [])
 
     return (
@@ -67,8 +67,8 @@ function RandomSpec() {
                         {
                             specInfo.specList.map(item => {
                                 return (
-                                    <li style={randomSpecListStyle}>
-                                        <div style={specInfoSize} className={"d-flex align-items-center justify-content-center mb-3 nanumSquareR-font-normal"}>{item}</div>
+                                    <li key={item.key} style={randomSpecListStyle}>
+                                        <div style={specInfoSize} className={"d-flex align-items-center justify-content-center mb-3 nanumSquareR-font-normal"}>{item.spec}</div>
                                     </li>
                                 );
                             })

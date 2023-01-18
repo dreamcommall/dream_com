@@ -35,11 +35,11 @@ const settings = {
 // 작성자 : MoonNight285
 // 서버와 통신하기전 테스트 용도
 const newProductList = [
-    {src : "/images/MainRollingBanner_139003.jpg", company : "제조사1", content : "상품내용1", price : "상품가격1", discountPercent : "5"},
-    {src : "/images/MainRollingBanner_139003.jpg", company : "제조사2", content : "상품내용2", price : "상품가격2", discountPercent : "10"},
-    {src : "/images/MainRollingBanner_139003.jpg", company : "제조사3", content : "상품내용3", price : "상품가격3", discountPercent : "0"},
-    {src : "/images/MainRollingBanner_139003.jpg", company : "제조사4", content : "상품내용4", price : "상품가격4", discountPercent : "20"},
-    {src : "/images/MainRollingBanner_139003.jpg", company : "제조사5", content : "상품내용5", price : "상품가격5", discountPercent : "25"},
+    {key : 0, src : "/images/MainRollingBanner_139003.jpg", company : "제조사1", content : "상품내용1", price : "상품가격1", discountPercent : "5"},
+    {key : 1, src : "/images/MainRollingBanner_139003.jpg", company : "제조사2", content : "상품내용2", price : "상품가격2", discountPercent : "10"},
+    {key : 2, src : "/images/MainRollingBanner_139003.jpg", company : "제조사3", content : "상품내용3", price : "상품가격3", discountPercent : "0"},
+    {key : 3, src : "/images/MainRollingBanner_139003.jpg", company : "제조사4", content : "상품내용4", price : "상품가격4", discountPercent : "20"},
+    {key : 4, src : "/images/MainRollingBanner_139003.jpg", company : "제조사5", content : "상품내용5", price : "상품가격5", discountPercent : "25"},
 ]
 
 // 작성자 : MoonNight285
@@ -55,7 +55,7 @@ function NewProduct() {
                 <Slider {...settings}>
                     {
                         newProductList.map(item => {
-                            return <NewProductContents src={item.src} company={item.company} content={item.content} price={item.price}
+                            return <NewProductContents key={item.key} src={item.src} company={item.company} content={item.content} price={item.price}
                                 discountPercent={item.discountPercent}/>
                         })
                     }
