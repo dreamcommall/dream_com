@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
+import {getElement} from "bootstrap/js/src/util";
 
 function Test() {
 
     const [data, setData] = useState([]);
     const [spec, setSpec] = useState([]);
+    const [img, setImg] = useState([]);
     const list = [];
 
     useEffect(() => {
         axios.get('http://localhost:8080/getRecentProduct')
             .then((req) => {
-                console.log(data);
                 for (let i = 0; i < req.data.length; i++) {
                     list.push(req.data[i]);
                 }
@@ -26,7 +27,9 @@ function Test() {
         for (let i = 0; i < getData.data.length; i++) {
             list.push(getData.data[i]);
         }
+
         setData(list);
+        setSpec([]);
     }
 
     const getProductData10 = () => {
@@ -35,8 +38,9 @@ function Test() {
                 for (let i = 0; i < req.data.length; i++) {
                     list.push(req.data[i]);
                 }
+
                 setData(list);
-                console.log(data);
+                setSpec([]);
             })
             .catch((err) => {
                 console.log(`에러`);
@@ -59,12 +63,12 @@ function Test() {
         setSpec(getData.data.spec);
     }
 
-    const getFullProduct = async () => {
-        console.log(data[0].productNum);
-        const getData =await axios.get('http://localhost:8080/getFullProduct',{params: {productNum: data[0].productNum}});
+    const fullProductInfo = async () => {
+        const getData =await axios.get('http://localhost:8080/fullProductInfo',{params: {productNum: data[0].productNum}});
         setData(getData.data.product);
         setSpec(getData.data.spec);
-        console.log(getData);
+        setImg(getData.data.img);
+        console.log(getData.data);
     }
 
     const getWishList = () => {
@@ -91,6 +95,16 @@ function Test() {
             })
     }
 
+    const categoryProduct = () => {
+        axios.get('http://localhost:8080/categoryProduct')
+            .then((req) => {
+                console.log(req.data);
+            })
+            .catch((err) => {
+                console.log('에러');
+            })
+    }
+
     const deleteWishList = () => {
         axios.delete('http://localhost:8080/deleteWishList', {params: {userId: "test1", productNum: 22222}})
             .then((req) => {
@@ -101,6 +115,15 @@ function Test() {
             })
     }
 
+    const topClickedProduct = () => {
+        axios.get('http://localhost:8080/topClickedProduct')
+            .then((req) => {
+                console.log(req.data);
+            })
+            .catch((err) => {
+                console.log('에러');
+            })
+    }
 
     return (
         <div>
@@ -108,13 +131,14 @@ function Test() {
             <button className={`btn btn-success`} onClick={getProductData10}>최근 10개</button>
             <button className={`btn btn-secondary`} onClick={updateProduct}>제품테이블 업데이트</button>
             <button className={`btn btn-info`} onClick={getRandomProduct}>랜덤 1개</button>
-            <button className={`btn btn-warning`} onClick={getFullProduct}>상세보기</button>
+            <button className={`btn btn-warning`} onClick={fullProductInfo}>상세보기</button>
             {
                 <div>
                     {data.map((item) => {
                     return(
                     <div key={item.productNum}>
-                    <p>{item.productNum}</p>
+                        <h3 id={item.productNum}>{item.productNum}</h3>
+                        <p>{item.imgPath}</p>
                     </div>
                     )
                     })}
@@ -127,9 +151,21 @@ function Test() {
                             )
                         })
                     }
+                    {
+                        img.map((item) => {
+                            return(
+                                <div key={item.idx}>
+                                    <p>{item.imgPath}</p>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
-
             }
+            <div>
+                <button className={`btn btn-primary mt-5`} onClick={topClickedProduct}>클릭 수 높은 제품</button>
+                <button className={`btn btn-info mt-5`} onClick={categoryProduct}>카테고리별 제품</button>
+            </div>
             <div className={`pt-5`}>
                 <button className={`btn btn-primary`} onClick={getWishList}>찜목록 불러오기</button>
                 <button className={`btn btn-info`} onClick={updateWishList}>찜목록 업데이트</button>
