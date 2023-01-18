@@ -1,0 +1,16 @@
+/* 작성자 : MoonNight285 */
+/* 화면의 최상단으로 올라가는 버튼의 스타일 */
+#div-to-top-button {
+    width : 90px;
+    height : 50px;
+    background-color : #FFD8D8;
+    color : black;
+    border-radius : 10%;
+    position : fixed;
+    top : 800px;
+    left : 1780px;
+}
+
+#div-to-top-button:hover {
+    cursor: pointer;
+}

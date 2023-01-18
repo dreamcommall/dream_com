@@ -64,7 +64,7 @@ function MainPageApp() {
     return (
         <div id={"div-main-page-contents"} className={"container-fluid"}>
             <div className={"row"}>
-                <div className={"col"}>
+                <div className={"col ps-0 pe-0"}>
                     <Loading />
                     <SidebarApp />
                     <AdvertisementTop/>

@@ -15,17 +15,23 @@ function AdvertisementTop() {
             <div className="carousel-inner">
                 <div className="carousel-item active">
                     <div className={"d-flex justify-content-center"}>
-                        <img style={advertisementTopStyle} src="/images/advertisementTop1.png" className="d-block" alt="..."/>
+                        <a href={"https://www.microsoft.com/ko-kr/windows/windows-11?r=1"} target={"_blank"}>
+                            <img style={advertisementTopStyle} src="/images/advertisementTop1.png" className="d-block" alt="..."/>
+                        </a>
                     </div>
                 </div>
                 <div className="carousel-item">
                     <div className={"d-flex justify-content-center"}>
-                        <img style={advertisementTopStyle} src="/images/advertisementTop2.png" className="d-block" alt="..."/>
+                        <a href={"https://www.westerndigital.com/"} target={"_blank"}>
+                            <img style={advertisementTopStyle} src="/images/advertisementTop2.png" className="d-block" alt="..."/>
+                        </a>
                     </div>
                 </div>
                 <div className="carousel-item">
                     <div className={"d-flex justify-content-center"}>
-                        <img style={advertisementTopStyle} src="/images/advertisementTop3.png" className="d-block" alt="..."/>
+                        <a href={"https://www.lenovo.com/kr/ko"} target={"_blank"}>
+                            <img style={advertisementTopStyle} src="/images/advertisementTop3.png" className="d-block" alt="..."/>
+                        </a>
                     </div>
                 </div>
             </div>

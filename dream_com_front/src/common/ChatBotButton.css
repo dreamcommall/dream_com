@@ -1,0 +1,12 @@
+/* 작성자 : MoonNight285* /
+/* 챗봇을 호출하는 버튼의 스타일을 조정 */
+#div-chat-bot-button {
+    position : fixed;
+    top : 860px;
+    left : 1790px;
+    zIndex : 1000
+}
+
+#div-chat-bot-button:hover {
+    cursor: pointer;
+}

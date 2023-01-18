@@ -1,0 +1,13 @@
+/* 작성자 : MoonNight285 */
+/* 히스토리 박스의 스타일을 조정 */
+#div-history-box {
+    width : 100px;
+    height : 400px;
+    border : 1px solid lightgray;
+    border-radius : 15px;
+    position : fixed;
+    zIndex : 1000;
+    background-color : white;
+    top : 390px;
+    left : 1775px;
+}
