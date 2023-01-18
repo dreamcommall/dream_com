@@ -1,9 +1,7 @@
 package com.bitc.dream_com.service;
 
 
-import com.bitc.dream_com.dto.ProductDto;
-import com.bitc.dream_com.dto.SpecDto;
-import com.bitc.dream_com.dto.WishListDto;
+import com.bitc.dream_com.dto.*;
 
 import java.util.List;
 
@@ -23,5 +21,17 @@ public interface TestService {
 
     List<SpecDto> getProductSpec(int productNum) throws Exception;
 
-    List<ProductDto> getFullProduct(int productNum) throws Exception;
+    List<ProductDto> fullProductInfo(int productNum) throws Exception;
+
+    List<ProductImgDto> getProductImg(int productNum) throws Exception;
+
+    List<ProductDto> topClickedProduct() throws Exception;
+
+    List<ProductDto> productData(int productNum) throws Exception;
+
+    List<ProductDto> type1Product() throws Exception;
+    List<ProductDto> type2Product() throws Exception;
+    List<ProductDto> type3Product() throws Exception;
+    List<ProductDto> type4Product() throws Exception;
+    List<ProductDto> type5Product() throws Exception;
 }
