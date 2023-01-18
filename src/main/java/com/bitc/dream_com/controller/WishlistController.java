@@ -31,11 +31,10 @@ public class WishlistController {
 //        찜목록 product_num으로 제품 테이블에서 정보 가져오기
         for(int i = 0; i < getWishlist.size(); i++) {
             int productNum = getWishlist.get(i).getProductNum();
-            List<ProductDto> wishlistData = testService.getFullProduct(productNum);
+            List<ProductDto> wishlistData = testService.productData(productNum);
             getData.add(wishlistData.get(0));
         }
 
-        System.out.println(getData);
         return getData;
     }
 
