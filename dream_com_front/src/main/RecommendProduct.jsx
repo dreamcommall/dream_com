@@ -6,7 +6,7 @@ import RandomSpec from "./RandomSpec";
 // 사용자에게 상품 추천목록을 보여주는 컴포넌트
 function RecommendProduct() {
     return (
-        <div className={"container mt-3 my-5"}>
+        <div className={"container mt-4 my-5"}>
             <div className={"row"}>
                 <div className={"col d-flex justify-content-center px-0"}>
                     <RandomSpec />
