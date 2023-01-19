@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {getElement} from "bootstrap/js/src/util";
 
-function Test() {
+function DbTestYmh() {
 
     const [data, setData] = useState([]);
     const [spec, setSpec] = useState([]);
@@ -167,4 +167,4 @@ function Test() {
     );
 }
 
-export default Test;
+export default DbTestYmh;
