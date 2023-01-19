@@ -12,6 +12,4 @@ public interface UserService {
     int checkInfo(UserDto userDto) throws Exception;
 
     void deleteAccount(UserDto userDto) throws Exception;
-
-    String getSessionInfo(HttpServletRequest request) throws Exception;
 }

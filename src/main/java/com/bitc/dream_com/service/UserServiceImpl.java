@@ -33,16 +33,4 @@ public class UserServiceImpl implements UserService {
     public void deleteAccount(UserDto userDto) throws Exception {
         userMapper.deleteAccount(userDto);
     }
-
-    @Override
-    public String getSessionInfo(HttpServletRequest request) throws Exception {
-        HttpSession session = request.getSession();
-
-        if (session.getAttribute("LoginInfo") != null) {
-            session.setMaxInactiveInterval(1800);
-            return "존재";
-        } else {
-            return "";
-        }
-    }
 }

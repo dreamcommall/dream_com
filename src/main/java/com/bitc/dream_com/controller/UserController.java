@@ -86,15 +86,21 @@ public class UserController {
 //    최종 작성자 : 양민호
     @RequestMapping(value = "session", method = RequestMethod.GET)
     public String session(@RequestParam("userId") String userId, HttpServletRequest request) throws Exception {;
-        String sessionData = userService.getSessionInfo(request);
         HttpSession session = request.getSession();
-
-        return sessionData;
+        String name = (String) session.getAttribute("LoginInfo");
+        System.out.println(name);
+        if(name != null) {
+            return name;
+        }
+        else {
+            return "";
+        }
     }
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public void create(@RequestParam("userId") String userId, HttpServletRequest request) throws Exception{
         HttpSession session = request.getSession();
         session.setAttribute("LoginInfo", userId);
+        System.out.println(session.getAttribute("LoginInfo"));
     }
 }
