@@ -26,9 +26,8 @@ public class TestScheduler {
 //        hitcount에 들어가 있던 데이터 삭제
         testService.deleteHitCount();
 
+//        hitcount 업데이트
         testService.updateClickCount(products);
-//        map 내용으로 hitcount 업데이트
-//        testService.updateClickCount(map);
         System.out.println("업데이트 완료");
     }
 }

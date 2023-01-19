@@ -1,6 +1,5 @@
 package com.bitc.dream_com.controller;
 
-import com.bitc.dream_com.dto.HitCountDto;
 import com.bitc.dream_com.dto.ProductDto;
 import com.bitc.dream_com.dto.ProductImgDto;
 import com.bitc.dream_com.dto.SpecDto;
@@ -8,7 +7,6 @@ import com.bitc.dream_com.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,15 +28,6 @@ public class TestController {
         return products;
     }
 
-//    제품 테이블 최신 10개 불러오기
-//    최종 수정일 2023-01-18
-//    최종 작성자 : 양민호
-    @RequestMapping(value = "/getProductData10", method = RequestMethod.GET)
-    public Object getProductData10() throws Exception {
-        List<ProductDto> products = testService.getProductData10();
-
-        return products;
-    }
 
 //    제품 테이블에서 랜덤 1개 불러오기
 //    최종 수정일 2023-01-18
