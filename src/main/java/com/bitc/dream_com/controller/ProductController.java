@@ -99,11 +99,11 @@ public class ProductController {
     }
 
 //    제품 테이블 업데이트 (관리자 페이지 완성 시 사용됨, where절 변수 재설정필요)
-//    최종 수정일 2023-01-16
+//    최종 수정일 2023-01-19
 //    최종 작성자 : 양민호
     @RequestMapping(value = "/updateProduct", method = RequestMethod.PUT)
-    public String updateProduct(@RequestParam("num") int num, @RequestParam("title") String title, @RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("discount") int discount, @RequestParam("quantity") int quantity, @RequestParam("delivery") String delivery, @RequestParam("click") int click) throws Exception {
-        productService.updateProduct(num, title, name, price, discount, quantity, delivery, click);
+    public String updateProduct(ProductDto productDto) throws Exception {
+        productService.updateProduct(productDto);
         return "업데이트 성공";
     }
 }

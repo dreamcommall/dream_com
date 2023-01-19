@@ -38,11 +38,12 @@
 
 
     <!--    제품 테이블 업데이트 (관리자 페이지 완성 시 사용됨, where절 변수 재설정필요)-->
-    <!--    최종 수정일 2023-01-16-->
+    <!--    최종 수정일 2023-01-19-->
     <!--    최종 작성자 : 양민호-->
     <update id="updateProduct" parameterType="com.bitc.dream_com.dto.ProductDto">
         update product set product_num = #{num}, product_title = #{title}, product_name = #{name}, product_price = #{price}, product_discount = #{discount},
-                           inventory_quantity = #{quantity}, product_createDt = now(), delivery_info = #{delivery}, click_count = #{click} where product_num = 12345
+                           inventory_quantity = #{quantity}, product_createDt = now(), delivery_info = #{delivery}, click_count = #{click}
+        where product_num = 12345
     </update>
 
 

@@ -9,7 +9,7 @@ public interface ProductService {
     //    제품 테이블 최신 5개 불러오기
     List<ProductDto> getRecentProduct() throws Exception;
 
-    void updateProduct(int num, String title, String name, int price, int discount, int quantity, String delivery, int click) throws Exception;
+    void updateProduct(ProductDto productDto) throws Exception;
 
     //    제품 테이블에서 랜덤 1개 불러오기
     List<ProductDto> getRandomProduct() throws Exception;

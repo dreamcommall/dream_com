@@ -21,8 +21,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateProduct(int num, String title, String name, int price, int discount, int quantity, String delivery, int click) throws Exception{
-        productMapper.updateProduct(num, title, name, price, discount, quantity, delivery, click);
+    public void updateProduct(ProductDto productDto) throws Exception{
+        productMapper.updateProduct(productDto);
     }
 
     //    제품 테이블에서 랜덤 1개 불러오기
