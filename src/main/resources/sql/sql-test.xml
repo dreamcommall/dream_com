@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitc.dream_com.mapper.TestMapper">
+
+    <!--    기능 : 로그인
+        최종 수정일 : 2023.01.19
+        최종 작성자 : 김영민 -->
+        <select id="loginChk" resultType="com.bitc.dream_com.dto.UserDto">
+            SELECT user_id, user_pw
+            FROM user
+            WHERE user_id = #{userId} AND user_pw = #{userPw}
+        </select>
+
+    <!--    기능 : 리뷰 보기
+            최종 수정일 : 2023.01.19
+            최종 작성자 : 김영민 -->
+    <select id="review" resultType="com.bitc.dream_com.dto.ReviewDto">
+        SELECT detail_review.review_num, detail_review.user_id, detail_review.content, detail_review.product_num, detail_review.createDt,
+               detail_review.img_path, detail_review.score, detail_review.like_count, user.user_id, noise_review.n_review_msg, packaging_review.p_review_msg,
+               delivery_review.d_review_msg, spec_review.s_review_msg
+        FROM detail_review
+                 JOIN user ON detail_review.user_id = user.user_id
+                 JOIN simple_review ON detail_review.review_num = simple_review.review_num
+                 JOIN noise_review ON simple_review.n_review_num = noise_review.n_review_num
+                 JOIN delivery_review ON simple_review.d_review_num = delivery_review.d_review_num
+                 JOIN packaging_review ON simple_review.p_review_num = packaging_review.p_review_num
+                 JOIN spec_review ON simple_review.s_review_num = spec_review.s_review_num;
+    </select>
+
+    <!--    기능 : 장바구니 담기
+        최종 수정일 : 2023.01.19
+        최종 작성자 : 김영민 -->
+    <insert id="insertCart" parameterType="com.bitc.dream_com.dto.CartDto">
+        INSERT INTO cart(product_num, quantity, user_id)
+        VALUES(#{productNum}, #{quantity}, 'test1')
+    </insert>
+
+    <!--    기능 : 장바구니 보기
+            최종 수정일 : 2023.01.19
+            최종 작성자 : 김영민 -->
+    <select id="selectCart" resultType="com.bitc.dream_com.dto.CartDto">
+        SELECT product.product_name, product.product_price, cart.product_num, cart.quantity,
+               product_img.img_path, product.delivery_info, product.product_discount
+        FROM cart
+                 JOIN product_img ON cart.product_num = product_img.product_num
+                 JOIN product ON cart.product_num = product.product_num
+        WHERE user_id = 'test1' AND product_img.img_path LIKE '%thumnail'
+    </select>
+
+    <!--    기능 : 장바구니 수정
+        최종 수정일 : 2023.01.19
+        최종 작성자 : 김영민 -->
+    <update id="updateCart" parameterType="com.bitc.dream_com.dto.CartDto">
+        UPDATE cart
+        SET quantity = #{quantity}
+        WHERE user_id = 'test1' AND product_num = #{productNum}
+    </update>
+
+    <!--    기능 : 장바구니 삭제
+        최종 수정일 : 2023.01.19
+        최종 작성자 : 김영민 -->
+    <delete id="deleteCart" parameterType="com.bitc.dream_com.dto.CartDto">
+        DELETE FROM cart
+        WHERE product_num = #{productNum} AND user_id = 'test1';
+    </delete>
+
+    <!--    기능 : 기존배송지 보기
+        최종 수정일 : 2023.01.19
+        최종 작성자 : 김영민 -->
+    <select id="address" resultType="com.bitc.dream_com.dto.AddressDto">
+        SELECT address.addr
+        FROM user
+                 JOIN address ON user.user_id = address.user_id
+        WHERE address.default_yn = 'Y' AND user.user_id = 'test1';
+    </select>
+
+    <!--    기능 : 다른배송지 저장
+        최종 수정일 : 2023.01.19
+        최종 작성자 : 김영민 -->
+    <insert id="insertAddress" parameterType="com.bitc.dream_com.dto.AddressDto">
+        insert into address(user_id, addr, default_yn)
+        values('test1',#{addr},'N')
+    </insert>
+
+    <!--    기능 : 리뷰 보기
+            최종 수정일 : 2023.01.19
+            최종 작성자 : 김영민 -->
+    <select id="anotherAddress" resultType="com.bitc.dream_com.dto.AddressDto">
+        SELECT address.addr
+        FROM user
+                 JOIN address ON user.user_id = address.user_id
+        WHERE address.default_yn = 'N' AND user.user_id = 'test1';
+    </select>
+
+    <delete id="deleteAddress" parameterType="com.bitc.dream_com.dto.AddressDto">
+        DELETE FROM address
+        WHERE addr = #{addr} AND user_id = 'test1';
+    </delete>
+</mapper>

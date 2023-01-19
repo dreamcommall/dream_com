@@ -1,4 +1,4 @@
-package com.bitc.dream_com.configuration;
+package com.bitc.dream_com.controller.configuration;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
