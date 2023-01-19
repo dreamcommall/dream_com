@@ -7,6 +7,29 @@
     <select id="loginChk" resultType="com.bitc.dream_com.dto.UserDto">
         SELECT user_id, user_pw
         FROM user
-        WHERE user_id = #{userId} AND user_pw = #{userPw}
+        WHERE user_id = #{userId} AND user_pw = #{userPw} AND user_state = 'N'
     </select>
+
+<!--    회원 정보 수정-->
+<!--    최종 수정일 : 2023-01-19-->
+<!--    최종 작성자 : 양민호-->
+    <update id="updateProfile" parameterType="com.bitc.dream_com.dto.UserDto">
+        update user set user_pw = #{userPw}, user_name = #{userName}, user_post = #{userPost}, user_addr = #{userAddr},
+                        user_tel = #{userTel}, user_email = #{userEmail}
+        where user_id = #{userId}
+    </update>
+
+<!--    회원 정보 확인-->
+<!--    최종 수정일 : 2023-01-19-->
+<!--    최종 작성자 : 양민호-->
+    <select id="checkInfo" resultType="int">
+        select count(*) from user where user_id = #{userId} and user_pw = #{userPw};
+    </select>
+
+<!--    회원 탈퇴-->
+<!--    최종 수정일 : 2023-01-19-->
+<!--    최종 작성자 : 양민호-->
+    <update id="deleteAccount" parameterType="com.bitc.dream_com.dto.UserDto">
+        update user set user_state = 'Y' where user_id = #{userId} and user_pw = #{userPw}
+    </update>
 </mapper>

@@ -15,4 +15,19 @@ public class UserServiceImpl implements UserService {
     public UserDto loginChk(String userId, String userPw) throws Exception {
         return userMapper.loginChk(userId, userPw);
     }
+
+    @Override
+    public void updateProfile(UserDto userDto) throws Exception {
+        userMapper.updateProfile(userDto);
+    }
+
+    @Override
+    public int checkInfo(UserDto userDto) throws Exception {
+        return userMapper.checkInfo(userDto);
+    }
+
+    @Override
+    public void deleteAccount(UserDto userDto) throws Exception {
+        userMapper.deleteAccount(userDto);
+    }
 }

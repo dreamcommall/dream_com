@@ -38,6 +38,45 @@ public class UserController {
         else{
             return loginChk;
         }
+    }
 
+//    회원 정보 수정
+//    최종 수정일 2023-01-19
+//    최종 작성자 : 양민호
+    @RequestMapping(value = "updateProfile", method = RequestMethod.PUT)
+    public String updateProfile(UserDto userDto) throws Exception{
+//        임시 데이터 추후 삭제 필요
+        userDto.setUserAddr("11");
+        userDto.setUserEmail("11@naver.com");
+        userDto.setUserName("이름");
+        userDto.setUserPost(123);
+        userDto.setUserAddr("1");
+        userDto.setUserTel("010-0000-0000");
+        userDto.setUserState("N");
+        System.out.println(userDto);
+//        ---------------------
+        userService.updateProfile(userDto);
+        return "수정 완료";
+    }
+
+//    회원 탈퇴
+//    최종 수정일 2023-01-19
+//    최종 작성자 : 양민호
+    @RequestMapping(value = "deleteAccount", method = RequestMethod.DELETE)
+    public String deleteAccount(UserDto userDto) throws Exception {
+//        회원 정보 확인
+        int result = userService.checkInfo(userDto);
+
+        String msg = "";
+
+        if(result == 1) {
+            userService.deleteAccount(userDto);
+            msg = "탈퇴 완료";
+        }
+        else {
+            msg =  "회원 정보 오류";
+        }
+
+        return msg;
     }
 }
