@@ -9,19 +9,6 @@ function Test() {
     const [img, setImg] = useState([]);
     const list = [];
 
-    useEffect(() => {
-        axios.get('http://localhost:8080/getRecentProduct')
-            .then((req) => {
-                for (let i = 0; i < req.data.length; i++) {
-                    list.push(req.data[i]);
-                }
-                setData(list);
-            })
-            .catch((err) => {
-                console.log(`에러`);
-            });
-    }, [])
-
     const getRecentProduct = async () => {
         const getData =await axios.get('http://localhost:8080/getRecentProduct');
         for (let i = 0; i < getData.data.length; i++) {
@@ -111,6 +98,22 @@ function Test() {
             })
     }
 
+    const buy = () => {
+        axios.get('http://localhost:8080/buy', {params: {userId: userId}})
+            .then((req) => {
+                console.log(req);
+            })
+            .catch((err) => {
+                console.log('에러');
+            })
+    }
+
+    const [userId, setUserId] = useState("");
+
+    const change = (e) => {
+        setUserId(e.target.value);
+    }
+
     return (
         <div>
             <button className={`btn btn-primary`} onClick={getRecentProduct}>최근 5개</button>
@@ -155,6 +158,10 @@ function Test() {
                 <button className={`btn btn-primary`} onClick={getWishList}>찜목록 불러오기</button>
                 <button className={`btn btn-info`} onClick={updateWishList}>찜목록 업데이트</button>
                 <button className={`btn btn-danger`} onClick={deleteWishList}>찜목록 삭제</button>
+            </div>
+            <div className={`pt-5`}>
+                <input type={"text"} onChange={change} />
+                <button className={`btn btn-primary`} onClick={buy}>구매</button>
             </div>
         </div>
     );
