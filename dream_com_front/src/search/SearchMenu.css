@@ -1,0 +1,8 @@
+.li-category-menu {
+    list-style-type: none;
+}
+
+.li-category-menu:hover {
+    background-color: #f7f9fa;
+    cursor: pointer;
+}

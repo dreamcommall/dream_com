@@ -1,0 +1,17 @@
+#buttonGroup-search-option {
+    width: 100%;
+    height: 75px;
+}
+
+#buttonGroup-search-option button {
+    border: 1px solid lightgray;
+}
+
+#buttonGroup-search-option #button-normal-option {
+    background-color: #e26e6e;
+}
+
+#buttonGroup-search-option #button-sale-option {
+    background-color: #f7f9fa;
+    color: black;
+}

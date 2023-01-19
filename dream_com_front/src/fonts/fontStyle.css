@@ -24,6 +24,11 @@
 }
 
 /* 나눔 스퀘어 기본 */
+.nanumSquareR-font-small {
+    font-size: 17px;
+    font-family: NanumSquareR;
+}
+
 .nanumSquareR-font-normal {
     font-size: 18px;
     font-family: NanumSquareR;
@@ -76,6 +81,11 @@
 }
 
 /* 나눔고딕 기본 */
+.nanumGothic-font-small {
+    font-size: 16px;
+    font-family: NanumGothic;
+}
+
 .nanumGothic-font-normal {
     font-size: 18px;
     font-family: NanumGothic;
