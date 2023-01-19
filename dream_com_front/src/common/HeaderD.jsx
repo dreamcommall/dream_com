@@ -18,25 +18,25 @@ function HeaderD() {
 
     return (
         <div>
-            <div className={"container-center"} style={{textAlign: "center"}}>
+            <div style={{textAlign: "center"}}>
                 <div className={"row"} style={{paddingLeft: "100px", marginBottom:"-10px", marginTop:"-20px"}}>
-                    <div className={"col-sm-2"}>
+                    <div className={"col"}>
                         <a>
                             <img style={{width: "100px", paddingTop: "47px"}} src={"/images/mainLogo.png"}/>
                         </a>
                     </div>
-                    <div className={"col-sm-4"} style={{paddingTop: "30px"}}>
+                    <div className={"col"} style={{paddingTop: "30px"}}>
                         <Search/>
                     </div>
 
                     {/*인기 검색어 */}
-                    <div className={"col-sm-3"} style={{paddingTop: "30px"}}>
+                    <div className={"col"} style={{paddingTop: "30px"}}>
                         <Keyword/>
                     </div>
 
                     {/*마이 페이지 아이콘*/}
-                    <div className={"col-sm-3"} style={{marginLeft: "-44px", marginTop:"4px"}}>
-                        <div className={"col-md-1"} style={{
+                    <div className={"col"} style={{marginLeft: "-44px", marginTop:"4px"}}>
+                        <div className={"col"} style={{
                             flex: "auto",
                             float: "left",
                             textAlign: "center",
