@@ -2,7 +2,7 @@ package com.bitc.dream_com.controller;
 
 import com.bitc.dream_com.dto.ProductDto;
 import com.bitc.dream_com.dto.WishListDto;
-import com.bitc.dream_com.service.TestService;
+import com.bitc.dream_com.service.ProductService;
 import com.bitc.dream_com.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ public class WishlistController {
     private WishlistService wishlistService;
 
     @Autowired
-    private TestService testService;
+    private ProductService productService;
 
 //    찜목록 불러오기
 //    최종 수정일 2023-01-17
@@ -31,7 +31,7 @@ public class WishlistController {
 //        찜목록 product_num으로 제품 테이블에서 정보 가져오기
         for(int i = 0; i < getWishlist.size(); i++) {
             int productNum = getWishlist.get(i).getProductNum();
-            List<ProductDto> wishlistData = testService.productData(productNum);
+            List<ProductDto> wishlistData = productService.productData(productNum);
             getData.add(wishlistData.get(0));
         }
 

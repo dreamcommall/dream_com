@@ -3,7 +3,7 @@ package com.bitc.dream_com.controller;
 import com.bitc.dream_com.dto.ProductDto;
 import com.bitc.dream_com.dto.ProductImgDto;
 import com.bitc.dream_com.dto.SpecDto;
-import com.bitc.dream_com.service.TestService;
+import com.bitc.dream_com.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +13,9 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-public class TestController {
+public class ProductController {
     @Autowired
-    private TestService testService;
+    private ProductService productService;
 
 
 //    제품 테이블 최신 5개 불러오기
@@ -23,7 +23,7 @@ public class TestController {
 //    최종 작성자 : 양민호
     @RequestMapping(value = "/getRecentProduct", method = RequestMethod.GET)
     public Object getRecentProduct() throws Exception {
-        List<ProductDto> products = testService.getRecentProduct();
+        List<ProductDto> products = productService.getRecentProduct();
 
         return products;
     }
@@ -34,10 +34,10 @@ public class TestController {
 //    최종 작성자 : 양민호
     @RequestMapping(value = "/getRandomProduct", method = RequestMethod.GET)
     public Object getRandomProduct() throws Exception {
-        List<ProductDto> products = testService.getRandomProduct();
+        List<ProductDto> products = productService.getRandomProduct();
         int productNum = products.get(0).getProductNum();
 //        스펙 불러오기
-        List<SpecDto> spec = testService.getProductSpec(productNum);
+        List<SpecDto> spec = productService.getProductSpec(productNum);
 
         Map<String, Object> productInfo = new HashMap<>();
         productInfo.put("product", products);
@@ -52,11 +52,11 @@ public class TestController {
 //    최종 작성자 : 양민호
     @RequestMapping(value = "/fullProductInfo", method = RequestMethod.GET)
     public Object fullProductInfo(@RequestParam("productNum") int productNum) throws Exception {
-        List<ProductDto> products = testService.fullProductInfo(productNum);
+        List<ProductDto> products = productService.fullProductInfo(productNum);
 //        스펙 불러오기
-        List<SpecDto> spec = testService.getProductSpec(productNum);
+        List<SpecDto> spec = productService.getProductSpec(productNum);
 //        이미지 불러오기
-        List<ProductImgDto> img = testService.getProductImg(productNum);
+        List<ProductImgDto> img = productService.getProductImg(productNum);
 
         Map<String, Object> productInfo = new HashMap<>();
         productInfo.put("product", products);
@@ -72,7 +72,7 @@ public class TestController {
     @RequestMapping(value = "/topClickedProduct", method = RequestMethod.GET)
     public Object topClickedProduct() throws Exception {
 //        hitcount 테이블 정보 불러오기
-        List<ProductDto> topClick = testService.topClickedProduct();
+        List<ProductDto> topClick = productService.topClickedProduct();
 
         return topClick;
     }
@@ -82,11 +82,11 @@ public class TestController {
 //    최종 작성자 : 양민호
     @RequestMapping(value = "categoryProduct", method = RequestMethod.GET)
     public Object categoryProduct() throws Exception {
-        List<ProductDto> type1 = testService.type1Product();
-        List<ProductDto> type2 = testService.type2Product();
-        List<ProductDto> type3 = testService.type3Product();
-        List<ProductDto> type4 = testService.type4Product();
-        List<ProductDto> type5 = testService.type5Product();
+        List<ProductDto> type1 = productService.type1Product();
+        List<ProductDto> type2 = productService.type2Product();
+        List<ProductDto> type3 = productService.type3Product();
+        List<ProductDto> type4 = productService.type4Product();
+        List<ProductDto> type5 = productService.type5Product();
 
         Map<String, Object> category = new HashMap<>();
         category.put("desktop", type1);
@@ -103,7 +103,7 @@ public class TestController {
 //    최종 작성자 : 양민호
     @RequestMapping(value = "/updateProduct", method = RequestMethod.PUT)
     public String updateProduct(@RequestParam("num") int num, @RequestParam("title") String title, @RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("discount") int discount, @RequestParam("quantity") int quantity, @RequestParam("delivery") String delivery, @RequestParam("click") int click) throws Exception {
-        testService.updateProduct(num, title, name, price, discount, quantity, delivery, click);
+        productService.updateProduct(num, title, name, price, discount, quantity, delivery, click);
         return "업데이트 성공";
     }
 }

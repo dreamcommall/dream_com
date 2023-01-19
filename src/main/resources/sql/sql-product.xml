@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bitc.dream_com.mapper.TestMapper">
+<mapper namespace="com.bitc.dream_com.mapper.ProductMapper">
 
     <!--    제품 테이블 최신 5개 불러오기-->
     <!--    최종 수정일 2023-01-16-->
