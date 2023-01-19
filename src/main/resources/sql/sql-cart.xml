@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bitc.dream_com.mapper.CartMapper">
-
-    <!--    기능 : 리뷰 보기
-            최종 수정일 : 2023.01.19
-            최종 작성자 : 김영민 -->
-    <select id="review" resultType="com.bitc.dream_com.dto.ReviewDto">
-        SELECT detail_review.review_num, detail_review.user_id, detail_review.content, detail_review.product_num, detail_review.createDt,
-               detail_review.img_path, detail_review.score, detail_review.like_count, user.user_id, noise_review.n_review_msg, packaging_review.p_review_msg,
-               delivery_review.d_review_msg, spec_review.s_review_msg
-        FROM detail_review
-                 JOIN user ON detail_review.user_id = user.user_id
-                 JOIN simple_review ON detail_review.review_num = simple_review.review_num
-                 JOIN noise_review ON simple_review.n_review_num = noise_review.n_review_num
-                 JOIN delivery_review ON simple_review.d_review_num = delivery_review.d_review_num
-                 JOIN packaging_review ON simple_review.p_review_num = packaging_review.p_review_num
-                 JOIN spec_review ON simple_review.s_review_num = spec_review.s_review_num;
-    </select>
-
     <!--    기능 : 장바구니 담기
         최종 수정일 : 2023.01.19
         최종 작성자 : 김영민 -->
