@@ -32,20 +32,6 @@ function Test() {
         setSpec([]);
     }
 
-    const getProductData10 = () => {
-        axios.get('http://localhost:8080/getProductData10')
-            .then((req) => {
-                for (let i = 0; i < req.data.length; i++) {
-                    list.push(req.data[i]);
-                }
-
-                setData(list);
-                setSpec([]);
-            })
-            .catch((err) => {
-                console.log(`에러`);
-            });
-    }
 
     const updateProduct = () => {
         axios.put('http://localhost:8080/updateProduct', null, {params: {num: 11111, title: '컴퓨터2 판매', name: '마우스1', price: 10000, discount: 0, quantity: 50, delivery: "2~3일 소요", click: 0}})
@@ -128,7 +114,6 @@ function Test() {
     return (
         <div>
             <button className={`btn btn-primary`} onClick={getRecentProduct}>최근 5개</button>
-            <button className={`btn btn-success`} onClick={getProductData10}>최근 10개</button>
             <button className={`btn btn-secondary`} onClick={updateProduct}>제품테이블 업데이트</button>
             <button className={`btn btn-info`} onClick={getRandomProduct}>랜덤 1개</button>
             <button className={`btn btn-warning`} onClick={fullProductInfo}>상세보기</button>
