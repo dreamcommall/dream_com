@@ -106,4 +106,77 @@ public class ProductController {
         productService.updateProduct(productDto);
         return "업데이트 성공";
     }
+
+//    검색결과 불러오기
+//    최종 수정일 2023-01-19
+//    최종 작성자 : 양민호
+    @RequestMapping(value = "searchProduct", method = RequestMethod.GET)
+    public String searchProduct(@RequestParam("keyword") String searchWord) throws Exception{
+//        검색어 띄어쓰기 단위로 자르기
+        String[] word = searchWord.split(" ");
+
+//        단어별 검색
+        for(int i = 0; i < word.length; i++) {
+            List<ProductDto> result = productService.searchProduct(word[i]);
+//            검색 결과가 존재할 경우
+            if(result.size() > 0) {
+                for(int j = 0; j < result.size(); j++) {
+                    ProductDto idx = result.get(i);
+//                    검색 결과가 속해있는 컬럼의 풀네임으로 키워드 저장
+//                    제품 번호를 키워드로 저장
+                    if(String.valueOf(idx.getProductNum()).contains(word[i])) {
+//                        키워드에 같은 값이 존재하지 않으면 추가
+                        int val = productService.searchKeyword(String.valueOf(idx.getProductNum()));
+                        if(val == 0) {
+                            productService.setKeyword(String.valueOf(idx.getProductNum()), idx.getProductNum());
+                        }
+//                        해당 키워드 카운트 + 1
+
+                    }
+//                    제품 제목의 경우 검색 단어를 저장
+                    if(idx.getProductTitle().contains(word[i])) {
+                        int val = productService.searchKeyword(idx.getProductTitle());
+                        if(val == 0) {
+                            productService.setKeyword(idx.getProductTitle(), idx.getProductNum());
+                        }
+
+                    }
+//                    제품 이름을 키워드로 저장
+                    if(idx.getProductName().contains(word[i])) {
+                        int val = productService.searchKeyword(idx.getProductName());
+                        if(val == 0) {
+                            productService.setKeyword(idx.getProductName(), idx.getProductNum());
+                        }
+
+                    }
+//                    제품 카테고리를 키워드로 저장
+                    if(idx.getTypeName().contains(word[i])) {
+                        int val = productService.searchKeyword(idx.getTypeName());
+                        if(val == 0) {
+                            productService.setKeyword(idx.getTypeName(), idx.getProductNum());
+                        }
+
+                    }
+//                    제조사 이름을 키워드로 저장
+                    if(idx.getCompanyName().contains(word[i])) {
+                        int val = productService.searchKeyword(idx.getCompanyName());
+                        if(val == 0) {
+                            productService.setKeyword(idx.getCompanyName(), idx.getProductNum());
+                        }
+                    }
+//                    성능 이름을 키워드로 저장
+                    if(idx.getPartName().contains(word[i])) {
+                        int val = productService.searchKeyword(idx.getPartName());
+                        if(val == 0) {
+                            productService.setKeyword(idx.getPartName(), idx.getProductNum());
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+        return "";
+    }
 }

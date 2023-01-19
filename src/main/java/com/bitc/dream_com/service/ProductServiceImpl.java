@@ -104,4 +104,22 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDto> type5Product() throws Exception {
         return productMapper.type5Product();
     }
+
+//    검색 결과 불러오기
+    @Override
+    public List<ProductDto> searchProduct(String word) throws Exception {
+        return productMapper.searchProduct(word);
+    }
+
+//    키워드 검색
+    @Override
+    public int searchKeyword(String keyword) throws Exception {
+        return productMapper.searchKeyword(keyword);
+    }
+
+//    키워드 등록
+    @Override
+    public void setKeyword(String keyword, int productNum) throws Exception {
+        productMapper.setKeyword(keyword, productNum);
+    }
 }

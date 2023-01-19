@@ -44,4 +44,13 @@ public interface ProductService {
     List<ProductDto> type3Product() throws Exception;
     List<ProductDto> type4Product() throws Exception;
     List<ProductDto> type5Product() throws Exception;
+
+//    검색 결과 불러오기
+    List<ProductDto> searchProduct(String word) throws Exception;
+
+//    키워드 검색
+    int searchKeyword(String keyword) throws Exception;
+
+//    키워드 등록
+    void setKeyword(String keyword, int productNum) throws Exception;
 }
