@@ -3,6 +3,8 @@ import SearchOption from "./SearchOption";
 import SearchMenu from "./SearchMenu";
 import SearchItems from "./SearchItems";
 import SearchItemPagination from "./SearchItemPagination";
+import SidebarApp from "../common/SidebarApp";
+import Loading from "../common/Loading";
 
 const searchItemInfo = [
     {key : 0, src : "/images/MainRollingBanner_139003.jpg", title : "제품이름1",
@@ -20,14 +22,16 @@ const searchItemInfo = [
     {key : 2, src : "/images/MainRollingBanner_139003.jpg", title : "제품이름3", specList : [{key : 0, spec : "스펙1"}, {key : 1, spec: "스펙2"}],
         averageScore : 3, registrationDate : "2022-05-11", commentCount : 28, price : 1500000},
     {key : 3, src : "/images/MainRollingBanner_139003.jpg", title : "제품이름4", specList : [{key : 0, spec : "스펙1"}, {key : 1, spec: "스펙2"}],
-        averageScore : 3, registrationDate : "2022-05-11", commentCount : 28, price : 1500000},
+        averageScore : 3.6, registrationDate : "2022-05-11", commentCount : 28, price : 1500000},
     {key : 4, src : "/images/MainRollingBanner_139003.jpg", title : "제품이름5", specList : [{key : 0, spec : "스펙1"}, {key : 1, spec: "스펙2"}],
-        averageScore : 3, registrationDate : "2022-05-11", commentCount : 28, price : 1500000}
+        averageScore : 3.3, registrationDate : "2022-05-11", commentCount : 28, price : 1500000}
 ]
 
 function SearchPageApp() {
     return (
         <div className={"container"}>
+            <Loading />
+            <SidebarApp />
             <SearchOption />
             <SearchMenu />
             <SearchItems searchItemInfo={searchItemInfo}/>

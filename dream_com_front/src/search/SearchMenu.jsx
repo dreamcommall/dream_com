@@ -27,7 +27,19 @@ const companyList = [
 
 function SearchMenu() {
     const [dividedCompanyList, setDividedCompanyList] = useState([]);
-    
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [toggle, setToggle] = useState(false);
+
+    const clearSearchOption = () => {
+        if (window.confirm("초기화를 진행할까요?")) {
+
+        }
+    }
+
+    const setCategory = (e) => {
+        const allTag = document.querySelector(".li-category-menu");
+    }
+
     const divideCompanyList = (list) => {
         let tempParent = [];
         let tempChild = [];
@@ -52,6 +64,9 @@ function SearchMenu() {
     
     useEffect(() => {
         divideCompanyList(companyList);
+        document.querySelectorAll(".li-category-menu").forEach(item => {
+            item.addEventListener("click", e => {setCategory(e)});
+        });
     }, [])
     
     return (
@@ -79,10 +94,12 @@ function SearchMenu() {
                     <div>
                         <div className={"d-flex justify-content-between align-items-center"} style={{height : 50, backgroundColor : "#f7f9fa"}}>
                             <h6 className={"my-0 mx-4 nanumSquareB-font-XNormal"}>제조사</h6>
-                            <div style={{width : "20%"}} className={"d-flex justify-content-around align-items-center"}>
+                            <div style={{width : "30%"}} className={"d-flex justify-content-around align-items-center"}>
                                 <p className={"my-0 nanumSquareB-font-normal"}>상품수순</p>
                                 <div className={"nanumSquareB-font-normal"}>|</div>
                                 <p className={"my-0 nanumSquareB-font-normal"}>가나다순</p>
+                                <div className={"nanumSquareB-font-normal"}>|</div>
+                                <p onClick={clearSearchOption} style={{cursor : "pointer"}} className={"my-0 me-3 nanumSquareB-font-normal"}>설정 초기화</p>
                             </div>
                         </div>
                         <div  style={{height : 265}} className={"pt-3"}>
@@ -94,7 +111,7 @@ function SearchMenu() {
                                                 arrayParent.map(arrayChild => {
                                                     return (
                                                         arrayChild.map(item => {
-                                                            return <div key={item.key} className={"mx-3 nanumSquareR-font-normal"}><input className={"mx-1"} type={"checkbox"}/><span>{item.companyName}({item.count})</span></div>
+                                                            return <div key={item.key} className={"d-flex align-items-center mx-3 nanumSquareR-font-normal"}><input style={{zoom : 1.5}} className={"mx-2"} type={"checkbox"}/><span>{item.companyName}({item.count})</span></div>
                                                         })
                                                     );
                                                 })
