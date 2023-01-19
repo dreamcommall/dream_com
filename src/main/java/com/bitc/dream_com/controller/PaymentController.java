@@ -39,15 +39,14 @@ public class PaymentController {
 //    최종 수정일 2023-01-19
 //    최종 작성자 : 양민호
     @RequestMapping(value = "buy")
-    public String buy(PaymentDto paymentDto) throws Exception {
-//        public String buy() throws Exception{
+    public Object buy(PaymentDto paymentDto) throws Exception {
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();
 
 //        현재 날짜 시간
         String paymentDate = date + " " + time;
 
-//        랜덤 결제번호
+//        랜덤 결제번호 전역변수설정
         int paymentNum = 0;
 
 //        랜덤 결제번호가 결제테이블 결제번호와 일치하는지 검사
@@ -69,7 +68,6 @@ public class PaymentController {
 //            랜덤 번호와 테이블의 저장된 번호가 일치하는지 확인
             for(int i = 0; i < tableNum.size(); i++) {
                 int usedNum = tableNum.get(i).getPaymentNum();
-
 //                번호가 일치하면 flag 변경
                 if(paymentNum == usedNum) {
                     flag = false;
@@ -84,8 +82,25 @@ public class PaymentController {
 //        검사 완료된 번호 Dto에 저장
         paymentDto.setPaymentNum(paymentNum);
 
-//        결제 테이블에 입력
-//        paymentService.buy(paymentDto);
-        return "결제 완료";
+//        임시데이터 (추후 삭제 필요)
+        paymentDto.setPaymentDate("2023-01-19 16:08:40");
+        paymentDto.setDeliveryAddr("우리집");
+        paymentDto.setMethodNum(2);
+        paymentDto.setProductNum(55555);
+        paymentDto.setQuantity(3);
+        paymentDto.setPrice(30000);
+//        ----------------------
+
+//        요청사항이 없을 경우
+        if(paymentDto.getRequest() == null || paymentDto.getRequest() == "") {
+            paymentDto.setRequest("없음");
+        }
+
+//        결제 테이블에 데이터 입력
+        paymentService.buy(paymentDto);
+
+        List<PaymentDto> paymentData = paymentService.paymentData(paymentDto.getUserId());
+
+        return paymentData;
     }
 }

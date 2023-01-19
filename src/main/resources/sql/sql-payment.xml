@@ -10,14 +10,14 @@
             join product_img pi on p.product_num = pi.product_num
             join product pr on pr.product_num = p.product_num
             join payment_method pm on p.method_num = pm.method_num
-        where p.user_id = #{userId}
+        where p.user_id = #{userId} and pi.img_path like '%thumnail'
     </select>
 
 <!--    결제취소-->
 <!--    최종 수정일 2023-01-19-->
 <!--    최종 작성자 : 양민호-->
     <update id="cancelPayment" parameterType="com.bitc.dream_com.dto.PaymentDto">
-        update payment state = 0
+        update payment set state = 0
         where user_id = #{userId} and payment_num = #{paymentNum}
     </update>
 
@@ -25,7 +25,7 @@
 <!--    최종 수정일 2023-01-19-->
 <!--    최종 작성자 : 양민호-->
     <insert id="buy" parameterType="com.bitc.dream_com.dto.PaymentDto">
-        insert into payment values(#{paymentNum}, #{paymentDate}, #{deliveryAddr}, #{methodNum}, #{userId}, #{productNum}, #{quantity}, ${price}, ${request}, 1)
+        insert into payment values(#{paymentNum}, #{paymentDate}, #{deliveryAddr}, #{methodNum}, #{userId}, #{productNum}, #{quantity}, ${price}, "요청사항", 1)
     </insert>
 
 <!--    전체 결제번호 데이터-->
