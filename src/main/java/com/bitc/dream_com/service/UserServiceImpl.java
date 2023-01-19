@@ -6,6 +6,9 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -29,5 +32,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteAccount(UserDto userDto) throws Exception {
         userMapper.deleteAccount(userDto);
+    }
+
+    @Override
+    public String getSessionInfo(HttpServletRequest request) throws Exception {
+        HttpSession session = request.getSession();
+
+        if (session.getAttribute("LoginInfo") != null) {
+            session.setMaxInactiveInterval(1800);
+            return "존재";
+        } else {
+            return "";
+        }
     }
 }

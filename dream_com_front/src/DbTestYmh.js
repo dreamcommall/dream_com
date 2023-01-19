@@ -165,9 +165,19 @@ function DbTestYmh() {
     }
 
     const session = () => {
-        axios.get('http://localhost:8080/session')
+        axios.get('http://localhost:8080/session', {params: {userId : userId}})
             .then((req) => {
+                console.log(req);
+            })
+            .catch((err) => {
+                console.log('에러');
+            })
+    }
 
+    const create = () => {
+        axios.get('http://localhost:8080/create', {params: {userId : userId}})
+            .then((req) => {
+                alert('세션 설정완료');
             })
             .catch((err) => {
                 console.log('에러');
@@ -242,7 +252,12 @@ function DbTestYmh() {
                     <button className={`btn btn-primary`} onClick={deleteAccount}>회원 탈퇴</button>
                 </div>
                 <div className={`mt-5`}>
-                    <button className={`btn btn-secondary`} onClick={session}>세션</button>
+                    <div>
+                        <label htmlFor={`user1`}>유저명</label>
+                        <input id={`user1`} type={"text"} onChange={changeUser} />
+                    </div>
+                    <button className={`btn btn-success me-5`} onClick={create}>세션 생성</button>
+                    <button className={`btn btn-secondary`} onClick={session}>세션 확인</button>
                 </div>
             </div>
         </div>

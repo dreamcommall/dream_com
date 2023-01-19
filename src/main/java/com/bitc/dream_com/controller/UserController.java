@@ -27,7 +27,7 @@ public class UserController {
             request.removeAttribute("LoginInfo");
         }
         else{
-            session.setAttribute("LoginInfo", loginChk);
+            session.setAttribute(loginChk.getUserId(), "세션 있음");
             session.setMaxInactiveInterval(1800);
         }
 
@@ -78,5 +78,23 @@ public class UserController {
         }
 
         return msg;
+    }
+
+
+//    세션 업데이트
+//    최종 작성 날짜 : 2023-01-19
+//    최종 작성자 : 양민호
+    @RequestMapping(value = "session", method = RequestMethod.GET)
+    public String session(@RequestParam("userId") String userId, HttpServletRequest request) throws Exception {;
+        String sessionData = userService.getSessionInfo(request);
+        HttpSession session = request.getSession();
+
+        return sessionData;
+    }
+
+    @RequestMapping(value = "create", method = RequestMethod.GET)
+    public void create(@RequestParam("userId") String userId, HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        session.setAttribute("LoginInfo", userId);
     }
 }
