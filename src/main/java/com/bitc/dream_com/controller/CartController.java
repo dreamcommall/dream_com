@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-public class CartController2 {
+public class CartController {
     @Autowired
     private CartService cartService;
 
