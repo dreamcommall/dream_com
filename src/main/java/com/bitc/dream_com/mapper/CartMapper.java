@@ -6,10 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface TestMapper {
-      UserDto loginChk(String userId, String userPw) throws Exception;
+public interface CartMapper {
 
-      List<ReviewDto> review() throws Exception;
 
       void insertCart(CartDto cartDto) throws Exception;
 
@@ -19,13 +17,7 @@ public interface TestMapper {
 
       void deleteCart(CartDto cartdto) throws Exception;
 
-      List<AddressDto> address() throws Exception;
 
-      void insertAddress(AddressDto addressDto) throws Exception;
-
-      List<AddressDto> anotherAddress() throws Exception;
-
-      void deleteAddress(AddressDto addressDto) throws Exception;
 
       void insertReview(ReviewDto reviewDto) throws Exception;
 }

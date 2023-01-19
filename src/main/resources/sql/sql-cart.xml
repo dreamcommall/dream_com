@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bitc.dream_com.mapper.TestMapper">
-
-    <!--    기능 : 로그인
-        최종 수정일 : 2023.01.19
-        최종 작성자 : 김영민 -->
-        <select id="loginChk" resultType="com.bitc.dream_com.dto.UserDto">
-            SELECT user_id, user_pw
-            FROM user
-            WHERE user_id = #{userId} AND user_pw = #{userPw}
-        </select>
+<mapper namespace="com.bitc.dream_com.mapper.CartMapper">
 
     <!--    기능 : 리뷰 보기
             최종 수정일 : 2023.01.19
@@ -64,36 +55,4 @@
         WHERE product_num = #{productNum} AND user_id = 'test1';
     </delete>
 
-    <!--    기능 : 기존배송지 보기
-        최종 수정일 : 2023.01.19
-        최종 작성자 : 김영민 -->
-    <select id="address" resultType="com.bitc.dream_com.dto.AddressDto">
-        SELECT address.addr
-        FROM user
-                 JOIN address ON user.user_id = address.user_id
-        WHERE address.default_yn = 'Y' AND user.user_id = 'test1';
-    </select>
-
-    <!--    기능 : 다른배송지 저장
-        최종 수정일 : 2023.01.19
-        최종 작성자 : 김영민 -->
-    <insert id="insertAddress" parameterType="com.bitc.dream_com.dto.AddressDto">
-        insert into address(user_id, addr, default_yn)
-        values('test1',#{addr},'N')
-    </insert>
-
-    <!--    기능 : 리뷰 보기
-            최종 수정일 : 2023.01.19
-            최종 작성자 : 김영민 -->
-    <select id="anotherAddress" resultType="com.bitc.dream_com.dto.AddressDto">
-        SELECT address.addr
-        FROM user
-                 JOIN address ON user.user_id = address.user_id
-        WHERE address.default_yn = 'N' AND user.user_id = 'test1';
-    </select>
-
-    <delete id="deleteAddress" parameterType="com.bitc.dream_com.dto.AddressDto">
-        DELETE FROM address
-        WHERE addr = #{addr} AND user_id = 'test1';
-    </delete>
 </mapper>
