@@ -25,7 +25,7 @@
 <!--    최종 수정일 2023-01-19-->
 <!--    최종 작성자 : 양민호-->
     <insert id="buy" parameterType="com.bitc.dream_com.dto.PaymentDto">
-        insert into payment values(#{paymentNum}, #{paymentDate}, #{deliveryAddr}, #{methodNum}, #{userId}, #{productNum}, #{quantity}, ${price}, "요청사항", 1)
+        insert into payment values(#{paymentNum}, #{paymentDate}, #{deliveryAddr}, #{methodNum}, #{userId}, #{productNum}, #{quantity}, ${price}, #{request}, 1)
     </insert>
 
 <!--    전체 결제번호 데이터-->
