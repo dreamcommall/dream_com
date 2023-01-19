@@ -18,4 +18,5 @@ public class ProductDto {
     private int companyNum;
     private String companyName;
     private String imgPath;
+    private String partName;
 }
