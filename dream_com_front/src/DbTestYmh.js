@@ -92,6 +92,10 @@ function DbTestYmh() {
         axios.get('http://localhost:8080/topClickedProduct')
             .then((req) => {
                 console.log(req.data);
+                for (let i = 0; i < req.data.length; i++) {
+                    list.push(req.data[i]);
+                }
+                setData(list);
             })
             .catch((err) => {
                 console.log('에러');
@@ -109,9 +113,65 @@ function DbTestYmh() {
     }
 
     const [userId, setUserId] = useState("");
+    const [userPw, setUserPw] = useState("");
 
-    const change = (e) => {
+    const changeUser = (e) => {
         setUserId(e.target.value);
+    }
+
+    const paymentData = () => {
+        axios.get('http://localhost:8080/paymentData', {params: {userId: userId}})
+            .then((req) => {
+                console.log(req.data);
+            })
+            .catch((err) => {
+                console.log('에러');
+            })
+    }
+
+    const cancelPayment = () => {
+        axios.put('http://localhost:8080/cancelPayment', null, {params: {userId: "test1", paymentNum: 334495}})
+            .then((req) => {
+                console.log(req);
+            })
+            .catch((err) => {
+                console.log('에러');
+            })
+    }
+
+
+    const changePw = (e) => {
+        setUserPw(e.target.value);
+    }
+
+    const updateProfile = () => {
+        axios.put('http://localhost:8080/updateProfile', null, {params: {userId: userId, userPw: userPw}})
+            .then((req) => {
+                console.log(req);
+            })
+            .catch((err) => {
+                console.log('에러');
+            })
+    }
+
+    const deleteAccount = () => {
+        axios.delete('http://localhost:8080/deleteAccount', {params: {userId: userId, userPw: userPw}})
+            .then((req) => {
+                console.log(req);
+            })
+            .catch((err) => {
+                console.log('에러');
+            })
+    }
+
+    const session = () => {
+        axios.get('http://localhost:8080/session')
+            .then((req) => {
+
+            })
+            .catch((err) => {
+                console.log('에러');
+            })
     }
 
     return (
@@ -160,8 +220,30 @@ function DbTestYmh() {
                 <button className={`btn btn-danger`} onClick={deleteWishList}>찜목록 삭제</button>
             </div>
             <div className={`pt-5`}>
-                <input type={"text"} onChange={change} />
+                <div>
+                    <label htmlFor={`user1`}>유저명</label>
+                    <input id={`user1`} type={"text"} onChange={changeUser} />
+                </div>
                 <button className={`btn btn-primary`} onClick={buy}>구매</button>
+                <button className={`btn btn-info`} onClick={paymentData}>결제정보 불러오기</button>
+                <button className={`btn btn-info`} onClick={cancelPayment}>결제취소</button>
+            </div>
+            <div className={`pt-5`}>
+                <div>
+                    <label htmlFor={`user2`}>유저명</label>
+                    <input id={`user2`} type={"text"} onChange={changeUser} />
+                </div>
+                <div>
+                    <label htmlFor={`pw`}>비밀번호</label>
+                    <input id={`pw`} type={"text"} onChange={changePw} />
+                </div>
+                <div>
+                    <button className={`btn btn-primary`} onClick={updateProfile}>정보 수정</button>
+                    <button className={`btn btn-primary`} onClick={deleteAccount}>회원 탈퇴</button>
+                </div>
+                <div className={`mt-5`}>
+                    <button className={`btn btn-secondary`} onClick={session}>세션</button>
+                </div>
             </div>
         </div>
     );

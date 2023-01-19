@@ -16,7 +16,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
       {/* 양민호 db 테스트 용도*/}
-      {/*<DbTestYmh />*/}
+      <DbTestYmh />
 
       {/* 김영민 db 테스트 용도*/}
 
