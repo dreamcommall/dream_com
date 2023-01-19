@@ -8,6 +8,9 @@ import RecommendProduct from "./RecommendProduct";
 import RepeatProductPage from "./RepeatProductPage";
 import Loading from "../common/Loading";
 import SidebarApp from "../common/SidebarApp";
+import HeaderD from "../common/HeaderD";
+import NavigationBar from "../common/NavigationBar";
+import Footer from "../common/Footer";
 
 // 작성자 : MoonNight285
 // 서버와 통신하기전 테스트 용도

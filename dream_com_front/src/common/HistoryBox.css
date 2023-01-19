@@ -6,7 +6,7 @@
     border : 1px solid lightgray;
     border-radius : 15px;
     position : fixed;
-    zIndex : 1000;
+    z-index : 1000;
     background-color : white;
     top : 390px;
     left : 1775px;
