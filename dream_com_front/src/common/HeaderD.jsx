@@ -35,7 +35,7 @@ function HeaderD() {
                     </div>
 
                     {/*마이 페이지 아이콘*/}
-                    <div className={"col-sm-3"} style={{marginLeft: "-44px"}}>
+                    <div className={"col-sm-3"} style={{marginLeft: "-44px", marginTop:"4px"}}>
                         <div className={"col-md-1"} style={{
                             flex: "auto",
                             float: "left",
