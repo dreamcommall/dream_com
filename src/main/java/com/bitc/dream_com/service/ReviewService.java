@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ReviewService {
     List<ReviewDto> review() throws Exception;
+
+    List<ReviewDto> getScore(int productNum) throws Exception;
 }

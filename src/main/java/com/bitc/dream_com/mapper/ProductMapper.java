@@ -1,5 +1,6 @@
 package com.bitc.dream_com.mapper;
 
+import com.bitc.dream_com.dto.CompanyDto;
 import com.bitc.dream_com.dto.ProductDto;
 import com.bitc.dream_com.dto.ProductImgDto;
 import com.bitc.dream_com.dto.SpecDto;
@@ -56,4 +57,6 @@ public interface ProductMapper {
 
 //    키워드 등록
     void setKeyword(String keyword, int productNum) throws Exception;
+
+    List<CompanyDto> getCompany(int productNum) throws Exception;
 }

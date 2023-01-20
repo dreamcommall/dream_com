@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface ReviewMapper {
     List<ReviewDto> review() throws Exception;
+
+    List<ReviewDto> getScore(int productNum) throws Exception;
 }

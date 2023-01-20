@@ -1,5 +1,6 @@
 package com.bitc.dream_com.service;
 
+import com.bitc.dream_com.dto.CompanyDto;
 import com.bitc.dream_com.dto.ProductDto;
 import com.bitc.dream_com.dto.ProductImgDto;
 import com.bitc.dream_com.dto.SpecDto;
@@ -121,5 +122,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void setKeyword(String keyword, int productNum) throws Exception {
         productMapper.setKeyword(keyword, productNum);
+    }
+
+    @Override
+    public List<CompanyDto> getCompany(int productNum) throws Exception {
+        return productMapper.getCompany(productNum);
     }
 }

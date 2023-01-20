@@ -15,8 +15,5 @@ public class ProductDto {
     private int clickCount;
     private int typeNum;
     private String typeName;
-    private int companyNum;
-    private String companyName;
-    private String imgPath;
-    private String partName;
+    private int key;
 }

@@ -38,9 +38,7 @@ function DbTestYmh() {
 
     const fullProductInfo = async () => {
         const getData =await axios.get('http://localhost:8080/fullProductInfo',{params: {productNum: data[0].productNum}});
-        setData(getData.data.product);
-        setSpec(getData.data.spec);
-        setImg(getData.data.img);
+
         console.log(getData.data);
     }
 

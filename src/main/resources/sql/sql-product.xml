@@ -91,6 +91,14 @@
         select * from product_img where product_num = #{product_num}
     </select>
 
+<!--    제품 제조사 불러오기-->
+<!--    최종 수정일 2023-01-20-->
+<!--    최종 작성자 : 양민호-->
+    <select id="getCompany" resultType="com.bitc.dream_com.dto.CompanyDto">
+        select * from company co
+                 join category ca on ca.company_num = co.company_num
+                 where ca.product_num = #{productNum}
+    </select>
 
     <!--    hitcount 테이블 정보 불러오기-->
     <!--    최종 수정일 2023-01-18-->

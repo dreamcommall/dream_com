@@ -17,4 +17,9 @@ public class ReviewServiceImpl implements ReviewService{
         return reviewMapper.review();
     }
 
+    @Override
+    public List<ReviewDto> getScore(int productNum) throws Exception {
+        return reviewMapper.getScore(productNum);
+    }
+
 }

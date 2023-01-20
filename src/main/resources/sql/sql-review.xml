@@ -17,4 +17,11 @@
                  JOIN packaging_review ON simple_review.p_review_num = packaging_review.p_review_num
                  JOIN spec_review ON simple_review.s_review_num = spec_review.s_review_num;
     </select>
+
+<!--    리뷰 평점 보기-->
+<!--    최종 수정일 2023-01-20-->
+<!--    최종 작성자 : 양민호-->
+    <select id="getScore" resultType="com.bitc.dream_com.dto.ReviewDto">
+        select score from detail_review where product_num = #{productNum}
+    </select>
 </mapper>

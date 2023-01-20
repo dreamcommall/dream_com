@@ -53,4 +53,6 @@ public interface ProductService {
 
 //    키워드 등록
     void setKeyword(String keyword, int productNum) throws Exception;
+
+    List<CompanyDto> getCompany(int productNum) throws Exception;
 }

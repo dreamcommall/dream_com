@@ -1,12 +1,12 @@
 package com.bitc.dream_com.controller;
 
-import com.bitc.dream_com.dto.ProductDto;
-import com.bitc.dream_com.dto.ProductImgDto;
-import com.bitc.dream_com.dto.SpecDto;
+import com.bitc.dream_com.dto.*;
 import com.bitc.dream_com.service.ProductService;
+import com.bitc.dream_com.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,16 +16,73 @@ import java.util.Map;
 public class ProductController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ReviewService reviewService;
 
+//    성능목록 저장될 배열
+    List<Object> specData = new ArrayList<>();
+
+//    제조사목록 저장될 배열
+    List<Object> companyData = new ArrayList<>();
+
+//    이미지 경로 저장될 변수
+    String thumbnail = "";
+    String mainPage = "";
+    String detailImg = "";
+    List<Object> carousel = new ArrayList<>();
+
+//    평점이 저장될 변수
+    double score = 0;
+
+//  상세 정보 저장될 dto
+    ProductDetail productDetail;
+
+//
+    public Object getFullData(List<ProductDto> dtoList) throws Exception{
+        List<ProductDetail> fullData = new ArrayList<>();
+        List<ProductDto> list = dtoList;
+        System.out.println(list);
+//        상세 정보 저장
+        for(int i = 0; i< dtoList.size(); i++) {
+            int productNum = dtoList.get(i).getProductNum();
+//            키값 설정하기
+            dtoList.get(i).setKey(i);
+
+//            썸네일 이미지 불러오기
+            List<ProductImgDto> img = productService.getProductImg(productNum);
+//            썸네일 이미지 경로 저장
+            for(ProductImgDto j : img) {
+                if (j.getImgPath().contains("thumbnail")) {
+                    thumbnail = j.getImgPath();
+                }
+            }
+
+//            평점 불러오기
+            List<ReviewDto> reviewScore = reviewService.getScore(productNum);
+            for(ReviewDto j : reviewScore) {
+                score += j.getScore();
+            }
+//            평점 저장
+            score = score / reviewScore.size();
+
+//            데이터 취합하기
+            productDetail = new ProductDetail(thumbnail, score);
+//            데이터 리스트에 넣기
+            fullData.add(productDetail);
+        }
+
+        System.out.println(fullData);
+        return fullData;
+    }
 
 //    제품 테이블 최신 5개 불러오기
 //    최종 수정일 2023-01-18
 //    최종 작성자 : 양민호
     @RequestMapping(value = "/getRecentProduct", method = RequestMethod.GET)
     public Object getRecentProduct() throws Exception {
-        List<ProductDto> products = productService.getRecentProduct();
+        List<ProductDto> recentProduct = productService.getRecentProduct();
 
-        return products;
+        return getFullData(recentProduct);
     }
 
 
@@ -34,36 +91,63 @@ public class ProductController {
 //    최종 작성자 : 양민호
     @RequestMapping(value = "/getRandomProduct", method = RequestMethod.GET)
     public Object getRandomProduct() throws Exception {
-        List<ProductDto> products = productService.getRandomProduct();
-        int productNum = products.get(0).getProductNum();
-//        스펙 불러오기
-        List<SpecDto> spec = productService.getProductSpec(productNum);
+        List<ProductDto> randomProduct = productService.getRandomProduct();
 
-        Map<String, Object> productInfo = new HashMap<>();
-        productInfo.put("product", products);
-        productInfo.put("spec", spec);
-
-        return productInfo;
+        return getFullData(randomProduct);
     }
 
 
-//    상세페이지 상품 정보 불러오기
-//    최종 수정일 2023-01-18
+//    상세페이지 상품 정보 불러오기 (수정중)
+//    최종 수정일 2023-01-20
 //    최종 작성자 : 양민호
     @RequestMapping(value = "/fullProductInfo", method = RequestMethod.GET)
     public Object fullProductInfo(@RequestParam("productNum") int productNum) throws Exception {
         List<ProductDto> products = productService.fullProductInfo(productNum);
+//        키 값 설정
+        for(int i = 0; i< products.size(); i++) {
+            products.get(i).setKey(i);
+        }
+
+        ProductDto productDto = new ProductDto();
 //        스펙 불러오기
         List<SpecDto> spec = productService.getProductSpec(productNum);
+        for(SpecDto i: spec) {
+            specData.clear();
+            specData.add(i.getPartName());
+        }
 //        이미지 불러오기
         List<ProductImgDto> img = productService.getProductImg(productNum);
+        for(ProductImgDto i : img) {
+            if(i.getImgPath().contains("thumbnail")) {
+                thumbnail = i.getImgPath();
+            }
+            else if(i.getImgPath().contains("carousel")) {
+                carousel.add(i.getImgPath());
+            }
+            else if(i.getImgPath().contains("mainPage")) {
+                mainPage = i.getImgPath();
+            }
+            else {
+                detailImg = i.getImgPath();
+            }
+        }
+//        제조사 불러오기
+        List<CompanyDto> company = productService.getCompany(productNum);
+        for(CompanyDto i : company) {
+            companyData.clear();
+            companyData.add(i.getCompanyName());
+        }
+//        평점 불러오기
+        List<ReviewDto> reviewScore = reviewService.getScore(productNum);
+        for(ReviewDto i : reviewScore) {
+            score += i.getScore();
+        }
+        score = score / reviewScore.size();
+//        제품 데이터 하나로 저장
+        productDetail = new ProductDetail(companyData, specData, carousel, score);
 
-        Map<String, Object> productInfo = new HashMap<>();
-        productInfo.put("product", products);
-        productInfo.put("spec", spec);
-        productInfo.put("img", img);
 
-        return productInfo;
+        return productDetail;
     }
 
 //    클릭 수가 높은 제품 정보 불러오기
@@ -73,6 +157,11 @@ public class ProductController {
     public Object topClickedProduct() throws Exception {
 //        hitcount 테이블 정보 불러오기
         List<ProductDto> topClick = productService.topClickedProduct();
+
+//        키 값 설정
+        for(int i = 0; i< topClick.size(); i++) {
+            topClick.get(i).setKey(i);
+        }
 
         return topClick;
     }
@@ -107,7 +196,8 @@ public class ProductController {
         return "업데이트 성공";
     }
 
-//    검색결과 불러오기
+
+//    검색결과 불러오기 (미완성, 수정필요, 제품 데이터 불러오는 부분 먼저 손보고 있는 중)
 //    최종 수정일 2023-01-19
 //    최종 작성자 : 양민호
     @RequestMapping(value = "searchProduct", method = RequestMethod.GET)
@@ -158,20 +248,9 @@ public class ProductController {
 
                     }
 //                    제조사 이름을 키워드로 저장
-                    if(idx.getCompanyName().contains(word[i])) {
-                        int val = productService.searchKeyword(idx.getCompanyName());
-                        if(val == 0) {
-                            productService.setKeyword(idx.getCompanyName(), idx.getProductNum());
-                        }
-                    }
-//                    성능 이름을 키워드로 저장
-                    if(idx.getPartName().contains(word[i])) {
-                        int val = productService.searchKeyword(idx.getPartName());
-                        if(val == 0) {
-                            productService.setKeyword(idx.getPartName(), idx.getProductNum());
-                        }
 
-                    }
+
+//                    성능 이름을 키워드로 저장
 
                 }
             }
