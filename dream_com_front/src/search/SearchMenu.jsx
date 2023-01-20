@@ -56,7 +56,7 @@ function SearchMenu() {
     const clearSearchOption = () => {
         if (window.confirm("초기화를 진행할까요?")) {
             setCategoryKey(-1)
-            setCompanyCheckList([]);
+            initCompanyCheckList();
         }
     }
 

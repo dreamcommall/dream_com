@@ -9,12 +9,12 @@ function SearchItem({src, title, specList, averageScore, registrationDate, comme
         let halfValue = averageScore % 1.0;
 
         for(let i = 0; i < Math.floor(averageScore); ++i) {
-            temp.push({src : "/images/star16.png"});
+            temp.push({key : i, src : "/images/star16.png"});
             setStars(temp);
         }
 
         if (halfValue >= 0.5) {
-            temp.push({src : "/images/starHalf16.png"});
+            temp.push({key : temp.length + 1, src : "/images/starHalf16.png"});
             setStars(temp);
         }
     }
@@ -33,7 +33,7 @@ function SearchItem({src, title, specList, averageScore, registrationDate, comme
                         <p className={"mb-1 nanumSquareR-font-small"}>
                             {
                                 specList.map(item => {
-                                    return (item.spec + "/");
+                                    return <span key={item.key} className={"my-0"}>{item.spec + "/"}</span>;
                                 })
                             }
                         </p>
@@ -41,8 +41,8 @@ function SearchItem({src, title, specList, averageScore, registrationDate, comme
                             <p className={"mb-1 nanumSquareR-font-small"}>평균별점 :
                                 {
                                     stars.map(item => {
-                                        return item.src == "/images/star16.png" ? <img style={{marginBottom : 3, marginLeft : 3}} src={"/images/star16.png"} /> :
-                                            <img style={{marginBottom : 3, marginLeft : 3}} src={"/images/starHalf16.png"} />
+                                        return item.src == "/images/star16.png" ? <img key={item.key} style={{marginBottom : 3, marginLeft : 3}} src={"/images/star16.png"} /> :
+                                            <img key={item.key} style={{marginBottom : 3, marginLeft : 3}} src={"/images/starHalf16.png"} />
                                     })
                                 }
                             </p>
