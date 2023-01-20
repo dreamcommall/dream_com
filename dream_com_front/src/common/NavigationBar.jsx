@@ -2,8 +2,10 @@ import React, {useState} from "react";
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-
+import "../fonts/fontStyle.css";
 import Form from "react-bootstrap/Form";
+import NavCss from "./NavigationBar.css";
+
 
 
 function NavigationBar() {
@@ -17,19 +19,20 @@ function NavigationBar() {
     const [gLine, setGLine] = useState(1)
 
 
-    return (
-        <Navbar>
-            <div>
 
-                <Navbar className={"container-fluid" } style={{marginLeft:"-8px"}}>
-                    <Nav style={{maxHeight: '100px', marginLeft:"10%" }}>
+    return (
+        <Navbar className={"container py-1"} id={"nav"} >
+            <div >
+
+                <Navbar className={"container-fluid NavCss" } style={{marginLeft:"-8px"}}>
+                    <Nav style={{maxHeight: '100px', marginLeft:"10%",position:"sticky"}}>
                         <a>
                             <li style={{listStyle: "none",width:"131%",marginRight:"20px" }}
                                 onMouseOver={() => setBestLine(0)}
                                 onMouseOut={() => setBestLine(1)}
                             >
                                 <Nav.Link href="#action1"
-                                          style={bestLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}} >베스트</Nav.Link>
+                                          style={bestLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}} className={"nanumSquareB-font-normal"} >베스트</Nav.Link>
                             </li>
                         </a>
                         <a>
@@ -38,7 +41,7 @@ function NavigationBar() {
                                 onMouseOut={() => setSpecialLine(1)}
                             >
                                 <Nav.Link href="#action1"
-                                          style={specialLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}}>특가상품</Nav.Link>
+                                          style={specialLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}} className={"nanumSquareB-font-normal"}>특가상품</Nav.Link>
                             </li>
                         </a>
                         <a>
@@ -47,7 +50,7 @@ function NavigationBar() {
                                 onMouseOut={() => setOneLine(1)}
                             >
                                 <Nav.Link href="#action1"
-                                          style={oneLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}}>11번가</Nav.Link>
+                                          style={oneLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}} className={"nanumSquareB-font-normal"}>11번가</Nav.Link>
                             </li>
                         </a>
                         <a>
@@ -56,7 +59,7 @@ function NavigationBar() {
                                 onMouseOut={() => setZoneLine(1)}
                             >
                                 <Nav.Link href="#action1"
-                                          style={zoneLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}}>컴퓨존</Nav.Link>
+                                          style={zoneLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}} className={"nanumSquareB-font-normal"}>컴퓨존</Nav.Link>
                             </li>
                         </a>
                         <a>
@@ -65,7 +68,7 @@ function NavigationBar() {
                                 onMouseOut={() => setGLine(1)}
                             >
                                 <Nav.Link href="#action1"
-                                          style={gLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}}>지마켓</Nav.Link>
+                                          style={gLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}} className={"nanumSquareB-font-normal"}>지마켓</Nav.Link>
                             </li>
                         </a>
                     </Nav>
@@ -79,7 +82,7 @@ function NavigationBar() {
                                     onMouseOut={() => setTextLine(1)}
                                 >
                                     <Nav.Link href="#action1"
-                                              style={textLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}}>로그인</Nav.Link>
+                                              style={textLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}} className={"nanumSquareB-font-normal"}>로그인</Nav.Link>
                                 </li>
                             </a>
                             <a>
@@ -88,7 +91,7 @@ function NavigationBar() {
                                     onMouseOut={() => setUserLine(1)}
                                 >
                                     <Nav.Link href="#action2"
-                                              style={userLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}}>회원가입</Nav.Link>
+                                              style={userLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}} className={"nanumSquareB-font-normal"}>회원가입</Nav.Link>
                                 </li>
                             </a>
                         </Nav>
