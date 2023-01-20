@@ -1,34 +1,34 @@
-import React from "react";
+import React, {useState} from "react";
 import Pagination from 'react-bootstrap/Pagination';
 import "./SearchItemPagination.css"
 
 function SearchItemPagination({pageCount}) {
+    const [paginationColor, setPaginationColor] = useState("white");
+    
+    const changePaginationColor = (value) => {
+        setPaginationColor(value);
+    }
+    
     return (
         <div className={"d-flex justify-content-center my-3"}>
             {
                 pageCount == 0 ? <Pagination>
-                    <Pagination.First />
-                    <Pagination.Prev />
-                    <Pagination.Item>{1}</Pagination.Item>
-                    <Pagination.Next />
-                    <Pagination.Last />
+                        <Pagination.Item><div>{"<"}</div></Pagination.Item>
+                        <Pagination.Item><div onClick={() => changePaginationColor("red1")} className={paginationColor == "red1" ? "active" : ""}>{1}</div></Pagination.Item>
+                        <Pagination.Item><div>{">"}</div></Pagination.Item>
                 </Pagination> :
                     <Pagination>
-                        <Pagination.First />
-                        <Pagination.Prev />
-                        <Pagination.Item>{1}</Pagination.Item>
-                        <Pagination.Ellipsis />
-        
-                        <Pagination.Item>{10}</Pagination.Item>
-                        <Pagination.Item>{11}</Pagination.Item>
-                        <Pagination.Item active>{12}</Pagination.Item>
-                        <Pagination.Item>{13}</Pagination.Item>
-                        <Pagination.Item disabled>{14}</Pagination.Item>
-        
-                        <Pagination.Ellipsis />
-                        <Pagination.Item>{20}</Pagination.Item>
-                        <Pagination.Next />
-                        <Pagination.Last />
+                        <Pagination.Item><div>{"<"}</div></Pagination.Item>
+                        <Pagination.Item><div onClick={() => changePaginationColor("red1")} className={paginationColor == "red1" ? "active" : ""}>{1}</div></Pagination.Item>
+                        <Pagination.Item><div>{"..."}</div></Pagination.Item>
+                        <Pagination.Item><div onClick={() => changePaginationColor("red10")} className={paginationColor == "red10" ? "active" : ""}>{10}</div></Pagination.Item>
+                        <Pagination.Item><div onClick={() => changePaginationColor("red11")} className={paginationColor == "red11" ? "active" : ""}>{11}</div></Pagination.Item>
+                        <Pagination.Item><div onClick={() => changePaginationColor("red12")} className={paginationColor == "red12" ? "active" : ""}>{12}</div></Pagination.Item>
+                        <Pagination.Item><div onClick={() => changePaginationColor("red13")} className={paginationColor == "red13" ? "active" : ""}>{13}</div></Pagination.Item>
+                        <Pagination.Item><div onClick={() => changePaginationColor("red14")} className={paginationColor == "red14" ? "active" : ""}>{14}</div></Pagination.Item>
+                        <Pagination.Item><div>{"..."}</div></Pagination.Item>
+                        <Pagination.Item><div onClick={() => changePaginationColor("red20")} className={paginationColor == "red20" ? "active" : ""}>{20}</div></Pagination.Item>
+                        <Pagination.Item><div>{">"}</div></Pagination.Item>
                     </Pagination>
             }
         </div>

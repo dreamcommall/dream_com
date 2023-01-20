@@ -28,7 +28,7 @@ function SearchItem({src, title, specList, averageScore, registrationDate, comme
             <img className={"m-3"} width={175} height={175} src={src} />
             <div style={{width : "100%"}}>
                 <div className={"d-flex"}>
-                    <div style={{width : "85%"}}>
+                    <div style={{width : "55%"}}>
                         <p className={"mb-3 nanumSquareR-font-normal"}><b>{title}</b></p>
                         <p className={"mb-1 nanumSquareR-font-small"}>
                             {
@@ -55,6 +55,7 @@ function SearchItem({src, title, specList, averageScore, registrationDate, comme
                             <p className={"nanumSquareR-font-small"}>찜하기</p>
                         </div>
                     </div>
+                    <div style={{width : "30%"}}></div>
                     <div style={{width : "15%"}} className={"d-flex align-items-center"}>
                         <p className={"my-0 nanumSquareR-font-normal"}><b>{price}원</b></p>
                     </div>

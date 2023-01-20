@@ -15,6 +15,7 @@ const searchItemInfo = [
             {key : 4, spec : "스펙입니다4"},
             {key : 5, spec : "스펙입니다5"},
             {key : 6, spec : "스펙입니다6"},
+            {key : 7, spec : "스펙입니다7"},
         ],
         averageScore : 5, registrationDate : "2022-03-11", commentCount : 20, price : 1700000},
     {key : 1, src : "/images/MainRollingBanner_139003.jpg", title : "제품이름2", specList : [{key : 0, spec : "스펙1"}, {key : 1, spec: "스펙2"}],

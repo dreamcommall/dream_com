@@ -9,6 +9,8 @@ const categoryMenu = [
     {key : 2, title : "메뉴3"},
     {key : 3, title : "메뉴4"},
     {key : 4, title : "메뉴5"},
+    {key : 5, title : "메뉴6"},
+    {key : 6, title : "메뉴7"},
 ]
 
 const companyList = [
@@ -27,17 +29,40 @@ const companyList = [
 
 function SearchMenu() {
     const [dividedCompanyList, setDividedCompanyList] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState("");
-    const [toggle, setToggle] = useState(false);
-
+    const [categoryTitle, setCategoryTitle] = useState("");
+    const [categoryKey, setCategoryKey] = useState(-1);
+    const [companyCheckList, setCompanyCheckList] = useState([]);
+    
+    const initCompanyCheckList = () => {
+        let temp = [];
+        for(let i = 0; i < companyList.length; ++i) {
+            temp.push(false);
+        }
+        setCompanyCheckList(temp);
+    }
+    
+    const setCompanyCheck = (key) => {
+        let temp = [];
+        for(let i = 0; i < companyCheckList.length; ++i) {
+            if (key == i) {
+                temp.push(!companyCheckList[i]);
+                continue;
+            }
+            temp.push(companyCheckList[i]);
+        }
+        setCompanyCheckList(temp);
+    }
+    
     const clearSearchOption = () => {
         if (window.confirm("초기화를 진행할까요?")) {
-
+            setCategoryKey(-1)
+            setCompanyCheckList([]);
         }
     }
 
-    const setCategory = (e) => {
-        const allTag = document.querySelector(".li-category-menu");
+    const setCategory = (key, title) => {
+        setCategoryKey(key);
+        setCategoryTitle(title);
     }
 
     const divideCompanyList = (list) => {
@@ -64,9 +89,7 @@ function SearchMenu() {
     
     useEffect(() => {
         divideCompanyList(companyList);
-        document.querySelectorAll(".li-category-menu").forEach(item => {
-            item.addEventListener("click", e => {setCategory(e)});
-        });
+        initCompanyCheckList();
     }, [])
     
     return (
@@ -77,11 +100,12 @@ function SearchMenu() {
                         <h6 className={"my-0 mx-4 nanumSquareB-font-XNormal"}>카테고리</h6>
                     </div>
                     <div style={{borderRight : "1px solid lightgray", height : 265}}>
-                        <ul className={"ps-0 pt-3"}>
+                        <ul id={"ul-category-menu"}>
                             {
                                 categoryMenu.map(item => {
                                     return (
-                                        <li key={item.key} className={"mb-1 nanumSquareR-font-normal li-category-menu"}>
+                                        <li key={item.key} onClick={() => setCategory(item.key, item.title)}
+                                            className={categoryKey == item.key ? "mb-1 p-1 nanumSquareR-font-normal li-category-menu active" : "mb-1 p-1 nanumSquareR-font-normal li-category-menu"}>
                                             <span className={"mx-4"}>{item.title}</span>
                                         </li>
                                     );
@@ -95,14 +119,14 @@ function SearchMenu() {
                         <div className={"d-flex justify-content-between align-items-center"} style={{height : 50, backgroundColor : "#f7f9fa"}}>
                             <h6 className={"my-0 mx-4 nanumSquareB-font-XNormal"}>제조사</h6>
                             <div style={{width : "30%"}} className={"d-flex justify-content-around align-items-center"}>
-                                <p className={"my-0 nanumSquareB-font-normal"}>상품수순</p>
+                                <p className={"my-0 nanumSquareB-font-normal"}>가격순</p>
                                 <div className={"nanumSquareB-font-normal"}>|</div>
                                 <p className={"my-0 nanumSquareB-font-normal"}>가나다순</p>
                                 <div className={"nanumSquareB-font-normal"}>|</div>
                                 <p onClick={clearSearchOption} style={{cursor : "pointer"}} className={"my-0 me-3 nanumSquareB-font-normal"}>설정 초기화</p>
                             </div>
                         </div>
-                        <div  style={{height : 265}} className={"pt-3"}>
+                        <div id={"div-company-list-wrapper"}>
                             {
                                 dividedCompanyList.map(arrayParent => {
                                     return (
@@ -111,7 +135,10 @@ function SearchMenu() {
                                                 arrayParent.map(arrayChild => {
                                                     return (
                                                         arrayChild.map(item => {
-                                                            return <div key={item.key} className={"d-flex align-items-center mx-3 nanumSquareR-font-normal"}><input style={{zoom : 1.5}} className={"mx-2"} type={"checkbox"}/><span>{item.companyName}({item.count})</span></div>
+                                                            return <div key={item.key} className={"d-flex align-items-center mx-3 nanumSquareR-font-normal"}>
+                                                                <input onChange={() => setCompanyCheck(item.key)} checked={companyCheckList[item.key]} style={{zoom : 1.5}} className={"mx-2"} type={"checkbox"}/>
+                                                                <span>{item.companyName}({item.count})</span>
+                                                            </div>
                                                         })
                                                     );
                                                 })
@@ -124,20 +151,20 @@ function SearchMenu() {
                     </div>
                 </div>
             </div>
-            <div className={"d-flex justify-content-end"} style={{border : "1px solid lightgray", borderTop : "none", height : 50}}>
-                <div style={{height : "100%"}} className={"d-flex align-items-center"}>
+            <div id={"div-search-option-bottom-wrapper"} className={"d-flex justify-content-end"}>
+                <div className={"d-flex align-items-center div-search-option-bottom"}>
                     <p className={"my-0 mx-2 nanumSquareR-font-normal"}>가격대</p>
                     <div>
-                        <input style={{fontSize : 18}} type={"text"}/>
+                        <input maxLength={15} type={"text"}/>
                         <span className={"mx-1"}>~</span>
-                        <input style={{fontSize : 18}} type={"text"}/>
+                        <input maxLength={15} type={"text"}/>
                     </div>
                 </div>
-                <div style={{height : "100%"}} className={"d-flex mx-4 align-items-center"}>
+                <div className={"d-flex mx-4 align-items-center div-search-option-bottom"}>
                     <p className={"my-0 mx-2 nanumSquareR-font-normal"}>결과 내 재검색</p>
                     <div className={"d-flex align-items-center"}>
-                        <input style={{fontSize : 18}} type={"text"} placeholder={"검색할 내용을 입력하세요."} className={"me-1"}/>
-                        <Button style={{fontSize : 16, width : 80}} variant={"secondary"} className={"mx-1 nanumSquareR-font-normal"}>검색</Button>
+                        <input maxLength={20} type={"text"} placeholder={"검색할 내용을 입력하세요."} className={"me-1"}/>
+                        <Button variant={"secondary"} className={"mx-1 nanumSquareR-font-normal"}>검색</Button>
                     </div>
                 </div>
             </div>
