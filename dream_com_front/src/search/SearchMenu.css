@@ -1,0 +1,45 @@
+.li-category-menu {
+    list-style-type: none;
+}
+
+.li-category-menu:hover {
+    background-color: #f7f9fa;
+    cursor: pointer;
+}
+
+.li-category-menu.active {
+    background-color: #e26e6e;
+    color : white;
+}
+
+#ul-category-menu {
+    padding-left: 0px;
+    padding-top: 20px;
+    height: 265px;
+    overflow-y: scroll;
+}
+
+#div-company-list-wrapper {
+    height: 265px;
+    padding-top: 25px;
+    overflow-y: scroll;
+}
+
+#div-search-option-bottom-wrapper {
+    border : 1px solid lightgray;
+    border-top: none;
+    height : 50px;
+}
+
+.div-search-option-bottom {
+    height: 100%;
+}
+
+.div-search-option-bottom input {
+    font-size: 18px;
+}
+
+.div-search-option-bottom button {
+    font-size: 16px;
+    width: 80px;
+}

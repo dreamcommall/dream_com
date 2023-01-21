@@ -1,0 +1,15 @@
+#buttonGroup-search-option {
+    width: 100%;
+    height: 75px;
+}
+
+#buttonGroup-search-option button {
+    border: 1px solid lightgray;
+    background-color: #f7f9fa;
+    color: black;
+}
+
+#buttonGroup-search-option button.selected {
+    background-color: #e26e6e;
+    color: white;
+}
