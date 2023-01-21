@@ -1,0 +1,9 @@
+#div-detail-product-info-thumbnail {
+    width: 50%;
+}
+
+#img-detail-main-thumbnail {
+    width: 100%;
+    margin-bottom: 30px;
+    padding : 10px
+}
