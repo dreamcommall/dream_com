@@ -1,6 +1,7 @@
 import React from "react";
 import DetailBodyMiniThumbnail from "./DetailBodyMiniThumbnail";
 import "./DetailBodyProductInfo.css"
+import DetailBodyProductSubInfo from "./DetailBodyProductSubInfo";
 
 const productMiniThumbnailList = [
     {key : 0, src : "/images/MainRollingBanner_139003.jpg"},
@@ -10,7 +11,7 @@ const productMiniThumbnailList = [
 
 function DetailBodyProductInfo() {
     return (
-        <div>
+        <div className={"d-flex"}>
             <div id={"div-detail-product-info-thumbnail"}>
                 <img id={"img-detail-main-thumbnail"} src={"/images/MainRollingBanner_139003.jpg"} />
                 <div className={"d-flex justify-content-center"}>
@@ -21,6 +22,7 @@ function DetailBodyProductInfo() {
                     }
                 </div>
             </div>
+            <DetailBodyProductSubInfo />
         </div>
     );
 }

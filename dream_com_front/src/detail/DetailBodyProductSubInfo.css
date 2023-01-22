@@ -1,0 +1,30 @@
+#div-detail-product-sub-info {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#div-detail-product-price-info {
+    background-color: #f2f1f1;
+}
+#div-detail-product-price-info * {
+    margin : 0px;
+}
+
+.div-detail-product-info-underline {
+    border-bottom: 1px solid lightgrey;
+    height: 70px;
+}
+
+.div-detail-product-info-underline * {
+    margin: 0px;
+}
+
+.div-detail-product-info-title {
+    width: 15%;
+}
+
+#div-detail-product-purchase-option div {
+    width: 33.3%;
+    border: 1px solid black;
+}
