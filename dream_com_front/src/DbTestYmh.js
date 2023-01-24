@@ -14,7 +14,7 @@ function DbTestYmh() {
         for (let i = 0; i < getData.data.length; i++) {
             list.push(getData.data[i]);
         }
-
+        console.log(getData);
         setData(list);
         setSpec([]);
     }
@@ -32,8 +32,7 @@ function DbTestYmh() {
 
     const getRandomProduct = async () => {
         const getData =await axios.get('http://localhost:8080/getRandomProduct');
-        setData(getData.data.product);
-        setSpec(getData.data.spec);
+        console.log(getData);
     }
 
     const fullProductInfo = async () => {
@@ -45,11 +44,7 @@ function DbTestYmh() {
     const getWishList = () => {
         axios.get('http://localhost:8080/getWishList', {params: {userId: "test1"}})
             .then((req) => {
-                for (let i = 0; i < req.data.length; i++) {
-                    list.push(req.data[i]);
-                }
-                setData(list);
-                console.log(data);
+                console.log(req)
             })
             .catch((err) => {
                 console.log('에러');
