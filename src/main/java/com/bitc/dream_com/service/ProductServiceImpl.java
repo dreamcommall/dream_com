@@ -56,12 +56,6 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.getProductSpec(productNum);
     }
 
-    //    상세페이지 상품 정보 불러오기
-    @Override
-    public List<ProductDto> fullProductInfo(int productNum) throws Exception {
-        return productMapper.fullProductInfo(productNum);
-    }
-
     //    이미지 불러오기
     @Override
     public List<ProductImgDto> getProductImg(int productNum) throws Exception {
@@ -74,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.topClickedProduct();
     }
 
-    //        찜목록 product_num으로 제품 테이블에서 정보 가져오기
+    //        특정 제품 테이블에서 정보 가져오기
     @Override
     public List<ProductDto> productData(int productNum) throws Exception {
         return productMapper.productData(productNum);

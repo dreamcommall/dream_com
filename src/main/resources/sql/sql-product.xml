@@ -3,32 +3,26 @@
 <mapper namespace="com.bitc.dream_com.mapper.ProductMapper">
 
     <!--    제품 테이블 최신 5개 불러오기-->
-    <!--    최종 수정일 2023-01-16-->
+    <!--    최종 수정일 2023-01-20-->
     <!--    최종 작성자 : 양민호-->
     <select id="getRecentProduct" resultType="com.bitc.dream_com.dto.ProductDto">
         select * from product pr join category ca on pr.product_num = ca.product_num
                                  join product_type pt on ca.type_num = pt.type_num
-                                 join company co on ca.company_num = co.company_num
-                                 join product_img pi on pi.product_num = pr.product_num
-        where pi.img_path like '%thumnail'
         order by product_createDt desc limit 5;
     </select>
 
 
     <!--    제품 테이블에서 랜덤 1개 불러오기-->
-    <!--    최종 수정일 2023-01-17-->
+    <!--    최종 수정일 2023-01-20-->
     <!--    최종 작성자 : 양민호-->
     <select id="getRandomProduct" resultType="com.bitc.dream_com.dto.ProductDto">
         select * from product pr join category ca on pr.product_num = ca.product_num
                                  join product_type pt on ca.type_num = pt.type_num
-                                 join company co on ca.company_num = co.company_num
-                                 join product_img pi on pi.product_num = pr.product_num
-        where pi.img_path like '%thumnail'
         order by rand() limit 1;
     </select>
 
 
-    <!--    제품 성능 불러오기-->
+    <!--    제품 성능 / 스펙 불러오기-->
     <!--    최종 수정일 2023-01-17-->
     <!--    최종 작성자 : 양민호-->
     <select id="getProductSpec" resultType="com.bitc.dream_com.dto.SpecDto">
@@ -72,18 +66,6 @@
         </foreach>
     </insert>
 
-
-    <!--    상세페이지 상품 정보 불러오기-->
-    <!--    최종 수정일 2023-01-17-->
-    <!--    최종 작성자 : 양민호-->
-    <select id="fullProductInfo" resultType="com.bitc.dream_com.dto.ProductDto">
-        select * from product pr join category ca on pr.product_num = ca.product_num
-                                 join product_type pt on ca.type_num = pt.type_num
-                                 join company co on ca.company_num = co.company_num
-        where pr.product_num = #{productNum};
-    </select>
-
-
     <!--    상품 이미지 불러오기-->
     <!--    최종 수정일 2023-01-18-->
     <!--    최종 작성자 : 양민호-->
@@ -106,10 +88,7 @@
     <select id="topClickedProduct" resultType="com.bitc.dream_com.dto.ProductDto">
         select * from product pr join category ca on pr.product_num = ca.product_num
                                  join product_type pt on ca.type_num = pt.type_num
-                                 join company co on ca.company_num = co.company_num
                                  join hitcount h on pr.product_num = h.product_num
-                                 join product_img pi on pi.product_num = pr.product_num
-        where pi.img_path like '%thumnail'
     </select>
 
 
@@ -119,9 +98,7 @@
     <select id="productData" resultType="com.bitc.dream_com.dto.ProductDto">
         select * from product pr join category ca on pr.product_num = ca.product_num
                                  join product_type pt on ca.type_num = pt.type_num
-                                 join company co on ca.company_num = co.company_num
-                                 join product_img pi on pi.product_num = pr.product_num
-        where pi.img_path like '%thumnail' and pr.product_num = #{productNum}
+        where pr.product_num = #{productNum}
     </select>
 
 
@@ -131,10 +108,7 @@
     <select id="type1Product" resultType="com.bitc.dream_com.dto.ProductDto">
         select * from product pr join category ca on pr.product_num = ca.product_num
                                  join product_type pt on ca.type_num = pt.type_num
-                                 join company co on ca.company_num = co.company_num
-                                 join hitcount h on pr.product_num = h.product_num
-                                 join product_img pi on pi.product_num = pr.product_num
-        where pi.img_path like '%thumnail' and pt.type_num = 1
+        where pt.type_num = 1
     </select>
 
 
@@ -144,10 +118,7 @@
     <select id="type2Product" resultType="com.bitc.dream_com.dto.ProductDto">
         select * from product pr join category ca on pr.product_num = ca.product_num
                                  join product_type pt on ca.type_num = pt.type_num
-                                 join company co on ca.company_num = co.company_num
-                                 join hitcount h on pr.product_num = h.product_num
-                                 join product_img pi on pi.product_num = pr.product_num
-        where pi.img_path like '%thumnail' and pt.type_num = 2
+        where pt.type_num = 2
     </select>
 
 
@@ -157,10 +128,7 @@
     <select id="type3Product" resultType="com.bitc.dream_com.dto.ProductDto">
         select * from product pr join category ca on pr.product_num = ca.product_num
                                  join product_type pt on ca.type_num = pt.type_num
-                                 join company co on ca.company_num = co.company_num
-                                 join hitcount h on pr.product_num = h.product_num
-                                 join product_img pi on pi.product_num = pr.product_num
-        where pi.img_path like '%thumnail' and pt.type_num = 3
+        where pt.type_num = 3
     </select>
 
 
@@ -170,10 +138,7 @@
     <select id="type4Product" resultType="com.bitc.dream_com.dto.ProductDto">
         select * from product pr join category ca on pr.product_num = ca.product_num
                                  join product_type pt on ca.type_num = pt.type_num
-                                 join company co on ca.company_num = co.company_num
-                                 join hitcount h on pr.product_num = h.product_num
-                                 join product_img pi on pi.product_num = pr.product_num
-        where pi.img_path like '%thumnail' and pt.type_num = 4
+        where pt.type_num = 4
     </select>
 
 
@@ -183,10 +148,7 @@
     <select id="type5Product" resultType="com.bitc.dream_com.dto.ProductDto">
         select * from product pr join category ca on pr.product_num = ca.product_num
                                  join product_type pt on ca.type_num = pt.type_num
-                                 join company co on ca.company_num = co.company_num
-                                 join hitcount h on pr.product_num = h.product_num
-                                 join product_img pi on pi.product_num = pr.product_num
-        where pi.img_path like '%thumnail' and pt.type_num = 5
+        where pt.type_num = 5
     </select>
 
 <!--    검색 결과 불러오기-->

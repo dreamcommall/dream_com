@@ -30,16 +30,13 @@ public interface ProductMapper {
     //    스펙 불러오기
     List<SpecDto> getProductSpec(int productNum) throws Exception;
 
-    //    상세페이지 상품 정보 불러오기
-    List<ProductDto> fullProductInfo(int productNum) throws Exception;
-
     //    이미지 불러오기
     List<ProductImgDto> getProductImg(int productNum) throws Exception;
 
     //    클릭 수가 높은 제품 정보 불러오기
     List<ProductDto> topClickedProduct() throws Exception;
 
-    //        찜목록 product_num으로 제품 테이블에서 정보 가져오기
+    //    특정 제품 테이블에서 정보 가져오기
     List<ProductDto> productData(int productNum) throws Exception;
 
     //    카테고리별 제품 정보 불러오기

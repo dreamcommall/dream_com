@@ -19,6 +19,9 @@ public class WishlistController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private ProductController productController;
+
 //    찜목록 불러오기
 //    최종 수정일 2023-01-17
 //    최종 작성자 : 양민호
@@ -26,16 +29,16 @@ public class WishlistController {
     public Object getWishList(@RequestParam("userId") String userId) throws Exception {
 //        찜목록 가져오기
         List<WishListDto> getWishlist = wishlistService.getWishList(userId);
-        List getData = new ArrayList<>();
+        List<ProductDto> product = new ArrayList<>();
 
 //        찜목록 product_num으로 제품 테이블에서 정보 가져오기
         for(int i = 0; i < getWishlist.size(); i++) {
             int productNum = getWishlist.get(i).getProductNum();
             List<ProductDto> wishlistData = productService.productData(productNum);
-            getData.add(wishlistData.get(0));
-        }
+            product.add(wishlistData.get(0));
+            }
 
-        return getData;
+        return productController.getFullData(product);
     }
 
 
