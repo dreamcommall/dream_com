@@ -10,7 +10,7 @@
             join product_img pi on p.product_num = pi.product_num
             join product pr on pr.product_num = p.product_num
             join payment_method pm on p.method_num = pm.method_num
-        where p.user_id = #{userId} and pi.img_path like '%thumnail'
+        where p.user_id = #{userId} and pi.img_path like '%thumbnail'
     </select>
 
 <!--    결제취소-->

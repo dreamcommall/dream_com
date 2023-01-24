@@ -18,7 +18,7 @@
         FROM cart
                  JOIN product_img ON cart.product_num = product_img.product_num
                  JOIN product ON cart.product_num = product.product_num
-        WHERE user_id = 'test1' AND product_img.img_path LIKE '%thumnail'
+        WHERE user_id = 'test1' AND product_img.img_path LIKE '%thumbnail'
     </select>
 
     <!--    기능 : 장바구니 수정
