@@ -22,4 +22,18 @@ public class ReviewServiceImpl implements ReviewService{
         return reviewMapper.getScore(productNum);
     }
 
+    @Override
+    public void insertDetailReview(ReviewDto reviewDto) throws Exception {
+        reviewMapper.insertDetailReview(reviewDto);
+    }
+
+    @Override
+    public void insertSimpleReview(ReviewDto reviewDto) throws Exception {
+        reviewMapper.insertSimpleReview(reviewDto);
+    }
+
+    @Override
+    public List<ReviewDto> selectReviewNum(ReviewDto reviewDto) throws Exception {
+        return reviewMapper.selectReviewNum(reviewDto);
+    }
 }

@@ -16,4 +16,8 @@ public class ReviewDto {
     private String pReviewMsg;
     private String dReviewMsg;
     private double score;
+    private int dReviewNum;
+    private int sReviewNum;
+    private int nReviewNum;
+    private int pReviewNum;
 }

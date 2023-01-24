@@ -24,4 +24,21 @@
     <select id="getScore" resultType="com.bitc.dream_com.dto.ReviewDto">
         select score from detail_review where product_num = #{productNum}
     </select>
+
+    <insert id="insertDetailReview" parameterType="com.bitc.dream_com.dto.ReviewDto">
+        INSERT INTO detail_review(score, user_id, product_num, content, createDt, img_path)
+        VALUES (#{score}, 'test2', #{productNum}, #{content}, NOW(), #{imgPath});
+    </insert>
+
+    <insert id="insertSimpleReview" parameterType="com.bitc.dream_com.dto.ReviewDto">
+        INSERT INTO simple_review(review_num, d_review_num,s_review_num,n_review_num,p_review_num)
+        VALUES (#{reviewNum}, #{dReviewNum}, #{sReviewNum}, #{nReviewNum}, #{pReviewNum});
+    </insert>
+
+    <select id="selectReviewNum" resultType="com.bitc.dream_com.dto.ReviewDto">
+        SELECT review_num FROM detail_review
+        WHERE user_id = 'test1' AND product_num = #{productNum}
+        ORDER BY createDt DESC
+            LIMIT 1;
+    </select>
 </mapper>
