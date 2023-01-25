@@ -132,4 +132,9 @@ public class ProductServiceImpl implements ProductService {
     public List<CompanyDto> company() throws Exception {
         return productMapper.company();
     }
+
+    @Override
+    public List<ProductDto> searchProductType(String word, String type) throws Exception {
+        return productMapper.searchProductType(word, type);
+    }
 }

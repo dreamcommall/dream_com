@@ -3,13 +3,14 @@ import axios from "axios";
 
 function SearchTest() {
     const [word, setWord] = useState("");
+    const [companys, setCompanys] = useState(["제조사1"]);
 
     const getWord = (e) => {
         setWord(e.target.value);
     }
 
     const search = () => {
-        axios.get("http://localhost:8080/searchProduct", {params: {keyword: word}})
+        axios.get("http://localhost:8080/searchProduct", {params: {keyword: word, type:"키보드"}})
             .then((req) => {
                 console.log(req);
             })

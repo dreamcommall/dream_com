@@ -59,4 +59,6 @@ public interface ProductService {
 
 //    제조사 카테고리 불러오기
     List<CompanyDto> company() throws Exception;
+
+    List<ProductDto> searchProductType(String word, String type) throws Exception;
 }

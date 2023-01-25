@@ -119,7 +119,8 @@ public class ProductController {
 //    최종 수정일 2023-01-25
 //    최종 작성자 : 양민호
     @RequestMapping(value = "searchProduct", method = RequestMethod.GET)
-    public Object searchProduct(@RequestParam("keyword") String searchWord) throws Exception {
+    public Object searchProduct(@RequestParam("keyword") String searchWord, @RequestParam(value = "type", required = false) String type,
+                                @RequestParam(value = "company", required = false) String company) throws Exception {
 //        검색어 띄어쓰기 단위로 자르기
         String[] word = searchWord.split(" ");
 
@@ -130,7 +131,23 @@ public class ProductController {
 //        단어별 검색
         for (int i = 0; i < word.length; i++) {
             System.out.println("-------------------------");
-            List<ProductDto> result = productService.searchProduct(word[i]);
+            List<ProductDto> result = null;
+//            카테고리 미선택 시
+            if(type == null && company == null) {
+                result = productService.searchProduct(word[i]);
+            }
+//            제품 카테고리만 선택 시
+            else if(type != null && company == null) {
+                result = productService.searchProductType(word[i], type);
+            }
+////            제조사 카테고리만 선택 시
+//            else if(type == null && company != null) {
+//
+//            }
+////            모두 선택 시
+//            else {
+//
+//            }
 //            검색 결과가 존재할 경우
             if (result.size() > 0) {
                 for (int j = 0; j < result.size(); j++) {
