@@ -23,7 +23,7 @@ public class WishlistController {
     private ProductController productController;
 
 //    찜목록 불러오기
-//    최종 수정일 2023-01-17
+//    최종 수정일 2023-01-25
 //    최종 작성자 : 양민호
     @RequestMapping(value = "getWishList", method = RequestMethod.GET)
     public Object getWishList(@RequestParam("userId") String userId) throws Exception {
@@ -34,8 +34,8 @@ public class WishlistController {
 //        찜목록 product_num으로 제품 테이블에서 정보 가져오기
         for(int i = 0; i < getWishlist.size(); i++) {
             int productNum = getWishlist.get(i).getProductNum();
-            List<ProductDto> wishlistData = productService.productData(productNum);
-            product.add(wishlistData.get(0));
+            ProductDto wishlistData = productService.productData(productNum);
+            product.add(wishlistData);
             }
 
         return productController.getFullData(product);
