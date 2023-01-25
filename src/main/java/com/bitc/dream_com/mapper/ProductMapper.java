@@ -62,4 +62,8 @@ public interface ProductMapper {
     List<CompanyDto> company() throws Exception;
 
     List<ProductDto> searchProductType(String word, String type) throws Exception;
+
+    List<ProductDto> searchProductCompany(String word, List company) throws Exception;
+
+    List<ProductDto> searchProductAll(String word, String type, List company) throws Exception;
 }

@@ -137,4 +137,14 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDto> searchProductType(String word, String type) throws Exception {
         return productMapper.searchProductType(word, type);
     }
+
+    @Override
+    public List<ProductDto> searchProductCompany(String word, List company) throws Exception {
+        return productMapper.searchProductCompany(word, company);
+    }
+
+    @Override
+    public List<ProductDto> searchProductAll(String word, String type, List company) throws Exception {
+        return productMapper.searchProductAll(word, type, company);
+    }
 }
