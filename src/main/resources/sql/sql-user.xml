@@ -32,4 +32,12 @@
     <update id="deleteAccount" parameterType="com.bitc.dream_com.dto.UserDto">
         update user set user_state = 'Y' where user_id = #{userId} and user_pw = #{userPw}
     </update>
+
+<!--    회원가입-->
+<!--    최종 수정일 : 2023-01-25-->
+<!--    최종 작성자 : 양민호-->
+    <insert id="join" parameterType="com.bitc.dream_com.dto.UserDto">
+        insert into user values (#{userId}, #{userPw}, #{userName}, #{userGender}, #{userPost}, #{userAddr}, #{userTel},
+                                 #{userEmail}, 'N')
+    </insert>
 </mapper>

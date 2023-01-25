@@ -80,20 +80,12 @@ public class UserController {
         return msg;
     }
 
-
-//    세션 업데이트
-//    최종 작성 날짜 : 2023-01-19
+//    회원가입
+//    최종 작성 날짜 : 2023-01-25
 //    최종 작성자 : 양민호
-    @RequestMapping(value = "session", method = RequestMethod.GET)
-    public String session(@RequestParam("userId") String userId, HttpServletRequest request) throws Exception {;
-        HttpSession session = request.getSession();
-        String name = (String) session.getAttribute("LoginInfo");
-        System.out.println(name);
-        if(name != null) {
-            return name;
-        }
-        else {
-            return "";
-        }
+    @RequestMapping(value = "join", method = RequestMethod.PUT)
+    public String join(UserDto userDto) throws Exception {
+        userService.join(userDto);
+        return "가입 완료";
     }
 }

@@ -33,4 +33,9 @@ public class UserServiceImpl implements UserService {
     public void deleteAccount(UserDto userDto) throws Exception {
         userMapper.deleteAccount(userDto);
     }
+
+    @Override
+    public void join(UserDto userDto) throws Exception {
+        userMapper.join(userDto);
+    }
 }
