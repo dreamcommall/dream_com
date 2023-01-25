@@ -10,13 +10,16 @@ import Review from "./Review";
 import InsertCart from "./InsertCart";
 import SelectCart from "./SelectCart";
 import Address from "./Address";
+import SearchTest from "./SearchTest";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
       {/* 양민호 db 테스트 용도*/}
-      {/*<DbTestYmh />*/}
+      <DbTestYmh />
+      <hr />
+    <SearchTest />
 
       {/* 김영민 db 테스트 용도*/}
 
