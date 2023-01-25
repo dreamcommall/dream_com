@@ -1,9 +1,6 @@
 package com.bitc.dream_com.service;
 
-import com.bitc.dream_com.dto.CompanyDto;
-import com.bitc.dream_com.dto.ProductDto;
-import com.bitc.dream_com.dto.ProductImgDto;
-import com.bitc.dream_com.dto.SpecDto;
+import com.bitc.dream_com.dto.*;
 import com.bitc.dream_com.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
 
     //        특정 제품 테이블에서 정보 가져오기
     @Override
-    public List<ProductDto> productData(int productNum) throws Exception {
+    public ProductDto productData(int productNum) throws Exception {
         return productMapper.productData(productNum);
     }
 
@@ -118,8 +115,21 @@ public class ProductServiceImpl implements ProductService {
         productMapper.setKeyword(keyword, productNum);
     }
 
+//    해당제품이 속한 제조사 불러오기
     @Override
     public List<CompanyDto> getCompany(int productNum) throws Exception {
         return productMapper.getCompany(productNum);
+    }
+
+//    제품 카테고리 불러오기
+    @Override
+    public List<TypeDto> type() throws Exception {
+        return productMapper.type();
+    }
+
+//    제조사 카테고리 불러오기
+    @Override
+    public List<CompanyDto> company() throws Exception {
+        return productMapper.company();
     }
 }

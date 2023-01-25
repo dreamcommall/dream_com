@@ -1,9 +1,6 @@
 package com.bitc.dream_com.mapper;
 
-import com.bitc.dream_com.dto.CompanyDto;
-import com.bitc.dream_com.dto.ProductDto;
-import com.bitc.dream_com.dto.ProductImgDto;
-import com.bitc.dream_com.dto.SpecDto;
+import com.bitc.dream_com.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -37,7 +34,7 @@ public interface ProductMapper {
     List<ProductDto> topClickedProduct() throws Exception;
 
     //    특정 제품 테이블에서 정보 가져오기
-    List<ProductDto> productData(int productNum) throws Exception;
+    ProductDto productData(int productNum) throws Exception;
 
     //    카테고리별 제품 정보 불러오기
     List<ProductDto> type1Product() throws Exception;
@@ -55,5 +52,12 @@ public interface ProductMapper {
 //    키워드 등록
     void setKeyword(String keyword, int productNum) throws Exception;
 
+//    해당제품이 속한 제조사 불러오기
     List<CompanyDto> getCompany(int productNum) throws Exception;
+
+//    제품 카테고리 불러오기
+    List<TypeDto> type() throws Exception;
+
+//    제조사 카테고리 불러오기
+    List<CompanyDto> company() throws Exception;
 }

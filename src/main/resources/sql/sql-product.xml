@@ -73,7 +73,7 @@
         select * from product_img where product_num = #{product_num}
     </select>
 
-<!--    제품 제조사 불러오기-->
+<!--    해당제품이 속한 제조사 불러오기-->
 <!--    최종 수정일 2023-01-20-->
 <!--    최종 작성자 : 양민호-->
     <select id="getCompany" resultType="com.bitc.dream_com.dto.CompanyDto">
@@ -165,6 +165,20 @@
            or pa.part_name like concat('%', #{word}, '%') or pt.type_name like concat('%', #{word}, '%')
            or cp.company_name like concat('%', #{word}, '%')
         group by pr.product_num;
+    </select>
+
+<!--    제품 카테고리 목록-->
+<!--    최종 수정일 2023-01-25-->
+<!--    최종 작성자 : 양민호-->
+    <select id="type" resultType="com.bitc.dream_com.dto.TypeDto">
+        select * from product_type
+    </select>
+
+<!--    제조사 카테고리 목록-->
+<!--    최종 수정일 2023-01-25-->
+<!--    최종 작성자 : 양민호-->
+    <select id="company" resultType="com.bitc.dream_com.dto.CompanyDto">
+        select * from company
     </select>
 
 <!--    키워드 검색-->

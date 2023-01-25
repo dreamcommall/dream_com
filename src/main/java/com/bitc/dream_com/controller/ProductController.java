@@ -48,9 +48,11 @@ public class ProductController {
 //    최종 작성자 : 양민호
     @RequestMapping(value = "/fullProductInfo", method = RequestMethod.GET)
     public Object fullProductInfo(@RequestParam("productNum") int productNum) throws Exception {
-        List<ProductDto> products = productService.productData(productNum);
+        List<ProductDto> list = new ArrayList<>();
+        ProductDto products = productService.productData(productNum);
+        list.add(products);
 
-        return getFullData(products);
+        return getFullData(list);
     }
 
 //    클릭 수가 높은 제품 정보 불러오기
@@ -94,77 +96,96 @@ public class ProductController {
         return "업데이트 성공";
     }
 
+//    제품 카테고리 목록
+//    최종 수정일 2023-01-25
+//    최종 작성자 : 양민호
+    @RequestMapping(value = "/type", method = RequestMethod.GET)
+    public Object type() throws Exception {
+        List<TypeDto> type = productService.type();
+        return type;
+    }
 
-//    검색결과 불러오기 (미완성, 수정필요, 제품 데이터 불러오는 부분 먼저 손보고 있는 중)
-//    최종 수정일 2023-01-22
+//    제조사 카테고리 목록
+//    최종 수정일 2023-01-25
+//    최종 작성자 : 양민호
+    @RequestMapping(value = "/company", method = RequestMethod.GET)
+    public Object company() throws Exception {
+        List<CompanyDto> company = productService.company();
+        return company;
+    }
+
+
+//    검색결과 불러오기 (데이터 불러오기 완료, 검색 시 결과 우선순위 미정)
+//    최종 수정일 2023-01-25
 //    최종 작성자 : 양민호
     @RequestMapping(value = "searchProduct", method = RequestMethod.GET)
-    public String searchProduct(@RequestParam("keyword") String searchWord) throws Exception {
+    public Object searchProduct(@RequestParam("keyword") String searchWord) throws Exception {
 //        검색어 띄어쓰기 단위로 자르기
         String[] word = searchWord.split(" ");
 
+//        검색 결과 제품번호가 저장될 배열
+        List searchData1 = new ArrayList<>();
+        List searchData2 = new ArrayList<>();
+
 //        단어별 검색
         for (int i = 0; i < word.length; i++) {
+            System.out.println("-------------------------");
             List<ProductDto> result = productService.searchProduct(word[i]);
-            int count = 0;
-            ProductDto idx = result.get(i);
 //            검색 결과가 존재할 경우
             if (result.size() > 0) {
-//              검색 단어가 포함된 컬럼 확인
                 for (int j = 0; j < result.size(); j++) {
-//                    제품 번호 확인
-                    if (String.valueOf(idx.getProductNum()).contains(word[i])) {
-                        count += 1;
-//                        키워드에 같은 값이 존재하지 않으면 추가
+                    ProductDto idx = result.get(j);
+
+//                        첫 단어 검색 결과 1번 리스트에 저장
+                    if(i == 0) {
+                        searchData1.add(idx.getProductNum());
                     }
-//                    제품 제목 확인
-                    if (idx.getProductTitle().contains(word[i])) {
-                        count += 1;
-                    }
-//                    제품 이름 확인
-                    if (idx.getProductName().contains(word[i])) {
-                        count += 1;
-                    }
-//                    제품 카테고리 확인
-                    if (idx.getTypeName().contains(word[i])) {
-                        count += 1;
-                    }
-//                    제조사 이름 확인
-                    List<CompanyDto> company = productService.getCompany(idx.getProductNum());
-                    for(CompanyDto c: company) {
-                        if(c.getCompanyName().contains(word[i])) {
-                            count += 1;
+//                         두 번째 단어부터는 첫 번째 단어 검색결과와 비교하여 일치하는 부분만 2번리스트에 추가
+                    else {
+                        for(int k = 0; k < searchData1.size(); k++) {
+                            int productNum = (int) searchData1.get(k);
+                            if(idx.getProductNum() == productNum) {
+                                searchData2.add(idx.getProductNum());
+                            }
+                        }
+//                        두 번째 단어 검색 결과 마지막일 경우 1번 리스트 초기화
+                        if(j == result.size() -1) {
+                            searchData1.clear();
                         }
                     }
-//                    성능 이름 확인
-                    List<SpecDto> spec = productService.getProductSpec(idx.getProductNum());
-                    for(SpecDto s: spec) {
-                        if(s.getPartName().contains(word[i])) {
-                            count += 1;
-                        }
-                    }
-//                    총 카운트 수 키값에 임시 저장
-                    idx.setKey(count);
-//                    첫 검색 결과 리스트에 저장
-//                    if() {
-//                    }
-//                    else {
-////                        검색 결과를 배열에 저장된 데이터의 count값 (key값)과 비교하여 count가 높으면 해당 index에 저장
-////                        (일치하는 결과가 많으면 우선순위를 높임)
-//                    }
                 }
             }
+//            2번 리스트 결과를 1번 리스트에 추가
+            searchData1.addAll(searchData2);
+            searchData2.clear();
         }
 
-        return "";
+//        1번 리스트에 저장된 값들의 제품정보를 불러온 후 search 리스트에 저장
+//        search 리스트에 저장된 정보의 상세정보 취합
+        List<ProductDto> search = new ArrayList<>();
+        for(int i = 0; i < searchData1.size(); i++) {
+            ProductDto list = productService.productData((Integer) searchData1.get(i));
+            search.add(list);
+        }
+
+        return getFullData(search);
     }
 
+
+
+
+
 //------------------------------------------------------------------------------
+
+
+
+
+
 
     //  상세 정보 dto
     ProductDetail productDetail;
 
-    // 최근 등록 상품 / 인기 상품
+    // 제품 모든 정보 취합 함수
     public Object getFullData(List<ProductDto> dtoList) throws Exception {
         List<ProductDetail> fullData = new ArrayList<>();
 
