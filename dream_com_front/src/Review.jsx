@@ -3,7 +3,7 @@ import axios from "axios";
 
 function Review(){
     const[review, setReview] = useState([]);
-    // const[score,setScore] = useState(0);
+    const[score,setScore] = useState(0);
     const[productNum,setProductNum] = useState(0);
     const[content, setContent] = useState("");
     const[imgPath, setImgPath] = useState("");
