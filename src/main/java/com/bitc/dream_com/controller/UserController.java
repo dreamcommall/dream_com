@@ -96,11 +96,4 @@ public class UserController {
             return "";
         }
     }
-
-    @RequestMapping(value = "create", method = RequestMethod.GET)
-    public void create(@RequestParam("userId") String userId, HttpServletRequest request) throws Exception{
-        HttpSession session = request.getSession();
-        session.setAttribute("LoginInfo", userId);
-        System.out.println(session.getAttribute("LoginInfo"));
-    }
 }

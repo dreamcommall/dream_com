@@ -166,17 +166,6 @@ function DbTestYmh() {
                 console.log('에러');
             })
     }
-
-    const create = () => {
-        axios.get('http://localhost:8080/create', {params: {userId : userId}})
-            .then((req) => {
-                alert('세션 설정완료');
-            })
-            .catch((err) => {
-                console.log('에러');
-            })
-    }
-
     return (
         <div>
             <button className={`btn btn-primary`} onClick={getRecentProduct}>최근 5개</button>
@@ -249,8 +238,6 @@ function DbTestYmh() {
                         <label htmlFor={`user1`}>유저명</label>
                         <input id={`user1`} type={"text"} onChange={changeUser} />
                     </div>
-                    <button className={`btn btn-success me-5`} onClick={create}>세션 생성</button>
-                    <button className={`btn btn-secondary`} onClick={session}>세션 확인</button>
                 </div>
             </div>
         </div>
