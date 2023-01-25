@@ -1,0 +1,31 @@
+#div-detail-product-summary {
+    margin-bottom: 30px;
+}
+
+#div-detail-product-summary h4 {
+    font-family: NanumSquareB;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+
+#div-detail-product-summary div {
+    display: flex;
+    border-bottom: 1px solid lightgray;
+}
+
+#div-detail-product-summary div > p {
+    margin: 0px;
+    padding: 10px;
+}
+
+#div-detail-product-summary div > p:first-child {
+    margin-left: 10px;
+    width: 15%;
+    font-family: NanumSquareB;
+    font-size: 18px;
+}
+
+#div-detail-product-summary div > p:last-child {
+    font-family: NanumSquareR;
+    font-size: 18px;
+}

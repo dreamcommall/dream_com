@@ -1,0 +1,84 @@
+#div-detail-review-summary h4 {
+    font-family: NanumSquareB;
+    margin-bottom: 20px;
+}
+
+#div-detail-review-summary > div {
+    display: flex;
+    height: 250px;
+}
+
+.div-detail-review-summary-contents:first-child {
+    border-left: 1px solid lightgray;
+}
+
+.div-detail-review-summary-contents:first-child p, .div-detail-review-summary-contents:nth-child(2) p
+, .div-detail-review-summary-contents:nth-child(3) > p:first-child {
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+#div-detail-review-progress-wrapper {
+    display: flex;
+    margin-top: 40px;
+    justify-content: center;
+}
+
+#div-detail-review-progress-wrapper div {
+    width: 80px;
+}
+
+#div-detail-review-progress-wrapper progress {
+    width: 120px;
+    rotate: 90deg;
+}
+
+.div-detail-review-summary-contents {
+    width: 33.3%;
+    border-width: 1px 1px 1px 0px;
+    border-color: lightgray;
+    border-style: solid;
+}
+
+.div-detail-review-summary-contents p {
+    font-family: NanumSquareR;
+    font-size: 15px;
+}
+
+.div-detail-review-summary-contents div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#div-detail-review-progress-score {
+    display: flex;
+    margin-top: 50px;
+    justify-content: center;
+}
+
+#div-detail-review-progress-score p {
+    margin: 0px 13px;
+}
+
+.p-detail-review-summary-content-title {
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    width: 15%;
+    padding: 2px;
+    text-align: center;
+    margin-right: 15px;
+    margin-left: 30px;
+}
+
+.p-detail-review-summary-content-comment {
+    width: 25%;
+}
+
+.p-detail-review-summary-content-percent {
+    width: 20%;
+}
