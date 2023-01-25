@@ -11,15 +11,20 @@ import InsertCart from "./InsertCart";
 import SelectCart from "./SelectCart";
 import Address from "./Address";
 import SearchTest from "./SearchTest";
+import Join from "./Join";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
       {/* 양민호 db 테스트 용도*/}
+      <Join />
+      <br />
+      <br />
+      <br />
       <DbTestYmh />
       <hr />
-    <SearchTest />
+      <SearchTest />
 
       {/* 김영민 db 테스트 용도*/}
 
