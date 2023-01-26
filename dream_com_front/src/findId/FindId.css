@@ -1,0 +1,87 @@
+.findId ul {
+    margin-top: 100px;
+    list-style: none;
+}
+
+.findId a{
+    text-decoration: none;
+    display: block;
+    color: black;
+    width: 248.6px;
+    height: 54px;
+    text-align: center;
+    line-height: 54px;
+    font-size: 17px;
+    border: 1px solid #e0e0e0;
+}
+
+#HandPhone {
+    border: 1px solid #e26e6e;
+    border-bottom: 0px;
+    color: #e26e6e;
+}
+
+#Email{
+    border-bottom: 1px solid #e26e6e;
+}
+
+.findId p{
+    font-size: 13px;
+}
+
+#radio {
+    width: 14px;
+    height: 14px;
+    accent-color: #e26e6e;
+}
+
+.findInput {
+    width: 380px;
+    height: 40px;
+    border: 1px solid #e0e0e0;
+    padding: 0 18px 1px 18px;
+}
+
+.PhoneInput {
+    width: 276px;
+    height: 40px;
+    border: 1px solid #e0e0e0;
+    padding: 0 18px 1px 18px;
+}
+
+.EmailInput {
+    width: 275px;
+    height: 40px;
+    border: 1px solid #e0e0e0;
+    padding: 0 18px 1px 18px;
+}
+
+#testUl {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+
+.findId button {
+    color: #e26e6e;
+    border: 2px solid #e26e6e;
+    background-color: white;
+    width: 87px;
+    height: 40px;
+}
+
+.findId button:hover {
+    background-color: #e26e6e;
+    color: white;
+}
+
+#nextBtn {
+    width: 140px;
+    height: 60px;
+    background-color: #e26e6e;
+    color: white;
+    font-size: 23px;
+}
