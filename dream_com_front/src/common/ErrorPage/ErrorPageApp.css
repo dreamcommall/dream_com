@@ -1,0 +1,27 @@
+#div-error-img-wrapper {
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#div-error-msg-wrapper {
+    height: 175px;
+}
+
+#div-error-top-underline-wrapper {
+    margin-top: 140px;
+}
+
+#div-error-msg-wrapper button {
+    font-family: NanumSquareB;
+    font-size: 24px;
+}
+
+#div-error-msg-wrapper h3 {
+    font-family: NanumSquareB;
+}
+
+#div-error-msg-wrapper h3:first-child {
+    color: red;
+}

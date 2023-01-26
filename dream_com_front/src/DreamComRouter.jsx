@@ -3,6 +3,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import MainPageApp from "./main/MainPageApp";
 import SearchPageApp from "./search/SearchPageApp";
 import DetailApp from "./detail/DetailApp";
+import ErrorPageApp from "./common/ErrorPage/ErrorPageApp";
 
 // 작성자 : MoonNight285
 // 라우터 관리 컴포넌트
@@ -14,6 +15,7 @@ function DreamComRouter() {
                 <Route path={"/main"} element={<MainPageApp />}></Route>
                 <Route path={"/search"} element={<SearchPageApp />}></Route>
                 <Route path={"/detail"} element={<DetailApp />} />
+                <Route path={"/error"} element={<ErrorPageApp />} />
             </Routes>
         </BrowserRouter>
     )
