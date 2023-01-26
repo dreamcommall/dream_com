@@ -7,15 +7,19 @@ import arrowDown from "../images/header/arrow-down.png"
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
-
-const stylyes = {
-
-}
+// useEffect(()=>{
+//     document.getElementById("dropList")?.scrollTo(0,0);
+// }, []);
+//
+// useEffect(()=>{
+//     window.removeEventListener('scroll', Keyword);
+// },[]);
 
 
 
 function Keyword() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
 
 
 
@@ -69,11 +73,11 @@ function Keyword() {
             {/*    <img style={{width: "20px", marginTop:"8px"}} src={isMenuOpen == false ? downIcon : upIcon}/>*/}
             {/*</button>*/}
 
-<div className={"row"} style={{marginRight:"130px", marginTop:"15px"}}>
+<div className={"row"} style={{marginRight:"130px", marginTop:"15px" }}>
     <div className={"col-8"} style={{marginTop:"10px"}}>
     <input type={"text"} style={{paddingRight:"10px", marginLeft:"15px"}}/>
     </div>
-    <div className={"col-2 "} style={{marginRight:"20px" , marginTop:"8px"}} >
+    <div id={"dropList"} className={"col-2 "} style={{marginRight:"20px" , marginTop:"8px", zIndex:"5001"}} >
             <DropdownButton id="dropdown-basic-button" variant="white" style={{border:"none"}}>
 
                 <Dropdown.Header><h6 style={{width : 300}}>실시간 키워드</h6></Dropdown.Header>

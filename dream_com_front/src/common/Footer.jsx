@@ -5,7 +5,7 @@ import FootGit from "./FootGit";
 function Footer() {
     return (
 
-        <footer className={""} style={{fontSize:"10px", textAlign: "center", position: "fixed", bottom: "0", backgroundColor:"rgb(250,250,250)"}}>
+        <footer className={""} style={{fontSize:"10px", textAlign: "center", bottom: "0", backgroundColor:"rgb(250,250,250)"}}>
             <div  style={{display:"flex", paddingTop:"20px"}}>
                 <section style={{width: "160%", textAlign:"left", padding: "1px",lineHeight:"5px",fontSize:"15px", paddingLeft:"100px"}}>
                     <p>DreamComputer(주) 대표강사 : 최 수 열 | 사업자등록번호 : 412 - 19 - 08342</p>

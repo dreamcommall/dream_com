@@ -1,0 +1,43 @@
+#signMain{
+    border-bottom:2px solid black    ;
+    width: 1500px;
+    height: 130px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
+
+#Sign-mainLogo{
+    width: 250px;
+    height: 100px;
+
+}
+#SignText{
+    padding-top: 25px;
+    align-items: center;
+}
+
+.ListHeader  {
+    text-align: center;
+    width: 500px;
+    height: 160px;
+  display: flex;
+    justify-content: space-around;
+    font-size: 20px;
+    padding-top: 50px;
+    align-items: center;
+
+
+}
+#yac{
+
+}
+#information{
+
+}
+#SignUpClear{
+
+}
+
