@@ -1,7 +1,6 @@
 import React from "react";
 
-const style = {
-}
+
 function PurchaseProductInfo(props) {
     return (
         <table style={{marginTop: "100px", marginLeft: "10px", width: "1280px"}} className={"table"}>
@@ -24,7 +23,7 @@ function PurchaseProductInfo(props) {
             <tbody>
             {props.item.map((item) => {
                 return (
-                    <tr className={"nanumSquareR-font-normal"} key={item.key}>
+                    <tr className={"nanumSquareR-font-normal"} key={item.key} style={{backgroundColor: "white"}}>
                         <td>
                             <div style={{height: "120px"}}>
                                 <div className={"text-center"} style={{float: "left", marginRight: "30px"}}>
@@ -35,29 +34,30 @@ function PurchaseProductInfo(props) {
                                         [{item.title}]
                                     </p>
                                     <p style={{textOverflow: "ellipsis"}}>
-                                        {item.name} / {item.spec.map((spec) => {return(spec + " / ")})}
+                                        {item.name} / {item.spec.map(spec => {return(spec + " / ")})}
                                     </p>
                                 </div>
                             </div>
                         </td>
-
                         {item.discount == 0 ?
                             <td className={"text-center"} style={{paddingTop: "50px"}}>
-                                <p className={"m-0"}>{item.price}원</p>
+                                <p className={"m-0"}>{item.price.toLocaleString("ko-KR")}원</p>
                             </td> :
                             <td className={"text-center"} style={{paddingTop: "40px"}}>
                                 <p className={"m-0"}>
-                                    <del>{item.price}원</del>
+                                    <del>{item.price.toLocaleString("ko-KR")}원</del>
                                 </p>
                                 <p className={"m-0"}>
-                                    <b style={{color: "red"}}>{item.price * (1 - item.discount / 100)}원</b>
+                                    <b style={{color: "red"}}>{(item.price * (1 - item.discount / 100)).toLocaleString("ko-KR")}원</b>
                                 </p>
                             </td>
                         }
 
                         <td className={"text-center"} style={{paddingTop: "50px"}}>{item.quantity}개</td>
-                        <td className={"text-center"} style={{paddingTop: "50px"}}>{item.price * (1 - item.discount / 100) * item.quantity}원</td>
-                        <td className={"text-center"} style={{paddingTop: "50px"}}>{item.deliveryPrice}원</td>
+                        <td className={"text-center"} style={{paddingTop: "50px"}}>
+                            {(item.price * (1 - item.discount / 100) * item.quantity).toLocaleString("ko-KR")}원
+                        </td>
+                        <td className={"text-center"} style={{paddingTop: "50px"}}>{item.deliveryPrice.toLocaleString("ko-KR")}원</td>
                     </tr>
                 )
             })}

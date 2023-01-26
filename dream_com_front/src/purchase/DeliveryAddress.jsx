@@ -28,7 +28,7 @@ function DeliveryAddress(props) {
     }
 
     return (
-        <div className={"mt-4 p-0 container"} style={{position: "relative"}}>
+        <div className={"mt-4 p-0 container"}>
             <div className={"nanumSquareB-font-XLarge"} style={{width: "750px"}}>
                 <p>배송 정보</p>
             </div>
@@ -46,12 +46,16 @@ function DeliveryAddress(props) {
                         </select>
                         <p>홍길동 : <span>010-1111-1111</span></p>
                         <label htmlFor={"request"} className={"form-label"}>요청사항</label>
-                        <input type={"text"} className={"form-control nanumSquareR-font-normal"} onChange={setReq}
-                                style={style.form} id={"request"} placeholder={"요청사항을 입력해주세요."}></input>
+                        <select className={"form-select nanumSquareR-font-normal"} onChange={setReq}
+                                style={style.form}>
+                            <option value={"없음"}>요청사항을 선택해 주세요.</option>
+                            <option value={"부재시 문앞에 놓아주세요."}>부재시 문앞에 놓아주세요.</option>
+                            <option value={"부재시 경비실에 맡겨주세요."}>부재시 경비실에 맡겨주세요.</option>
+                            <option value={"배송 후 연락주세요."}>배송 후 연락주세요.</option>
+                        </select>
                     </div>
                 </div>
             </div>
-            <Receipt item={props.receipt} />
         </div>
     )
 }

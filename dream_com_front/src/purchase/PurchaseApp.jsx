@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import PurchaseHead from "./PurchaseHead";
 import DeliveryAddress from "./DeliveryAddress";
 import Receipt from "./Receipt";
+import PaymentMethod from "./PaymentMethod";
 
 const item = [
     {key: 1, title: "가성비 컴퓨터!", name: "DESKTOP01", spec: ["부품1", "부품2", "부품3"],
@@ -39,8 +40,9 @@ function PurchaseApp() {
     return(
         <div id={"div-purchase-page"} className={"container-fluid mt-3"}>
             <PurchaseHead item={item} />
-            <DeliveryAddress item={addr} receipt={receipt} />
-
+            <Receipt item={receipt} />
+            <DeliveryAddress item={addr} />
+            <PaymentMethod />
         </div>
     )
 }

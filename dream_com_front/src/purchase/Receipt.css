@@ -4,6 +4,12 @@
     position : sticky;
     z-index : 100;
     top : 100px;
-
     left : 1120px;
+    float: right;
+    margin-top: 85px;
+    margin-right: 285px;
+}
+
+#span_arrow {
+
 }
