@@ -10,6 +10,7 @@ function DreamComRouter() {
         <BrowserRouter>
             <Routes>
                 <Route path={"/main"} element={<MainPageApp />}></Route>
+
             </Routes>
         </BrowserRouter>
     )

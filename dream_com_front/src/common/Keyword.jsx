@@ -7,20 +7,20 @@ import arrowDown from "../images/header/arrow-down.png"
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
-useEffect(()=>{
-    document.getElementById("dropList")?.scrollTo(0,0);
-}, []);
-
-useEffect(()=>{
-    window.removeEventListener('scroll', Keyword);
-},[]);
+// useEffect(()=>{
+//     document.getElementById("dropList")?.scrollTo(0,0);
+// }, []);
+//
+// useEffect(()=>{
+//     window.removeEventListener('scroll', Keyword);
+// },[]);
 
 
 
 function Keyword() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-   
+
 
 
     const listSearch = [

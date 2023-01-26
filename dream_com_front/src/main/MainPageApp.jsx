@@ -12,6 +12,7 @@ import HeaderD from "../common/HeaderD";
 import NavigationBar from "../common/NavigationBar";
 import Footer from "../common/Footer";
 
+
 // 작성자 : MoonNight285
 // 서버와 통신하기전 테스트 용도
 const companyList = [
@@ -65,7 +66,10 @@ function MainPageApp() {
     }, []);
     
     return (
+
         <div id={"div-main-page-contents"} className={"container-fluid"}>
+            <HeaderD />
+            <NavigationBar />
             <div className={"row"}>
                 <div className={"col ps-0 pe-0"}>
                     <Loading />
@@ -86,6 +90,8 @@ function MainPageApp() {
                     }
                 </div>
             </div>
+            <Footer />
+
         </div>
     );
 }
