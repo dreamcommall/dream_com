@@ -44,12 +44,13 @@ const sampleRepeatContentList = [
 // 메인페이지에서 사용하는 컴포넌트들을 조합해주는 컴포넌트
 function MainPageApp() {
     const [repeatContentList, setRepeatContentList] = useState([]);
+    const CORRECTION_VALUE = 30;
     
     const handleScroll = () => {
         const offsetHeight = document.getElementById("div-main-page-contents").offsetHeight;
         const clientHeight = document.documentElement.clientHeight;
         
-        if (offsetHeight - window.scrollY <= clientHeight) {
+        if (offsetHeight - window.scrollY <= clientHeight + CORRECTION_VALUE) {
             let temp = [];
             temp.push(sampleRepeatContentList);
             setRepeatContentList(temp);
