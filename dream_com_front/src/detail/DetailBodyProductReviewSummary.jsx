@@ -1,18 +1,61 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./DetailBodyProductReviewSummary.css"
 
-function DetailBodyProductReviewSummary() {
+function DetailBodyProductReviewSummary({score}) {
+    const [stars, setStars] = useState([]);
+    const [defaultStars, setDefaultStars] = useState([]);
+    
+    const createStars = () => {
+        let temp = [];
+        let halfValue = score % 1.0;
+    
+        for (let i = 0; i < Math.floor(score); ++i) {
+            temp.push({key: i, src: "/images/star64.png"});
+            setStars(temp);
+        }
+    
+        if (halfValue >= 0.5) {
+            temp.push({key: temp.length + 1, src: "/images/starHalf64.png"});
+            setStars(temp);
+        }
+    }
+    
+    const createRemindStars = () => {
+        let temp = [];
+        
+        for (let i = 0; i < Math.floor(5 - score); ++i) {
+            temp.push({key : i, src : "/images/star64_blank.png"});
+        }
+        
+        setDefaultStars(temp);
+    }
+    
+    useEffect(() => {
+        createStars();
+        createRemindStars();
+    }, []);
+    
     return (
         <div id={"div-detail-review-summary"} className={"mb-5"}>
             <h4>구매후기 25건</h4>
             <div>
                 <div className={"div-detail-review-summary-contents"}>
-                    <p className={"mt-4"}>전체 만족도 평점</p>
-                    <p>별점</p>
-                    <p>숫자</p>
+                    <p className={"mt-4"}>전체 만족도 평균 평점</p>
+                    <p>
+                        {
+                            stars.map(item => {
+                                return <img className={"mx-2 mt-4"} width={48} height={48} key={item.key} src={item.src} />
+                            })
+                        }
+                        {
+                            defaultStars.map(item => {
+                                return <img className={"mx-2 mt-4"} width={48} height={48} key={item.key} src={item.src} />
+                            })
+                        }
+                    </p>
                 </div>
                 <div className={"div-detail-review-summary-contents"}>
-                    <p className={"mt-4"}>평점비율</p>
+                    <p className={"mt-4"}>전체 평점비율</p>
                     <div id={"div-detail-review-progress-wrapper"}>
                         <div><progress /></div>
                         <div><progress /></div>

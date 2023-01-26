@@ -26,7 +26,7 @@ const errorMsgList = [
 
 function  DetailHeader() {
     return (
-        <div className={"mt-5"}>
+        <div id={"div-detail-nav-header"} className={"mt-5"}>
             {
                 detailCategoryNameList.map(item => {
                     return <DetailHeaderCategory key={item.key} categoryName={item.title} />

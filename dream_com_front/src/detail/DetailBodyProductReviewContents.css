@@ -1,0 +1,36 @@
+.p-detail-simple-review {
+    margin-right: 10px;
+    font-family: NanumSquareR;
+    font-size: 18px;
+}
+
+.p-detail-simple-review span {
+    font-family: NanumSquareB;
+    color : #e26e6e;
+}
+
+#div-detail-review-content {
+    height: 100px;
+}
+
+#div-detail-review-photo {
+    height: 200px;
+}
+
+#div-detail-review-contents-wrapper {
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 50px;
+}
+
+#div-detail-review-like-wrapper {
+    border: 1px solid lightgray;
+    border-radius: 20px;
+    padding: 5px;
+    font-family: NanumSquareR;
+    font-size: 17px;
+}
+
+#div-detail-review-like-wrapper:hover {
+    background-color: #f2f1f1;
+    cursor: pointer;
+}

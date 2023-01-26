@@ -1,0 +1,28 @@
+#table-detail-cancel-info {
+    width: 100%;
+    border: 1px solid lightgray;
+    margin-bottom: 50px;
+}
+
+#table-detail-cancel-info td:first-child {
+    width: 200px;
+}
+
+#table-detail-cancel-info th {
+    background-color: #f2f1f1;
+}
+
+#table-detail-cancel-info th, #table-detail-cancel-info td {
+    padding: 15px;
+    border: 1px solid lightgray;
+    font-family: NanumSquareR;
+    font-size: 18px;
+}
+
+#table-detail-cancel-info td > p {
+    margin-bottom: 5px;
+}
+
+#p-detail-cancel-info-warning {
+    color : red;
+}

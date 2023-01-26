@@ -1,0 +1,22 @@
+#div-detail-product-review-header {
+    width: 100%;
+    height: 100px;
+    background-color: #f2f1f1;
+}
+
+#div-detail-product-review-header input {
+    height: 40px;
+    font-size: 18px;
+}
+
+#div-detail-product-review-select-wrapper {
+    height: 100px;
+    margin-left: 50px;
+}
+
+#div-detail-product-review-select-wrapper select {
+    margin-right: 25px;
+    width: 150px;
+    font-family: NanumSquareR;
+    font-size: 18px;
+}
