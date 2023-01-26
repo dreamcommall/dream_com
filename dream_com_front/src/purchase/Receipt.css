@@ -1,0 +1,9 @@
+#div-receipt {
+    width : 500px;
+    height: 305px;
+    position : sticky;
+    z-index : 100;
+    top : 100px;
+
+    left : 1120px;
+}
