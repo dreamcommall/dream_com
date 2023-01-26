@@ -27,7 +27,7 @@ const errorMsgList = [
 // 제품 상세페이지에서 제품의 제목, 스펙, 카테고리를 보여주는 컴포넌트(상단에 위치)
 function  DetailHeader() {
     return (
-        <div id={"div-detail-nav-header"} className={"mt-5"}>
+        <div id={"div-detail-nav-header"} className={"mt-3"}>
             {
                 detailCategoryNameList.map(item => {
                     return <DetailHeaderCategory key={item.key} categoryName={item.title} />

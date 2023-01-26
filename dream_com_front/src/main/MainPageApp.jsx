@@ -91,7 +91,6 @@ function MainPageApp() {
                 </div>
             </div>
             <Footer />
-
         </div>
     );
 }

@@ -5,6 +5,9 @@ import SearchItems from "./SearchItems";
 import SearchItemPagination from "./SearchItemPagination";
 import SidebarApp from "../common/SidebarApp";
 import Loading from "../common/Loading";
+import HeaderD from "../common/HeaderD";
+import NavigationBar from "../common/NavigationBar";
+import Footer from "../common/Footer";
 
 const searchItemInfo = [
     {key : 0, src : "/images/MainRollingBanner_139003.jpg", title : "제품이름1",
@@ -30,13 +33,18 @@ const searchItemInfo = [
 
 function SearchPageApp() {
     return (
-        <div className={"container"}>
-            <Loading />
-            <SidebarApp />
-            <SearchOption />
-            <SearchMenu />
-            <SearchItems searchItemInfo={searchItemInfo}/>
-            <SearchItemPagination pageCount={searchItemInfo.length}/>
+        <div className={"container-fluid"}>
+            <HeaderD />
+            <NavigationBar />
+            <div className={"container"}>
+                <Loading />
+                <SidebarApp />
+                <SearchOption />
+                <SearchMenu />
+                <SearchItems searchItemInfo={searchItemInfo}/>
+                <SearchItemPagination pageCount={searchItemInfo.length}/>
+            </div>
+            <Footer />
         </div>
     );
 }
