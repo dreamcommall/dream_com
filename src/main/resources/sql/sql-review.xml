@@ -5,7 +5,7 @@
     <!--    기능 : 리뷰 보기
             최종 수정일 : 2023.01.19
             최종 작성자 : 김영민 -->
-    <select id="review" resultType="com.bitc.dream_com.dto.ReviewDto">
+    <select id="productReview" resultType="com.bitc.dream_com.dto.ReviewDto">
         SELECT detail_review.review_num, detail_review.user_id, detail_review.content, detail_review.product_num, detail_review.createDt,
                detail_review.img_path, detail_review.score, detail_review.like_count, user.user_id, noise_review.n_review_msg, packaging_review.p_review_msg,
                delivery_review.d_review_msg, spec_review.s_review_msg
@@ -15,7 +15,25 @@
                  JOIN noise_review ON simple_review.n_review_num = noise_review.n_review_num
                  JOIN delivery_review ON simple_review.d_review_num = delivery_review.d_review_num
                  JOIN packaging_review ON simple_review.p_review_num = packaging_review.p_review_num
-                 JOIN spec_review ON simple_review.s_review_num = spec_review.s_review_num;
+                 JOIN spec_review ON simple_review.s_review_num = spec_review.s_review_num
+        where detail_review.product_num = #{productNum}
+    </select>
+
+<!--    사용자 리뷰 보기-->
+<!--    최종 수정일 2023-01-26-->
+<!--    최종 작성자 : 양민호-->
+    <select id="userReview" resultType="com.bitc.dream_com.dto.ReviewDto">
+        SELECT detail_review.review_num, detail_review.user_id, detail_review.content, detail_review.product_num, detail_review.createDt,
+               detail_review.img_path, detail_review.score, detail_review.like_count, user.user_id, noise_review.n_review_msg, packaging_review.p_review_msg,
+               delivery_review.d_review_msg, spec_review.s_review_msg
+        FROM detail_review
+                 JOIN user ON detail_review.user_id = user.user_id
+                 JOIN simple_review ON detail_review.review_num = simple_review.review_num
+                 JOIN noise_review ON simple_review.n_review_num = noise_review.n_review_num
+                 JOIN delivery_review ON simple_review.d_review_num = delivery_review.d_review_num
+                 JOIN packaging_review ON simple_review.p_review_num = packaging_review.p_review_num
+                 JOIN spec_review ON simple_review.s_review_num = spec_review.s_review_num
+        where detail_review.user_id = #{userId}
     </select>
 
 <!--    리뷰 평점 보기-->
@@ -41,4 +59,23 @@
         ORDER BY createDt DESC
             LIMIT 1;
     </select>
+
+<!--    리뷰수정-->
+<!--    최종 수정일 2023-01-26-->
+<!--    최종 작성자 : 양민호-->
+    <update id="changeReview" parameterType="com.bitc.dream_com.dto.ReviewDto">
+        update detail_review dr
+            JOIN user ON dr.user_id = user.user_id
+            JOIN simple_review sr ON dr.review_num = sr.review_num
+        set dr.score = #{score}, dr.content = #{content}, dr.img_path = #{imgPath}, sr.d_review_num = #{dReviewNum},
+            sr.s_review_num = #{sReviewNum}, sr.n_review_num = #{nReviewNum}, sr.p_review_num = #{pReviewNum}
+        where dr.review_num = #{reviewNum} and dr.user_id = #{userId} and dr.product_num = #{productNum}
+    </update>
+
+<!--    리뷰수정-->
+<!--    최종 수정일 2023-01-26-->
+<!--    최종 작성자 : 양민호-->
+    <delete id="deleteReview" parameterType="com.bitc.dream_com.dto.ReviewDto">
+        delete from detail_review where user_id = #{userId} and review_num = #{reviewNum} and product_num = #{productNum}
+    </delete>
 </mapper>

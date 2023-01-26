@@ -5,8 +5,6 @@ import com.bitc.dream_com.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -15,15 +13,25 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-//    기능 : 리뷰 보기
-//    최종 수정일 : 2023.01.19
-//    최종 작성자 : 김영민
+//    기능 : 제품 리뷰 보기
+//    최종 수정일 : 2023.01.26
+//    최종 작성자 : 양민호
 
-    @RequestMapping(value = "/review", method = RequestMethod.GET)
-    public Object review() throws Exception{
-        List<ReviewDto> review = reviewService.review();
+    @RequestMapping(value = "/productReview", method = RequestMethod.GET)
+    public Object productReview(@RequestParam("productNum") int productNum) throws Exception{
+        List<ReviewDto> productReview = reviewService.productReview(productNum);
 
-        return review;
+        return productReview;
+    }
+
+//    사용자 리뷰 보기
+//    최종 수정일 2023-01-26
+//    최종 작성자 : 양민호
+    @RequestMapping(value = "userReview", method = RequestMethod.GET)
+    public Object userReview(@RequestParam("userId") String userId) throws Exception {
+        List<ReviewDto> userReview = reviewService.userReview(userId);
+
+        return userReview;
     }
 
 //    기능 : 리뷰 작성하기
@@ -40,6 +48,22 @@ public class ReviewController {
 
         reviewService.insertSimpleReview(reviewDto);
         System.out.println(reviewDto);
+    }
+
+//    리뷰 수정하기
+//    최종 수정일 2023-01-26
+//    최종 작성자 : 양민호
+    @RequestMapping(value = "changeReview", method = RequestMethod.PUT)
+    public void changeReview(ReviewDto reviewDto) throws Exception{
+        reviewService.changeReview(reviewDto);
+    }
+
+//    리뷰 삭제하기
+//    최종 수정일 2023-01-26
+//    최종 작성자 : 양민호
+    @RequestMapping(value = "deleteReview", method = RequestMethod.DELETE)
+    public void deleteReview(ReviewDto reviewDto) throws Exception {
+        reviewService.deleteReview(reviewDto);
     }
 
 }

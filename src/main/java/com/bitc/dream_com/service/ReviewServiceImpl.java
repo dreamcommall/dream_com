@@ -13,8 +13,8 @@ public class ReviewServiceImpl implements ReviewService{
     private ReviewMapper reviewMapper;
 
     @Override
-    public List<ReviewDto> review() throws Exception {
-        return reviewMapper.review();
+    public List<ReviewDto> productReview(int productNum) throws Exception {
+        return reviewMapper.productReview(productNum);
     }
 
     @Override
@@ -35,5 +35,20 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public List<ReviewDto> selectReviewNum(ReviewDto reviewDto) throws Exception {
         return reviewMapper.selectReviewNum(reviewDto);
+    }
+
+    @Override
+    public List<ReviewDto> userReview(String userId) throws Exception {
+        return reviewMapper.userReview(userId);
+    }
+
+    @Override
+    public void changeReview(ReviewDto reviewDto) throws Exception {
+        reviewMapper.changeReview(reviewDto);
+    }
+
+    @Override
+    public void deleteReview(ReviewDto reviewDto) throws Exception {
+        reviewMapper.deleteReview(reviewDto);
     }
 }

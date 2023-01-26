@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface ReviewMapper {
-    List<ReviewDto> review() throws Exception;
+    List<ReviewDto> productReview(int productNum) throws Exception;
 
     List<ReviewDto> getScore(int productNum) throws Exception;
 
@@ -16,4 +16,9 @@ public interface ReviewMapper {
     void insertSimpleReview(ReviewDto reviewDto) throws Exception;
 
     List<ReviewDto> selectReviewNum(ReviewDto reviewDto) throws Exception;
+
+    List<ReviewDto> userReview(String userId) throws Exception;
+
+    void changeReview(ReviewDto reviewDto) throws Exception;
+    void deleteReview(ReviewDto reviewDto) throws Exception;
 }
