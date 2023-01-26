@@ -9,6 +9,7 @@ const productMiniThumbnailList = [
     {key : 2, src : "/images/MainRollingBanner_139003.jpg"}
 ]
 
+// 상품의 이미지나 가격정보를 보여주는 컴포넌트
 function DetailBodyProductInfo() {
     return (
         <div className={"d-flex"}>

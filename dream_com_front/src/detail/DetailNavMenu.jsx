@@ -1,6 +1,7 @@
 import React from "react";
 import "./DetailNavMenu.css";
 
+// 제품 상세페이지에서 사용하는 네비게이션바 컴포넌트
 function DetailNavMenu() {
     return (
         <div id={"div-detail-nav-menu"}>

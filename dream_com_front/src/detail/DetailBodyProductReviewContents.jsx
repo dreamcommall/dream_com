@@ -2,6 +2,7 @@ import React from "react";
 import "../fonts/fontStyle.css"
 import "./DetailBodyProductReviewContents.css"
 
+// 리뷰의 내용을 표시하는 컴포넌트
 function DetailBodyProductReviewContents(props) {
     return (
         <div id={"div-detail-review-contents-wrapper"}>

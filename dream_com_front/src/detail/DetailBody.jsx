@@ -16,6 +16,7 @@ const sampleReviewContentList = [
         noiseReview : "조용해요", boxingReview : "깔끔해요", reviewContent : "테스트3 리뷰입니다.", likeCount : 32}
 ]
 
+// 제품 상세페이지의 가격정보 ~ 리뷰까지 보여주는 부분을 구성하는 컴포넌트
 function DetailBody() {
     return (
         <div>

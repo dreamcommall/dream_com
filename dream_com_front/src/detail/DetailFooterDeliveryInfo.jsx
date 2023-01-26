@@ -2,6 +2,7 @@ import React from "react";
 import "./DetailFooterDeliveryInfo.css"
 import "../fonts/fontStyle.css"
 
+// 제품 상세페이지에서 배송정보를 표시하는 테이블로 만들어 보여주는 컴포넌트
 function DetailFooterDeliveryInfo() {
     return (
         <div id={"div-detail-nav-delivery"} className={"mb-5"}>

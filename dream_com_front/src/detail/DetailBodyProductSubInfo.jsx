@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
+// 제품의 가격정보등을 보여주는 컴포넌트
 function DetailBodyProductSubInfo(props) {
     const [productCount, setProductCount] = useState(0);
 

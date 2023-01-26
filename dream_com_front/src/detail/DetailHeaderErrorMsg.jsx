@@ -1,6 +1,7 @@
 import React from "react";
 import "./DetailHeaderErrorMsg.css"
 
+// 제품을 구매할때 유의사항을 알려주는 컴포넌트
 function DetailHeaderErrorMsg({errorMsg}) {
     return (
         <div className={"d-flex align-items-center"}>

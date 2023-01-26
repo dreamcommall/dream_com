@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "./DetailBodyProductReviewSummary.css"
 
+// 전체 리뷰를 분석하여 종합적인 정보를 한눈에 모아서 보여주는 컴포넌트
 function DetailBodyProductReviewSummary({score}) {
     const [stars, setStars] = useState([]);
     const [defaultStars, setDefaultStars] = useState([]);

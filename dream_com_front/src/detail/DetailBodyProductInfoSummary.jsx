@@ -1,6 +1,7 @@
 import React from "react";
 import "./DetailBodyProductInfoSummary.css"
 
+// 제품의 정보를 표시해주는 컴포넌트(하단에 위치)
 function DetailBodyProductInfoSummary({productNumber}) {
     return (
         <div id={"div-detail-product-summary"}>
