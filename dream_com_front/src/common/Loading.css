@@ -1,0 +1,11 @@
+#div-loading-wrapper {
+    position: fixed;
+    top: 50%;
+    left: 48%;
+    z-index: 5000;
+    display: none;
+}
+
+#div-loading-wrapper.active {
+    display: block;
+}

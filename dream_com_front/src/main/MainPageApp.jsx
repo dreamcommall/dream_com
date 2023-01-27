@@ -45,25 +45,28 @@ const sampleRepeatContentList = [
 // 메인페이지에서 사용하는 컴포넌트들을 조합해주는 컴포넌트
 function MainPageApp() {
     const [repeatContentList, setRepeatContentList] = useState([]);
+    const [isLoad, setIsLoad] = useState(false);
     const CORRECTION_VALUE = 30;
-    
+
     const handleScroll = () => {
         const offsetHeight = document.getElementById("div-main-page-contents").offsetHeight;
         const clientHeight = document.documentElement.clientHeight;
         
         if (offsetHeight - window.scrollY <= clientHeight + CORRECTION_VALUE) {
             let temp = [];
-    
+
+            setIsLoad(true);
             // axios는 서버의 주소가 있을때
             axios.get("http://localhost:8080/categoryProduct")
                 .then(response => {
                     temp = response.data;
                     setRepeatContentList(temp);
-                    console.log(temp);
+                    setIsLoad(false);
                 })
                 .catch(err => {
                     console.log("현시간 인기상품을 가져오는데 실패했습니다.");
                     console.log("에러내용 : " + err);
+                    setIsLoad(false);
                 });
         }
     }
@@ -84,7 +87,7 @@ function MainPageApp() {
             <NavigationBar />
             <div className={"row"}>
                 <div className={"col ps-0 pe-0"}>
-                    <Loading />
+                    <Loading loadStatus={isLoad}/>
                     <SidebarApp />
                     <AdvertisementTop/>
                     <PopularProduct />
