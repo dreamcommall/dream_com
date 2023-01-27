@@ -36,11 +36,7 @@ public interface ProductService {
     ProductDto productData(int productNum) throws Exception;
 
     //    카테고리별 제품 정보 불러오기
-    List<ProductDto> type1Product() throws Exception;
-    List<ProductDto> type2Product() throws Exception;
-    List<ProductDto> type3Product() throws Exception;
-    List<ProductDto> type4Product() throws Exception;
-    List<ProductDto> type5Product() throws Exception;
+    List<ProductDto> typeProduct(int typeNum) throws Exception;
 
 //    검색 결과 불러오기
     List<ProductDto> searchProduct(String word) throws Exception;
@@ -65,4 +61,6 @@ public interface ProductService {
     List<ProductDto> searchProductCompany(String word, List company) throws Exception;
 
     List<ProductDto> searchProductAll(String word, String type, List company) throws Exception;
+
+    List<CompanyDto> categoryCompany(String typeName) throws Exception;
 }

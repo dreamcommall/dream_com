@@ -102,54 +102,16 @@
     </select>
 
 
-<!--    카테고리별 제품 정보 불러오기 (데스크탑)-->
+<!--    카테고리별 제품 정보 불러오기-->
 <!--    최종 수정일 2023-01-18-->
 <!--    최종 작성자 : 양민호-->
-    <select id="type1Product" resultType="com.bitc.dream_com.dto.ProductDto">
+    <select id="typeProduct" resultType="com.bitc.dream_com.dto.ProductDto">
         select * from product pr join category ca on pr.product_num = ca.product_num
                                  join product_type pt on ca.type_num = pt.type_num
-        where pt.type_num = 1
+        where pt.type_num = #{typeNum}
     </select>
 
 
-<!--    카테고리별 제품 정보 불러오기 (노트북)-->
-<!--    최종 수정일 2023-01-18-->
-<!--    최종 작성자 : 양민호-->
-    <select id="type2Product" resultType="com.bitc.dream_com.dto.ProductDto">
-        select * from product pr join category ca on pr.product_num = ca.product_num
-                                 join product_type pt on ca.type_num = pt.type_num
-        where pt.type_num = 2
-    </select>
-
-
-<!--    카테고리별 제품 정보 불러오기 (키보드)-->
-<!--    최종 수정일 2023-01-18-->
-<!--    최종 작성자 : 양민호-->
-    <select id="type3Product" resultType="com.bitc.dream_com.dto.ProductDto">
-        select * from product pr join category ca on pr.product_num = ca.product_num
-                                 join product_type pt on ca.type_num = pt.type_num
-        where pt.type_num = 3
-    </select>
-
-
-<!--    카테고리별 제품 정보 불러오기 (마우스)-->
-<!--    최종 수정일 2023-01-18-->
-<!--    최종 작성자 : 양민호-->
-    <select id="type4Product" resultType="com.bitc.dream_com.dto.ProductDto">
-        select * from product pr join category ca on pr.product_num = ca.product_num
-                                 join product_type pt on ca.type_num = pt.type_num
-        where pt.type_num = 4
-    </select>
-
-
-<!--    카테고리별 제품 정보 불러오기 (모니터)-->
-<!--    최종 수정일 2023-01-18-->
-<!--    최종 작성자 : 양민호-->
-    <select id="type5Product" resultType="com.bitc.dream_com.dto.ProductDto">
-        select * from product pr join category ca on pr.product_num = ca.product_num
-                                 join product_type pt on ca.type_num = pt.type_num
-        where pt.type_num = 5
-    </select>
 
 <!--    카테고리 미선택 시 검색 결과 불러오기-->
 <!--    최종 수정일 2023-01-25-->
@@ -248,4 +210,13 @@
     <insert id="setKeyword" parameterType="com.bitc.dream_com.dto.KeywordDto">
         insert into keyword(product_num, keyword) values(#{productNum}, #{keyword})
     </insert>
+
+<!--    카테고리별 제품의 제조사 검색-->
+<!--    최종 수정일 2023-01-27-->
+<!--    최종 작성자 : 양민호-->
+    <select id="categoryCompany" resultType="com.bitc.dream_com.dto.CompanyDto">
+        select com.company_name from category c join product_type pt on c.type_num = pt.type_num
+                                                join company com on c.company_num = com.company_num
+        where type_name = #{typeName} group by com.company_name
+    </select>
 </mapper>
