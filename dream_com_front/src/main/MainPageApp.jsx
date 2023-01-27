@@ -11,6 +11,7 @@ import SidebarApp from "../common/SidebarApp";
 import HeaderD from "../common/HeaderD";
 import NavigationBar from "../common/NavigationBar";
 import Footer from "../common/Footer";
+import axios from "axios";
 
 
 // 작성자 : MoonNight285
@@ -52,8 +53,18 @@ function MainPageApp() {
         
         if (offsetHeight - window.scrollY <= clientHeight + CORRECTION_VALUE) {
             let temp = [];
-            temp.push(sampleRepeatContentList);
-            setRepeatContentList(temp);
+    
+            // axios는 서버의 주소가 있을때
+            axios.get("http://localhost:8080/categoryProduct")
+                .then(response => {
+                    temp = response.data;
+                    setRepeatContentList(temp);
+                    console.log(temp);
+                })
+                .catch(err => {
+                    console.log("현시간 인기상품을 가져오는데 실패했습니다.");
+                    console.log("에러내용 : " + err);
+                });
         }
     }
     
@@ -80,7 +91,6 @@ function MainPageApp() {
                     <AdvertisementMiddle />
                     <AdvertisementBridge />
                     <RecommendProduct />
-                    <RepeatProductPage categoryName={"데스크탑 & PC"} companyList={companyList} mainProductInfoList={mainProductInfoList} subProductInfoList={subProductInfoList}/>
                     {
                         repeatContentList.map(repeatContentArray => {
                             return repeatContentArray.map(item => {
