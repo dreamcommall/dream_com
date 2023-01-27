@@ -13,7 +13,7 @@ function DreamComRouter() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path={"/main"} element={<MainPageApp />}></Route>
+                <Route path={"/"} element={<MainPageApp />}></Route>
                 <Route path={"/search"} element={<SearchPageApp />}></Route>
                 <Route path={"/detail"} element={<DetailApp />} />
                 <Route path={"/error"} element={<ErrorPageApp />} />

@@ -11,6 +11,7 @@ import HeaderD from "../common/HeaderD";
 import NavigationBar from "../common/NavigationBar";
 import Footer from "../common/Footer";
 import axios from "axios";
+import ClickPrevent from "../common/ClickPrevent";
 
 // 작성자 : MoonNight285
 // 메인페이지에서 사용하는 컴포넌트들을 조합해주는 컴포넌트
@@ -105,6 +106,7 @@ function MainPageApp() {
     
     return (
         <div id={"div-main-page-contents"} className={"container-fluid"}>
+            <ClickPrevent isLoading={isLoad}/>
             <HeaderD />
             <NavigationBar />
             <div className={"row"}>
