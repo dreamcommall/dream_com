@@ -3,6 +3,9 @@ import PurchaseHead from "./PurchaseHead";
 import DeliveryAddress from "./DeliveryAddress";
 import Receipt from "./Receipt";
 import PaymentMethod from "./PaymentMethod";
+import HeaderD from "../common/HeaderD";
+import NavigationBar from "../common/NavigationBar";
+import Footer from "../common/Footer";
 
 const item = [
     {key: 1, title: "가성비 컴퓨터!", name: "DESKTOP01", spec: ["부품1", "부품2", "부품3"],
@@ -38,11 +41,16 @@ function PurchaseApp() {
     ]
 
     return(
-        <div id={"div-purchase-page"} className={"container-fluid mt-3"}>
-            <PurchaseHead item={item} />
-            <Receipt item={receipt} />
-            <DeliveryAddress item={addr} />
-            <PaymentMethod />
+        <div className={"container-fluid"}>
+            <HeaderD />
+            <NavigationBar />
+            <div className={"mt-3 mb-5"}>
+                <PurchaseHead item={item} />
+                <Receipt item={receipt} />
+                <DeliveryAddress item={addr} />
+                <PaymentMethod />
+            </div>
+            <Footer />
         </div>
     )
 }
