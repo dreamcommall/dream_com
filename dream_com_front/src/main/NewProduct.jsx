@@ -34,36 +34,8 @@ const settings = {
 };
 
 // 작성자 : MoonNight285
-// 서버와 통신하기전 테스트 용도
-const sampleNewProductList = [
-    {key : 0, src : "/images/MainRollingBanner_139003.jpg", company : "제조사1", content : "상품내용1", price : "상품가격1", discountPercent : "5"},
-    {key : 1, src : "/images/MainRollingBanner_139003.jpg", company : "제조사2", content : "상품내용2", price : "상품가격2", discountPercent : "10"},
-    {key : 2, src : "/images/MainRollingBanner_139003.jpg", company : "제조사3", content : "상품내용3", price : "상품가격3", discountPercent : "0"},
-    {key : 3, src : "/images/MainRollingBanner_139003.jpg", company : "제조사4", content : "상품내용4", price : "상품가격4", discountPercent : "20"},
-    {key : 4, src : "/images/MainRollingBanner_139003.jpg", company : "제조사5", content : "상품내용5", price : "상품가격5", discountPercent : "25"},
-]
-
-// 작성자 : MoonNight285
 // 신규등록 상품을 보여주는 컴포넌트
-function NewProduct() {
-    const [newProductList, setNewProductList] = useState([]);
-    
-    useEffect(() => {
-        // 프론트에서 임시로 테스트 용도
-        let temp = [];
-        
-        // axios는 서버의 주소가 있을때
-        axios.get("http://localhost:8080/getRecentProduct")
-            .then(response => {
-                temp = response.data;
-                setNewProductList(temp);
-            })
-            .catch(err => {
-                console.log("현시간 인기상품을 가져오는데 실패했습니다.");
-                console.log("에러내용 : " + err);
-            });
-    }, [])
-    
+function NewProduct({newProductList}) {
     return (
         <div style={newProductWrapperStyle}>
             <div className={"d-flex justify-content-start my-3"}>
