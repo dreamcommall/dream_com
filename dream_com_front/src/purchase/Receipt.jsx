@@ -3,7 +3,7 @@ import "./Receipt.css";
 
 const style = {
     button: {width: "300px", height: "60px", backgroundColor: "black", color: "white", borderRadius: "10px", marginTop: "20px"},
-    collapse: {borderTop: "1px solid lightgray", borderBottom: "1px solid lightgray", paddingTop: "10px", paddingBottom: "10px", backgroundColor: "lightgray"}
+    collapse: {borderTop: "1px solid lightgray", borderBottom: "1px solid lightgray", paddingTop: "10px", paddingBottom: "10px"}
 }
 function Receipt(props) {
     // 체크박스 클릭 시 값 저장 / 체크박스 연속 클릭 방지
@@ -54,7 +54,6 @@ function Receipt(props) {
             setTime(1);
             window.setTimeout(() => {
                 setTime(0);
-                console.log(324);
             }, 500);
         }
     }
@@ -118,7 +117,7 @@ function Receipt(props) {
                             </label>
                         </div>
                         <p className={"collapse"} id={"p-collapse"} style={style.collapse}>
-                            고객님께서는 개인정보 수집 및 이용에 대하여 동의를 거부하실 수 있으며, 거부 시 상품배송, 구매 및 결제, 일부 포인트 적립이 제한됩니다.
+                            고객님께서는 개인정보 수집 및 이용에 대하여 동의를 거부하실 수 있으며, 거부 시 상품배송, 구매 및 결제가 제한됩니다.
                         </p>
 
                     </div>
