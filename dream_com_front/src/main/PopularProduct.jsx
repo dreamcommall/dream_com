@@ -23,22 +23,17 @@ function PopularProduct() {
     useEffect(() => {
         // 프론트에서 임시로 테스트 용도
         let temp = [];
-        for(let i = 0; i < 20; ++i) {
-            temp.push({key : i, src : "/images/MainRollingBanner_139003.jpg", name : `상품제목${i}`, price : `상품가격${i}`,
-                discountPercent : i});
-            setPopularProductList(temp);
-        }
-        
         
         // axios는 서버의 주소가 있을때
-        // axios.get("", {params : ""})
-        //     .then(response => {
-        //         // 아이템을 받아서 useState를 이용해 데이터를 저장
-        //     })
-        //     .catch(err => {
-        //         console.log("현시간 인기상품을 가져오는데 실패했습니다.");
-        //         console.log("에러내용 : " + err);
-        //     });
+        axios.get("http://localhost:8080/topClickedProduct")
+            .then(response => {
+                temp = response.data;
+                setPopularProductList(temp);
+            })
+            .catch(err => {
+                console.log("현시간 인기상품을 가져오는데 실패했습니다.");
+                console.log("에러내용 : " + err);
+            });
     }, [])
     
     return (
@@ -52,11 +47,12 @@ function PopularProduct() {
             <div style={{width : "97%"}} className={"ms-4"}>
                 <Slider {...settings}>
                     {
+                        // 현시간 인기상품
                         popularProductList.map(item => {
                             return (
                                 <div key={item.key}>
-                                    <PopularProductImg src={item.src} />
-                                    <PopularProductContents name={item.name} price={item.price} discountPercent={item.discountPercent} />
+                                    <PopularProductImg src={item.thumbnailImg} />
+                                    <PopularProductContents name={item.productTitle} price={item.productPrice} discountPercent={item.productDiscount} />
                                 </div>
                             );
                         })

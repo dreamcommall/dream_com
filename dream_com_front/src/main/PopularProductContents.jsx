@@ -11,7 +11,7 @@ function PopularProductContents({name, price, discountPercent}) {
                 {
                     discountPercent == 0 ? <p/> : <p style={{color : "red"}} className={"nanumSquareB-font-normal"}>{discountPercent}% </p>
                 }
-                <p className={"nanumSquareR-font-normal mx-2"}>{price}</p>
+                <p className={"nanumSquareR-font-normal mx-2"}>{price - ((price / 100) * discountPercent)}원</p>
             </div>
         </div>
     );

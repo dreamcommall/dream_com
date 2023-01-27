@@ -46,7 +46,7 @@ function NewProductContents({src, company, content, price, discountPercent}) {
                 {
                     discountPercent == 0 ? <p /> : <p style={{color : "red"}} className={"nanumSquareB-font-normal"}>{discountPercent}% 할인</p>
                 }
-                <p className={"nanumSquareR-font-normal"}>{price}</p>
+                <p className={"nanumSquareR-font-normal"}>{price - ((price / 100) * discountPercent)}원</p>
             </div>
         </div>
     );

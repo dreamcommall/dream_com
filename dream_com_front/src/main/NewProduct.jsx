@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Slider from "react-slick";
 import "./slick.css"
 import "./slick-theme.css"
 import NewProductContents from "./NewProductContents";
 import "../fonts/fontStyle.css"
+import axios from "axios";
 
 // 작성자 : MoonNight285
 // 신규등록 상품을 감싸는 부모 태그의 넓이 및 배경색 조절
@@ -34,7 +35,7 @@ const settings = {
 
 // 작성자 : MoonNight285
 // 서버와 통신하기전 테스트 용도
-const newProductList = [
+const sampleNewProductList = [
     {key : 0, src : "/images/MainRollingBanner_139003.jpg", company : "제조사1", content : "상품내용1", price : "상품가격1", discountPercent : "5"},
     {key : 1, src : "/images/MainRollingBanner_139003.jpg", company : "제조사2", content : "상품내용2", price : "상품가격2", discountPercent : "10"},
     {key : 2, src : "/images/MainRollingBanner_139003.jpg", company : "제조사3", content : "상품내용3", price : "상품가격3", discountPercent : "0"},
@@ -45,6 +46,24 @@ const newProductList = [
 // 작성자 : MoonNight285
 // 신규등록 상품을 보여주는 컴포넌트
 function NewProduct() {
+    const [newProductList, setNewProductList] = useState([]);
+    
+    useEffect(() => {
+        // 프론트에서 임시로 테스트 용도
+        let temp = [];
+        
+        // axios는 서버의 주소가 있을때
+        axios.get("http://localhost:8080/getRecentProduct")
+            .then(response => {
+                temp = response.data;
+                setNewProductList(temp);
+            })
+            .catch(err => {
+                console.log("현시간 인기상품을 가져오는데 실패했습니다.");
+                console.log("에러내용 : " + err);
+            });
+    }, [])
+    
     return (
         <div style={newProductWrapperStyle}>
             <div className={"d-flex justify-content-start my-3"}>
@@ -55,8 +74,8 @@ function NewProduct() {
                 <Slider {...settings}>
                     {
                         newProductList.map(item => {
-                            return <NewProductContents key={item.key} src={item.src} company={item.company} content={item.content} price={item.price}
-                                discountPercent={item.discountPercent}/>
+                            return <NewProductContents key={item.key} src={item.thumbnailImg} company={item.companyName[0]} content={item.productTitle}
+                                price={item.productPrice} discountPercent={item.productDiscount}/>
                         })
                     }
                 </Slider>

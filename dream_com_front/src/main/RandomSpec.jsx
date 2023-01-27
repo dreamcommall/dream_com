@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "../fonts/fontStyle.css"
+import axios from "axios";
 
 // 작성자 : MoonNight285
 // 랜덤으로 추천해주는 견적의 박스영역의 디자인
@@ -45,10 +46,29 @@ const specInfo = {
 // 랜덤으로 견적을 추천해주는 컴포넌트
 function RandomSpec() {
     const [randomComment, setRandomComment] = useState("");
+    const [randomSpec, setRandomSpec] = useState([]);
+    const [partNames, setPartNames] = useState([]);
+    // const [productTitle, setProductTitle] = useState("");
 
     useEffect(() => {
         const randomIdx = Number.parseInt(((Math.random() - 0.1) * (randomSpecComment.length)).toString());
         setRandomComment(randomSpecComment[randomIdx].title);
+    
+        let temp = [];
+    
+        // axios는 서버의 주소가 있을때
+        axios.get("http://localhost:8080/getRandomProduct")
+            .then(response => {
+                temp = response.data;
+                setRandomSpec(temp);
+                setPartNames(temp[0].partName);
+                console.log(randomSpec);
+                console.log(randomSpec);
+            })
+            .catch(err => {
+                console.log("현시간 인기상품을 가져오는데 실패했습니다.");
+                console.log("에러내용 : " + err);
+            });
     }, [])
 
     return (
@@ -65,10 +85,11 @@ function RandomSpec() {
                 <div>
                     <ul className={"mt-2 ps-4"}>
                         {
-                            specInfo.specList.map(item => {
+                            // 추천 제품 스펙부분
+                            partNames.map(item => {
                                 return (
-                                    <li key={item.key} style={randomSpecListStyle}>
-                                        <div style={specInfoSize} className={"d-flex align-items-center justify-content-center mb-3 nanumSquareR-font-normal"}>{item.spec}</div>
+                                    <li style={randomSpecListStyle}>
+                                        <div style={specInfoSize} className={"d-flex align-items-center justify-content-center mb-3 nanumSquareR-font-normal"}>{item}</div>
                                     </li>
                                 );
                             })
@@ -76,13 +97,22 @@ function RandomSpec() {
                     </ul>
                 </div>
             </div>
-            <p className={"mx-4 mb-1 nanumSquareR-font-normal"}>제품설명입니다.</p>
-            <div className={"d-flex mx-4"}>
-                {
-                    specInfo.discountPercent == 0 ? <p/> : <p style={{color : "red"}} className={"me-3 nanumSquareB-font-normal"}>{specInfo.discountPercent}% 할인</p>
-                }
-                <p className={"nanumSquareR-font-normal"}>가격입니다.</p>
-            </div>
+            {
+                // 추천 제품 판매글 & 할인율 & 가격
+                randomSpec.map(item => {
+                    return (
+                        <div key={item.key}>
+                            <p className={"mx-4 mt-2 mb-1 nanumSquareR-font-normal"}>{item.productTitle}</p>
+                            <div className={"d-flex mx-4"}>
+                                {
+                                    item.productDiscount == 0 ? <p/> : <p style={{color : "red"}} className={"me-3 nanumSquareB-font-normal"}>{item.productDiscount}% 할인</p>
+                                }
+                                <p className={"nanumSquareR-font-normal"}>{item.productPrice - ((item.productPrice / 100) * item.productDiscount)}원</p>
+                            </div>
+                        </div>
+                    );
+                })
+            }
         </div>
     );
 }
