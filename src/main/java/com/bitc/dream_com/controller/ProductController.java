@@ -71,20 +71,47 @@ public class ProductController {
 //    최종 작성자 : 양민호
     @RequestMapping(value = "categoryProduct", method = RequestMethod.GET)
     public Object categoryProduct() throws Exception {
-        List<ProductDto> type1 = productService.type1Product();
-        List<ProductDto> type2 = productService.type2Product();
-        List<ProductDto> type3 = productService.type3Product();
-        List<ProductDto> type4 = productService.type4Product();
-        List<ProductDto> type5 = productService.type5Product();
+        int[] typeNum = {1, 2, 3, 4, 5};
 
-        Map<String, Object> category = new HashMap<>();
-        category.put("desktop", getFullData(type1));
-        category.put("laptop", getFullData(type2));
-        category.put("keyboard", getFullData(type3));
-        category.put("mouse", getFullData(type4));
-        category.put("monitor", getFullData(type5));
+        List datas = new ArrayList<>();
 
-        return category;
+        for(int item: typeNum) {
+            List<ProductDto> type = productService.typeProduct(item);
+            List<CompanyDto> typeCompany = productService.categoryCompany(type.get(0).getTypeName());
+
+            Map<String, Object> category = new HashMap<>();
+            List companyList = new ArrayList<>();
+            List mainProductInfoList = new ArrayList<>();
+            List subProductInfoList = new ArrayList<>();
+            List data = new ArrayList<>();
+
+            for(int i = 0; i < typeCompany.size(); i++) {
+                Map<String, Object> company = new HashMap<>();
+                company.put("key", i);
+                company.put("companyList", typeCompany.get(i).getCompanyName());
+                companyList.add(company);
+            }
+
+            for(int i = 0; i < type.size(); i++) {
+                if(i < 3) {
+                    mainProductInfoList.add(type.get(i));
+                }
+                else {
+                    int key = type.get(i).getKey();
+                    type.get(i).setKey(key - 3);
+                    subProductInfoList.add(type.get(i));
+                }
+            }
+            category.put("categoryName", type.get(0).getTypeName());
+            category.put("companyList", companyList);
+            category.put("key", item - 1);
+            category.put("mainProductInfoList", mainProductInfoList);
+            category.put("subProductInfoList", subProductInfoList);
+            data.add(category);
+            datas.add(data);
+        }
+
+        return datas;
     }
 
 //    제품 테이블 업데이트 (관리자 페이지 완성 시 사용됨, where절 변수 재설정필요)

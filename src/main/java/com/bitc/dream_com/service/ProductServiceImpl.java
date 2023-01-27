@@ -73,28 +73,8 @@ public class ProductServiceImpl implements ProductService {
 
     //    카테고리별 제품 정보 불러오기
     @Override
-    public List<ProductDto> type1Product() throws Exception {
-        return productMapper.type1Product();
-    }
-
-    @Override
-    public List<ProductDto> type2Product() throws Exception {
-        return productMapper.type2Product();
-    }
-
-    @Override
-    public List<ProductDto> type3Product() throws Exception {
-        return productMapper.type3Product();
-    }
-
-    @Override
-    public List<ProductDto> type4Product() throws Exception {
-        return productMapper.type4Product();
-    }
-
-    @Override
-    public List<ProductDto> type5Product() throws Exception {
-        return productMapper.type5Product();
+    public List<ProductDto> typeProduct(int typeNum) throws Exception {
+        return productMapper.typeProduct(typeNum);
     }
 
 //    검색 결과 불러오기
@@ -146,5 +126,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> searchProductAll(String word, String type, List company) throws Exception {
         return productMapper.searchProductAll(word, type, company);
+    }
+
+    @Override
+    public List<CompanyDto> categoryCompany(String typeName) throws Exception {
+        return productMapper.categoryCompany(typeName);
     }
 }
