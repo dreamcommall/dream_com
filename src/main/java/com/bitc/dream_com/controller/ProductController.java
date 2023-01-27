@@ -94,12 +94,12 @@ public class ProductController {
 
             for(int i = 0; i < type.size(); i++) {
                 if(i < 3) {
-                    mainProductInfoList.add(type.get(i));
+                    mainProductInfoList.add(getFullData(type.get(i)));
                 }
                 else {
                     int key = type.get(i).getKey();
                     type.get(i).setKey(key - 3);
-                    subProductInfoList.add(type.get(i));
+                    subProductInfoList.add(getFullData(type.get(i)));
                 }
             }
             category.put("categoryName", type.get(0).getTypeName());
@@ -307,6 +307,82 @@ public class ProductController {
 //            키값 설정하기
             fullData.get(i).setKey(i);
         }
+
+        return fullData;
+    }
+
+    public Object getFullData(ProductDto productDto) throws Exception {
+        List<ProductDetail> fullData = new ArrayList<>();
+
+//        상세 정보 저장
+            int productNum = productDto.getProductNum();
+
+//            이미지 경로 저장될 변수
+            String thumbnail = "";
+            String mainPageImg = "";
+            String detailImg = "";
+            List<Object> carousel = new ArrayList<>();
+
+//            성능목록 저장될 배열
+            List<Object> specData = new ArrayList<>();
+
+//            제조사목록 저장될 배열
+            List<Object> companyData = new ArrayList<>();
+
+//            평점이 저장될 변수
+            double score = 0;
+
+//            이미지 불러오기
+            List<ProductImgDto> img = productService.getProductImg(productNum);
+//            썸네일 이미지 경로 저장
+            for (ProductImgDto j : img) {
+                if (j.getImgPath().contains("thumbnail")) {
+                    thumbnail = j.getImgPath();
+                }
+//            상세페이지 캐러샐 이미지경로 저장
+                else if (j.getImgPath().contains("carousel")) {
+                    carousel.add(j.getImgPath());
+                }
+//            메인페이지 캐러샐 이미지경로 저장
+                else if (j.getImgPath().contains("mainPage")) {
+                    mainPageImg = j.getImgPath();
+                }
+//            상세페이지 설명 이미지경로 저장
+                else {
+                    detailImg = j.getImgPath();
+                }
+            }
+
+//        스펙 불러오기
+            List<SpecDto> spec = productService.getProductSpec(productNum);
+            for (SpecDto j : spec) {
+                specData.add(j.getPartName());
+            }
+
+//        제조사 불러오기
+            List<CompanyDto> company = productService.getCompany(productNum);
+            companyData.clear();
+            for (CompanyDto j : company) {
+                companyData.add(j.getCompanyName());
+            }
+
+//            평점 불러오기
+            List<ReviewDto> reviewScore = reviewService.getScore(productNum);
+
+            if(reviewScore.size() > 0) {
+                for (ReviewDto j : reviewScore) {
+                    score += j.getScore();
+                }
+//                평점 저장
+                score = score / reviewScore.size();
+            }
+
+//            데이터 취합하기
+            productDetail = new ProductDetail(productDto, companyData, specData, thumbnail, carousel, mainPageImg, detailImg, score);
+//            데이터 리스트에 넣기
+            fullData.add(productDetail);
+//            키값 설정하기
+            fullData.get(0).setKey(productDto.getKey());
 
         return fullData;
     }
