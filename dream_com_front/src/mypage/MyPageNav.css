@@ -1,0 +1,45 @@
+#div-my-page-nav {
+    position: fixed;
+    width: 200px;
+    border: 1px solid lightgrey;
+    left: 75px;
+    text-align: center;
+    top: 175px;
+    z-index: 1005;
+    background-color: white;
+    box-shadow: 1px 1px 5px 1px gray;
+}
+
+#div-my-page-nav p {
+    margin: 0px;
+    height: 50px;
+    border-top: 1px solid lightgrey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: NanumSquareR;
+    font-size: 18px;
+}
+
+#div-my-page-nav p:hover {
+    background-color: #f2f1f1;
+    cursor: pointer;
+    animation-name: updateBackground;
+    animation-duration:0.75s;
+    animation-iteration-count:infinite;
+    animation-direction:alternate;
+    animation-fill-mode: forwards;
+}
+
+@keyframes updateBackground {
+    0% {
+        background-color: white;
+    }
+    100% {
+        background-color: #f2f1f1;
+    }
+}
+
+#div-my-page-nav p.active {
+    background-color: #f2f1f1;
+}
