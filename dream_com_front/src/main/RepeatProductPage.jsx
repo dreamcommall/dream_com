@@ -34,7 +34,7 @@ function RepeatProductPage({categoryName, companyList, mainProductInfoList, subP
                             {
                                 companyList.map(item =>  {
                                     return (
-                                        <p key={item.key} className={"mx-4 nanumSquareR-font-normal"}># {item.company}</p>
+                                        <p key={item.key} className={"mx-4 nanumSquareR-font-normal"}># {item.companyList}</p>
                                     );
                                 })
                             }
@@ -46,10 +46,10 @@ function RepeatProductPage({categoryName, companyList, mainProductInfoList, subP
                                 mainProductInfoList.map(item => {
                                     return (
                                         <Carousel.Item key={item.key}>
-                                            <img src={item.src} alt={""} />
+                                            <img src={"/images/MainRollingBanner_139003.jpg"} alt={""} />
                                             <div style={{position : "relative", bottom : 75, fontSize : 20, backgroundColor : "#5A5A5A", height : 35}}
                                                     className={"d-flex justify-content-center align-items-center"}>
-                                                <span style={{color : "white"}} className={"nanumSquareR-font-XNormal"}>{item.name}</span>
+                                                <span style={{color : "white"}} className={"nanumSquareR-font-XNormal"}>{item.productTitle}</span>
                                             </div>
                                         </Carousel.Item>
                                     );
@@ -60,12 +60,13 @@ function RepeatProductPage({categoryName, companyList, mainProductInfoList, subP
                     <div style={{width : "49%"}} className={"mx-3"}>
                         <div className={"d-flex justify-content-center"}>
                             {
+                                // 상단에 위치
                                 subProductInfoList.map(item => {
-                                    if (item.key == 1) {
+                                    if (item.key == 1) { // 중간에 위치
                                         return (
                                             <RepeatProductContents key={item.key} style={{padding : 10, border : "1px solid #EBEBEB"}} item={item} />
                                         );
-                                    } else if(item.key < 3) {
+                                    } else if(item.key < 3) { // 양쪽 사이드에 위치
                                         return (
                                             <RepeatProductContents key={item.key} style={{padding : 10, borderBottom : "1px solid #EBEBEB"}} item={item} />
                                         );
@@ -75,12 +76,13 @@ function RepeatProductPage({categoryName, companyList, mainProductInfoList, subP
                         </div>
                         <div className={"d-flex justify-content-center"}>
                             {
+                                // 하단에 위치
                                 subProductInfoList.map(item => {
-                                    if (item.key == 4) {
+                                    if (item.key == 4) { // 중간에 위치
                                         return (
                                             <RepeatProductContents key={item.key} style={{padding : 10, border : "1px solid #EBEBEB", borderBottom : "none"}} item={item} />
                                         );
-                                    } else if (item.key >= 3) {
+                                    } else if (item.key >= 3) { // 양쪽 사이드에 위치
                                         return (
                                             <RepeatProductContents key={item.key} style={{padding : 10, borderTop : "1px solid #EBEBEB"}} item={item} />
                                         );

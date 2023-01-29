@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import ReactDOM from 'react-dom';
 import AdvertisementTop from "./AdvertisementTop";
 import PopularProduct from "./PopularProduct";
 import AdvertisementMiddle from "./AdvertisementMiddle";
@@ -11,53 +10,92 @@ import SidebarApp from "../common/SidebarApp";
 import HeaderD from "../common/HeaderD";
 import NavigationBar from "../common/NavigationBar";
 import Footer from "../common/Footer";
-
-
-// 작성자 : MoonNight285
-// 서버와 통신하기전 테스트 용도
-const companyList = [
-    {key : 0, company : "제조사1"}, {key : 1, company : "제조사2"}, {key : 2, company : "제조사3"},
-]
-
-const mainProductInfoList = [
-    {key : 0, name : "제품1 이름입니다.", src : "/images/deskTop1.jpg"},
-    {key : 1, name : "제품2 이름입니다.", src : "/images/deskTop2.jpg"},
-    {key : 2, name : "제품3 이름입니다.", src : "/images/deskTop3.jpg"}
-]
-
-const subProductInfoList = [
-    {key : 0, name : "상품1 이름입니다.", price : "상품1 가격입니다.", discountPercent : "0", src : "/images/MainRollingBanner_139003.jpg"},
-    {key : 1, name : "상품2 이름입니다.", price : "상품2 가격입니다.", discountPercent : "3", src : "/images/MainRollingBanner_139003.jpg"},
-    {key : 2, name : "상품3 이름입니다.", price : "상품3 가격입니다.", discountPercent : "6", src : "/images/MainRollingBanner_139003.jpg"},
-    {key : 3, name : "상품4 이름입니다.", price : "상품4 가격입니다.", discountPercent : "9", src : "/images/MainRollingBanner_139003.jpg"},
-    {key : 4, name : "상품5 이름입니다.", price : "상품5 가격입니다.", discountPercent : "0", src : "/images/MainRollingBanner_139003.jpg"},
-    {key : 5, name : "상품6 이름입니다.", price : "상품6 가격입니다.", discountPercent : "12", src : "/images/MainRollingBanner_139003.jpg"},
-]
-
-// 객체를 저장해도 자동으로 배열로 감싸진다!!! 주의요망
-const sampleRepeatContentList = [
-    {key : 0, categoryName : "데스크탑 * PC", companyList : companyList, mainProductInfoList : mainProductInfoList, subProductInfoList : subProductInfoList},
-    {key : 1, categoryName : "노트북", companyList : companyList, mainProductInfoList : mainProductInfoList, subProductInfoList : subProductInfoList},
-]
+import axios from "axios";
+import ClickPrevent from "../common/ClickPrevent";
 
 // 작성자 : MoonNight285
 // 메인페이지에서 사용하는 컴포넌트들을 조합해주는 컴포넌트
 function MainPageApp() {
-    const [repeatContentList, setRepeatContentList] = useState([]);
-    const CORRECTION_VALUE = 30;
-    
+    const [popularProductList, setPopularProductList] = useState([]); // 현시간 인기상품
+    const [repeatContentList, setRepeatContentList] = useState([]); // 카테고리 별 상품 표시
+    const [randomSpec, setRandomSpec] = useState([]); // 랜덤 추천 견적의 상품가격 및 할인율 및 판매글
+    const [partNames, setPartNames] = useState([]); // 랜덤 추천 견적의 스펙 부분
+    const [newProductList, setNewProductList] = useState([]); // 신상품 목록
+    const [isLoad, setIsLoad] = useState(false); // 로딩창
+    const CORRECTION_VALUE = 30; // 스크롤 이벤트 보정값
+
+    // 마우스 스크롤 이벤트가 발생하면 화면의 y값을 기준으로 카테고리별 상품을 불러온다.
     const handleScroll = () => {
         const offsetHeight = document.getElementById("div-main-page-contents").offsetHeight;
         const clientHeight = document.documentElement.clientHeight;
         
         if (offsetHeight - window.scrollY <= clientHeight + CORRECTION_VALUE) {
             let temp = [];
-            temp.push(sampleRepeatContentList);
-            setRepeatContentList(temp);
+
+            setIsLoad(true);
+            // 카테고리 별 상품목록을 서버에서 가져오기
+            axios.get("http://localhost:8080/categoryProduct")
+                .then(response => {
+                    temp = response.data;
+                    setRepeatContentList(temp);
+                    setIsLoad(false);
+                })
+                .catch(err => {
+                    console.log("카테고리 상품목록을 가져오는데 실패했습니다.");
+                    console.log("에러내용 : " + err);
+                    setIsLoad(false);
+                });
         }
     }
-    
+
+    // 메인페이지에 접속시 필요한 데이터를 불러온다.
+    const dataReceive = async () => {
+        let tempPopularProductList = []; // 현시간 인기상품 복사본 배열
+        let tempRandomSpec = []; // 랜덤 추천 견적 복사본 배열
+        let tempNewProductList = []; // 신상품 목록 복사본 배열
+
+        // 현시간 인기상품 정보를 받아오기
+        await axios.get("http://localhost:8080/topClickedProduct")
+            .then(response => {
+                tempPopularProductList = response.data;
+                setPopularProductList(tempPopularProductList);
+            })
+            .catch(err => {
+                console.log("현시간 인기상품을 가져오는데 실패했습니다.");
+                console.log("에러내용 : " + err);
+            });
+
+        // 랜덤 추천 견적 정보를 불러오기
+        await axios.get("http://localhost:8080/getRandomProduct")
+            .then(response => {
+                tempRandomSpec = response.data;
+                setRandomSpec(tempRandomSpec);
+                setPartNames(tempRandomSpec[0].partName);
+            })
+            .catch(err => {
+                console.log("랜덤 추천 견적을 불러오는데 실패했습니다.");
+                console.log("에러내용 : " + err);
+            });
+
+        // 신상품 목록을 조회한다.
+        await axios.get("http://localhost:8080/getRecentProduct")
+            .then(response => {
+                tempNewProductList = response.data;
+                setNewProductList(tempNewProductList);
+            })
+            .catch(err => {
+                console.log("신상품 목록을 가져오는데 실패하였습니다.");
+                console.log("에러내용 : " + err);
+            });
+    }
+
+    // 필요한 데이터를 불러오고 스크롤 이벤트를 등록
     useEffect(() => {
+        setIsLoad(true);
+        dataReceive().then(() => {
+            setIsLoad(false);
+        })
+
         // scroll event listener 등록
         window.addEventListener("scroll", handleScroll);
         return () => {
@@ -67,20 +105,19 @@ function MainPageApp() {
     }, []);
     
     return (
-
         <div id={"div-main-page-contents"} className={"container-fluid"}>
+            <ClickPrevent isLoading={isLoad}/>
             <HeaderD />
             <NavigationBar />
             <div className={"row"}>
                 <div className={"col ps-0 pe-0"}>
-                    <Loading />
+                    <Loading loadStatus={isLoad}/>
                     <SidebarApp />
                     <AdvertisementTop/>
-                    <PopularProduct />
+                    <PopularProduct popularProductList={popularProductList} />
                     <AdvertisementMiddle />
                     <AdvertisementBridge />
-                    <RecommendProduct />
-                    <RepeatProductPage categoryName={"데스크탑 & PC"} companyList={companyList} mainProductInfoList={mainProductInfoList} subProductInfoList={subProductInfoList}/>
+                    <RecommendProduct randomSpec={randomSpec} partNames={partNames} newProductList={newProductList} />
                     {
                         repeatContentList.map(repeatContentArray => {
                             return repeatContentArray.map(item => {

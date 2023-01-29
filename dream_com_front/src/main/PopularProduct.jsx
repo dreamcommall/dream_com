@@ -17,24 +17,7 @@ const settings = {
 };
 
 // 현시간 인기상품을 보여주는 컴포넌트
-function PopularProduct() {
-    const [popularProductList, setPopularProductList] = useState([]);
-    
-    useEffect(() => {
-        // 프론트에서 임시로 테스트 용도
-        let temp = [];
-        
-        // axios는 서버의 주소가 있을때
-        axios.get("http://localhost:8080/topClickedProduct")
-            .then(response => {
-                temp = response.data;
-                setPopularProductList(temp);
-            })
-            .catch(err => {
-                console.log("현시간 인기상품을 가져오는데 실패했습니다.");
-                console.log("에러내용 : " + err);
-            });
-    }, [])
+function PopularProduct({popularProductList}) {
     
     return (
         <div className={"container mt-5"}>

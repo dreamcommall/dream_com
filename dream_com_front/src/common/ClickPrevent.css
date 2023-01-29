@@ -1,0 +1,12 @@
+#div-click-prevent {
+    height: 100vh;
+    background-color: lightgray;
+    opacity: 0.3;
+    z-index: 5100;
+    position: fixed;
+    display: none;
+}
+
+#div-click-prevent.active {
+    display: block;
+}
