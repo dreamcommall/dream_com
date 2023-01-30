@@ -2,6 +2,7 @@ package com.bitc.dream_com.service;
 
 
 import com.bitc.dream_com.dto.*;
+import com.github.pagehelper.Page;
 
 import java.util.List;
 
@@ -63,4 +64,7 @@ public interface ProductService {
     List<ProductDto> searchProductAll(String word, String type, List company) throws Exception;
 
     List<CompanyDto> categoryCompany(String typeName) throws Exception;
+
+//    검색 페이지 페이징
+    Page<ProductDto> searchProductPaging(List productNumList, int pageNum) throws Exception;
 }

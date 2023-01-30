@@ -219,4 +219,16 @@
                                                 join company com on c.company_num = com.company_num
         where type_name = #{typeName} group by com.company_name
     </select>
+
+<!--    제품번호 리스트로 데이터 불러오기-->
+<!--    최종 수정일 2023-01-30-->
+<!--    최종 작성자 : 양민호-->
+    <select id="searchProductList" resultType="com.bitc.dream_com.dto.ProductDto" parameterType="java.util.List">
+        select * from product pr join category ca on pr.product_num = ca.product_num
+                                 join product_type pt on ca.type_num = pt.type_num
+        where
+            <foreach collection="productNumList" separator="or" item="item">
+                pr.product_num = #{item}
+            </foreach>
+    </select>
 </mapper>

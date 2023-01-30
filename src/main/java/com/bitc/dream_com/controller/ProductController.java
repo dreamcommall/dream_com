@@ -3,6 +3,7 @@ package com.bitc.dream_com.controller;
 import com.bitc.dream_com.dto.*;
 import com.bitc.dream_com.service.ProductService;
 import com.bitc.dream_com.service.ReviewService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -95,8 +96,6 @@ public class ProductController {
             for(int i = 0; i < type.size(); i++) {
                 if(i < 3) {
                     mainProductInfoList.add(getFullData(type.get(i)));
-//                    임시 데이터 추후 삭제
-                    subProductInfoList.add(getFullData(type.get(i)));
                 }
                 else {
                     int key = type.get(i).getKey();
@@ -145,12 +144,13 @@ public class ProductController {
 
 
 //    검색결과 불러오기 (데이터 불러오기 완료, 검색 시 결과 우선순위 미정)
-//    최종 수정일 2023-01-25
+//    페이징 처리 완료 2023-01-30 양민호
+//    최종 수정일 2023-01-30
 //    최종 작성자 : 양민호
     @RequestMapping(value = "searchProduct", method = RequestMethod.GET)
     public Object searchProduct(@RequestParam("keyword") String searchWord, @RequestParam(value = "type", required = false) String type,
-                                @RequestParam(value = "company", required = false) List company) throws Exception {
-        System.out.println(company);
+                                @RequestParam(value = "company", required = false) List company,
+                                @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) throws Exception {
 //        검색어 띄어쓰기 단위로 자르기
         String[] word = searchWord.split(" ");
 
@@ -160,7 +160,6 @@ public class ProductController {
 
 //        단어별 검색
         for (int i = 0; i < word.length; i++) {
-            System.out.println("-------------------------");
             List<ProductDto> result = null;
 //            카테고리 미선택 시
             if(type == null && company == null) {
@@ -208,16 +207,24 @@ public class ProductController {
             searchData1.addAll(searchData2);
             searchData2.clear();
         }
+        System.out.println(searchData1);
 
-//        1번 리스트에 저장된 값들의 제품정보를 불러온 후 search 리스트에 저장
-//        search 리스트에 저장된 정보의 상세정보 취합
-        List<ProductDto> search = new ArrayList<>();
+//        1번 리스트에 저장된 값들의 제품번호를 productNumList에 저장
+        List productNumList = new ArrayList<>();
         for(int i = 0; i < searchData1.size(); i++) {
-            ProductDto list = productService.productData((Integer) searchData1.get(i));
-            search.add(list);
+            productNumList.add(searchData1.get(i));
         }
+//        productNumList에 저장된 제품번호로 검색하여 페이징 처리
+        PageInfo<ProductDto> page = new PageInfo<>(productService.searchProductPaging(productNumList, pageNum), 10);
 
-        return getFullData(search);
+//        페이지 정보 해쉬맵에 저장
+        HashMap<String, Object> searchPaginationData = new HashMap<>();
+        searchPaginationData.put("FirstPage", page.getNavigateFirstPage());
+        searchPaginationData.put("LastPage", page.getNavigateLastPage());
+        searchPaginationData.put("CurrentPage", page.getPages());
+        searchPaginationData.put("ProductInfo", getFullData(page.getList()));
+
+        return searchPaginationData;
     }
 
 
@@ -234,7 +241,7 @@ public class ProductController {
     //  상세 정보 dto
     ProductDetail productDetail;
 
-    // 제품 모든 정보 취합 함수
+    // 제품리스트의 모든 정보 취합 함수
     public Object getFullData(List<ProductDto> dtoList) throws Exception {
         List<ProductDetail> fullData = new ArrayList<>();
 
@@ -269,9 +276,7 @@ public class ProductController {
                     carousel.add(j.getImgPath());
                 }
 //            메인페이지 캐러샐 이미지경로 저장
-//                else if (j.getImgPath().contains("mainPage")) {
-//                임시 이미지 경로
-                else if (j.getImgPath().contains("thumbnail")) {
+                else if (j.getImgPath().contains("mainPage")) {
                     mainPageImg = j.getImgPath();
                 }
 //            상세페이지 설명 이미지경로 저장
@@ -315,6 +320,10 @@ public class ProductController {
         return fullData;
     }
 
+
+
+
+//    하나의 제품데이터의 모든 정보 취합 함수 (매개변수만 달라짐)
     public Object getFullData(ProductDto productDto) throws Exception {
         List<ProductDetail> fullData = new ArrayList<>();
 
