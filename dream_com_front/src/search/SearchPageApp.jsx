@@ -10,6 +10,7 @@ import NavigationBar from "../common/NavigationBar";
 import Footer from "../common/Footer";
 import {useSearchParams} from "react-router-dom";
 import axios from "axios";
+import ClickPrevent from "../common/ClickPrevent";
 
 function SearchPageApp() {
     const [searchParams, setSearchParams] = useSearchParams(); // 파라미터를 가져오는 훅
@@ -21,10 +22,13 @@ function SearchPageApp() {
     const [selectedCompaniesChecked, setSelectedCompaniesChecked] = useState([]); // 선택한 제조사들의 이름이 담긴 배열
     const [categoryMenus, setCategoryMenus] = useState([]); // DB에 저장된 카테고리 메뉴 목록
     const [companies, setCompanies] = useState([]); // 특정 카테고리를 기준으로 DB에 저장된 제조사 목록을 조회할때 사용하는 배열
+    const [isLoad, setIsLoad] = useState(false); // 로딩창
     
-    const dataReceive = (targetKeyword) => {
+    const dataReceive = async (targetKeyword) => {
+        setIsLoad(true);
+
         // 서버에게 검색한 키워드를 기반으로 데이터를 조회를 요청한다.
-        axios.get("http://localhost:8080/searchProduct", {params : {keyword : targetKeyword}})
+        await axios.get("http://localhost:8080/searchProduct", {params : {keyword : targetKeyword}})
             .then(response => {
                 setCurrentPageNumber(response.data.CurrentPage);
                 setFirstPageNumber(response.data.FirstPage);
@@ -41,7 +45,7 @@ function SearchPageApp() {
             });
         
         // 서버에게 저장된 카테고리를 요청한다.
-        axios.get("http://localhost:8080/type")
+        await axios.get("http://localhost:8080/type")
             .then(response => {
                 setCategoryMenus(response.data);
             })
@@ -67,14 +71,16 @@ function SearchPageApp() {
     }, [selectedCompaniesChecked]);
     
     // 선택한 카테고리가 변경되면 서버에게 해당 카테고리로 등록되어있는 제조자 명단을 요청한다.
-    useEffect(() => {
+    useEffect( () => {
         if (selectedCategory == "") {// 카테고리가 선택이 안되어있는경우
             return;
         }
-        
-        axios.get("http://localhost:8080/company")
+
+        setIsLoad(true);
+        axios.get("http://localhost:8080/company", {params : {type : selectedCategory}})
             .then(response => {
                 setCompanies(response.data);
+                setIsLoad(false);
             })
             .catch(err => {
                 console.log(`에러메세지 : ${err}`);
@@ -83,15 +89,19 @@ function SearchPageApp() {
     }, [selectedCategory]);
     
     useEffect(() => {
-        dataReceive(searchParams.get("keyword"));
+        dataReceive(searchParams.get("keyword"))
+            .then(() => {
+                setIsLoad(false);
+            });
     }, [searchParams]);
     
     return (
         <div className={"container-fluid"}>
+            <ClickPrevent isLoading={isLoad} />
             <HeaderD keyword={searchParams.get("keyword")}/>
             <NavigationBar />
             <div className={"container"}>
-                <Loading />
+                <Loading loadStatus={isLoad} />
                 <SidebarApp />
                 <SearchOption />
                 <SearchMenu keyword={searchParams.get("keyword")} categoryMenu={categoryMenus} companyList={companies}

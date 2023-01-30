@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "../fonts/fontStyle.css"
 
-function SearchItem({src, title, specList, averageScore, registrationDate, commentCount, price}) {
+function SearchItem({src, title, specList, averageScore, registrationDate, commentCount, price, discount}) {
     const [stars, setStars] = useState([]);
     const [defaultStars, setDefaultStars] = useState([]); // 빈값을 표시하기위한 별점
 
@@ -41,7 +41,7 @@ function SearchItem({src, title, specList, averageScore, registrationDate, comme
             <div style={{width : "100%"}}>
                 <div className={"d-flex"}>
                     <div style={{width : "55%"}}>
-                        <p className={"mb-3 nanumSquareR-font-normal"}><b>{title}</b></p>
+                        <p className={"my-2 nanumSquareR-font-normal"}><b>{title}</b></p>
                         <p className={"mb-1 nanumSquareR-font-small"}>
                             {
                                 specList.map(item => {
@@ -74,7 +74,12 @@ function SearchItem({src, title, specList, averageScore, registrationDate, comme
                     </div>
                     <div style={{width : "30%"}}></div>
                     <div style={{width : "15%"}} className={"d-flex align-items-center"}>
-                        <p className={"my-0 nanumSquareR-font-normal"}><b>{price}원</b></p>
+                        <div>
+                            {
+                                discount == 0 ? null : <p style={{color : "red"}} className={"my-0 nanumSquareB-font-normal"}>{discount}% 할인</p>
+                            }
+                            <p className={"my-0 nanumSquareR-font-normal"}><b>{price}원</b></p>
+                        </div>
                     </div>
                 </div>
             </div>
