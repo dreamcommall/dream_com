@@ -207,7 +207,6 @@ public class ProductController {
             searchData1.addAll(searchData2);
             searchData2.clear();
         }
-        System.out.println(searchData1);
 
 //        1번 리스트에 저장된 값들의 제품번호를 productNumList에 저장
         List productNumList = new ArrayList<>();
@@ -223,6 +222,7 @@ public class ProductController {
         searchPaginationData.put("LastPage", page.getNavigateLastPage());
         searchPaginationData.put("CurrentPage", page.getPageNum());
         searchPaginationData.put("ProductInfo", getFullData(page.getList()));
+        searchPaginationData.put("Login", "ok");
 
         return searchPaginationData;
     }
@@ -300,17 +300,19 @@ public class ProductController {
 
 //            평점 불러오기
             List<ReviewDto> reviewScore = reviewService.getScore(productNum);
-
             if(reviewScore.size() > 0) {
                 for (ReviewDto j : reviewScore) {
                     score += j.getScore();
                 }
 //                평점 저장
-                score = score / reviewScore.size();
+                score = Math.round((score / reviewScore.size()) * 10) / 10.0;
             }
 
+//            리뷰 개수 불러오기
+            int reviewNumber = reviewService.getReview(productNum);
+
 //            데이터 취합하기
-            productDetail = new ProductDetail(dtoList.get(i), companyData, specData, thumbnail, carousel, mainPageImg, detailImg, score);
+            productDetail = new ProductDetail(dtoList.get(i), companyData, specData, thumbnail, carousel, mainPageImg, detailImg, score, reviewNumber);
 //            데이터 리스트에 넣기
             fullData.add(productDetail);
 //            키값 설정하기
@@ -387,11 +389,13 @@ public class ProductController {
                     score += j.getScore();
                 }
 //                평점 저장
-                score = score / reviewScore.size();
+                score = Math.round((score / reviewScore.size()) * 10) / 10.0;
             }
+//            리뷰 개수 불러오기
+        int reviewNumber = reviewService.getReview(productNum);
 
 //            데이터 취합하기
-            productDetail = new ProductDetail(productDto, companyData, specData, thumbnail, carousel, mainPageImg, detailImg, score);
+            productDetail = new ProductDetail(productDto, companyData, specData, thumbnail, carousel, mainPageImg, detailImg, score, reviewNumber);
 //            데이터 리스트에 넣기
             fullData.add(productDetail);
 //            키값 설정하기

@@ -21,4 +21,6 @@ public interface ReviewMapper {
 
     void changeReview(ReviewDto reviewDto) throws Exception;
     void deleteReview(ReviewDto reviewDto) throws Exception;
+
+    int getReview(int productNum) throws Exception;
 }
