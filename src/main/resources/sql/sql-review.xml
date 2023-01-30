@@ -78,4 +78,11 @@
     <delete id="deleteReview" parameterType="com.bitc.dream_com.dto.ReviewDto">
         delete from detail_review where user_id = #{userId} and review_num = #{reviewNum} and product_num = #{productNum}
     </delete>
+
+<!--    해당 제품 리뷰 개수 불러오기-->
+<!--    최종 수정일 2023-01-30-->
+<!--    최종 작성자 : 양민호-->
+    <select id="getReview" resultType="int">
+        select count(*) from detail_review where product_num = #{productNum}
+    </select>
 </mapper>

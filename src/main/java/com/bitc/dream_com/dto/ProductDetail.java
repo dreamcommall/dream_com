@@ -16,9 +16,10 @@ public class ProductDetail extends ProductDto{
     private String detailImg;
 
     private double score;
+    private int reviewNumber;
 
     public ProductDetail(ProductDto productDto, List company, List part, String thumbnailImg, List carouselImg,
-                         String mainPageImg, String detailImg, double reviewScore) {
+                         String mainPageImg, String detailImg, double reviewScore, int reviewNumber) {
         setProductDto(productDto);
 
         this.companyName = company;
@@ -28,6 +29,7 @@ public class ProductDetail extends ProductDto{
         this.mainPageImg = mainPageImg;
         this.detailImg = detailImg;
         this.score = reviewScore;
+        this.reviewNumber = reviewNumber;
     }
 
     public void setProductDto(ProductDto productDto) {

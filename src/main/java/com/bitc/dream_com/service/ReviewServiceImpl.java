@@ -51,4 +51,9 @@ public class ReviewServiceImpl implements ReviewService{
     public void deleteReview(ReviewDto reviewDto) throws Exception {
         reviewMapper.deleteReview(reviewDto);
     }
+
+    @Override
+    public int getReview(int productNum) throws Exception {
+        return reviewMapper.getReview(productNum);
+    }
 }
