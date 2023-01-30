@@ -95,6 +95,8 @@ public class ProductController {
             for(int i = 0; i < type.size(); i++) {
                 if(i < 3) {
                     mainProductInfoList.add(getFullData(type.get(i)));
+//                    임시 데이터 추후 삭제
+                    subProductInfoList.add(getFullData(type.get(i)));
                 }
                 else {
                     int key = type.get(i).getKey();
@@ -267,7 +269,9 @@ public class ProductController {
                     carousel.add(j.getImgPath());
                 }
 //            메인페이지 캐러샐 이미지경로 저장
-                else if (j.getImgPath().contains("mainPage")) {
+//                else if (j.getImgPath().contains("mainPage")) {
+//                임시 이미지 경로
+                else if (j.getImgPath().contains("thumbnail")) {
                     mainPageImg = j.getImgPath();
                 }
 //            상세페이지 설명 이미지경로 저장
