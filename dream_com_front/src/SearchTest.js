@@ -8,15 +8,15 @@ function SearchTest() {
         setWord(e.target.value);
     }
 
-    const com = ["제조사1"];
+    const com = [];
     const coms = {
         com: com.join(",")
     }
-    console.log(coms)
     const search = () => {
-        axios.get("http://localhost:8080/searchProduct", {params: {keyword: word, type:"데스크탑", company: coms.com}})
+        axios.get("http://localhost:8080/searchProduct", {params: {keyword: word, type: "", company: coms.com, minPrice: 0, maxPrice: 0,
+            pageNum : 4}})
             .then((req) => {
-                console.log(req);
+                console.log(req.data);
             })
             .catch((err) => {
                 console.log(`에러`);
@@ -34,9 +34,9 @@ function SearchTest() {
     }
 
     const company = () => {
-        axios.get("http://localhost:8080/company")
+        axios.get("http://localhost:8080/company", {params: {type: "데스크탑"}})
             .then((req) => {
-                console.log(req);
+                console.log(req.data);
             })
             .catch((err) => {
                 console.log(`에러`);
