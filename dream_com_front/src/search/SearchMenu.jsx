@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import "../fonts/fontStyle.css"
 import Button from 'react-bootstrap/Button'
 import "./SearchMenu.css"
+import {Link} from "react-router-dom";
 
 const categoryMenu = [
     {key : 0, title : "메뉴1"},
@@ -27,11 +28,29 @@ const companyList = [
     {key : 10, companyName : "제조사명11", count : 11},
 ]
 
-function SearchMenu() {
+function SearchMenu({keyword}) {
     const [dividedCompanyList, setDividedCompanyList] = useState([]);
     const [categoryTitle, setCategoryTitle] = useState("");
     const [categoryKey, setCategoryKey] = useState(-1);
     const [companyCheckList, setCompanyCheckList] = useState([]);
+    const [searchKeyword, setSearchKeyword] = useState(""); // 검색키워드
+    
+    // 검색 input 태그에서 엔터키 누르면 작동
+    const onEnterPress = (e) => {
+        if (e.key == "Enter") {
+            const search = document.getElementById("Link-menu-search-keyword");
+            search.click();
+        }
+    }
+    
+    useEffect(() => {
+        setSearchKeyword(keyword);
+    }, [keyword])
+    
+    // 검색 input 태그에서 값이 변경될때마다 상태변경
+    const updateSearchTarget = (target) => {
+        setSearchKeyword(target.value);
+    }
     
     const initCompanyCheckList = () => {
         let temp = [];
@@ -163,8 +182,11 @@ function SearchMenu() {
                 <div className={"d-flex mx-4 align-items-center div-search-option-bottom"}>
                     <p className={"my-0 mx-2 nanumSquareR-font-normal"}>결과 내 재검색</p>
                     <div className={"d-flex align-items-center"}>
-                        <input maxLength={20} type={"text"} placeholder={"검색할 내용을 입력하세요."} className={"me-1"}/>
-                        <Button variant={"secondary"} className={"mx-1 nanumSquareR-font-normal"}>검색</Button>
+                        <input onChange={(e) => {updateSearchTarget(e.target)}} onKeyDown={(e) => {onEnterPress(e)}}
+                            maxLength={20} type={"text"} placeholder={"검색할 내용을 입력하세요."} className={"me-1"} value={searchKeyword}/>
+                        <Link to={`/search?keyword=${searchKeyword}`} id={"Link-menu-search-keyword"}>
+                            <Button variant={"secondary"} className={"mx-1 nanumSquareR-font-normal"}>검색</Button>
+                        </Link>
                     </div>
                 </div>
             </div>

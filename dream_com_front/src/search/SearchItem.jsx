@@ -3,6 +3,7 @@ import "../fonts/fontStyle.css"
 
 function SearchItem({src, title, specList, averageScore, registrationDate, commentCount, price}) {
     const [stars, setStars] = useState([]);
+    const [defaultStars, setDefaultStars] = useState([]); // 빈값을 표시하기위한 별점
 
     const createStars = () => {
         let temp = [];
@@ -17,10 +18,21 @@ function SearchItem({src, title, specList, averageScore, registrationDate, comme
             temp.push({key : temp.length + 1, src : "/images/starHalf16.png"});
             setStars(temp);
         }
-    }
+    };
+    
+    const createRemindStars = () => {
+        let temp = [];
+        
+        for (let i = 0; i < Math.floor(5 - averageScore); ++i) {
+            temp.push({key : i, src : "/images/star64_blank.png"});
+        }
+        
+        setDefaultStars(temp);
+    };
 
     useEffect(() => {
         createStars();
+        createRemindStars();
     }, []);
 
     return (
@@ -43,6 +55,11 @@ function SearchItem({src, title, specList, averageScore, registrationDate, comme
                                     stars.map(item => {
                                         return item.src == "/images/star16.png" ? <img key={item.key} style={{marginBottom : 3, marginLeft : 3}} src={"/images/star16.png"} /> :
                                             <img key={item.key} style={{marginBottom : 3, marginLeft : 3}} src={"/images/starHalf16.png"} />
+                                    })
+                                }
+                                {
+                                    defaultStars.map(item => {
+                                        return <img key={item.key} style={{marginBottom : 3, marginLeft : 3}} src={"/images/star16_blank.png"} />
                                     })
                                 }
                             </p>
