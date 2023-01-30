@@ -4,32 +4,7 @@ import Button from 'react-bootstrap/Button'
 import "./SearchMenu.css"
 import {Link} from "react-router-dom";
 
-const categoryMenu = [
-    {key : 0, title : "메뉴1"},
-    {key : 1, title : "메뉴2"},
-    {key : 2, title : "메뉴3"},
-    {key : 3, title : "메뉴4"},
-    {key : 4, title : "메뉴5"},
-    {key : 5, title : "메뉴6"},
-    {key : 6, title : "메뉴7"},
-]
-
-const companyList = [
-    {key : 0, companyName : "제조사명1", count : 1},
-    {key : 1, companyName : "제조사명2", count : 2},
-    {key : 2, companyName : "제조사명3", count : 3},
-    {key : 3, companyName : "제조사명4", count : 4},
-    {key : 4, companyName : "제조사명5", count : 5},
-    {key : 5, companyName : "제조사명6", count : 6},
-    {key : 6, companyName : "제조사명7", count : 7},
-    {key : 7, companyName : "제조사명8", count : 8},
-    {key : 8, companyName : "제조사명9", count : 9},
-    {key : 9, companyName : "제조사명10", count : 10},
-    {key : 10, companyName : "제조사명11", count : 11},
-]
-
-function SearchMenu({keyword}) {
-    const [dividedCompanyList, setDividedCompanyList] = useState([]);
+function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, funcUpdateCompanies}) {
     const [categoryTitle, setCategoryTitle] = useState("");
     const [categoryKey, setCategoryKey] = useState(-1);
     const [companyCheckList, setCompanyCheckList] = useState([]);
@@ -52,14 +27,17 @@ function SearchMenu({keyword}) {
         setSearchKeyword(target.value);
     }
     
+    // 초기화 버튼 클릭시 초기값으로 설정
     const initCompanyCheckList = () => {
         let temp = [];
         for(let i = 0; i < companyList.length; ++i) {
             temp.push(false);
         }
         setCompanyCheckList(temp);
+        funcUpdateCompanies(temp);
     }
     
+    // 제조사 체크박스를 클릭할때마다 선택한 값의 상태값과 그 값을 기준으로 어떤회사를 선택했는지를 저장
     const setCompanyCheck = (key) => {
         let temp = [];
         for(let i = 0; i < companyCheckList.length; ++i) {
@@ -70,6 +48,7 @@ function SearchMenu({keyword}) {
             temp.push(companyCheckList[i]);
         }
         setCompanyCheckList(temp);
+        funcUpdateCompanies(temp);
     }
     
     const clearSearchOption = () => {
@@ -82,32 +61,10 @@ function SearchMenu({keyword}) {
     const setCategory = (key, title) => {
         setCategoryKey(key);
         setCategoryTitle(title);
-    }
-
-    const divideCompanyList = (list) => {
-        let tempParent = [];
-        let tempChild = [];
-        
-        list.forEach(item => {
-            if (tempChild.length == 5) {
-                tempParent.push([tempChild]);
-                tempChild = [];
-            }
-            tempChild.push(item);
-        });
-        
-        if (tempChild.length != 0) {
-            tempParent.push([tempChild]);
-            tempChild = [];
-        }
-        
-        if (tempParent.length != 0) {
-            setDividedCompanyList(tempParent);
-        }
+        funcUpdateCategory(title);
     }
     
     useEffect(() => {
-        divideCompanyList(companyList);
         initCompanyCheckList();
     }, [])
     
@@ -123,9 +80,9 @@ function SearchMenu({keyword}) {
                             {
                                 categoryMenu.map(item => {
                                     return (
-                                        <li key={item.key} onClick={() => setCategory(item.key, item.title)}
-                                            className={categoryKey == item.key ? "mb-1 p-1 nanumSquareR-font-normal li-category-menu active" : "mb-1 p-1 nanumSquareR-font-normal li-category-menu"}>
-                                            <span className={"mx-4"}>{item.title}</span>
+                                        <li key={item.typeNum} onClick={() => setCategory(item.typeNum, item.typeName)}
+                                            className={categoryKey == item.typeNum ? "mb-1 p-1 nanumSquareR-font-normal li-category-menu active" : "mb-1 p-1 nanumSquareR-font-normal li-category-menu"}>
+                                            <span className={"mx-4"}>{item.typeName}</span>
                                         </li>
                                     );
                                 })
@@ -147,23 +104,11 @@ function SearchMenu({keyword}) {
                         </div>
                         <div id={"div-company-list-wrapper"}>
                             {
-                                dividedCompanyList.map(arrayParent => {
-                                    return (
-                                        <div className={"d-flex mb-2"}>
-                                            {
-                                                arrayParent.map(arrayChild => {
-                                                    return (
-                                                        arrayChild.map(item => {
-                                                            return <div key={item.key} className={"d-flex align-items-center mx-3 nanumSquareR-font-normal"}>
-                                                                <input onChange={() => setCompanyCheck(item.key)} checked={companyCheckList[item.key]} style={{zoom : 1.5}} className={"mx-2"} type={"checkbox"}/>
-                                                                <span>{item.companyName}({item.count})</span>
-                                                            </div>
-                                                        })
-                                                    );
-                                                })
-                                            }
-                                        </div>
-                                    );
+                                companyList.map(item => {
+                                    return <div key={item.companyNum} className={"d-flex align-items-center mx-3 nanumSquareR-font-normal"}>
+                                        <input onChange={() => setCompanyCheck(item.companyNum)} checked={companyCheckList[item.companyNum]} style={{zoom : 1.5}} className={"mx-2"} type={"checkbox"}/>
+                                        <span>{item.companyName}({item.productNum})</span>
+                                    </div>
                                 })
                             }
                         </div>

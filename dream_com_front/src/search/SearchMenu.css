@@ -20,9 +20,15 @@
 }
 
 #div-company-list-wrapper {
-    height: 265px;
-    padding-top: 25px;
+    padding-top: 30px;
     overflow-y: scroll;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#div-company-list-wrapper div {
+    height: 20px;
+    margin-bottom: 15px;
 }
 
 #div-search-option-bottom-wrapper {
