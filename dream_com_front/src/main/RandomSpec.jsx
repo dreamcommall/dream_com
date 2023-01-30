@@ -20,9 +20,15 @@ const randomSpecListStyle = {
 // 랜덤으로 추천해주는 스펙의 리스트안에 들어가는 박스 스타일 수정
 const specInfoSize = {
     width: 125,
-    height: 30,
+    height: 35,
     backgroundColor : "#f4f4f4",
-    borderRadius : 15
+    borderRadius : 15,
+    overflow : "hidden",
+    textOverflow : "ellipsis",
+    whiteSpace : "nowrap",
+    padding : 5,
+    paddingLeft : 10,
+    textAlign : "center"
 }
 
 // 작성자 : MoonNight285
@@ -32,6 +38,15 @@ const randomSpecComment = [
     {key : 1, title : "가격/스펙 모두 만족하는"},
     {key : 2, title : "요즘 핫한"}
 ]
+
+// 신상품 글 안넘치도록 스타일 조정
+const contentStyle = {
+    marginLeft : 35,
+    width : 235,
+    overflow : "hidden",
+    textOverflow : "ellipsis",
+    whiteSpace : "nowrap"
+}
 
 // 작성자 : MoonNight285
 // 랜덤으로 견적을 추천해주는 컴포넌트
@@ -61,7 +76,9 @@ function RandomSpec({randomSpec, partNames}) {
                             partNames.map(item => {
                                 return (
                                     <li style={randomSpecListStyle}>
-                                        <div style={specInfoSize} className={"d-flex align-items-center justify-content-center mb-3 nanumSquareR-font-normal"}>{item}</div>
+                                        <div title={item} className={"d-flex align-items-center justify-content-center mb-2 nanumSquareR-font-normal"}>
+                                            <p className={"my-0"} style={specInfoSize}>{item}</p>
+                                        </div>
                                     </li>
                                 );
                             })

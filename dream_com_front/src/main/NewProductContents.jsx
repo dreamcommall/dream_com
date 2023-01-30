@@ -29,6 +29,15 @@ const commonStyle = {
     marginLeft : 35
 }
 
+// 신상품 글 안넘치도록 스타일 조정
+const contentStyle = {
+    marginLeft : 35,
+    width : 235,
+    overflow : "hidden",
+    textOverflow : "ellipsis",
+    whiteSpace : "nowrap"
+}
+
 // 작성자 : MoonNight285
 // 신규등록 상품을 보여주는 컴포넌트에서 캐러셀안에 사용되는 아이템을 만들어주는 컴포넌트
 // src => 이미지 경로
@@ -38,10 +47,10 @@ const commonStyle = {
 // discountPercent => 제품의 할인율(없는경우 0)
 function NewProductContents({src, company, content, price, discountPercent}) {
     return (
-        <div>
+        <div title={content}>
             <img style={newProductImgStyle} src={src} />
             <h6 style={companyStyle} className={"nanumSquareR-font-normal"}>{company}</h6>
-            <p style={commonStyle} className={"mb-1 nanumSquareR-font-normal"}>{content}</p>
+            <p style={contentStyle} className={"mb-1 nanumSquareR-font-normal"}>{content}</p>
             <div style={commonStyle} className={"d-flex justify-content-between me-1"}>
                 {
                     discountPercent == 0 ? <p /> : <p style={{color : "red"}} className={"nanumSquareB-font-normal"}>{discountPercent}% 할인</p>
