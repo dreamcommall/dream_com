@@ -75,7 +75,7 @@ function Keyword() {
 
 <div className={"row"} style={{marginRight:"130px", marginTop:"15px" }}>
     <div className={"col-8"} style={{marginTop:"10px"}}>
-    <input type={"text"} style={{paddingRight:"10px", marginLeft:"15px"}}/>
+    <input type={"text"} style={{paddingRight:"10px", marginLeft:"15px"}} readOnly={true}/>
     </div>
     <div id={"dropList"} className={"col-2 "} style={{marginRight:"20px" , marginTop:"8px", zIndex:"5001"}} >
             <DropdownButton id="dropdown-basic-button" variant="white" style={{border:"none"}}>
