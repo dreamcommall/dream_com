@@ -81,8 +81,8 @@ public class ProductServiceImpl implements ProductService {
 
 //    검색 결과 불러오기
     @Override
-    public List<ProductDto> searchProduct(String word) throws Exception {
-        return productMapper.searchProduct(word);
+    public List<ProductDto> searchProduct(String word, int minPrice, int maxPrice) throws Exception {
+        return productMapper.searchProduct(word, minPrice, maxPrice);
     }
 
 //    키워드 검색
@@ -111,23 +111,23 @@ public class ProductServiceImpl implements ProductService {
 
 //    제조사 카테고리 불러오기
     @Override
-    public List<CompanyDto> company() throws Exception {
-        return productMapper.company();
+    public List<CompanyDto> company(String type) throws Exception {
+        return productMapper.company(type);
     }
 
     @Override
-    public List<ProductDto> searchProductType(String word, String type) throws Exception {
-        return productMapper.searchProductType(word, type);
+    public List<ProductDto> searchProductType(String word, String type, int minPrice, int maxPrice) throws Exception {
+        return productMapper.searchProductType(word, type, minPrice, maxPrice);
     }
 
     @Override
-    public List<ProductDto> searchProductCompany(String word, List company) throws Exception {
-        return productMapper.searchProductCompany(word, company);
+    public List<ProductDto> searchProductCompany(String word, List company, int minPrice, int maxPrice) throws Exception {
+        return productMapper.searchProductCompany(word, company, minPrice, maxPrice);
     }
 
     @Override
-    public List<ProductDto> searchProductAll(String word, String type, List company) throws Exception {
-        return productMapper.searchProductAll(word, type, company);
+    public List<ProductDto> searchProductAll(String word, String type, List company, int minPrice, int maxPrice) throws Exception {
+        return productMapper.searchProductAll(word, type, company, minPrice, maxPrice);
     }
 
     @Override
@@ -140,5 +140,25 @@ public class ProductServiceImpl implements ProductService {
     public Page<ProductDto> searchProductPaging(List productNumList, int pageNum) throws Exception {
         PageHelper.startPage(pageNum, 5);
         return productMapper.searchProductList(productNumList);
+    }
+
+    @Override
+    public List<ProductDto> searchDiscountProduct(String word, int minPrice, int maxPrice) throws Exception {
+        return productMapper.searchDiscountProduct(word, minPrice, maxPrice);
+    }
+
+    @Override
+    public List<ProductDto> searchDiscountProductType(String word, String type, int minPrice, int maxPrice) throws Exception {
+        return productMapper.searchDiscountProductType(word, type, minPrice, maxPrice);
+    }
+
+    @Override
+    public List<ProductDto> searchDiscountProductCompany(String word, List company, int minPrice, int maxPrice) throws Exception {
+        return productMapper.searchDiscountProductCompany(word, company, minPrice, maxPrice);
+    }
+
+    @Override
+    public List<ProductDto> searchDiscountProductAll(String word, String type, List company, int minPrice, int maxPrice) throws Exception {
+        return productMapper.searchDiscountProductAll(word, type, company, minPrice, maxPrice);
     }
 }

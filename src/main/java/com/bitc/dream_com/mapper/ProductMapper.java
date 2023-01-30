@@ -41,7 +41,7 @@ public interface ProductMapper {
     List<ProductDto> typeProduct(int typeNum) throws Exception;
 
 //    검색 결과 불러오기
-    List<ProductDto> searchProduct(String word) throws Exception;
+    List<ProductDto> searchProduct(String word, int minPrice, int maxPrice) throws Exception;
 
 //    키워드 검색
     int searchKeyword(String keyword) throws Exception;
@@ -56,15 +56,23 @@ public interface ProductMapper {
     List<TypeDto> type() throws Exception;
 
 //    제조사 카테고리 불러오기
-    List<CompanyDto> company() throws Exception;
+    List<CompanyDto> company(String type) throws Exception;
 
-    List<ProductDto> searchProductType(String word, String type) throws Exception;
+    List<ProductDto> searchProductType(String word, String type, int minPrice, int maxPrice) throws Exception;
 
-    List<ProductDto> searchProductCompany(String word, List company) throws Exception;
+    List<ProductDto> searchProductCompany(String word, List company, int minPrice, int maxPrice) throws Exception;
 
-    List<ProductDto> searchProductAll(String word, String type, List company) throws Exception;
+    List<ProductDto> searchProductAll(String word, String type, List company, int minPrice, int maxPrice) throws Exception;
 
     List<CompanyDto> categoryCompany(String typeName) throws Exception;
 
     Page<ProductDto> searchProductList(List productNumList) throws Exception;
+
+    List<ProductDto> searchDiscountProduct(String word, int minPrice, int maxPrice) throws Exception;
+
+    List<ProductDto> searchDiscountProductType(String word, String type, int minPrice, int maxPrice) throws Exception;
+
+    List<ProductDto> searchDiscountProductCompany(String word, List company, int minPrice, int maxPrice) throws Exception;
+
+    List<ProductDto> searchDiscountProductAll(String word, String type, List company, int minPrice, int maxPrice) throws Exception;
 }

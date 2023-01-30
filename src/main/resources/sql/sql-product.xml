@@ -116,23 +116,7 @@
 <!--    카테고리 미선택 시 검색 결과 불러오기-->
 <!--    최종 수정일 2023-01-25-->
 <!--    최종 작성자 : 양민호-->
-    <select id="searchProduct" parameterType="String" resultType="com.bitc.dream_com.dto.ProductDto">
-        select * from product pr
-                          join category ca on pr.product_num = ca.product_num
-                          join product_type pt on pt.type_num = ca.type_num
-                          join company cp on cp.company_num = ca.company_num
-                          join spec sp on sp.product_num = pr.product_num
-                          join part pa on pa.part_num = sp.part_num
-        where pr.product_title like concat('%', #{word}, '%') or pr.product_name like concat('%', #{word}, '%')
-           or pa.part_name like concat('%', #{word}, '%') or pt.type_name like concat('%', #{word}, '%')
-           or cp.company_name like concat('%', #{word}, '%')
-        group by pr.product_num;
-    </select>
-
-<!--    제품 카테고리만 선택 시 검색 결과 불러오기-->
-<!--    최종 수정일 2023-01-25-->
-<!--    최종 작성자 : 양민호-->
-    <select id="searchProductType" parameterType="String" resultType="com.bitc.dream_com.dto.ProductDto">
+    <select id="searchProduct" resultType="com.bitc.dream_com.dto.ProductDto">
         select * from product pr
                           join category ca on pr.product_num = ca.product_num
                           join product_type pt on pt.type_num = ca.type_num
@@ -141,7 +125,23 @@
                           join part pa on pa.part_num = sp.part_num
         where (pr.product_title like concat('%', #{word}, '%') or pr.product_name like concat('%', #{word}, '%')
            or pa.part_name like concat('%', #{word}, '%') or pt.type_name like concat('%', #{word}, '%')
-           or cp.company_name like concat('%', #{word}, '%')) and pt.type_name = #{type}
+           or cp.company_name like concat('%', #{word}, '%')) and pr.product_price between #{minPrice} and #{maxPrice}
+        group by pr.product_num;
+    </select>
+
+<!--    제품 카테고리만 선택 시 검색 결과 불러오기-->
+<!--    최종 수정일 2023-01-25-->
+<!--    최종 작성자 : 양민호-->
+    <select id="searchProductType" resultType="com.bitc.dream_com.dto.ProductDto">
+        select * from product pr
+                          join category ca on pr.product_num = ca.product_num
+                          join product_type pt on pt.type_num = ca.type_num
+                          join company cp on cp.company_num = ca.company_num
+                          join spec sp on sp.product_num = pr.product_num
+                          join part pa on pa.part_num = sp.part_num
+        where (pr.product_title like concat('%', #{word}, '%') or pr.product_name like concat('%', #{word}, '%')
+           or pa.part_name like concat('%', #{word}, '%') or pt.type_name like concat('%', #{word}, '%')
+           or cp.company_name like concat('%', #{word}, '%')) and pt.type_name = #{type} and pr.product_price between #{minPrice} and #{maxPrice}
         group by pr.product_num;
     </select>
 
@@ -157,7 +157,7 @@
                           join part pa on pa.part_num = sp.part_num
         where (pr.product_title like concat('%', #{word}, '%') or pr.product_name like concat('%', #{word}, '%')
             or pa.part_name like concat('%', #{word}, '%') or pt.type_name like concat('%', #{word}, '%')
-            or cp.company_name like concat('%', #{word}, '%')) and
+            or cp.company_name like concat('%', #{word}, '%')) and pr.product_price between #{minPrice} and #{maxPrice} and
             <foreach collection="company" item="item" separator="and">
                 cp.company_name = #{item}
             </foreach>
@@ -176,7 +176,7 @@
         join part pa on pa.part_num = sp.part_num
         where (pr.product_title like concat('%', #{word}, '%') or pr.product_name like concat('%', #{word}, '%')
         or pa.part_name like concat('%', #{word}, '%') or pt.type_name like concat('%', #{word}, '%')
-        or cp.company_name like concat('%', #{word}, '%')) and pt.type_name = #{type} and
+        or cp.company_name like concat('%', #{word}, '%')) and pr.product_price between #{minPrice} and #{maxPrice} and pt.type_name = #{type} and
         <foreach collection="company" item="item" separator="and">
             cp.company_name = #{item}
         </foreach>
@@ -194,7 +194,10 @@
 <!--    최종 수정일 2023-01-25-->
 <!--    최종 작성자 : 양민호-->
     <select id="company" resultType="com.bitc.dream_com.dto.CompanyDto">
-        select * from company
+        select * from company co
+            join category ca on co.company_num = ca.company_num
+            join product_type pt on ca.type_num = pt.type_num
+        where pt.type_name = #{type}
     </select>
 
 <!--    키워드 검색-->
@@ -230,5 +233,77 @@
             <foreach collection="productNumList" separator="or" item="item">
                 pr.product_num = #{item}
             </foreach>
+    </select>
+
+<!--    할인제품 검색결과 불러오기-->
+<!--    최종 수정일 2023-01-30-->
+<!--    최종 작성자 : 양민호-->
+    <select id="searchDiscountProduct" resultType="com.bitc.dream_com.dto.ProductDto">
+        select * from product pr
+                          join category ca on pr.product_num = ca.product_num
+                          join product_type pt on pt.type_num = ca.type_num
+                          join company cp on cp.company_num = ca.company_num
+                          join spec sp on sp.product_num = pr.product_num
+                          join part pa on pa.part_num = sp.part_num
+        where (pr.product_title like concat('%', #{word}, '%') or pr.product_name like concat('%', #{word}, '%')
+            or pa.part_name like concat('%', #{word}, '%') or pt.type_name like concat('%', #{word}, '%')
+            or cp.company_name like concat('%', #{word}, '%')) and pr.product_price between #{minPrice} and #{maxPrice} and pr.product_discount > 0
+        group by pr.product_num;
+    </select>
+
+    <!--    할인제품 카테고리만 선택 시 검색 결과 불러오기-->
+    <!--    최종 수정일 2023-01-30-->
+    <!--    최종 작성자 : 양민호-->
+    <select id="searchDiscountProductType" resultType="com.bitc.dream_com.dto.ProductDto">
+        select * from product pr
+                          join category ca on pr.product_num = ca.product_num
+                          join product_type pt on pt.type_num = ca.type_num
+                          join company cp on cp.company_num = ca.company_num
+                          join spec sp on sp.product_num = pr.product_num
+                          join part pa on pa.part_num = sp.part_num
+        where (pr.product_title like concat('%', #{word}, '%') or pr.product_name like concat('%', #{word}, '%')
+            or pa.part_name like concat('%', #{word}, '%') or pt.type_name like concat('%', #{word}, '%')
+            or cp.company_name like concat('%', #{word}, '%'))
+          and pt.type_name = #{type} and pr.product_price between #{minPrice} and #{maxPrice} and pr.product_discount > 0
+        group by pr.product_num;
+    </select>
+
+    <!--    할인제품 제조사 카테고리만 선택 시 검색 결과 불러오기-->
+    <!--    최종 수정일 2023-01-30-->
+    <!--    최종 작성자 : 양민호-->
+    <select id="searchDiscountProductCompany"  resultType="com.bitc.dream_com.dto.ProductDto">
+        select * from product pr
+        join category ca on pr.product_num = ca.product_num
+        join product_type pt on pt.type_num = ca.type_num
+        join company cp on cp.company_num = ca.company_num
+        join spec sp on sp.product_num = pr.product_num
+        join part pa on pa.part_num = sp.part_num
+        where (pr.product_title like concat('%', #{word}, '%') or pr.product_name like concat('%', #{word}, '%')
+        or pa.part_name like concat('%', #{word}, '%') or pt.type_name like concat('%', #{word}, '%')
+        or cp.company_name like concat('%', #{word}, '%')) and pr.product_price between #{minPrice} and #{maxPrice} and pr.product_discount > 0 and
+        <foreach collection="company" item="item" separator="and">
+            cp.company_name = #{item}
+        </foreach>
+        group by pr.product_num;
+    </select>
+
+    <!--    할인제품 카테고리 모두 선택 시 검색 결과 불러오기-->
+    <!--    최종 수정일 2023-01-30-->
+    <!--    최종 작성자 : 양민호-->
+    <select id="searchDiscountProductAll"  resultType="com.bitc.dream_com.dto.ProductDto">
+        select * from product pr
+        join category ca on pr.product_num = ca.product_num
+        join product_type pt on pt.type_num = ca.type_num
+        join company cp on cp.company_num = ca.company_num
+        join spec sp on sp.product_num = pr.product_num
+        join part pa on pa.part_num = sp.part_num
+        where (pr.product_title like concat('%', #{word}, '%') or pr.product_name like concat('%', #{word}, '%')
+        or pa.part_name like concat('%', #{word}, '%') or pt.type_name like concat('%', #{word}, '%')
+        or cp.company_name like concat('%', #{word}, '%'))
+          and pr.product_price between #{minPrice} and #{maxPrice} and pt.type_name = #{type} and pr.product_discount > 0 and
+        <foreach collection="company" item="item" separator="and">
+            cp.company_name = #{item}
+        </foreach>
+        group by pr.product_num;
     </select>
 </mapper>

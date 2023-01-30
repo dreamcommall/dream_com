@@ -137,8 +137,8 @@ public class ProductController {
 //    최종 수정일 2023-01-25
 //    최종 작성자 : 양민호
     @RequestMapping(value = "/company", method = RequestMethod.GET)
-    public Object company() throws Exception {
-        List<CompanyDto> company = productService.company();
+    public Object company(@RequestParam(value = "type") String type) throws Exception {
+        List<CompanyDto> company = productService.company(type);
         return company;
     }
 
@@ -150,9 +150,16 @@ public class ProductController {
     @RequestMapping(value = "searchProduct", method = RequestMethod.GET)
     public Object searchProduct(@RequestParam("keyword") String searchWord, @RequestParam(value = "type", required = false) String type,
                                 @RequestParam(value = "company", required = false) List company,
-                                @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) throws Exception {
+                                @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                @RequestParam(value = "minPrice") int minPrice,
+                                @RequestParam(value = "maxPrice") int maxPrice) throws Exception {
+
 //        검색어 띄어쓰기 단위로 자르기
         String[] word = searchWord.split(" ");
+
+        if(maxPrice == 0) {
+            maxPrice = 999999999;
+        }
 
 //        검색 결과 제품번호가 저장될 배열
         List searchData1 = new ArrayList<>();
@@ -162,20 +169,20 @@ public class ProductController {
         for (int i = 0; i < word.length; i++) {
             List<ProductDto> result = null;
 //            카테고리 미선택 시
-            if(type == null && company == null) {
-                result = productService.searchProduct(word[i]);
+            if(type.equals("") && company.size() == 0) {
+                result = productService.searchProduct(word[i], minPrice, maxPrice);
             }
 //            제품 카테고리만 선택 시
-            else if(type != null && company == null) {
-                result = productService.searchProductType(word[i], type);
+            else if(!type.equals("") && company.size() == 0) {
+                result = productService.searchProductType(word[i], type, minPrice, maxPrice);
             }
 //            제조사 카테고리만 선택 시
-            else if(type == null && company != null) {
-                result = productService.searchProductCompany(word[i], company);
+            else if(type.equals("") && company.size() != 0) {
+                result = productService.searchProductCompany(word[i], company, minPrice, maxPrice);
             }
 //            모두 선택 시
             else {
-                result = productService.searchProductAll(word[i], type, company);
+                result = productService.searchProductAll(word[i], type, company, minPrice, maxPrice);
             }
 
 
@@ -213,18 +220,119 @@ public class ProductController {
         for(int i = 0; i < searchData1.size(); i++) {
             productNumList.add(searchData1.get(i));
         }
-//        productNumList에 저장된 제품번호로 검색하여 페이징 처리
-        PageInfo<ProductDto> page = new PageInfo<>(productService.searchProductPaging(productNumList, pageNum), 10);
 
-//        페이지 정보 해쉬맵에 저장
+
+        PageInfo<ProductDto> page = null;
+
         HashMap<String, Object> searchPaginationData = new HashMap<>();
-        searchPaginationData.put("FirstPage", page.getNavigateFirstPage());
-        searchPaginationData.put("LastPage", page.getNavigateLastPage());
-        searchPaginationData.put("CurrentPage", page.getPageNum());
-        searchPaginationData.put("ProductInfo", getFullData(page.getList()));
-        searchPaginationData.put("Login", "ok");
+        if  (productNumList.size() > 0) {
+//        productNumList에 저장된 제품번호로 검색하여 페이징 처리
+            page = new PageInfo<>(productService.searchProductPaging(productNumList, pageNum), 10);
+            //        페이지 정보 해쉬맵에 저장
+            searchPaginationData.put("FirstPage", page.getNavigateFirstPage());
+            searchPaginationData.put("LastPage", page.getNavigateLastPage());
+            searchPaginationData.put("CurrentPage", page.getPageNum());
+            searchPaginationData.put("ProductInfo", getFullData(page.getList()));
+            searchPaginationData.put("Login", "ok");
+            return searchPaginationData;
+        }
+        else {
+            return page;
+        }
+    }
 
-        return searchPaginationData;
+
+    @RequestMapping(value = "searchDiscountProduct", method = RequestMethod.GET)
+    public Object searchDiscountProduct(@RequestParam("keyword") String searchWord, @RequestParam(value = "type") String type,
+                                @RequestParam(value = "company") List company,
+                                @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                @RequestParam(value = "minPrice") int minPrice,
+                                @RequestParam(value = "maxPrice") int maxPrice) throws Exception {
+
+//        검색어 띄어쓰기 단위로 자르기
+        String[] word = searchWord.split(" ");
+
+        if(maxPrice == 0) {
+            maxPrice = 999999999;
+        }
+
+//        검색 결과 제품번호가 저장될 배열
+        List searchData1 = new ArrayList<>();
+        List searchData2 = new ArrayList<>();
+
+//        단어별 검색
+        for (int i = 0; i < word.length; i++) {
+            List<ProductDto> result = null;
+//            카테고리 미선택 시
+            if(type.equals("") && company.size() == 0) {
+                result = productService.searchDiscountProduct(word[i], minPrice, maxPrice);
+            }
+//            제품 카테고리만 선택 시
+            else if(!type.equals("") && company.size() == 0) {
+                result = productService.searchDiscountProductType(word[i], type, minPrice, maxPrice);
+            }
+//            제조사 카테고리만 선택 시
+            else if(type.equals("") && company.size() != 0) {
+                result = productService.searchDiscountProductCompany(word[i], company, minPrice, maxPrice);
+            }
+//            모두 선택 시
+            else {
+                result = productService.searchDiscountProductAll(word[i], type, company, minPrice, maxPrice);
+            }
+
+
+//            검색 결과가 존재할 경우
+            if (result.size() > 0) {
+                for (int j = 0; j < result.size(); j++) {
+                    ProductDto idx = result.get(j);
+
+//                        첫 단어 검색 결과 1번 리스트에 저장
+                    if(i == 0) {
+                        searchData1.add(idx.getProductNum());
+                    }
+//                         두 번째 단어부터는 첫 번째 단어 검색결과와 비교하여 일치하는 부분만 2번리스트에 추가
+                    else {
+                        for(int k = 0; k < searchData1.size(); k++) {
+                            int productNum = (int) searchData1.get(k);
+                            if(idx.getProductNum() == productNum) {
+                                searchData2.add(idx.getProductNum());
+                            }
+                        }
+//                        두 번째 단어 검색 결과 마지막일 경우 1번 리스트 초기화
+                        if(j == result.size() -1) {
+                            searchData1.clear();
+                        }
+                    }
+                }
+            }
+//            2번 리스트 결과를 1번 리스트에 추가
+            searchData1.addAll(searchData2);
+            searchData2.clear();
+        }
+
+//        1번 리스트에 저장된 값들의 제품번호를 productNumList에 저장
+        List productNumList = new ArrayList<>();
+        for(int i = 0; i < searchData1.size(); i++) {
+            productNumList.add(searchData1.get(i));
+        }
+
+        PageInfo<ProductDto> page = null;
+
+        HashMap<String, Object> searchPaginationData = new HashMap<>();
+        if  (productNumList.size() > 0) {
+//        productNumList에 저장된 제품번호로 검색하여 페이징 처리
+            page = new PageInfo<>(productService.searchProductPaging(productNumList, pageNum), 10);
+            //        페이지 정보 해쉬맵에 저장
+            searchPaginationData.put("FirstPage", page.getNavigateFirstPage());
+            searchPaginationData.put("LastPage", page.getNavigateLastPage());
+            searchPaginationData.put("CurrentPage", page.getPageNum());
+            searchPaginationData.put("ProductInfo", getFullData(page.getList()));
+            searchPaginationData.put("Login", "ok");
+            return searchPaginationData;
+        }
+        else {
+            return page;
+        }
     }
 
 
