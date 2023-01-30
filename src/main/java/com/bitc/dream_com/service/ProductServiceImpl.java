@@ -2,6 +2,8 @@ package com.bitc.dream_com.service;
 
 import com.bitc.dream_com.dto.*;
 import com.bitc.dream_com.mapper.ProductMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -131,5 +133,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<CompanyDto> categoryCompany(String typeName) throws Exception {
         return productMapper.categoryCompany(typeName);
+    }
+
+//    검색 페이지 페이징
+    @Override
+    public Page<ProductDto> searchProductPaging(List productNumList, int pageNum) throws Exception {
+        PageHelper.startPage(pageNum, 5);
+        return productMapper.searchProductList(productNumList);
     }
 }

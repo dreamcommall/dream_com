@@ -1,6 +1,7 @@
 package com.bitc.dream_com.mapper;
 
 import com.bitc.dream_com.dto.*;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -64,4 +65,6 @@ public interface ProductMapper {
     List<ProductDto> searchProductAll(String word, String type, List company) throws Exception;
 
     List<CompanyDto> categoryCompany(String typeName) throws Exception;
+
+    Page<ProductDto> searchProductList(List productNumList) throws Exception;
 }
