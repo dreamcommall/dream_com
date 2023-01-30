@@ -1,0 +1,80 @@
+#deliveryInformation li{
+    font-size: 14px;
+    color: gray;
+}
+
+#table{
+    list-style: none;
+}
+
+thead tr th{
+    font-size: 16px;
+    border: 1px solid gray;
+    border-left: 0;
+    border-right: 0;
+}
+
+tbody tr td{
+    border: none
+}
+
+tbody tr:hover{
+    background: #f7f9fa;
+}
+
+tbody img{
+    display: flex;
+    position: absolute;
+    width: 100px;
+    height: 120px;
+    margin-left: 0;
+}
+
+.productInfo{
+    display: block;
+    margin-left: 90px;
+}
+
+tbody td tr ul li div {
+    font-size: 10px;
+}
+
+tbody ul{
+    list-style: none;
+}
+
+.listStyle{
+    display: flex;
+    justify-content: center;
+    padding-top: 55px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#listStyle{
+    display: block;
+    font-size: 16px;
+    padding-top: 50px;
+    font-weight: bold;
+}
+
+.deliveryState {
+    font-weight: bold;
+    font-size: 16px;
+    padding-top: 55px;
+}
+
+
+.orderState button{
+    margin-left: 50px;
+    font-size: 15px;
+    width: 100px;
+    height: 32px;
+    background: white;
+    border: 1px solid #d3d3d3;
+}
+
+.orderState button:hover {
+    background: #e26e6e;
+    color: white;
+}
