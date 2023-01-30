@@ -223,6 +223,7 @@ public class ProductController {
         searchPaginationData.put("LastPage", page.getNavigateLastPage());
         searchPaginationData.put("CurrentPage", page.getPageNum());
         searchPaginationData.put("ProductInfo", getFullData(page.getList()));
+        searchPaginationData.put("Login", "ok");
 
         return searchPaginationData;
     }
