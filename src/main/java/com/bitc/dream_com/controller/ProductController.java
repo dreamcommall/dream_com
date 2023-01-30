@@ -221,7 +221,7 @@ public class ProductController {
         HashMap<String, Object> searchPaginationData = new HashMap<>();
         searchPaginationData.put("FirstPage", page.getNavigateFirstPage());
         searchPaginationData.put("LastPage", page.getNavigateLastPage());
-        searchPaginationData.put("CurrentPage", page.getPages());
+        searchPaginationData.put("CurrentPage", page.getPageNum());
         searchPaginationData.put("ProductInfo", getFullData(page.getList()));
 
         return searchPaginationData;
