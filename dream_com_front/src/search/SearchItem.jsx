@@ -33,7 +33,7 @@ function SearchItem({src, title, specList, averageScore, registrationDate, comme
                         <p className={"mb-1 nanumSquareR-font-small"}>
                             {
                                 specList.map(item => {
-                                    return <span key={item.key} className={"my-0"}>{item.spec + "/"}</span>;
+                                    return <span key={item} className={"my-0"}>{item + "/"}</span>;
                                 })
                             }
                         </p>

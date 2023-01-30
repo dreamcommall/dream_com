@@ -1,33 +1,35 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Pagination from 'react-bootstrap/Pagination';
 import "./SearchItemPagination.css"
 
-function SearchItemPagination({pageCount}) {
-    const [paginationColor, setPaginationColor] = useState("white");
+function SearchItemPagination({currentPageNumber, firstPageNumber, lastPageNumber}) {
+    const [pageNumberList, setPageNumberList] = useState([]); // 페이지 번호를 담기위한 공간
     
-    const changePaginationColor = (value) => {
-        setPaginationColor(value);
-    }
+    useEffect(() => {
+        let temp = [];
+        for (let i = firstPageNumber; i <= lastPageNumber; ++i) {
+            temp.push(i);
+        }
+        setPageNumberList(temp);
+    }, [firstPageNumber, lastPageNumber]);
     
     return (
         <div className={"d-flex justify-content-center my-3"}>
             {
-                pageCount == 0 ? <Pagination>
+                // 첫페이지와 마지막 페이지가 일치하면 1 페이지밖에 존재하지않는다.
+                firstPageNumber == lastPageNumber ? <Pagination>
                         <Pagination.Item><div>{"<"}</div></Pagination.Item>
-                        <Pagination.Item><div onClick={() => changePaginationColor("red1")} className={paginationColor == "red1" ? "active" : ""}>{1}</div></Pagination.Item>
+                        <Pagination.Item><div className={"active"}>{1}</div></Pagination.Item>
                         <Pagination.Item><div>{">"}</div></Pagination.Item>
                 </Pagination> :
+                    // 페이지 개수가 2개 이상일때
                     <Pagination>
                         <Pagination.Item><div>{"<"}</div></Pagination.Item>
-                        <Pagination.Item><div onClick={() => changePaginationColor("red1")} className={paginationColor == "red1" ? "active" : ""}>{1}</div></Pagination.Item>
-                        <Pagination.Item><div>{"..."}</div></Pagination.Item>
-                        <Pagination.Item><div onClick={() => changePaginationColor("red10")} className={paginationColor == "red10" ? "active" : ""}>{10}</div></Pagination.Item>
-                        <Pagination.Item><div onClick={() => changePaginationColor("red11")} className={paginationColor == "red11" ? "active" : ""}>{11}</div></Pagination.Item>
-                        <Pagination.Item><div onClick={() => changePaginationColor("red12")} className={paginationColor == "red12" ? "active" : ""}>{12}</div></Pagination.Item>
-                        <Pagination.Item><div onClick={() => changePaginationColor("red13")} className={paginationColor == "red13" ? "active" : ""}>{13}</div></Pagination.Item>
-                        <Pagination.Item><div onClick={() => changePaginationColor("red14")} className={paginationColor == "red14" ? "active" : ""}>{14}</div></Pagination.Item>
-                        <Pagination.Item><div>{"..."}</div></Pagination.Item>
-                        <Pagination.Item><div onClick={() => changePaginationColor("red20")} className={paginationColor == "red20" ? "active" : ""}>{20}</div></Pagination.Item>
+                        {
+                            pageNumberList.map(item => {
+                                return <Pagination.Item><div className={`red${currentPageNumber}` == `red${item}` ? `red${item} active` : `red${item}`}>{item}</div></Pagination.Item>
+                            })
+                        }
                         <Pagination.Item><div>{">"}</div></Pagination.Item>
                     </Pagination>
             }
