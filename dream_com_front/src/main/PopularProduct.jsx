@@ -33,7 +33,7 @@ function PopularProduct({popularProductList}) {
                         // 현시간 인기상품
                         popularProductList.map(item => {
                             return (
-                                <div key={item.key}>
+                                <div title={item.productTitle} key={item.key}>
                                     <PopularProductImg src={item.thumbnailImg} />
                                     <PopularProductContents name={item.productTitle} price={item.productPrice} discountPercent={item.productDiscount} />
                                 </div>

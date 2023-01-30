@@ -1,0 +1,40 @@
+/* 신규등록 상품을 보여주는 캐러셀의 아이템중 이미지의 크기 및 위치 조절 */
+#div-new-product-contents img {
+    width: 200px;
+    height: 200px;
+    margin-left: 35px;
+    margin-right: 0px;
+}
+
+/* 신규등록 상품을 보여주는 캐러셀의 아이템중 제조사를 보여주는 부분의 디자인 조절 */
+#div-new-product-contents h6 {
+    background-color : #EBE6E6;
+    border-radius : 10px;
+    width: 50%;
+    padding: 7px 5px 5px;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 35px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 신상품 글 안넘치도록 스타일 조정 */
+#div-new-product-contents > p {
+    margin-left : 35px;
+    width : 235px;
+    overflow : hidden;
+    text-overflow : ellipsis;
+    white-space : nowrap;
+}
+
+/* 신상품 가격정보 */
+#div-new-product-price-info {
+    margin-left: 35px;
+}
+
+/* 신상품 가격의 세일부분 강조 */
+#div-new-product-price-info p:first-child {
+    color: red;
+}
