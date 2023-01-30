@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import SearchOption from "./SearchOption";
 import SearchMenu from "./SearchMenu";
 import SearchItems from "./SearchItems";
@@ -8,6 +8,9 @@ import Loading from "../common/Loading";
 import HeaderD from "../common/HeaderD";
 import NavigationBar from "../common/NavigationBar";
 import Footer from "../common/Footer";
+import {useSearchParams} from "react-router-dom";
+import axios from "axios";
+import config from "bootstrap/js/src/util/config";
 
 const searchItemInfo = [
     {key : 0, src : "/images/MainRollingBanner_139003.jpg", title : "제품이름1",
@@ -32,6 +35,23 @@ const searchItemInfo = [
 ]
 
 function SearchPageApp() {
+    const [searchParams, setSearchParams] = useSearchParams();
+    let searchKeyword;
+    
+    const dataReceive = () => {
+        axios.get("http://localhost:8080/searchProduct", {params : {keyword : "컴퓨터"}})
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(err => {
+            
+            })
+    }
+    
+    useEffect(() => {
+        searchKeyword = searchParams.get("keyword");
+    }, [])
+    
     return (
         <div className={"container-fluid"}>
             <HeaderD />

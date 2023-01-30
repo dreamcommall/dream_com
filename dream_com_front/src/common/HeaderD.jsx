@@ -10,7 +10,7 @@ import heartHover from "../images/header/heart hover.png"
 import Keyword from "./Keyword";
 
 
-function HeaderD() {
+function HeaderD({keyword}) {
     const [isUseHover, setUseHover] = useState(1);
     const [isShopHover, setShopHover] = useState(1);
     const [isHeartHover, setHeartHover] = useState(1);
@@ -26,7 +26,7 @@ function HeaderD() {
                         </a>
                     </div>
                     <div className={"col"} style={{paddingTop: "30px"}}>
-                        <Search/>
+                        <Search keyword={keyword}/>
                     </div>
 
                     {/*인기 검색어 */}

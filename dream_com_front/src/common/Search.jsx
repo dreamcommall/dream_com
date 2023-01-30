@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import Button from "react-bootstrap/Button";
 
-function Search() {
-    const [searchTarget, setSearchTarget] = useState(""); // 검색키워드
+function Search({keyword}) {
+    const [searchKeyword, setSearchKeyword] = useState(""); // 검색키워드
     
     // 검색 input 태그에서 엔터키 누르면 작동
     const onEnterPress = (e) => {
@@ -13,12 +13,12 @@ function Search() {
     
     // 검색 input 태그에서 값이 변경될때마다 상태변경
     const updateSearchTarget = (target) => {
-        setSearchTarget(target.value);
+        setSearchKeyword(target.value);
     }
     
     // 검색 버튼 또는 엔터키 누르면 실행
     const runSearch = () => {
-        window.location.href = `/search/${searchTarget}`;
+        window.location.href = `/search?keyword=${searchKeyword}`;
     };
     
     return (
