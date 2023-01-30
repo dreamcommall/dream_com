@@ -11,7 +11,7 @@ function RepeatProductContents({style, item}) {
                 }
                 <p className={"mx-1 nanumSquareR-font-normal mb-2"}>{item.productPrice - ((item.productPrice / 100) * item.productDiscount)}원</p>
             </div>
-            <img width={179} height={179} src={item.src}/>
+            <img width={179} height={179} src={item.thumbnailImg}/>
         </div>
     );
 }
