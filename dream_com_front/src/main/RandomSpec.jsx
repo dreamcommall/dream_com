@@ -1,35 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "../fonts/fontStyle.css"
-import axios from "axios";
-
-// 작성자 : MoonNight285
-// 랜덤으로 추천해주는 견적의 박스영역의 디자인
-const randomSpecWrapperSize = {
-    border : "2px solid #EBEBEB",
-    width : 435,
-    height : 435
-}
-
-// 작성자 : MoonNight285
-// 랜덤으로 추천해주는 스펙의 리스트 스타일 수정
-const randomSpecListStyle = {
-    listStyleType : "none"
-}
-
-// 작성자 : MoonNight285
-// 랜덤으로 추천해주는 스펙의 리스트안에 들어가는 박스 스타일 수정
-const specInfoSize = {
-    width: 125,
-    height: 35,
-    backgroundColor : "#f4f4f4",
-    borderRadius : 15,
-    overflow : "hidden",
-    textOverflow : "ellipsis",
-    whiteSpace : "nowrap",
-    padding : 5,
-    paddingLeft : 10,
-    textAlign : "center"
-}
+import "./RandomSpec.css"
 
 // 작성자 : MoonNight285
 // 랜덤으로 추천해줄때 사용되는 문구설정
@@ -39,19 +10,11 @@ const randomSpecComment = [
     {key : 2, title : "요즘 핫한"}
 ]
 
-// 신상품 글 안넘치도록 스타일 조정
-const contentStyle = {
-    marginLeft : 35,
-    width : 235,
-    overflow : "hidden",
-    textOverflow : "ellipsis",
-    whiteSpace : "nowrap"
-}
-
 // 작성자 : MoonNight285
 // 랜덤으로 견적을 추천해주는 컴포넌트
 function RandomSpec({randomSpec, partNames}) {
     const [randomComment, setRandomComment] = useState("");
+    console.log(randomSpec);
 
     useEffect(() => {
         const randomIdx = Number.parseInt(((Math.random() - 0.1) * (randomSpecComment.length)).toString());
@@ -59,7 +22,7 @@ function RandomSpec({randomSpec, partNames}) {
     }, [])
 
     return (
-        <div style={randomSpecWrapperSize} className={"me-3"}>
+        <div id={"div-random-spec-wrapper"} className={"me-3"}>
             <div className={"d-flex align-items-center justify-content-center mx-3 mt-2 mb-2"}>
                 <img src={"/images/recommend.png"}/>
             </div>
@@ -68,16 +31,16 @@ function RandomSpec({randomSpec, partNames}) {
             </div>
             <h5 className={"text-center mb-4 nanumSquareB-font-XNormal"}>{randomComment} 제품</h5>
             <div className={"d-flex mb-0"}>
-                <img width={225} height={225} className={"ms-4 pe-2"} src={"/images/MainRollingBanner_139003.jpg"} />
+                <img width={225} height={225} className={"ms-4 pe-2"} src={randomSpec.thumbnailImg} />
                 <div>
                     <ul className={"mt-2 ps-4"}>
                         {
                             // 추천 제품 스펙부분
                             partNames.map(item => {
                                 return (
-                                    <li style={randomSpecListStyle}>
+                                    <li>
                                         <div title={item} className={"d-flex align-items-center justify-content-center mb-2 nanumSquareR-font-normal"}>
-                                            <p className={"my-0"} style={specInfoSize}>{item}</p>
+                                            <p className={"p-random-spec-value"}>{item}</p>
                                         </div>
                                     </li>
                                 );
@@ -90,11 +53,11 @@ function RandomSpec({randomSpec, partNames}) {
                 // 추천 제품 판매글 & 할인율 & 가격
                 randomSpec.map(item => {
                     return (
-                        <div key={item.key}>
-                            <p className={"mx-4 mt-2 mb-1 nanumSquareR-font-normal"}>{item.productTitle}</p>
+                        <div title={item.productTitle} key={item.key}>
+                            <p id={"p-random-spec-product-title"} className={"mx-4 mt-2 mb-1 nanumSquareR-font-normal"}>{item.productTitle}</p>
                             <div className={"d-flex mx-4"}>
                                 {
-                                    item.productDiscount == 0 ? <p/> : <p style={{color : "red"}} className={"me-3 nanumSquareB-font-normal"}>{item.productDiscount}% 할인</p>
+                                    item.productDiscount == 0 ? <p/> : <p id={"p-random-spec-sale"} className={"me-3 nanumSquareB-font-normal"}>{item.productDiscount}% 할인</p>
                                 }
                                 <p className={"nanumSquareR-font-normal"}>{item.productPrice - ((item.productPrice / 100) * item.productDiscount)}원</p>
                             </div>

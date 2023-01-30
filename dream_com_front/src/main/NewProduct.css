@@ -1,0 +1,12 @@
+/* 신규등록 상품을 감싸는 부모 태그의 넓이 및 배경색 조절 */
+#div-new-product-wrapper {
+    width: 850px;
+    height: 435px;
+    background-color: #f7f9fa;
+}
+
+/* 신규등록 상품을 보여주는 캐러셀의 크기, 아이템의 위치를 조절 */
+#div-new-product-slider {
+    width: 85%;
+    margin-left: 65px;
+}

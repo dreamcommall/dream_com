@@ -1,0 +1,12 @@
+/* 현시간 인기상품의 상품명을 한줄로 제한 */
+#p-main-popular-content {
+    overflow: hidden;
+    width: 250px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 현시간 인기상품의 세일표시 글의 색상 강조 */
+#p-main-popular-content-sale {
+    color: red;
+}
