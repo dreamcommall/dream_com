@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "./DetailBodyProductSubInfo.css"
-import "../fonts/fontStyle.css"
+import "../../fonts/fontStyle.css"
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';

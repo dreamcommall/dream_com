@@ -6,7 +6,7 @@ import DetailBodyProductInfoSummary from "./DetailBodyProductInfoSummary";
 import DetailBodyProductReviewSummary from "./DetailBodyProductReviewSummary";
 import DetailBodyProductReview from "./DetailBodyProductReview";
 import DetailBodyProductReviewContents from "./DetailBodyProductReviewContents";
-import DetailReviewPagination from "./DetailReviewPagination";
+import DetailBodyReviewPagination from "./DetailBodyReviewPagination";
 
 const sampleReviewContentList = [
     {key : 0, userId : "testUser1", createDate : "2023-01-26", deliveryReview : "배송이 빨라요", specReview : "좋아요" ,
@@ -36,7 +36,7 @@ function DetailBody() {
                     return <DetailBodyProductReviewContents key={item.key} data={item}/>
                 })
             }
-            <DetailReviewPagination />
+            <DetailBodyReviewPagination />
         </div>
     );
 }

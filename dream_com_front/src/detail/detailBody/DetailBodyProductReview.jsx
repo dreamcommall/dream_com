@@ -1,7 +1,7 @@
 import React from "react";
 import "./DetailBodyProductReview.css"
 import Form from 'react-bootstrap/Form';
-import "../fonts/fontStyle.css"
+import "../../fonts/fontStyle.css"
 
 // 제품 상세페이지에서 리뷰를 보기위해 기준을 선택하는 컴포넌트
 function DetailBodyProductReview() {

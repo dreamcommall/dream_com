@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import Pagination from 'react-bootstrap/Pagination';
-import "./DetailReviewPagination.css"
+import "./DetailBodyReviewPagination.css"
 import {Link} from "react-router-dom";
 
-function DetailReviewPagination({currentPageNumber, firstPageNumber, lastPageNumber, keyword}) {
+function DetailBodyReviewPagination({currentPageNumber, firstPageNumber, lastPageNumber, keyword}) {
     const [pageNumberList, setPageNumberList] = useState([]); // 페이지 번호를 담기위한 공간
     
     useEffect(() => {
@@ -58,4 +58,4 @@ function DetailReviewPagination({currentPageNumber, firstPageNumber, lastPageNum
     );
 }
 
-export default DetailReviewPagination;
+export default DetailBodyReviewPagination;
