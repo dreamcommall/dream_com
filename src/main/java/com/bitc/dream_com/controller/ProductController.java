@@ -153,7 +153,14 @@ public class ProductController {
                                 @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                 @RequestParam(value = "minPrice") int minPrice,
                                 @RequestParam(value = "maxPrice") int maxPrice) throws Exception {
-
+//        카테고리 파라미터 미입력 시 변환
+        if(type == null) {
+            type = "";
+        }
+//        제조사 파라미터 미입력 시 변환
+        if(company == null) {
+            company = new ArrayList<>();
+        }
 //        검색어 띄어쓰기 단위로 자르기
         String[] word = searchWord.split(" ");
 
@@ -169,7 +176,7 @@ public class ProductController {
         for (int i = 0; i < word.length; i++) {
             List<ProductDto> result = null;
 //            카테고리 미선택 시
-            if(type.equals("") && company.size() == 0) {
+            if(type.equals("") && (company.size() == 0)) {
                 result = productService.searchProduct(word[i], minPrice, maxPrice);
             }
 //            제품 카테고리만 선택 시
@@ -243,11 +250,19 @@ public class ProductController {
 
 
     @RequestMapping(value = "searchDiscountProduct", method = RequestMethod.GET)
-    public Object searchDiscountProduct(@RequestParam("keyword") String searchWord, @RequestParam(value = "type") String type,
-                                @RequestParam(value = "company") List company,
+    public Object searchDiscountProduct(@RequestParam("keyword") String searchWord, @RequestParam(value = "type", required = false) String type,
+                                @RequestParam(value = "company", required = false) List company,
                                 @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                 @RequestParam(value = "minPrice") int minPrice,
                                 @RequestParam(value = "maxPrice") int maxPrice) throws Exception {
+//        카테고리 파라미터 미입력 시 변환
+        if(type == null) {
+            type = "";
+        }
+//        제조사 파라미터 미입력 시 변환
+        if(company == null) {
+            company = new ArrayList<>();
+        }
 
 //        검색어 띄어쓰기 단위로 자르기
         String[] word = searchWord.split(" ");
