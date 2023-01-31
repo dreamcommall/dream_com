@@ -1,6 +1,8 @@
 package com.bitc.dream_com.service;
 
 import com.bitc.dream_com.dto.ReviewDto;
+import com.bitc.dream_com.dto.UserDto;
+import com.github.pagehelper.Page;
 
 import java.util.List;
 
@@ -22,5 +24,12 @@ public interface ReviewService {
 
     void deleteReview(ReviewDto reviewDto) throws Exception;
 
-    int getReview(int productNum) throws Exception;
+    int getReviewCount(int productNum) throws Exception;
+
+    int getContentReviewCount(int productNum) throws Exception;
+
+    int addLikeCount(int reviewNum) throws Exception;
+
+    Page<ReviewDto> getReviewPaging(int productNum, int pageNum) throws Exception;
+
 }

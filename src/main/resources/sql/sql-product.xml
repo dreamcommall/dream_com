@@ -126,7 +126,8 @@
         where (pr.product_title like concat('%', #{word}, '%') or pr.product_name like concat('%', #{word}, '%')
            or pa.part_name like concat('%', #{word}, '%') or pt.type_name like concat('%', #{word}, '%')
            or cp.company_name like concat('%', #{word}, '%')) and pr.product_price between #{minPrice} and #{maxPrice}
-        group by pr.product_num;
+        group by pr.product_num
+        order by pr.product_title
     </select>
 
 <!--    제품 카테고리만 선택 시 검색 결과 불러오기-->
@@ -142,7 +143,8 @@
         where (pr.product_title like concat('%', #{word}, '%') or pr.product_name like concat('%', #{word}, '%')
            or pa.part_name like concat('%', #{word}, '%') or pt.type_name like concat('%', #{word}, '%')
            or cp.company_name like concat('%', #{word}, '%')) and pt.type_name = #{type} and pr.product_price between #{minPrice} and #{maxPrice}
-        group by pr.product_num;
+        group by pr.product_num
+        order by pr.product_title
     </select>
 
 <!--    제조사 카테고리만 선택 시 검색 결과 불러오기-->
@@ -161,7 +163,8 @@
             <foreach collection="company" item="item" separator="or">
                 cp.company_name = #{item}
             </foreach>
-        group by pr.product_num;
+        group by pr.product_num
+        order by pr.product_title
     </select>
 
 <!--     카테고리 모두 선택 시 검색 결과 불러오기-->
@@ -180,7 +183,8 @@
         <foreach collection="company" item="item" separator="and">
             cp.company_name = #{item}
         </foreach>
-        group by pr.product_num;
+        group by pr.product_num
+        order by pr.product_title
     </select>
 
 <!--    제품 카테고리 목록-->
@@ -235,7 +239,23 @@
             <foreach collection="productNumList" separator="or" item="item">
                 pr.product_num = #{item}
             </foreach>
+        order by pr.product_title
     </select>
+
+<!--    할인중인 제품번호 리스트로 데이터 불러오기-->
+<!--    최종 수정일 2023-01-30-->
+<!--    최종 작성자 : 양민호-->
+    <select id="searchDiscountProductList" resultType="com.bitc.dream_com.dto.ProductDto" parameterType="java.util.List">
+        select * from product pr join category ca on pr.product_num = ca.product_num
+                                 join product_type pt on ca.type_num = pt.type_num
+        where
+            <foreach collection="productNumList" separator="or" item="item">
+                pr.product_num = #{item}
+            </foreach>
+        order by pr.product_discount desc
+    </select>
+
+
 
 <!--    할인제품 검색결과 불러오기-->
 <!--    최종 수정일 2023-01-30-->
@@ -250,7 +270,8 @@
         where (pr.product_title like concat('%', #{word}, '%') or pr.product_name like concat('%', #{word}, '%')
             or pa.part_name like concat('%', #{word}, '%') or pt.type_name like concat('%', #{word}, '%')
             or cp.company_name like concat('%', #{word}, '%')) and pr.product_price between #{minPrice} and #{maxPrice} and pr.product_discount > 0
-        group by pr.product_num;
+        group by pr.product_num
+        order by pr.product_discount desc
     </select>
 
     <!--    할인제품 카테고리만 선택 시 검색 결과 불러오기-->
@@ -267,7 +288,8 @@
             or pa.part_name like concat('%', #{word}, '%') or pt.type_name like concat('%', #{word}, '%')
             or cp.company_name like concat('%', #{word}, '%'))
           and pt.type_name = #{type} and pr.product_price between #{minPrice} and #{maxPrice} and pr.product_discount > 0
-        group by pr.product_num;
+        group by pr.product_num
+        order by pr.product_discount desc
     </select>
 
     <!--    할인제품 제조사 카테고리만 선택 시 검색 결과 불러오기-->
@@ -286,7 +308,8 @@
         <foreach collection="company" item="item" separator="or">
             cp.company_name = #{item}
         </foreach>
-        group by pr.product_num;
+        group by pr.product_num
+        order by pr.product_discount desc
     </select>
 
     <!--    할인제품 카테고리 모두 선택 시 검색 결과 불러오기-->
@@ -306,6 +329,14 @@
         <foreach collection="company" item="item" separator="and">
             cp.company_name = #{item}
         </foreach>
-        group by pr.product_num;
+        group by pr.product_num
+        order by pr.product_discount
     </select>
+
+<!--    제품 클릭 시 클릭 카운트 증가-->
+<!--    최종 수정일 2023-01-31-->
+<!--    최종 작성자 : 양민호-->
+    <update id="addClickCount" parameterType="int">
+        update product set click_count = click_count + 1 where product_num = #{productNum}
+    </update>
 </mapper>
