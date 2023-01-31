@@ -4,11 +4,13 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import "./SearchOption.css"
 import "../fonts/fontStyle.css"
 
-function SearchOption() {
+function SearchOption({funcSearchOption}) {
     const [btnColor, setBtnColor] = useState("");
     
+    // 버튼 클릭시 상태값을 통해 버튼의 이름을 변경하고 변경한 이름을 옵션에 전달
     const changeBtnColor = (btnName => {
         setBtnColor(btnName);
+        funcSearchOption(btnName);
     });
     
     useEffect(() => {

@@ -4,11 +4,14 @@ import Button from 'react-bootstrap/Button'
 import "./SearchMenu.css"
 import {Link} from "react-router-dom";
 
-function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, funcUpdateCompanies}) {
+// 제조사 체크박스 선택부분에 버그가 존재
+// 상태값 변동이 제대로 안됨
+function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, funcUpdateCompanies, funcUpdateMinPrice, funcUpdateMaxPrice}) {
     const [categoryTitle, setCategoryTitle] = useState("");
     const [categoryKey, setCategoryKey] = useState(-1);
     const [companyCheckList, setCompanyCheckList] = useState([]);
     const [searchKeyword, setSearchKeyword] = useState(""); // 검색키워드
+    const [companyIsChecked, setCompanyIsChecked] = useState([]); // 선택한 카테고리의 제조사명단의 체크여부값
     
     // 검색 input 태그에서 엔터키 누르면 작동
     const onEnterPress = (e) => {
@@ -27,34 +30,43 @@ function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, fun
         setSearchKeyword(target.value);
     }
     
-    // 초기화 버튼 클릭시 초기값으로 설정
-    const initCompanyCheckList = () => {
+    // 카테고리 제조사 선택여부를 초기화한다.
+    const initCompanyIsChecked = () => {
         let temp = [];
-        for(let i = 0; i < companyList.length; ++i) {
+        for (let i = 0; i < companyList.length; ++i) {
             temp.push(false);
         }
-        setCompanyCheckList(temp);
-        funcUpdateCompanies(temp);
+        setCompanyIsChecked(temp);
+    }
+    
+    // 초기화 버튼 클릭시 초기값으로 설정
+    const initCompanyCheckList = () => {
+        setCompanyCheckList([]);
+        funcUpdateCompanies([]);
     }
     
     // 제조사 체크박스를 클릭할때마다 선택한 값의 상태값과 그 값을 기준으로 어떤회사를 선택했는지를 저장
-    const setCompanyCheck = (key) => {
-        let temp = [];
-        for(let i = 0; i < companyCheckList.length; ++i) {
-            if (key == i) {
-                temp.push(!companyCheckList[i]);
-                continue;
-            }
-            temp.push(companyCheckList[i]);
+    const setCompanyCheck = (target) => {
+        let temp = []; // 임시배열 생성
+        
+        companyCheckList.forEach(item => { // 저장되어있는 제조사 선택명단을 불러옴
+            temp.push(item);
+        });
+        
+        if (temp.indexOf(target.value) == -1) { // 유저가 선택한 값이 있는지 확인
+            temp.push(target.value);
+        } else {
+            temp = temp.filter(item => item != target.value); // 있으면 제거
         }
+        
         setCompanyCheckList(temp);
-        funcUpdateCompanies(temp);
     }
     
     const clearSearchOption = () => {
         if (window.confirm("초기화를 진행할까요?")) {
             setCategoryKey(-1)
             initCompanyCheckList();
+            initCompanyIsChecked();
         }
     }
 
@@ -66,7 +78,17 @@ function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, fun
     
     useEffect(() => {
         initCompanyCheckList();
-    }, [])
+        initCompanyIsChecked();
+    }, []);
+    
+    useEffect(() => {
+        initCompanyCheckList();
+        initCompanyIsChecked();
+    }, [categoryTitle, companyList]);
+    
+    useEffect(() => {;
+        funcUpdateCompanies(companyCheckList);
+    }, [companyCheckList])
     
     return (
         <div>
@@ -105,9 +127,10 @@ function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, fun
                         <div id={"div-company-list-wrapper"}>
                             {
                                 companyList.map(item => {
-                                    return <div key={item.companyNum} className={"d-flex align-items-center mx-3 nanumSquareR-font-normal"}>
-                                        <input onChange={() => setCompanyCheck(item.companyNum)} checked={companyCheckList[item.companyNum]} style={{zoom : 1.5}} className={"mx-2"} type={"checkbox"}/>
-                                        <span>{item.companyName}({item.productNum})</span>
+                                    return <div className={"d-flex align-items-center mx-3 nanumSquareR-font-normal"}>
+                                        <input onChange={(e) => {setCompanyCheck(e.target)}} checked={companyIsChecked[item.key]} style={{zoom : 1.5}} className={"mx-2"} type={"checkbox"}
+                                        value={item.companyName}/>
+                                        <span>{item.companyName}</span>
                                     </div>
                                 })
                             }
@@ -119,9 +142,9 @@ function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, fun
                 <div className={"d-flex align-items-center div-search-option-bottom"}>
                     <p className={"my-0 mx-2 nanumSquareR-font-normal"}>가격대</p>
                     <div>
-                        <input maxLength={15} type={"text"}/>
+                        <input onChange={(e) => {funcUpdateMinPrice(e.target)}} maxLength={15} type={"text"}/>
                         <span className={"mx-1"}>~</span>
-                        <input maxLength={15} type={"text"}/>
+                        <input onChange={(e) => {funcUpdateMaxPrice(e.target)}} maxLength={15} type={"text"}/>
                     </div>
                 </div>
                 <div className={"d-flex mx-4 align-items-center div-search-option-bottom"}>

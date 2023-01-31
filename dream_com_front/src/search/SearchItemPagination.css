@@ -18,3 +18,8 @@
     background-color: #e26e6e;
     color: white;
 }
+
+.link-search-pagination {
+    color: black;
+    text-decoration: none;
+}
