@@ -13,8 +13,7 @@ function SearchTest() {
         com: com.join(",")
     }
     const search = () => {
-        axios.get("http://localhost:8080/searchProduct", {params: {keyword: word, type: "", company: coms.com, minPrice: 0, maxPrice: 0,
-            pageNum : 4}})
+        axios.get("http://localhost:8080/searchProduct", {params: {keyword: word, minPrice: 0, maxPrice: 0}})
             .then((req) => {
                 console.log(req.data);
             })
