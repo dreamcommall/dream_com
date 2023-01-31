@@ -23,4 +23,12 @@ public interface ReviewMapper {
     void deleteReview(ReviewDto reviewDto) throws Exception;
 
     int getReview(int productNum) throws Exception;
+
+    List<ReviewDto> noiseMsg() throws Exception;
+
+    List<ReviewDto> specMsg() throws Exception;
+
+    List<ReviewDto> packagingMsg() throws Exception;
+
+    List<ReviewDto> deliveryMsg() throws Exception;
 }

@@ -56,4 +56,24 @@ public class ReviewServiceImpl implements ReviewService{
     public int getReview(int productNum) throws Exception {
         return reviewMapper.getReview(productNum);
     }
+
+    @Override
+    public List<ReviewDto> noiseMsg() throws Exception {
+        return reviewMapper.noiseMsg();
+    }
+
+    @Override
+    public List<ReviewDto> specMsg() throws Exception {
+        return reviewMapper.specMsg();
+    }
+
+    @Override
+    public List<ReviewDto> packagingMsg() throws Exception {
+        return reviewMapper.packagingMsg();
+    }
+
+    @Override
+    public List<ReviewDto> deliveryMsg() throws Exception {
+        return reviewMapper.deliveryMsg();
+    }
 }
