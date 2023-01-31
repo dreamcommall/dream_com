@@ -1,0 +1,32 @@
+#div-info {
+    width: 470px;
+    height: 100px;
+    margin-left: 15px;
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#div-productImg {
+    float: left;
+    margin-top: 7px;
+    margin-right: 15px;
+}
+
+#div-productImg img {
+    width: 100px;
+}
+
+
+#p-productTitle, #p-productName {
+    margin: 0px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#p-productName {
+    margin-bottom: 10px;
+}

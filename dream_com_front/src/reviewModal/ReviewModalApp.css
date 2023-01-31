@@ -1,0 +1,14 @@
+#div-reviewModal {
+    width: 500px;
+}
+
+#button-close {
+    border: 1px solid lightgrey;
+    float: right;
+    height: 40px;
+    width: 40px;
+    font-size: 25px;
+    border-radius: 4px;
+    margin-top: 4px;
+    background-color: white;
+}
