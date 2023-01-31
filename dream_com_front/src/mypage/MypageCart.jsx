@@ -28,7 +28,7 @@ function MypageCart(){
                 </thead>
 
                 <tbody className={"text-center"}>
-                    <tr>
+                    <tr className={"tableCart"}>
                         <td>
                             <div className={"img-fluid ms-1"}>
                                 <a href={"#"}><img src={"images/logo192.png"} /></a>
@@ -65,9 +65,9 @@ function MypageCart(){
             </table>
             <div className={"text-center nanumSquareR-font-normal"}>
                 <div className={"totalPrice"}>총 상품금액: 3,000,000</div>
-                <div className={"float-start ms-4"}>-</div>
+                <div className={"float-start ms-4 mt-3"}>-</div>
                 <div className={"totalSale"}>총 할인금액 : 20,000</div>
-                <div className={"float-start ms-4"}>=</div>
+                <div className={"float-start ms-4 mt-3"}>=</div>
                 <div className={"totalMoney ms-4"}>총 금액 : 2,980,000</div>
             </div>
             <br/>

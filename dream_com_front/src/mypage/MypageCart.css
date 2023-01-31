@@ -15,7 +15,7 @@
 }
 
 .title{
-    border: 1px solid lightgrey;
+    padding: 15px;
 }
 
 .deleteCart{
@@ -34,6 +34,7 @@
     height: 50px;
     border: 1px solid lightgrey;
     background: white;
+    margin-left: 40px;
 }
 
 .deleteCart:hover{
@@ -64,8 +65,8 @@
 .totalPrice{
     display: flex;
     float: left;
-    margin-left: 250px;
-    margin-top: 10px;
+    margin-left: 320px;
+    margin-top: 15px;
     font-size: 20px;
 }
 
@@ -73,10 +74,15 @@
     display: flex;
     float: left;
     margin-left: 20px;
+    margin-top: 15px;
     font-size: 20px;
 }
 
 .totalMoney{
     float: left;
     font-size: 20px;
+    margin-top: 15px;
+}
+.tableCart:hover{
+    background: #f7f9fa;
 }
