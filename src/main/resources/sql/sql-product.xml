@@ -198,6 +198,8 @@
             join category ca on co.company_num = ca.company_num
             join product_type pt on ca.type_num = pt.type_num
         where pt.type_name = #{type}
+        group by co.company_name
+        order by co.company_name
     </select>
 
 <!--    키워드 검색-->
