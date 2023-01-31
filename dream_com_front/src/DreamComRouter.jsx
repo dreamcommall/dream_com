@@ -16,9 +16,6 @@ function DreamComRouter() {
             <Routes>
                 <Route path={"/main"} element={<MainPageApp />}></Route>
                 <Route path={"/search"} element={<SearchPageApp />}></Route>
-                <Route path={"/mypage"} element={<BuyProductList />}></Route>
-                <Route path={"/mypageCart"} element={<MypageCart />}></Route>
-                <Route path={"/mypageWishList"} element={<MypageWishList />}></Route>
             </Routes>
         </BrowserRouter>
     )

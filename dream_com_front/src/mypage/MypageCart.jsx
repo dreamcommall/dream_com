@@ -34,12 +34,12 @@ function MypageCart(){
                                 <a href={"#"}><img src={"images/logo192.png"} /></a>
                                 <div style={{marginLeft:"100px"}}>
                                     <a href={"#"} className={"productTitle"}>
-                                        <div className={"mt-0"}>[레노버] ThinkStation P358 TWR-30GLS00A00 AMD R7-5845 [16G/512G/T1000/Win11Pro] [기본제품]</div>
+                                        <div>[레노버] ThinkStation P358 TWR-30GLS00A00 AMD R7-5845 [16G/512G/T1000/Win11Pro] [기본제품]</div>
                                     </a>
-                                    <div className={"mt-3 option"}>
-                                        <div>옵션</div>
-                                        <div>AMD Ryzen 7 PRO 5845, NVIDIA T1000 8GB GDDR6 HP, 16GB DDR 3200 NDIMM 1RX8</div>
-                                    </div>
+                                    {/*<div className={"mt-3 option"}>*/}
+                                        {/*<div>옵션</div>*/}
+                                        {/*<div>AMD Ryzen 7 PRO 5845, NVIDIA T1000 8GB GDDR6 HP, 16GB DDR 3200 NDIMM 1RX8</div>*/}
+                                    {/*</div>*/}
                                 </div>
                             </div>
                         </td>

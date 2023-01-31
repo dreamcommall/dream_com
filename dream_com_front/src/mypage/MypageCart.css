@@ -53,8 +53,14 @@
 }
 
 .productTitle{
+    font-size: 19px;
     text-decoration: none;
     color: black;
+}
+
+.productTitle div{
+    padding-top: 20px;
+    padding-right: 10px;
 }
 
 .productTitle:hover{
