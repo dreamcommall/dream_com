@@ -22,10 +22,10 @@ const sampleReviewContentList = [
 ]
 
 // 제품 상세페이지의 가격정보 ~ 리뷰까지 보여주는 부분을 구성하는 컴포넌트
-function DetailBody() {
+function DetailBody(props) {
     return (
         <div>
-            <DetailBodyProductInfo />
+            <DetailBodyProductInfo data={props}/>
             <DetailBodyProductPurchaseTip />
             <DetailBodyProductMainImg src={"/images/product_test_main_img.jpg"} />
             <DetailBodyProductInfoSummary />

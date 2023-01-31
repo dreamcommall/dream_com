@@ -10,7 +10,7 @@ const productMiniThumbnailList = [
 ]
 
 // 상품의 이미지나 가격정보를 보여주는 컴포넌트
-function DetailBodyProductInfo() {
+function DetailBodyProductInfo(props) {
     return (
         <div className={"d-flex"}>
             <div id={"div-detail-product-info-thumbnail"}>

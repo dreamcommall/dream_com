@@ -42,8 +42,8 @@ function DetailApp() {
                 <Loading loadStatus={isLoad} />
                 <DetailNavMenu />
                 <SidebarApp />
-                <DetailHeader />
-                <DetailBody />
+                <DetailHeader data={productInfo} />
+                <DetailBody data={productInfo} />
                 <DetailFooter />
             </div>
             <Footer />
