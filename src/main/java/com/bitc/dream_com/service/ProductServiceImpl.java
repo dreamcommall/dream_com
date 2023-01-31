@@ -142,6 +142,13 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.searchProductList(productNumList);
     }
 
+//    할인 제품 페이징
+    @Override
+    public Page<ProductDto> searchDiscountProductList(List productNumList, int pageNum) throws Exception {
+        PageHelper.startPage(pageNum, 5);
+        return productMapper.searchDiscountProductList(productNumList);
+    }
+
     @Override
     public List<ProductDto> searchDiscountProduct(String word, int minPrice, int maxPrice) throws Exception {
         return productMapper.searchDiscountProduct(word, minPrice, maxPrice);
@@ -160,5 +167,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> searchDiscountProductAll(String word, String type, List company, int minPrice, int maxPrice) throws Exception {
         return productMapper.searchDiscountProductAll(word, type, company, minPrice, maxPrice);
+    }
+
+    @Override
+    public int addClickCount(int productNum) throws Exception {
+        return productMapper.addClickCount(productNum);
     }
 }
