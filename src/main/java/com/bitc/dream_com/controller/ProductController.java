@@ -134,12 +134,19 @@ public class ProductController {
     }
 
 //    제조사 카테고리 목록
-//    최종 수정일 2023-01-25
+//    최종 수정일 2023-01-31
 //    최종 작성자 : 양민호
     @RequestMapping(value = "/company", method = RequestMethod.GET)
     public Object company(@RequestParam(value = "type") String type) throws Exception {
         List<CompanyDto> company = productService.company(type);
-        return company;
+        List<Object> companyList = new ArrayList<>();
+        for(int i = 0; i < company.size(); i++) {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("companyName", company.get(i).getCompanyName());
+            map.put("key", i);
+            companyList.add(map);
+        }
+        return companyList;
     }
 
 
