@@ -42,7 +42,7 @@ function DetailBodyProductInfo({productInfo}) {
                     }
                 </div>
             </div>
-            <DetailBodyProductSubInfo />
+            <DetailBodyProductSubInfo productInfo={productInfo} />
         </div>
     );
 }

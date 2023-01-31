@@ -6,13 +6,29 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 // 제품의 가격정보등을 보여주는 컴포넌트
-function DetailBodyProductSubInfo(props) {
-    const [productCount, setProductCount] = useState(0);
+function DetailBodyProductSubInfo({productInfo}) {
+    const [productNum, setProductNum] = useState(0); // 상품번호
+    const [productDiscount, setProductDiscount] = useState(0); // 할인율
+    const [productPrice, setProductPrice] = useState(0); // 가격
+    const [reviewCount, setReviewCount] = useState(0); // 평점 개수
+    const [score, setScore] = useState(0); // 평점
+    const [productTitle, setProductTitle] = useState(""); // 상품 제목
+    const [discountPrice, setDiscountPrice] = useState(0); // 할인 된 가격
+    const [totalPrice, setTotalPrice] = useState(0); // 총 합계 금액
+    const [quantity, setQuantity] = useState(0); // 제품의 재고 수량
+    const [productCount, setProductCount] = useState(0); // 제품 개수 선택에 사용되는 값
 
+    // 제품 개수 선택(증가)
     const plusProductCount = () => {
+        if (productCount == quantity) {
+            alert("상품의 재고수량보다 더 많이 선택할 수 없습니다.");
+            return;
+        }
+
         setProductCount(productCount + 1);
     }
 
+    // 제품 개수 선택(감소)
     const minusProductCount = () => {
         if (productCount <= 0) {
             return;
@@ -21,28 +37,47 @@ function DetailBodyProductSubInfo(props) {
         setProductCount(productCount - 1);
     }
 
+    useEffect(() => {
+        if (productInfo == undefined) {
+            return;
+        }
+        setProductNum(productInfo[0].productNum);
+        setProductDiscount(productInfo[0].productDiscount);
+        setProductPrice(productInfo[0].productPrice);
+        setScore(productInfo[0].score);
+        setReviewCount(productInfo[0].reviewCount);
+        setProductTitle(productInfo[0].productTitle);
+        setQuantity(productInfo[0].inventoryQuantity);
+        setDiscountPrice(productInfo[0].productPrice -
+            ((productInfo[0].productPrice / 100) * productInfo[0].productDiscount));
+    }, [productInfo]);
+
+    useEffect(() => {
+        setTotalPrice(discountPrice * productCount);
+    }, [productCount])
+
     return (
         <div id={"div-detail-product-sub-info"}>
             <div className={"d-flex justify-content-end me-1"}>
-                <p className={"nanumSquareR-font-normal"}>상품번호 : 12345</p>
+                <p className={"nanumSquareR-font-normal"}>상품번호 : {productNum}</p>
             </div>
             <div className={"d-flex align-items-center mx-3 div-detail-product-info-underline"}>
                 <p className={"nanumSquareB-font-XNormal div-detail-product-info-title"}>판매가</p>
                 <div className={"mx-5"}>
                     <div className={"d-flex"}>
-                        <p className={"mb-1 me-1 nanumSquareR-font-normal"}>할인율</p>
-                        <p className={"mb-1 nanumSquareR-font-normal"}>기존가격</p>
+                        <p className={"mb-1 me-1 nanumSquareR-font-normal"}>{productDiscount}% 할인</p>
+                        <p className={"mb-1 nanumSquareR-font-normal"}>{productPrice}원</p>
                     </div>
-                    <p className={"nanumSquareR-font-normal"}>할인가격</p>
+                    <p className={"nanumSquareR-font-normal"}>{discountPrice}원</p>
                 </div>
             </div>
             <div className={"d-flex align-items-center mx-3 div-detail-product-info-underline"}>
                 <p className={"nanumSquareB-font-XNormal div-detail-product-info-title"}>상품평</p>
-                <p className={"mx-5 nanumSquareR-font-normal"}>별점(댓글 개수)</p>
+                <p className={"mx-5 nanumSquareR-font-normal"}>{score}점({reviewCount})</p>
             </div>
             <div className={"d-flex align-items-center mx-3 div-detail-product-info-underline"}>
-                <p className={"nanumSquareB-font-XNormal div-detail-product-info-title"}>카드혜택</p>
-                <p className={"mx-5 nanumSquareR-font-normal"}>무이자 할부</p>
+                <p className={"nanumSquareB-font-XNormal div-detail-product-info-title"}>재고수량</p>
+                <p className={"mx-5 nanumSquareR-font-normal"}>{quantity}개</p>
             </div>
             <div className={"d-flex align-items-center mx-3 div-detail-product-info-underline"}>
                 <p className={"nanumSquareB-font-XNormal div-detail-product-info-title"}>배송정보</p>
@@ -53,18 +88,18 @@ function DetailBodyProductSubInfo(props) {
                 <p className={"mx-5 nanumSquareR-font-normal"}>무료배송</p>
             </div>
             <div id={"div-detail-product-price-info"} className={"mx-3 mb-3"}>
-                <p className={"nanumSquareR-font-XNormal p-3"}>상품제목입니다.</p>
+                <p className={"nanumSquareR-font-XNormal p-3"}>{productTitle}</p>
                 <div className={"d-flex justify-content-between align-items-center p-3"}>
                     <InputGroup id={"inputGroup-detail-product-calculator"}>
                         <Button variant="outline-secondary" onClick={minusProductCount}>-</Button>
                         <Form.Control value={productCount == undefined ? 0 : productCount}/>
                         <Button variant="outline-secondary" onClick={plusProductCount}>+</Button>
                     </InputGroup>
-                    <p className={"mb-0 nanumSquareB-font-XNormal"}>가격입니다.</p>
+                    <p className={"mb-0 nanumSquareB-font-XNormal"}>{totalPrice}원</p>
                 </div>
             </div>
             <div className={"d-flex justify-content-end me-3"}>
-                <p className={"nanumSquareB-font-large"}>총 합계 금액 <span id={"span-detail-product-price"}>100000원</span></p>
+                <p className={"nanumSquareB-font-large"}>총 합계 금액 <span id={"span-detail-product-price"}>{totalPrice}원</span></p>
             </div>
             <div id={"div-detail-product-purchase-option"}>
                 <div><img src={"images/heart.png"} /></div>
