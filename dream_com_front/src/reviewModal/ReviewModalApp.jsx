@@ -2,6 +2,7 @@ import React from "react";
 import "./ReviewModalApp.css";
 import ReviewModalProductInfo from "./ReviewModalProductInfo";
 import TotalScore from "./TotalScore";
+import SimpleReview from "./SimpleReview";
 
 function ReviewModalApp() {
     return (
@@ -16,6 +17,7 @@ function ReviewModalApp() {
                 <ReviewModalProductInfo />
             </div>
             <TotalScore />
+            <SimpleReview review={"소음"} url={"Noise"} />
         </div>
     )
 }

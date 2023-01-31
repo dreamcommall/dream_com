@@ -40,73 +40,73 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-// projectDir => 현재 프로젝트 경로(스프링 프로젝트)
-// dream_com_front => 리액트 프로젝트 폴더 이름
-// frontendDir 로 변수를 정의
-// $는 변수사용시 사용한다.
-def frontendDir = "$projectDir/dream_com_front"
-
-// 리액트 소스코드를 복사할 장소를 설정
-sourceSets {
-	main {
-		resources {
-			srcDirs = ["$projectDir/src/main/resources"]
-		}
-	}
-}
-
+//// projectDir => 현재 프로젝트 경로(스프링 프로젝트)
+//// dream_com_front => 리액트 프로젝트 폴더 이름
+//// frontendDir 로 변수를 정의
+//// $는 변수사용시 사용한다.
+//def frontendDir = "$projectDir/dream_com_front"
 //
-processResources {
-	dependsOn "copyReactBuildFiles"
-}
-
-// 리액트 프로젝트의 모듈을 설치하는 함수이다.
-// audit => 최적화
-// fix => 문제있는거있으면 수정
-// install => 설치
-task installReact(type: Exec) {
-	workingDir "$frontendDir"
-	inputs.dir "$frontendDir"
-	group = BasePlugin.BUILD_GROUP
-	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-		commandLine "npm.cmd", "audit", "fix"
-		commandLine "npm.cmd", "install"
-	}
-	else {
-		commandLine "npm", "audit", "fix"
-		commandLine "npm", "install"
-	}
-}
-
-// 리액트 프로젝트를 빌드하는 함수이다.
-// dependsOn "installReact" => 위에서 만듬
-// System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')
-// os에 따라 빌드방식을 변경한다.
-task buildReact(type: Exec) {
-	dependsOn "installReact"
-	workingDir "$frontendDir"
-	inputs.dir "$frontendDir"
-	group = BasePlugin.BUILD_GROUP
-	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-		commandLine "npm.cmd", "run-script", "build"
-	}
-	else {
-		commandLine "npm", "run-script", "build"
-	}
-}
-
-// 리액트 프로젝트 빌드 파일을 스프링 프로젝트로 복사한다.
-// dependsOn "buildReact" => 바로 위에 선언한 함수
-// copyReactBuildFiles => 함수명 아무거나 가능함..
-// from "$frontendDir/build" => 리액트의 빌드파일을
-// into "$buildDir/resources/main/static" => 스프링 프로젝트의 빌드위치로 복사한다.
-task copyReactBuildFiles(type: Copy) {
-	dependsOn "buildReact"
-	from "$frontendDir/build"
-	into "$buildDir/resources/main/static"
-}
-
-// 배포 시 리액트 프로젝트의 배포 파일도 함께 포함한다.
-tasks.bootJar {
-	dependsOn "copyReactBuildFiles"
-}
+//// 리액트 소스코드를 복사할 장소를 설정
+//sourceSets {
+//	main {
+//		resources {
+//			srcDirs = ["$projectDir/src/main/resources"]
+//		}
+//	}
+//}
+//
+////
+//processResources {
+//	dependsOn "copyReactBuildFiles"
+//}
+//
+//// 리액트 프로젝트의 모듈을 설치하는 함수이다.
+//// audit => 최적화
+//// fix => 문제있는거있으면 수정
+//// install => 설치
+//task installReact(type: Exec) {
+//	workingDir "$frontendDir"
+//	inputs.dir "$frontendDir"
+//	group = BasePlugin.BUILD_GROUP
+//	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+//		commandLine "npm.cmd", "audit", "fix"
+//		commandLine "npm.cmd", "install"
+//	}
+//	else {
+//		commandLine "npm", "audit", "fix"
+//		commandLine "npm", "install"
+//	}
+//}
+//
+//// 리액트 프로젝트를 빌드하는 함수이다.
+//// dependsOn "installReact" => 위에서 만듬
+//// System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')
+//// os에 따라 빌드방식을 변경한다.
+//task buildReact(type: Exec) {
+//	dependsOn "installReact"
+//	workingDir "$frontendDir"
+//	inputs.dir "$frontendDir"
+//	group = BasePlugin.BUILD_GROUP
+//	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+//		commandLine "npm.cmd", "run-script", "build"
+//	}
+//	else {
+//		commandLine "npm", "run-script", "build"
+//	}
+//}
+//
+//// 리액트 프로젝트 빌드 파일을 스프링 프로젝트로 복사한다.
+//// dependsOn "buildReact" => 바로 위에 선언한 함수
+//// copyReactBuildFiles => 함수명 아무거나 가능함..
+//// from "$frontendDir/build" => 리액트의 빌드파일을
+//// into "$buildDir/resources/main/static" => 스프링 프로젝트의 빌드위치로 복사한다.
+//task copyReactBuildFiles(type: Copy) {
+//	dependsOn "buildReact"
+//	from "$frontendDir/build"
+//	into "$buildDir/resources/main/static"
+//}
+//
+//// 배포 시 리액트 프로젝트의 배포 파일도 함께 포함한다.
+//tasks.bootJar {
+//	dependsOn "copyReactBuildFiles"
+//}

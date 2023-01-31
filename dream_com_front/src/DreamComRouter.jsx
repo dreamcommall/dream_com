@@ -5,6 +5,7 @@ import SearchPageApp from "./search/SearchPageApp";
 import DetailApp from "./detail/DetailApp";
 import ErrorPageApp from "./common/ErrorPage/ErrorPageApp";
 import PurchaseApp from "./purchase/PurchaseApp";
+import ReviewModalApp from "./reviewModal/ReviewModalApp";
 
 // 작성자 : MoonNight285
 // 라우터 관리 컴포넌트
@@ -18,6 +19,7 @@ function DreamComRouter() {
                 <Route path={"/detail"} element={<DetailApp />} />
                 <Route path={"/error"} element={<ErrorPageApp />} />
                 <Route path={"/purchase"} element={<PurchaseApp />}></Route>
+                <Route path={"review"} element={<ReviewModalApp />}></Route>
             </Routes>
         </BrowserRouter>
     )
