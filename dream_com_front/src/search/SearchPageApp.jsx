@@ -22,13 +22,23 @@ function SearchPageApp() {
     const [selectedCompaniesChecked, setSelectedCompaniesChecked] = useState([]); // 선택한 제조사들의 이름이 담긴 배열
     const [categoryMenus, setCategoryMenus] = useState([]); // DB에 저장된 카테고리 메뉴 목록
     const [companies, setCompanies] = useState([]); // 특정 카테고리를 기준으로 DB에 저장된 제조사 목록을 조회할때 사용하는 배열
+    const [minPrice, setMinPrice] = useState(0); // 검색할때 사용하는 가격의 최소값
+    const [maxPrice, setMaxPrice] = useState(0); // 검색할때 사용하는 가격의 최대값
     const [isLoad, setIsLoad] = useState(false); // 로딩창
     
     const dataReceive = async (targetKeyword) => {
         setIsLoad(true);
-
+    
+        // 서버에게 제조사 목록을 보내기 위한 셋팅
+        // 빈값이여도 이렇게 해야한다.
+        const com = [];
+        const coms = {
+            com: com.join(",")
+        }
+        
         // 서버에게 검색한 키워드를 기반으로 데이터를 조회를 요청한다.
-        await axios.get("http://localhost:8080/searchProduct", {params : {keyword : targetKeyword}})
+        await axios.get("http://localhost:8080/searchProduct", {params : {keyword : targetKeyword, type : selectedCategory,
+                minPrice : minPrice, maxPrice : maxPrice, company : coms.com}})
             .then(response => {
                 setCurrentPageNumber(response.data.CurrentPage);
                 setFirstPageNumber(response.data.FirstPage);
@@ -75,7 +85,7 @@ function SearchPageApp() {
         if (selectedCategory == "") {// 카테고리가 선택이 안되어있는경우
             return;
         }
-
+        
         setIsLoad(true);
         axios.get("http://localhost:8080/company", {params : {type : selectedCategory}})
             .then(response => {

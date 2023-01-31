@@ -105,9 +105,9 @@ function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, fun
                         <div id={"div-company-list-wrapper"}>
                             {
                                 companyList.map(item => {
-                                    return <div key={item.companyNum} className={"d-flex align-items-center mx-3 nanumSquareR-font-normal"}>
+                                    return <div className={"d-flex align-items-center mx-3 nanumSquareR-font-normal"}>
                                         <input onChange={() => setCompanyCheck(item.companyNum)} checked={companyCheckList[item.companyNum]} style={{zoom : 1.5}} className={"mx-2"} type={"checkbox"}/>
-                                        <span>{item.companyName}({item.productNum})</span>
+                                        <span>{item.companyName}</span>
                                     </div>
                                 })
                             }
