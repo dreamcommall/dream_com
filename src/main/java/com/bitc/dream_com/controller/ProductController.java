@@ -49,11 +49,9 @@ public class ProductController {
 //    최종 작성자 : 양민호
     @RequestMapping(value = "/fullProductInfo", method = RequestMethod.GET)
     public Object fullProductInfo(@RequestParam("productNum") int productNum) throws Exception {
-        List<ProductDto> list = new ArrayList<>();
         ProductDto products = productService.productData(productNum);
-        list.add(products);
 
-        return getFullData(list);
+        return getFullData(products);
     }
 
 //    클릭 수가 높은 제품 정보 불러오기
@@ -256,6 +254,11 @@ public class ProductController {
     }
 
 
+//    할인중인 제품 검색결과 불러오기 (데이터 불러오기 완료, 검색 시 결과 우선순위 미정)
+//    페이징 처리 완료 2023-01-30 양민호
+//    최종 수정일 2023-01-30
+//    최종 작성자 : 양민호
+
     @RequestMapping(value = "searchDiscountProduct", method = RequestMethod.GET)
     public Object searchDiscountProduct(@RequestParam("keyword") String searchWord, @RequestParam(value = "type", required = false) String type,
                                 @RequestParam(value = "company", required = false) List company,
@@ -343,7 +346,7 @@ public class ProductController {
         HashMap<String, Object> searchPaginationData = new HashMap<>();
         if  (productNumList.size() > 0) {
 //        productNumList에 저장된 제품번호로 검색하여 페이징 처리
-            page = new PageInfo<>(productService.searchProductPaging(productNumList, pageNum), 10);
+            page = new PageInfo<>(productService.searchDiscountProductList(productNumList, pageNum), 10);
             //        페이지 정보 해쉬맵에 저장
             searchPaginationData.put("FirstPage", page.getNavigateFirstPage());
             searchPaginationData.put("LastPage", page.getNavigateLastPage());
@@ -357,6 +360,19 @@ public class ProductController {
         }
     }
 
+//    상품 클릭 시 클릭 수 증가
+//    최종 수정일 2023-01-31
+//    최종 작성자 : 양민호
+    @RequestMapping(value = "addClickCount", method = RequestMethod.PUT)
+    public String addClickCount(@RequestParam("productNum") int productNum) throws Exception {
+        int update = productService.addClickCount(productNum);
+        if(update == 1) {
+            return "success";
+        }
+        else {
+            return "fail";
+        }
+    }
 
 
 
@@ -439,10 +455,10 @@ public class ProductController {
             }
 
 //            리뷰 개수 불러오기
-            int reviewNumber = reviewService.getReview(productNum);
+            int reviewCount = reviewService.getReviewCount(productNum);
 
 //            데이터 취합하기
-            productDetail = new ProductDetail(dtoList.get(i), companyData, specData, thumbnail, carousel, mainPageImg, detailImg, score, reviewNumber);
+            productDetail = new ProductDetail(dtoList.get(i), companyData, specData, thumbnail, carousel, mainPageImg, detailImg, score, reviewCount);
 //            데이터 리스트에 넣기
             fullData.add(productDetail);
 //            키값 설정하기
@@ -522,10 +538,10 @@ public class ProductController {
                 score = Math.round((score / reviewScore.size()) * 10) / 10.0;
             }
 //            리뷰 개수 불러오기
-        int reviewNumber = reviewService.getReview(productNum);
+        int reviewCount = reviewService.getReviewCount(productNum);
 
 //            데이터 취합하기
-            productDetail = new ProductDetail(productDto, companyData, specData, thumbnail, carousel, mainPageImg, detailImg, score, reviewNumber);
+            productDetail = new ProductDetail(productDto, companyData, specData, thumbnail, carousel, mainPageImg, detailImg, score, reviewCount);
 //            데이터 리스트에 넣기
             fullData.add(productDetail);
 //            키값 설정하기

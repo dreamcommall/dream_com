@@ -13,7 +13,7 @@ function SearchTest() {
         com: com.join(",")
     }
     const search = () => {
-        axios.get("http://localhost:8080/searchProduct", {params: {keyword: word, minPrice: 0, maxPrice: 0}})
+        axios.get("http://localhost:8080/searchDiscountProduct", {params: {keyword: word, minPrice: 0, maxPrice: 0}})
             .then((req) => {
                 console.log(req.data);
             })
@@ -41,6 +41,17 @@ function SearchTest() {
                 console.log(`에러`);
             })
     }
+
+
+    const addClickCount = () => {
+        axios.put("http://localhost:8080/addClickCount", null,  {params: {productNum: 230130001}})
+            .then((req) => {
+                console.log(req.data);
+            })
+            .catch((err) => {
+                console.log(`에러`);
+            })
+    }
     return(
         <div>
             <input type={`text`} onChange={getWord} />
@@ -48,6 +59,7 @@ function SearchTest() {
             <div>
                 <button className={`btn btn-secondary`} onClick={type}>카테고리</button>
                 <button className={`btn btn-success`} onClick={company}>제조사</button>
+                <button className={`btn btn-success`} onClick={addClickCount}>클릭 수 증가</button>
             </div>
         </div>
     );
