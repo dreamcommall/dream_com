@@ -67,6 +67,7 @@ public interface ProductMapper {
     List<CompanyDto> categoryCompany(String typeName) throws Exception;
 
     Page<ProductDto> searchProductList(List productNumList) throws Exception;
+    Page<ProductDto> searchDiscountProductList(List productNumList) throws Exception;
 
     List<ProductDto> searchDiscountProduct(String word, int minPrice, int maxPrice) throws Exception;
 
@@ -75,4 +76,6 @@ public interface ProductMapper {
     List<ProductDto> searchDiscountProductCompany(String word, List company, int minPrice, int maxPrice) throws Exception;
 
     List<ProductDto> searchDiscountProductAll(String word, String type, List company, int minPrice, int maxPrice) throws Exception;
+
+    int addClickCount(int productNum) throws Exception;
 }
