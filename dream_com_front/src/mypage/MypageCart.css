@@ -1,0 +1,82 @@
+
+#Quantity{
+    padding-top: 55px;
+}
+
+#Quantity input{
+    width: 30px;
+    padding-left: 7px;
+    border: 1px solid #f7f9fa;
+}
+
+#Quantity button{
+    width: 30px;
+    border: 1px solid #f7f9fa;
+}
+
+.title{
+    border: 1px solid lightgrey;
+}
+
+.deleteCart{
+    font-weight: bold;
+    width: 150px;
+    height: 50px;
+    border: 1px solid lightgrey;
+    background: white;
+    margin-top: 50px;
+    margin-left: 450px;
+}
+
+.buyCart{
+    font-weight: bold;
+    width: 150px;
+    height: 50px;
+    border: 1px solid lightgrey;
+    background: white;
+}
+
+.deleteCart:hover{
+    background: #e26e6e;
+    color: white;
+}
+
+.buyCart:hover{
+    background: #e26e6e;
+    color: white;
+}
+
+.option{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.productTitle{
+    text-decoration: none;
+    color: black;
+}
+
+.productTitle:hover{
+    color: black;
+    text-decoration: underline;
+}
+
+.totalPrice{
+    display: flex;
+    float: left;
+    margin-left: 250px;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.totalSale{
+    display: flex;
+    float: left;
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+.totalMoney{
+    float: left;
+    font-size: 20px;
+}
