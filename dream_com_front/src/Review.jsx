@@ -42,11 +42,21 @@ function Review(){
     }
 
     const getData = () => {
-        axios.get('http://localhost:8080/review')
+        axios.get('http://localhost:8080/productReview', {params: {productNum: 230130001}})
             .then((req) => {
                 const{data} = req;
-                setReview(data);
-                console.log(review);
+                // setReview(data);
+                console.log(req.data);
+            })
+            .catch((err) => {
+                alert('통신실패');
+            })
+    }
+
+    const reviewRate = () => {
+        axios.get('http://localhost:8080/reviewRate', {params: {productNum: 230130001}})
+            .then((req) => {
+                console.log(req.data);
             })
             .catch((err) => {
                 alert('통신실패');
@@ -59,8 +69,8 @@ function Review(){
                 score:score,
                 productNum:productNum,
                 content:content,
-                imgPath:imgPath,
-
+                imgPath:"",
+                userId: "test432",
                 dReviewNum:dReviewNum,
                 sReviewNum:sReviewNum,
                 nReviewNum:nReviewNum,
@@ -113,6 +123,7 @@ function Review(){
             <input value={pReviewNum} onChange={PReviewHandle} />
 
             <button className={"btn btn-primary"} onClick={insertDetailReview}>리뷰작성</button>
+            <button className={"btn btn-primary"} onClick={reviewRate}>평점 비율</button>
         </div>
     )
 }

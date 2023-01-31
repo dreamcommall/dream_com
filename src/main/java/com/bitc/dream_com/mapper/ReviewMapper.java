@@ -1,6 +1,7 @@
 package com.bitc.dream_com.mapper;
 
 import com.bitc.dream_com.dto.ReviewDto;
+import com.bitc.dream_com.dto.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,5 +23,9 @@ public interface ReviewMapper {
     void changeReview(ReviewDto reviewDto) throws Exception;
     void deleteReview(ReviewDto reviewDto) throws Exception;
 
-    int getReview(int productNum) throws Exception;
+    int getReviewCount(int productNum) throws Exception;
+
+    int getContentReviewCount(int productNum) throws Exception;
+
+    void addClickCount(int reviewNum) throws Exception;
 }

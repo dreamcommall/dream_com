@@ -6,9 +6,7 @@
             최종 수정일 : 2023.01.19
             최종 작성자 : 김영민 -->
     <select id="productReview" resultType="com.bitc.dream_com.dto.ReviewDto">
-        SELECT detail_review.review_num, detail_review.user_id, detail_review.content, detail_review.product_num, detail_review.createDt,
-               detail_review.img_path, detail_review.score, detail_review.like_count, user.user_id, noise_review.n_review_msg, packaging_review.p_review_msg,
-               delivery_review.d_review_msg, spec_review.s_review_msg
+        SELECT *
         FROM detail_review
                  JOIN user ON detail_review.user_id = user.user_id
                  JOIN simple_review ON detail_review.review_num = simple_review.review_num
@@ -17,7 +15,8 @@
                  JOIN packaging_review ON simple_review.p_review_num = packaging_review.p_review_num
                  JOIN spec_review ON simple_review.s_review_num = spec_review.s_review_num
         where detail_review.product_num = #{productNum}
-    </select>
+        order by detail_review.like_count desc
+</select>
 
 <!--    사용자 리뷰 보기-->
 <!--    최종 수정일 2023-01-26-->
@@ -45,7 +44,7 @@
 
     <insert id="insertDetailReview" parameterType="com.bitc.dream_com.dto.ReviewDto">
         INSERT INTO detail_review(score, user_id, product_num, content, createDt, img_path)
-        VALUES (#{score}, 'test2', #{productNum}, #{content}, NOW(), #{imgPath});
+        VALUES (#{score}, #{userId}, #{productNum}, #{content}, NOW(), #{imgPath});
     </insert>
 
     <insert id="insertSimpleReview" parameterType="com.bitc.dream_com.dto.ReviewDto">
@@ -55,7 +54,7 @@
 
     <select id="selectReviewNum" resultType="com.bitc.dream_com.dto.ReviewDto">
         SELECT review_num FROM detail_review
-        WHERE user_id = 'test1' AND product_num = #{productNum}
+        WHERE user_id = #{userId} AND product_num = #{productNum}
         ORDER BY createDt DESC
             LIMIT 1;
     </select>
@@ -82,7 +81,21 @@
 <!--    해당 제품 리뷰 개수 불러오기-->
 <!--    최종 수정일 2023-01-30-->
 <!--    최종 작성자 : 양민호-->
-    <select id="getReview" resultType="int">
+    <select id="getReviewCount" resultType="int">
         select count(*) from detail_review where product_num = #{productNum}
     </select>
+
+<!--    후기 작성한 리뷰 개수 불러오기-->
+<!--    최종 수정일 2023-01-31-->
+<!--    최종 작성자 : 양민호-->
+    <select id="getContentReviewCount" resultType="int">
+        select count(*) from detail_review where product_num = #{productNum} and content != ''
+    </select>
+
+<!--    좋아요 클릭 시 개수 증가-->
+<!--    최종 수정일 2023-01-31-->
+<!--    최종 작성자 : 양민호-->
+    <update id="addClickCount" parameterType="int">
+        update detail_review set like_count = like_count + 1 where review_num = #{reviewNum}
+    </update>
 </mapper>

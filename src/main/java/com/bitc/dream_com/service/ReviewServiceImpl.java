@@ -1,6 +1,7 @@
 package com.bitc.dream_com.service;
 
 import com.bitc.dream_com.dto.ReviewDto;
+import com.bitc.dream_com.dto.UserDto;
 import com.bitc.dream_com.mapper.ReviewMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,17 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public int getReview(int productNum) throws Exception {
-        return reviewMapper.getReview(productNum);
+    public int getReviewCount(int productNum) throws Exception {
+        return reviewMapper.getReviewCount(productNum);
+    }
+
+    @Override
+    public int getContentReviewCount(int productNum) throws Exception {
+        return reviewMapper.getContentReviewCount(productNum);
+    }
+
+    @Override
+    public void addClickCount(int reviewNum) throws Exception {
+        reviewMapper.addClickCount(reviewNum);
     }
 }
