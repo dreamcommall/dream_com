@@ -158,7 +158,7 @@
         where (pr.product_title like concat('%', #{word}, '%') or pr.product_name like concat('%', #{word}, '%')
             or pa.part_name like concat('%', #{word}, '%') or pt.type_name like concat('%', #{word}, '%')
             or cp.company_name like concat('%', #{word}, '%')) and pr.product_price between #{minPrice} and #{maxPrice} and
-            <foreach collection="company" item="item" separator="and">
+            <foreach collection="company" item="item" separator="or">
                 cp.company_name = #{item}
             </foreach>
         group by pr.product_num;
@@ -283,7 +283,7 @@
         where (pr.product_title like concat('%', #{word}, '%') or pr.product_name like concat('%', #{word}, '%')
         or pa.part_name like concat('%', #{word}, '%') or pt.type_name like concat('%', #{word}, '%')
         or cp.company_name like concat('%', #{word}, '%')) and pr.product_price between #{minPrice} and #{maxPrice} and pr.product_discount > 0 and
-        <foreach collection="company" item="item" separator="and">
+        <foreach collection="company" item="item" separator="or">
             cp.company_name = #{item}
         </foreach>
         group by pr.product_num;
