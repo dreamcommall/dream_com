@@ -430,6 +430,10 @@ public class ProductController {
                     detailImg = j.getImgPath();
                 }
             }
+//            캐러셀 이미지 없는 경우 썸네일로 대체
+            if(carousel.size() == 0) {
+                carousel.add(thumbnail);
+            }
 
 //        스펙 불러오기
             List<SpecDto> spec = productService.getProductSpec(productNum);
