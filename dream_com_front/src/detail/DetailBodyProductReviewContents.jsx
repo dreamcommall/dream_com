@@ -5,7 +5,7 @@ import "./DetailBodyProductReviewContents.css"
 // 리뷰의 내용을 표시하는 컴포넌트
 function DetailBodyProductReviewContents(props) {
     return (
-        <div id={"div-detail-review-contents-wrapper"}>
+        <div className={"div-detail-review-contents-wrapper"}>
             <div className={"d-flex justify-content-between"}>
                 <p className={"nanumSquareB-font-normal"}>{props.data.userId}</p>
                 <p className={"nanumSquareR-font-normal"}>{props.data.createDate}</p>
@@ -25,8 +25,8 @@ function DetailBodyProductReviewContents(props) {
             <div id={"div-detail-review-photo"}>
                 <p>사진 & 동영상</p>
             </div>
-            <div className={"d-flex align-items-center mb-2"}>
-                <div id={"div-detail-review-like-wrapper"} className={"d-flex align-items-center"}>
+            <div className={"d-flex align-items-center mb-3"}>
+                <div className={"d-flex align-items-center div-detail-review-like-wrapper"}>
                     <p className={"mb-0 mt-1 mx-1"}>좋아요</p>
                     <img width={22} height={22} className={"mb-1"} src={"/images/like.png"} />
                     <p className={"mb-0 mx-2 mt-1"}>{props.data.likeCount}</p>

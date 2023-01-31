@@ -1,13 +1,11 @@
 import React from "react";
 import DetailHeaderCategory from "./DetailHeaderCategory";
 import DetailHeaderSpec from "./DetailHeaderSpec";
-import DetailHeaderErrorMsg from "./DetailHeaderErrorMsg";
 
 const detailCategoryNameList = [
     {key : 0, title : "홈"},
-    {key : 1, title : "카테고리1"},
-    {key : 2, title : "카테고리2"},
-    {key : 3, title : "카테고리3"}
+    {key : 1, title : "카테고리"},
+    {key : 2, title : "제조사"}
 ]
 
 const detailSpecList = [
@@ -16,12 +14,6 @@ const detailSpecList = [
     {key : 2, title : "스펙3"},
     {key : 3, title : "스펙4"},
     {key : 4, title : "스펙5"}
-]
-
-const errorMsgList = [
-    {key : 0, msg : "에러메세지1"},
-    {key : 1, msg : "에러메세지2"},
-    {key : 2, msg : "에러메세지3"}
 ]
 
 // 제품 상세페이지에서 제품의 제목, 스펙, 카테고리를 보여주는 컴포넌트(상단에 위치)
@@ -42,15 +34,7 @@ function  DetailHeader() {
                         })
                     }
                 </div>
-                <div>
-                    <img className={"mx-1"} src={"/images/share.png"} /><span>공유하기</span>
-                </div>
             </div>
-            {
-                errorMsgList.map(item => {
-                    return <DetailHeaderErrorMsg key={item.key} errorMsg={item.msg} />
-                })
-            }
             <hr/>
         </div>
     );

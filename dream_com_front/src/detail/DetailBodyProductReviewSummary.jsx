@@ -37,7 +37,7 @@ function DetailBodyProductReviewSummary({score}) {
     }, []);
     
     return (
-        <div id={"div-detail-review-summary"} className={"mb-5"}>
+        <div id={"div-detail-review-summary"} className={"mb-4"}>
             <h4>구매후기 25건</h4>
             <div>
                 <div className={"div-detail-review-summary-contents"}>
