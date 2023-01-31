@@ -95,7 +95,7 @@
 <!--    좋아요 클릭 시 개수 증가-->
 <!--    최종 수정일 2023-01-31-->
 <!--    최종 작성자 : 양민호-->
-    <update id="addClickCount" parameterType="int">
+    <update id="addLikeCount" parameterType="int">
         update detail_review set like_count = like_count + 1 where review_num = #{reviewNum}
     </update>
 </mapper>

@@ -64,7 +64,7 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public void addClickCount(int reviewNum) throws Exception {
-        reviewMapper.addClickCount(reviewNum);
+    public int addLikeCount(int reviewNum) throws Exception {
+        return reviewMapper.addLikeCount(reviewNum);
     }
 }

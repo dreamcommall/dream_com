@@ -27,5 +27,5 @@ public interface ReviewService {
 
     int getContentReviewCount(int productNum) throws Exception;
 
-    void addClickCount(int reviewNum) throws Exception;
+    int addLikeCount(int reviewNum) throws Exception;
 }

@@ -129,9 +129,15 @@ public class ReviewController {
 //    좋아요 클릭 시 개수 증가
 //    최종 수정일 2023-01-31
 //    최종 작성자 : 양민호
-    @RequestMapping(value = "addClickCount", method = RequestMethod.PUT)
-    public void addClickCount(@RequestParam("reviewNum") int reviewNum) throws Exception {
-        reviewService.addClickCount(reviewNum);
+    @RequestMapping(value = "addLikeCount", method = RequestMethod.PUT)
+    public String addLikeCount(@RequestParam("reviewNum") int reviewNum) throws Exception {
+        int update = reviewService.addLikeCount(reviewNum);
+        if(update == 1) {
+            return "success";
+        }
+        else {
+            return "fail";
+        }
     }
 
 }
