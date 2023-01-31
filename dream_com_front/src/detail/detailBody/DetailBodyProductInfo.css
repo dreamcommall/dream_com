@@ -6,6 +6,6 @@
 /* 제품 상세페이지 메인 이미지 마진, 패딩 스타일 */
 #img-detail-main-thumbnail {
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     padding : 10px
 }

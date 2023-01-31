@@ -19,7 +19,7 @@ function DetailApp() {
     // 서버로부터 현재 클릭한 상품의 상세정보를 불러오기
     const dataReceive = async () => {
         setIsLoad(true);
-        await axios.get("http://localhost:8080/fullProductInfo", {params : {productNum : 230130001}})
+        await axios.get("http://localhost:8080/fullProductInfo", {params : {productNum : 230130006}})
             .then(response => {
                 setProductInfo(response.data);
             })
@@ -43,7 +43,7 @@ function DetailApp() {
                 <DetailNavMenu />
                 <SidebarApp />
                 <DetailHeader data={productInfo} />
-                <DetailBody data={productInfo} />
+                <DetailBody productInfo={productInfo} />
                 <DetailFooter />
             </div>
             <Footer />
