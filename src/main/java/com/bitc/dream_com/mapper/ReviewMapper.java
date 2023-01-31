@@ -2,6 +2,7 @@ package com.bitc.dream_com.mapper;
 
 import com.bitc.dream_com.dto.ReviewDto;
 import com.bitc.dream_com.dto.UserDto;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -28,4 +29,6 @@ public interface ReviewMapper {
     int getContentReviewCount(int productNum) throws Exception;
 
     int addLikeCount(int reviewNum) throws Exception;
+
+    Page<ReviewDto> getReviewPaging(int productNum) throws Exception;
 }

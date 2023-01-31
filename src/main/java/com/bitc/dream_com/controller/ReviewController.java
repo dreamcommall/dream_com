@@ -2,6 +2,8 @@ package com.bitc.dream_com.controller;
 
 import com.bitc.dream_com.dto.ReviewDto;
 import com.bitc.dream_com.service.ReviewService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,22 +21,23 @@ public class ReviewController {
 //    최종 작성자 : 양민호
 
     @RequestMapping(value = "/productReview", method = RequestMethod.GET)
-    public Object productReview(@RequestParam("productNum") int productNum) throws Exception{
-        List<ReviewDto> productReview = reviewService.productReview(productNum);
+    public Object productReview(@RequestParam("productNum") int productNum, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) throws Exception{
+        PageInfo<ReviewDto> page = new PageInfo<>(reviewService.getReviewPaging(productNum, pageNum), 10);
 
-
+        List pageList = page.getList();
 //        리뷰 작성자 아이디 암호화
-        for(int i = 0; i < productReview.size(); i++) {
-            String id = productReview.get(i).getUserId();
+        for(int i = 0; i < pageList.size(); i++) {
+            String id = page.getList().get(i).getUserId();
             if(id.length() <= 6) {
                 id = id.substring(0, 2) + ("*".repeat(id.length() - 3)) + id.substring(id.length()-1);
-                productReview.get(i).setUserId(id);
+                page.getList().get(i).setUserId(id);
             }
             else {
                 id = id.substring(0, 3) + ("*".repeat(id.length() - 5)) + id.substring(id.length()-2);
-                productReview.get(i).setUserId(id);
+                page.getList().get(i).setUserId(id);
             }
         }
+
 //        전체 리뷰 개수
         int totalReviewCount = reviewService.getReviewCount(productNum);
 //        후기 작성 리뷰 개수
@@ -43,7 +46,10 @@ public class ReviewController {
         HashMap<String, Object> review = new HashMap<>();
         review.put("totalReviewCount", totalReviewCount);
         review.put("contentReviewCount", contentReviewCount);
-        review.put("reviews", productReview);
+        review.put("reviews", page.getList());
+        review.put("currentPage", page.getPageNum());
+        review.put("FirstPage", page.getNavigateFirstPage());
+        review.put("LastPage", page.getNavigateLastPage());
 
         return review;
     }

@@ -3,6 +3,8 @@ package com.bitc.dream_com.service;
 import com.bitc.dream_com.dto.ReviewDto;
 import com.bitc.dream_com.dto.UserDto;
 import com.bitc.dream_com.mapper.ReviewMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,5 +68,11 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public int addLikeCount(int reviewNum) throws Exception {
         return reviewMapper.addLikeCount(reviewNum);
+    }
+
+    @Override
+    public Page<ReviewDto> getReviewPaging(int productNum, int pageNum) throws Exception {
+        PageHelper.startPage(pageNum, 5);
+        return reviewMapper.getReviewPaging(productNum);
     }
 }
