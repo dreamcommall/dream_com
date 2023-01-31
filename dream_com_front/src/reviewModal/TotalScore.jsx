@@ -1,17 +1,48 @@
-import React from "react";
+import React, {useState} from "react";
 import "./TotalScore.css";
 
 function TotalScore() {
+    // 별 개수
+    const startList = [1, 2, 3, 4, 5];
+    // 마우스 호버 유무 state
+    const [isHover, setIsHover] = useState(0);
+    // 마우스 호버한 별점 위치
+    const [hoverStar, setHoverStar] = useState(0);
+    // 선택한 마우스 별점 위치
+    const [rate, setRate] = useState(0);
+
+    // 마우스 호버 시 별점 번호 저장
+    const mouseover = (e) => {
+        setIsHover(1);
+        setHoverStar(e);
+
+    }
+
+    // 마우스 호버 아웃 시 별점 번호 초기화
+    const mouseout = (e) => {
+        setIsHover(0);
+        setHoverStar(0);
+    }
+
+    // 클릭 시 별점 번호 확정
+    const clickStar = (e) => {
+        setRate(e)
+    }
 
     return (
-        <div className={"text-center mt-5"}>
+        <div id={"div-totalScore"}>
             <p className={"nanumSquareB-font-large"}>상품은 만족하셨나요?</p>
-            <div>
-                <img id={"div-img"} src={"/images/star64_blank.png"} />
-                <img id={"div-img"} src={"/images/star64_blank.png"} />
-                <img id={"div-img"} src={"/images/star64_blank.png"} />
-                <img id={"div-img"} src={"/images/star64_blank.png"} />
-                <img id={"div-img"} src={"/images/star64_blank.png"} />
+            <div id={"div-stars"}>
+                {startList.map(item => {
+
+                    return (
+                        <img src={(item <= hoverStar ?
+                            (item <= rate ?  "/images/star64_opacity.png" : "/images/star64_opacity.png")
+                            : (item <= rate ? "/images/star64.png" : "/images/star64_blank.png"))}
+                                key={item} onMouseOver={() => mouseover(item)} onMouseOut={() => mouseout(item)}
+                                onClick={() => clickStar(item)} className={"div-starImg"} />
+                    )
+                })}
             </div>
         </div>
     )

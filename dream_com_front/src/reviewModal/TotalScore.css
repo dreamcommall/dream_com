@@ -1,2 +1,14 @@
+#div-totalScore {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+#div-stars {
+    text-align: left;
+    padding-left: 75px;
+    padding-right: 50px;
+}
 
-
+.div-starImg {
+    margin-left: 20px;
+}
