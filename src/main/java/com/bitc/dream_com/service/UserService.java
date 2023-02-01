@@ -16,4 +16,6 @@ public interface UserService {
     void join(UserDto userDto) throws Exception;
 
     String sendEmail(String email) throws Exception;
+
+    void idChk(UserDto userDto) throws Exception;
 }

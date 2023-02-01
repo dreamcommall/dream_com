@@ -9,6 +9,7 @@ import SignInfomation from "./common/SignInfomation";
 import SignClear from "./common/SignUpClear";
 import EmailTest from "./EmailTest";
 import Clause from "./SignUp/Clause";
+import LoginChk from "./LoginChk";
 
 
 // 작성자 : MoonNight285
@@ -27,6 +28,7 @@ function DreamComRouter() {
                 <Route path={"/signinfomation"} element={<SignInfomation />}></Route>
                 <Route path={"/signClear"} element={<SignClear />}></Route>
                 <Route path={"/emailchk"} element={<EmailTest />}></Route>
+                <Route path={"/idchk"} element={<LoginChk />}></Route>
             </Routes>
         </BrowserRouter>
     )

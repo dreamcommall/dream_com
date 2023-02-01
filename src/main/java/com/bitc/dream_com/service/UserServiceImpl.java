@@ -119,4 +119,10 @@ public class UserServiceImpl implements UserService {
         return ePw;
     }
 
+    @Override
+    public void idChk(UserDto userDto) throws Exception {
+        userMapper.idChk(userDto);
+    }
+
+
 }

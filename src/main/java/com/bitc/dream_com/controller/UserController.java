@@ -44,6 +44,23 @@ public class UserController {
         }
     }
 
+//    아이디 중복체크
+//    최종 수정일 : 2023.02.01
+//    최종 작성자 : 김영민
+
+    @RequestMapping(value = "/idChk",method = RequestMethod.POST)
+    public int idChk(UserDto userDto) throws Exception{
+        userService.idChk(userDto);
+        System.out.println(userDto.getUserId());
+        if(userDto.getUserId() == null){
+            return 0;
+        }
+
+        else{
+            return 1;
+        }
+    }
+
 //    회원 정보 수정
 //    최종 수정일 2023-01-19
 //    최종 작성자 : 양민호
