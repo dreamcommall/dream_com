@@ -4,6 +4,7 @@ import com.bitc.dream_com.dto.ReviewDto;
 import com.bitc.dream_com.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -123,5 +124,10 @@ public class ReviewController {
         simpleReviewMsg.put("delivery", deliveryMsgList);
 
         return simpleReviewMsg;
+    }
+
+    @RequestMapping(value = "upload", method = RequestMethod.POST)
+    public void upload(MultipartFile files) {
+        System.out.println(files);
     }
 }
