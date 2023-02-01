@@ -36,6 +36,12 @@ width: 3%;
     height: 26px;
     border: none;
 }
+#userBtn:hover{
+    background-color: lightgray;
+}
+#clearBtn:hover{
+    background-color: lightgray;
+}
 
 #clearBtn {
     border: none;
