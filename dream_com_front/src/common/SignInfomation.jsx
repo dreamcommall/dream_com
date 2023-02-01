@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import "./SignInfomation.css";
 import "../fonts/fontStyle.css";
 import {useDaumPostcodePopup} from 'react-daum-postcode';
-
 import SignCommu from "./SignCommu";
 import SignUpHeader from "../SignUp/SignUpHeader";
 
@@ -200,51 +199,51 @@ function SignInfomation() {
         <SignUpHeader/>
         <div className={"container"} id={"div-information"}>
             <div className={"div-userMain"}>
-                <p className={"nanumSquareB-font-normal"} style={{fontSize: "25px"}}>정보 입력</p>
+                <p id={"p-SignInfo"} className={"nanumSquareB-font-normal"} style={{fontSize: "25px"}}>정보 입력</p>
             </div>
 
             <div className={"div-userList"}>
                 <div className={"div-userId"}>
                     <div className={"col-1"}></div>
                     <div className={"col-2"}>
-                        <p className={"nanumSquareR-font-normal"}>이 름</p>
+                        <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>이 름</p>
                     </div>
                     <div className={"col-5"}>
                         <input type={"text"} maxLength={20} id="name" value={name} onChange={onChangeName}/>
                     </div>
                     <div className={"col-5"}>
-                        {isName ? <p className={"message"} style={{color: "blue"}}>{nameMessage}</p> :
-                            <p className={"message"} style={{color: "red"}}>{nameMessage}</p>}
+                        {isName ? <p id={"p-SignInfo"} className={"message"} style={{color: "blue"}}>{nameMessage}</p> :
+                            <p id={"p-SignInfo"} className={"message"} style={{color: "red"}}>{nameMessage}</p>}
                     </div>
                 </div>
 
                 <div className={"div-userId"}>
                     <div className={"col-1"}></div>
                     <div className={"col-2"}>
-                        <p className={"nanumSquareR-font-normal"}>아이디</p>
+                        <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>아이디</p>
                     </div>
                     <div className={"col-5"}>
                         <input type={"text"} maxLength={15} value={id} onChange={onChangeId}/>
                         <button id={"userBtn"} className={"nanumSquareR-font-normal"} onClick={SignCommu}>중복 체크</button>
                     </div>
                     <div className={"col-5"}>
-                        {isId ? <p className={"message"} style={{color: "blue"}}>{idMessage}</p> :
-                            <p className={"message"} style={{color: "red"}}>{idMessage}</p>}
+                        {isId ? <p id={"p-SignInfo"} className={"message"} style={{color: "blue"}}>{idMessage}</p> :
+                            <p id={"p-SignInfo"} className={"message"} style={{color: "red"}}>{idMessage}</p>}
                     </div>
                 </div>
 
                 <div className={"div-userId"}>
                     <div className={"col-1"}></div>
                     <div className={"col-2"}>
-                        <p className={"nanumSquareR-font-normal"}>비밀 번호</p>
+                        <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>비밀 번호</p>
                     </div>
                     <div className={"col-5"}>
                         <input type={"password"} maxLength={15} value={password}
                                onChange={onChangePassword}/>
                     </div>
                     <div className={"col-5"}>
-                        {isPassword ? <p className={"message"} style={{color: "blue"}}>{passwordMessage}</p> :
-                            <p className={"message"} style={{color: "red"}}>{passwordMessage}</p>}
+                        {isPassword ? <p id={"p-SignInfo"} className={"message"} style={{color: "blue"}}>{passwordMessage}</p> :
+                            <p id={"p-SignInfo"} className={"message"} style={{color: "red"}}>{passwordMessage}</p>}
                     </div>
                 </div>
 
@@ -252,7 +251,7 @@ function SignInfomation() {
                 <div className={"div-userId"}>
                     <div className={"col-1"}></div>
                     <div className={"col-2"}>
-                        <p className={"nanumSquareR-font-normal"}>비밀 번호 확인</p>
+                        <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>비밀 번호 확인</p>
                     </div>
                     <div className={"col-5"}>
                         <input type={"password"} maxLength={15} value={passwordConfirm}
@@ -261,8 +260,8 @@ function SignInfomation() {
                     <div className={"col-5"}>
 
                         {isPasswordConfirm ?
-                            <p className={"message"} style={{color: "blue"}}>{passwordConfirmMessage}</p> :
-                            <p className={"message"} style={{color: "red"}}>{passwordConfirmMessage}</p>}
+                            <p id={"p-SignInfo"} className={"message"} style={{color: "blue"}}>{passwordConfirmMessage}</p> :
+                            <p id={"p-SignInfo"} className={"message"} style={{color: "red"}}>{passwordConfirmMessage}</p>}
                     </div>
                 </div>
 
@@ -270,7 +269,7 @@ function SignInfomation() {
                 <div className={"div-userId"}>
                     <div className={"col-1"}></div>
                     <div className={"col-2"}>
-                        <p className={"nanumSquareR-font-normal"}>성 별</p>
+                        <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>성 별</p>
                     </div>
                     <div className={"col-5"}>
                         <input name={"gender"} type={"radio"}/> 남성
@@ -282,14 +281,14 @@ function SignInfomation() {
                 <div className={"div-userId"}>
                     <div className={"col-1"}></div>
                     <div className={"col-2"}>
-                        <p className={"nanumSquareR-font-normal"}>휴대 전화</p>
+                        <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>휴대 전화</p>
                     </div>
                     <div className={"col-5"}>
                         <input type={"text"} maxLength={13} value={phone} onChange={onChangePhone}/>
                     </div>
                     <div className={"col-5"}>
-                        {isPhone ? <p className={"message"} style={{color: "blue"}}>{phoneMessage}</p> :
-                            <p className={"message"} style={{color: "red"}}>{phoneMessage}</p>}
+                        {isPhone ? <p id={"p-SignInfo"} className={"message"} style={{color: "blue"}}>{phoneMessage}</p> :
+                            <p id={"p-SignInfo"} className={"message"} style={{color: "red"}}>{phoneMessage}</p>}
                     </div>
                 </div>
 
@@ -297,7 +296,7 @@ function SignInfomation() {
                 <div className={"div-userAddClass"}>
                     <div className={"col-1"}></div>
                     <div className={"col-2"}>
-                        <p className={"nanumSquareR-font-normal"}>이메일</p>
+                        <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>이메일</p>
                     </div>
                     <div className={"col-5"}>
                         <div id={"div-userAdd"}>
@@ -314,15 +313,15 @@ function SignInfomation() {
                         </div>
                     </div>
                     <div className={"col-5"}>
-                        {isEmail ? <p className={"message"} style={{color: "blue"}}>{emailMessage}</p> :
-                            <p className={"message"} style={{color: "red"}}>{emailMessage}</p>}
+                        {isEmail ? <p id={"p-SignInfo"} className={"message"} style={{color: "blue"}}>{emailMessage}</p> :
+                            <p id={"p-SignInfo"} className={"message"} style={{color: "red"}}>{emailMessage}</p>}
                     </div>
                 </div>
 
                 <div className={"div-userId"}>
                     <div className={"col-1"}></div>
                     <div className={"col-2"}>
-                        <p className={"nanumSquareR-font-normal"}>우편 번호</p>
+                        <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>우편 번호</p>
                     </div>
                     <div className={"col-8"}>
                         <input type={"text"} id={"postCode"} readOnly={true} name={"address"} onChange={handleInput}
@@ -338,7 +337,7 @@ function SignInfomation() {
                 <div className={"div-userAddClass"} style={{borderBottom: "none"}}>
                     <div className={"col-1"}></div>
                     <div className={"col-2"}>
-                        <p className={"nanumSquareR-font-normal"}>주소</p>
+                        <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>주소</p>
                     </div>
                     <div className={"col-8"}>
                         <div id={"div-userAdd"}>
