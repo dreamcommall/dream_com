@@ -26,9 +26,12 @@ function EmailTest(){
     const sendEmailChk = () => {
         axios.post("http://localhost:8080/EmailChk" ,null,{
             params:{
-
+                chkNumber:emailChk
             }
         })
+            .then((req)=>{
+                console.log(req.data);
+            })
     }
 
     return(
@@ -36,7 +39,7 @@ function EmailTest(){
             <input type="email" value={email} onChange={emailHandleChange} />
             <button className={"btn btn-primary"} onClick={sendEmail}>인증번호 받기</button>
             <input type="text" value={emailChk} onChange={emailChkHandleChange} />
-            <button className={"btn btn-primary"} onClick={sendEmail}>인증번호 확인</button>
+            <button className={"btn btn-primary"} onClick={sendEmailChk}>인증번호 확인</button>
         </div>
     )
 }

@@ -93,8 +93,8 @@ public class UserController {
         return "가입 완료";
     }
 
-//    이메일 인증(이메일 인증번호 전송
-//    최종 작성 날짜 :
+//    이메일 인증(이메일 인증번호 전송)
+//    최종 작성 날짜 : 2023.02.01
 //    최종 작성자 : 김영민
     @RequestMapping(value = "/sendEmail",method = RequestMethod.POST)
     public String sendEmail(@RequestParam String email) throws Exception{
@@ -104,11 +104,12 @@ public class UserController {
     }
 
 //    이메일 인증
-//    최종 작성 날짜 :
+//    최종 작성 날짜 : 2023.02.01
 //    최종 작성자 : 김영민
     @RequestMapping(value = "EmailChk",method = RequestMethod.POST)
     public int EmailChk(@RequestParam("chkNumber") String chkNumber) throws Exception{
-        if(chkNumber == UserServiceImpl.ePw){
+        System.out.println(UserServiceImpl.ePw);
+        if( UserServiceImpl.ePw.equals(chkNumber)){
             return 1;
         }
         else{
