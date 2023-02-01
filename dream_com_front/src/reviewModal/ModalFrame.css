@@ -1,0 +1,26 @@
+/* modal창 외부화면 */
+.div-ModalFrame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 1900px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* modal창 */
+.div-ModalFrameBody {
+    position: absolute;
+    width: 700px;
+    max-height: 800px;
+    padding: 20px 40px;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid black;
+    border-radius: 10px 0px 0px 10px;
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+    overflow: auto;
+}
