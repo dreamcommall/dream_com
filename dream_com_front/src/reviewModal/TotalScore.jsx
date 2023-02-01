@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import "./TotalScore.css";
 
-function TotalScore() {
+function TotalScore(props) {
     // 별 개수
     const startList = [1, 2, 3, 4, 5];
     // 마우스 호버 유무 state
@@ -13,7 +13,9 @@ function TotalScore() {
 
     // 마우스 호버 시 별점 번호 저장
     const mouseover = (e) => {
+        // 호버 여부
         setIsHover(1);
+        // 호버시 해당 별점 번호
         setHoverStar(e);
 
     }
@@ -26,7 +28,10 @@ function TotalScore() {
 
     // 클릭 시 별점 번호 확정
     const clickStar = (e) => {
-        setRate(e)
+        // 현재 컴포넌트에 선택한 별점 저장
+        setRate(e);
+        // ReviewModalApp.jsx 컴포넌트에 선택한 별점 저장
+        props.setting(e);
     }
 
     return (
@@ -36,7 +41,7 @@ function TotalScore() {
                 {startList.map(item => {
 
                     return (
-                        <img src={(item <= hoverStar ?
+                        <img src={(item <= hoverStar && hoverStar != rate ?
                             (item <= rate ?  "/images/star64_opacity.png" : "/images/star64_opacity.png")
                             : (item <= rate ? "/images/star64.png" : "/images/star64_blank.png"))}
                                 key={item} onMouseOver={() => mouseover(item)} onMouseOut={() => mouseout(item)}

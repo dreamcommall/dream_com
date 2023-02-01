@@ -1,0 +1,22 @@
+#div-detailContent {
+    border-top: 1px solid lightgrey;
+    padding: 20px 0px 20px 0px;
+}
+
+#div-contentText {
+    position: relative;
+    display: inline-block;
+    margin-left: 59px;
+    margin-top: 10px;
+}
+
+#textarea {
+    resize: none;
+}
+
+#div-textLength {
+    position: absolute;
+    bottom: 8px;
+    right: 25px;
+    color: gray;
+}

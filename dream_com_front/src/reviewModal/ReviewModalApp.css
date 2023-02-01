@@ -2,7 +2,7 @@
     width: 600px;
 }
 
-#button-close {
+#button-close-top {
     border: 1px solid lightgrey;
     float: right;
     height: 40px;
@@ -11,4 +11,19 @@
     border-radius: 4px;
     margin-top: 4px;
     background-color: white;
+}
+
+#button-close-bottom {
+    width: 200px;
+    height: 50px;
+    margin-right: 10px;
+    background-color: white;
+    border: 1px solid black;
+}
+
+#button-insert {
+    width: 200px;
+    height: 50px;
+    background-color: #e26e6e;
+    border: 1px solid black;
 }
