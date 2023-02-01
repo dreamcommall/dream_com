@@ -17,5 +17,5 @@ public interface UserService {
 
     String sendEmail(String email) throws Exception;
 
-    void idChk(UserDto userDto) throws Exception;
+    int idChk(String userId) throws Exception;
 }

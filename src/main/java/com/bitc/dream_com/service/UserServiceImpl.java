@@ -120,8 +120,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void idChk(UserDto userDto) throws Exception {
-        userMapper.idChk(userDto);
+    public int idChk(String userId) throws Exception {
+        return userMapper.idChk(userId);
+
     }
 
 

@@ -15,5 +15,5 @@ public interface UserMapper {
 
     void join(UserDto userDto) throws Exception;
 
-    void idChk(UserDto userDto) throws Exception;
+    int idChk(String userId) throws Exception;
 }
