@@ -5,9 +5,11 @@ import SearchPageApp from "./search/SearchPageApp";
 import ErrorPageApp from "./common/ErrorPage/ErrorPageApp";
 import PurchaseApp from "./purchase/PurchaseApp";
 import DetailApp from "./detail/DetailApp";
-import Clause from "./SignUp/Clause";
 import SignInfomation from "./common/SignInfomation";
 import SignClear from "./common/SignUpClear";
+import EmailTest from "./EmailTest";
+import Clause from "./SignUp/Clause";
+
 
 // 작성자 : MoonNight285
 // 라우터 관리 컴포넌트
@@ -24,6 +26,7 @@ function DreamComRouter() {
                 <Route path={"/sign"} element={<Clause />}></Route>
                 <Route path={"/signinfomation"} element={<SignInfomation />}></Route>
                 <Route path={"/signClear"} element={<SignClear />}></Route>
+                <Route path={"/emailchk"} element={<EmailTest />}></Route>
             </Routes>
         </BrowserRouter>
     )

@@ -2,11 +2,15 @@ package com.bitc.dream_com.controller;
 
 import com.bitc.dream_com.dto.UserDto;
 import com.bitc.dream_com.service.UserService;
+import com.bitc.dream_com.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.net.PasswordAuthentication;
+import java.util.Properties;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -88,4 +92,30 @@ public class UserController {
         userService.join(userDto);
         return "가입 완료";
     }
+
+//    이메일 인증(이메일 인증번호 전송)
+//    최종 작성 날짜 : 2023.02.01
+//    최종 작성자 : 김영민
+    @RequestMapping(value = "/sendEmail",method = RequestMethod.POST)
+    public String sendEmail(@RequestParam String email) throws Exception{
+        String sendEmail = userService.sendEmail(email);
+//        System.out.println("controller : " + sendEmail);
+        return sendEmail;
+    }
+
+//    이메일 인증
+//    최종 작성 날짜 : 2023.02.01
+//    최종 작성자 : 김영민
+    @RequestMapping(value = "EmailChk",method = RequestMethod.POST)
+    public int EmailChk(@RequestParam("chkNumber") String chkNumber) throws Exception{
+        System.out.println(UserServiceImpl.ePw);
+        if( UserServiceImpl.ePw.equals(chkNumber)){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+
+
 }
