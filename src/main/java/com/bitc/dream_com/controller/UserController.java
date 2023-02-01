@@ -110,12 +110,25 @@ public class UserController {
     public int EmailChk(@RequestParam("chkNumber") String chkNumber) throws Exception{
         System.out.println(UserServiceImpl.ePw);
         if( UserServiceImpl.ePw.equals(chkNumber)){
+//            1이 나오면 중복
             return 1;
         }
         else{
+//            0이 나오면 가입 가능
             return 0;
         }
     }
 
+//    아이디 중복체크
+//    최종 수정일 : 2023.02.01
+//    최종 작성자 : 김영민
+
+    @RequestMapping(value = "/idChk",method = RequestMethod.POST)
+    public int idChk(@RequestParam("userId") String userId) throws Exception{
+        int result = userService.idChk(userId);
+
+        System.out.println(result);
+        return result;
+    }
 
 }

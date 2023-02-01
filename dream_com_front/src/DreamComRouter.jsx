@@ -8,7 +8,7 @@ import SignInfomation from "./common/SignInfomation";
 import SignClear from "./common/SignUpClear";
 import EmailTest from "./EmailTest";
 import Clause from "./SignUp/Clause";
-
+import LoginChk from "./LoginChk";
 import Login from "./login/Login";
 import FindId from "./findId/FindId";
 import FindPw from "./findId/FindPw";
@@ -33,6 +33,7 @@ function DreamComRouter() {
                 <Route path={"/login"} element={<Login />}></Route>
                 <Route path={"/findId"} element={<FindId />}></Route>
                 <Route path={"/findPw"} element={<FindPw />}></Route>
+                <Route path={"/idchk"} element={<LoginChk />}></Route>
             </Routes>
         </BrowserRouter>
     )

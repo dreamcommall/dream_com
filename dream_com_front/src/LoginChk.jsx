@@ -35,10 +35,21 @@ function LoginChk(){
             })
     }
 
+    const idChk = () => {
+        axios.post('http://localhost:8080/idChk',null,{
+            params:{
+                userId:userId
+            }
+        })
+            .then((req)=>{
+                console.log(req.data);
+            })
+    }
     return(
         <div className={"container"}>
                   <label className={"form-label"}>아이디 : </label>
                 <input className={"form-control"}  value={userId} onChange={handleInputId}/>
+                <button className={"btn btn-primary"} onClick={idChk}>아이디 중복체크</button>
                 <label className={"form-label"}>비밀번호 : </label>
                 <input className={"form-control"}  value={userPw} onChange={handleInputPw}/>
                 <button className={"btn btn-primary"} onClick={LoginChk}>로그인</button>
