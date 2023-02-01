@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import axios from "axios";
 import "../fonts/fontStyle.css"
 import "./Login.css"
-import Footer from "../common/Footer";
 
 // 작성자 : YMKJJ
 // 기능 : 로그인 UI / 로그인 기능
@@ -91,7 +90,7 @@ function Login(){
                         </div>
                         <div>
                             <input placeholder={"비밀번호는 8~20자"} value={userPw} onChange={handleInputPw} type={"password"}
-                                   className={"nanumSquareR-font-small"} style={inputSize}/>
+                                    style={inputSize}/>
                         </div>
                         {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 2*/}
                         <div>
