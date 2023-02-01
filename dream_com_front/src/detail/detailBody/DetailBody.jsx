@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import DetailBodyProductInfo from "./DetailBodyProductInfo";
 import DetailBodyProductPurchaseTip from "./DetailBodyProductPurchaseTip";
 import DetailBodyProductMainImg from "./DetailBodyProductMainImg";
@@ -8,35 +8,47 @@ import DetailBodyProductReview from "./DetailBodyProductReview";
 import DetailBodyProductReviewContents from "./DetailBodyProductReviewContents";
 import DetailBodyReviewPagination from "./DetailBodyReviewPagination";
 
-const sampleReviewContentList = [
-    {key : 0, userId : "testUser1", createDate : "2023-01-26", deliveryReview : "배송이 빨라요", specReview : "좋아요" ,
-        noiseReview : "조용해요", boxingReview : "깔끔해요", reviewContent : "테스트1 리뷰입니다.", likeCount : 5},
-    {key : 1, userId : "testUser2", createDate : "2023-01-25", deliveryReview : "배송이 빨라요", specReview : "좋아요" ,
-        noiseReview : "조용해요", boxingReview : "깔끔해요", reviewContent : "테스트2 리뷰입니다.", likeCount : 0},
-    {key : 2, userId : "testUser3", createDate : "2023-01-24", deliveryReview : "배송이 빨라요", specReview : "좋아요" ,
-        noiseReview : "조용해요", boxingReview : "깔끔해요", reviewContent : "테스트3 리뷰입니다.", likeCount : 32},
-    {key : 3, userId : "testUser3", createDate : "2023-01-24", deliveryReview : "배송이 빨라요", specReview : "좋아요" ,
-        noiseReview : "조용해요", boxingReview : "깔끔해요", reviewContent : "테스트3 리뷰입니다.", likeCount : 32},
-    {key : 4, userId : "testUser3", createDate : "2023-01-24", deliveryReview : "배송이 빨라요", specReview : "좋아요" ,
-        noiseReview : "조용해요", boxingReview : "깔끔해요", reviewContent : "테스트3 리뷰입니다.", likeCount : 32}
-]
-
 // 제품 상세페이지의 가격정보 ~ 리뷰까지 보여주는 부분을 구성하는 컴포넌트
-function DetailBody() {
+function DetailBody({productInfo, reviewRate, reviewInfo, funcPlusReviewLikeCount}) {
+    const [firstPage, setFirstPage] = useState(1); // 상품 리뷰의 시작 페이지 번호
+    const [currentPage, setCurrentPage] = useState(1); // 상품 리뷰의 현재 페이지 번호
+    const [lastPage, setLastPage] = useState(1); // 상품 리뷰의 마지막 페이지 번호
+    const [reviews, setReviews] = useState([]); // 상품의 리뷰내용
+    const [productNum, setProductNum] = useState(0); // 상품번호
+    
+    // 서버로부터 값 받아오기
+    useEffect(() => {
+        if (reviewInfo == undefined) {
+            return;
+        }
+        setFirstPage(reviewInfo.FirstPage);
+        setCurrentPage(reviewInfo.currentPage);
+        setLastPage(reviewInfo.LastPage);
+        setReviews(reviewInfo.reviews);
+    }, [reviewInfo]);
+    
+    // 서버로부터 제품번호 가져오기
+    useEffect(() => {
+        if (productInfo == undefined) {
+            return;
+        }
+        setProductNum(productInfo[0].productNum);
+    }, [productInfo])
+    
     return (
         <div>
-            <DetailBodyProductInfo />
+            <DetailBodyProductInfo productInfo={productInfo}/>
             <DetailBodyProductPurchaseTip />
-            <DetailBodyProductMainImg src={"/images/product_test_main_img.jpg"} />
-            <DetailBodyProductInfoSummary />
-            <DetailBodyProductReviewSummary score={3.8} />
+            <DetailBodyProductMainImg productInfo={productInfo} />
+            <DetailBodyProductInfoSummary productInfo={productInfo} />
+            <DetailBodyProductReviewSummary productInfo={productInfo} reviewRate={reviewRate} />
             <DetailBodyProductReview />
             {
-                sampleReviewContentList.map(item => {
-                    return <DetailBodyProductReviewContents key={item.key} data={item}/>
+                reviews.map(item => {
+                    return <DetailBodyProductReviewContents key={item.key} reviewData={item} funcPlusReviewLikeCount={funcPlusReviewLikeCount}/>
                 })
             }
-            <DetailBodyReviewPagination />
+            <DetailBodyReviewPagination firstPageNumber={firstPage} lastPageNumber={lastPage} currentPageNumber={currentPage} productNumber={productNum} />
         </div>
     );
 }
