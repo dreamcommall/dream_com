@@ -45,7 +45,7 @@
 
     <insert id="insertDetailReview" parameterType="com.bitc.dream_com.dto.ReviewDto">
         INSERT INTO detail_review(score, user_id, product_num, content, createDt, img_path)
-        VALUES (#{score}, 'test2', #{productNum}, #{content}, NOW(), #{imgPath});
+        VALUES (#{score}, #{userId}, #{productNum}, #{content}, NOW(), #{imgPath});
     </insert>
 
     <insert id="insertSimpleReview" parameterType="com.bitc.dream_com.dto.ReviewDto">

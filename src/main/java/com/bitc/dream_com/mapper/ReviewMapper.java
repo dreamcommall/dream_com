@@ -11,7 +11,7 @@ public interface ReviewMapper {
 
     List<ReviewDto> getScore(int productNum) throws Exception;
 
-    void insertDetailReview(ReviewDto reviewDto) throws Exception;
+    int insertDetailReview(ReviewDto reviewDto) throws Exception;
 
     void insertSimpleReview(ReviewDto reviewDto) throws Exception;
 

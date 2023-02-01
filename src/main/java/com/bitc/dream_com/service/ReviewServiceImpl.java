@@ -23,8 +23,8 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public void insertDetailReview(ReviewDto reviewDto) throws Exception {
-        reviewMapper.insertDetailReview(reviewDto);
+    public int insertDetailReview(ReviewDto reviewDto) throws Exception {
+        return reviewMapper.insertDetailReview(reviewDto);
     }
 
     @Override
