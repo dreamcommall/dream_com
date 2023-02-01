@@ -85,10 +85,12 @@ function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, fun
     const clearSearchOption = () => {
         if (window.confirm("초기화를 진행할까요?")) {
             setCategoryKey(-1)
+            initCompanyIsChecked();
             initCompanyCheckList();
         }
     }
 
+    // 카테고리 클릭시 카테고리 저장
     const setCategory = (key, title) => {
         setCategoryKey(key);
         setCategoryTitle(title);
