@@ -71,12 +71,10 @@ function ReviewModalApp(props) {
         }
     }
 
-    // 업로드된 파일
-    const [uploadedImg, setUploadedImg] = useState("");
+    // 업로드된 파일 정보
+    const [uploadedImg, setUploadedImg] = useState(null);
     // 이미지 미리보기 state
     const [previewImg, setPreviewImg] = useState([]);
-    //
-    const [image, setImage] = useState(null);
 
 
     // 이미지 파일 경로 저장
@@ -94,7 +92,6 @@ function ReviewModalApp(props) {
         } else {
             setUploadedImg(e.target.files);
             // 이미지 미리보기
-            setImage(e.target.files);
             setPreviewImg([]);
             const reader = new FileReader();
             reader.readAsDataURL(e.target.files[0]);
@@ -112,7 +109,10 @@ function ReviewModalApp(props) {
     const upload = () => {
         const formData = new FormData();
         formData.append("file", uploadedImg)
-        axios.post("http://localhost:8080/upload", formData)
+        axios.post("http://localhost:8080/upload", formData,
+            {headers: {"Content-Type": `multipart/form-data; `},
+            baseURL: 'http://localhost:8080'
+        })
             .then(req => {
                 console.log("완료")
             })
@@ -138,19 +138,21 @@ function ReviewModalApp(props) {
             <SimpleReview title={"배송상태는 어떤가요?"} msg={deliveryMsgList} setting={setDeliveryMsgNum} name={"delivery"} />
             <SimpleReview title={"포장상태는 어떤가요?"} msg={packagingMsgList} setting={setPackagingMsgNum} name={"packaging"} />
             <ReviewDetailContent setting={setContent} />
-            <input type={"file"} accept={".gif, .jpg, .png"} onChange={setImgPath} />
-            {/*<button onClick={upload}>파일 업로드</button>*/}
-            {previewImg.map((item) => {
-                return (
-                    <img
-                        key={item}
-                        src={item}
-                        alt={"First slide"}
-                        style={{width:"200px", height:"150px"}}
-                    />
-                )
-            })}
-            <div className={"text-center"}>
+            <div id={"div-imgUpload"}>
+                <div id={"div-img"}>
+                    <input type={"file"} accept={".gif, .jpg, .png"} onChange={setImgPath} id={"input-img"} />
+                    <label htmlFor={"input-img"} className={"nanumSquareB-font-XLarge"}><span>📁 사진 첨부하기</span></label>
+                </div>
+                <div id={"div-previewImg"}>
+                    {previewImg.map((item) => {
+                        return (
+                            <img key={item} src={item} id={"img-previewImg"}/>
+                        )
+                    })}
+                </div>
+                {/*<button onClick={upload}>파일 업로드</button>*/}
+            </div>
+            <div className={"text-center mb-5"}>
                 <button id={"button-close-bottom"}>취소</button>
                 <button id={"button-insert"} onClick={insertReview}>등록</button>
             </div>

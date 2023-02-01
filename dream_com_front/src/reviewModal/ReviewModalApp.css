@@ -13,6 +13,33 @@
     background-color: white;
 }
 
+#input-img {
+    display: none;
+}
+
+#div-img {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+#div-img label span {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+#div-previewImg {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0px;
+}
+
+#img-previewImg {
+    max-width: 500px;
+    text-align: center;
+}
+
 #button-close-bottom {
     width: 200px;
     height: 50px;
