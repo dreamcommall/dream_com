@@ -114,4 +114,32 @@
         where detail_review.product_num = #{productNum}
         order by detail_review.like_count desc
     </select>
+
+<!--    소음 리뷰 메세지-->
+<!--    최종 수정일 2023-01-31-->
+<!--    최종 작성자 : 양민호-->
+    <select id="noiseMsg" resultType="com.bitc.dream_com.dto.ReviewDto">
+        select * from noise_review
+    </select>
+
+<!--    성능 리뷰 메세지-->
+<!--    최종 수정일 2023-01-31-->
+<!--    최종 작성자 : 양민호-->
+    <select id="specMsg" resultType="com.bitc.dream_com.dto.ReviewDto">
+        select * from spec_review
+    </select>
+
+<!--    포장상태 리뷰 메세지-->
+<!--    최종 수정일 2023-01-31-->
+<!--    최종 작성자 : 양민호-->
+    <select id="packagingMsg" resultType="com.bitc.dream_com.dto.ReviewDto">
+        select * from packaging_review
+    </select>
+
+<!--    배송 리뷰 메세지-->
+<!--    최종 수정일 2023-01-31-->
+<!--    최종 작성자 : 양민호-->
+    <select id="deliveryMsg" resultType="com.bitc.dream_com.dto.ReviewDto">
+        select * from delivery_review
+    </select>
 </mapper>

@@ -13,6 +13,7 @@ import Login from "./login/Login";
 import FindId from "./findId/FindId";
 import FindPw from "./findId/FindPw";
 import ErrorPageApp from "./common/ErrorPage/ErrorPageApp";
+import ModalFrameTest from "./reviewModal/ModalFrameTest";
 
 // 작성자 : MoonNight285
 // 라우터 관리 컴포넌트
@@ -34,6 +35,7 @@ function DreamComRouter() {
                 <Route path={"/findId"} element={<FindId />}></Route>
                 <Route path={"/findPw"} element={<FindPw />}></Route>
                 <Route path={"/idchk"} element={<LoginChk />}></Route>
+                <Route path={"review"} element={<ModalFrameTest />}></Route>
             </Routes>
         </BrowserRouter>
     )
