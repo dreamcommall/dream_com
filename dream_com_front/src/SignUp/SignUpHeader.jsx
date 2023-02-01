@@ -1,7 +1,7 @@
 import React from "react";
 import "./SignUpHeader.css";
 import SignMainLogo from "../SignMainLogo.png"
-import SignInfomation from "./SignInfomation";
+import SignInfomation from "../common/SignInfomation";
 import "../fonts/fontStyle.css";
 
 function SignUpHeader() {
