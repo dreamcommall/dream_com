@@ -4,7 +4,7 @@ import FootGit from "./FootGit";
 
 function Footer() {
     return (
-
+<div className={"container-fluid"}>
         <footer className={""} style={{fontSize:"10px", textAlign: "center", bottom: "0", backgroundColor:"rgb(250,250,250)"}}>
             <div  style={{display:"flex", paddingTop:"20px"}}>
                 <section style={{width: "160%", textAlign:"left", padding: "1px",lineHeight:"5px",fontSize:"15px", paddingLeft:"100px"}}>
@@ -22,7 +22,9 @@ function Footer() {
 
                 </section>
             </div>
+
         </footer>
+</div>
 
 
 
