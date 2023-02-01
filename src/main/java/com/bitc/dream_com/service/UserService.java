@@ -14,4 +14,6 @@ public interface UserService {
     void deleteAccount(UserDto userDto) throws Exception;
 
     void join(UserDto userDto) throws Exception;
+
+    String sendEmail(String email) throws Exception;
 }
