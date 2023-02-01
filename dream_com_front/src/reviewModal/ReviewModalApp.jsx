@@ -128,7 +128,7 @@ function ReviewModalApp(props) {
         formData.append("userId", JSON.stringify(userId));
 
         // 파일 업로드
-        axios.post("http://localhost:8080/upload", formData,
+        axios.post("http://localhost:8080/saveUploadImg", formData,
             {headers: {"Content-Type": `multipart/form-data; `},
             baseURL: 'http://localhost:8080'
         })

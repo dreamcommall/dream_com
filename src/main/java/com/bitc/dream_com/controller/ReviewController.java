@@ -1,11 +1,15 @@
 package com.bitc.dream_com.controller;
 
+import com.bitc.dream_com.dto.ProductDto;
 import com.bitc.dream_com.dto.ReviewDto;
+import com.bitc.dream_com.dto.UserDto;
 import com.bitc.dream_com.service.ReviewService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,9 +26,7 @@ public class ReviewController {
 
     @RequestMapping(value = "/productReview", method = RequestMethod.GET)
     public Object productReview(@RequestParam("productNum") int productNum) throws Exception{
-        List<ReviewDto> productReview = reviewService.productReview(productNum);
-
-        return productReview;
+        return reviewService.productReview(productNum);
     }
 
 //    사용자 리뷰 보기
@@ -32,25 +34,27 @@ public class ReviewController {
 //    최종 작성자 : 양민호
     @RequestMapping(value = "userReview", method = RequestMethod.GET)
     public Object userReview(@RequestParam("userId") String userId) throws Exception {
-        List<ReviewDto> userReview = reviewService.userReview(userId);
-
-        return userReview;
+        return reviewService.userReview(userId);
     }
 
-//    기능 : 리뷰 작성하기
-//    최종 수정일 : 2023.01.19
-//    최종 작성자 : 김영민
+//    기능 : 리뷰 작성하기 (insert 완료 후 결과 반환)
+//    최종 수정일 : 2023-02-01
+//    최종 작성자 : 양민호 (최초 작성자 김영민)
 
     @RequestMapping(value = "/insertDetailReview", method = RequestMethod.GET)
-    public void insertDetailReview(ReviewDto reviewDto) throws Exception{
-        reviewService.insertDetailReview(reviewDto);
+    public int insertDetailReview(ReviewDto reviewDto) throws Exception{
+        int result = reviewService.insertDetailReview(reviewDto);
 
+//        입력한 리뷰의 리뷰번호 받아오는 부분
         List<ReviewDto> data = reviewService.selectReviewNum(reviewDto);
         int reviewNum = data.get(0).getReviewNum();
         reviewDto.setReviewNum(reviewNum);
 
         reviewService.insertSimpleReview(reviewDto);
-        System.out.println(reviewDto);
+//        리뷰번호가 제대로 받아와 지지 않을 때가 있어서 확인용도
+        System.out.println(reviewNum);
+
+        return result;
     }
 
 //    리뷰 수정하기
@@ -126,8 +130,49 @@ public class ReviewController {
         return simpleReviewMsg;
     }
 
-    @RequestMapping(value = "upload", method = RequestMethod.POST)
-    public void upload(MultipartFile files) {
-        System.out.println(files);
+
+//    리뷰 작성 시 첨부한 사진 저장 / 경로 반환
+//    최종 수정일 2023-02-01
+//    최종 작성자 : 양민호
+    @RequestMapping(value = "saveUploadImg", method = RequestMethod.POST)
+    public String saveUploadImg(@RequestParam(value = "file", required = false) MultipartFile[] multipartFiles,
+                       @RequestParam(value = "userId", required = false) String userId,
+                       @RequestParam(value = "productNum", required = false) String productNum) throws Exception {
+//        객체타입을 문자열로 변환하여 가져온 파라미터 정보를 Dto타입으로 변환
+        ProductDto product = new ObjectMapper().readValue(productNum, ProductDto.class);
+        UserDto user = new ObjectMapper().readValue(userId, UserDto.class);
+        // 새롭게 저장할 파일 명
+        String fileId = user.getUserId() + "_" + product.getProductNum();
+
+//        이미지 파일 저장될 경로
+        String UPLOAD_PATH = "C:\\java505\\intelliJ\\react\\dream_com\\dream_com_front\\public\\images\\reviewImage";
+        try {
+            for(int i = 0; i < multipartFiles.length; i++) {
+                MultipartFile file = multipartFiles[i];
+                // 원본 파일 ex) 파일.jpg
+                String originName = file.getOriginalFilename();
+                // 확장자 ex) jpg
+                String fileExtension = originName.substring(originName.lastIndexOf(".") + 1);
+                // 원본 파일이름 ex) 파일
+                originName = originName.substring(0, originName.lastIndexOf("."));
+                // 파일 사이즈
+                long fileSize = file.getSize();
+
+
+                File fileSave = new File(UPLOAD_PATH, fileId + "." + fileExtension);
+                // 폴더가 없을 경우 폴더 만들기
+                if(!fileSave.exists()) {
+                    fileSave.mkdirs();
+                }
+
+                // fileSave의 형태로 파일 저장
+                file.transferTo(fileSave);
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return UPLOAD_PATH + fileId;
     }
 }
