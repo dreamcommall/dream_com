@@ -2,6 +2,7 @@ package com.bitc.dream_com.controller;
 
 import com.bitc.dream_com.dto.UserDto;
 import com.bitc.dream_com.service.UserService;
+import com.bitc.dream_com.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.web.bind.annotation.*;
@@ -107,7 +108,7 @@ public class UserController {
 //    최종 작성자 : 김영민
     @RequestMapping(value = "EmailChk",method = RequestMethod.POST)
     public int EmailChk(@RequestParam("chkNumber") String chkNumber) throws Exception{
-        if(chkNumber == "123456"){
+        if(chkNumber == UserServiceImpl.ePw){
             return 1;
         }
         else{
