@@ -21,9 +21,9 @@ function DreamComRouter() {
                 <Route path={"/detail"} element={<DetailApp />} />
                 <Route path={"/error"} element={<ErrorPageApp />} />
                 <Route path={"/purchase"} element={<PurchaseApp />}></Route>
-                <Route path={"/sign"} element={<Clause/>}></Route>
-                <Route path={"/signinfomation"} element={<SignInfomation/>}></Route>
-                <Route path={"/signClear"} element={<SignClear/>}></Route>
+                <Route path={"/sign"} element={<Clause />}></Route>
+                <Route path={"/signinfomation"} element={<SignInfomation />}></Route>
+                <Route path={"/signClear"} element={<SignClear />}></Route>
             </Routes>
         </BrowserRouter>
     )

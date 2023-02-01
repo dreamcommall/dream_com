@@ -6,7 +6,7 @@ import "../fonts/fontStyle.css";
 
 function SignUpHeader() {
     return (
-        <>
+        <div>
             <div className={"container"} id={"signMain"}>
                 <div id={"Sign-mainLogo"}>
                     <img style={{width:"70%"}} src={SignMainLogo}/>
@@ -26,10 +26,7 @@ function SignUpHeader() {
                     </div>
                 </div>
             </div>
-
-<SignInfomation/>
-
-        </>
+        </div>
     );
 }
 

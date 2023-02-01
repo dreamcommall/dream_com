@@ -36,6 +36,7 @@ function clause() {
     };
 
     const ageBtnEvent = () => {
+        console.log(`ageCheck : ${ageCheck}`)
         if (ageCheck === false) {
             setAgeCheck(true)
         } else {
@@ -44,6 +45,7 @@ function clause() {
     };
 
     const useBtnEvent = () => {
+        console.log(`useCheck : ${useCheck}`)
         if (useCheck === false) {
             setUseCheck(true)
         } else {
@@ -52,6 +54,7 @@ function clause() {
     };
 
     const marketingBtnEvent = () => {
+        console.log(`marketingCheck : ${marketingCheck}`)
         if (marketingCheck === false) {
             setMarketingCheck(true)
         } else {
@@ -61,6 +64,9 @@ function clause() {
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
+        console.log(`ageCheck : ${ageCheck}`)
+        console.log(`useCheck : ${useCheck}`)
+        console.log(`marketingCheck : ${marketingCheck}`)
         if (ageCheck === true && useCheck === true && marketingCheck === true) {
             setAllCheck(true)
         } else {
@@ -149,7 +155,7 @@ function clause() {
                         </li>
                     </ul>
 
-                        <Link to={"/signInformation"}>
+                        <Link to={"/signInfomation"}>
                             <button className="next-button" style={{fontFamily: "nanumSquareB-font-normal"}}
                                     disabled={ageCheck == true && useCheck == true ? false : true}>확인</button>
                         </Link>

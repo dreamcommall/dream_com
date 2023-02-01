@@ -2,8 +2,9 @@ import React, {useState} from "react";
 import "./SignInfomation.css";
 import "../fonts/fontStyle.css";
 import {useDaumPostcodePopup} from 'react-daum-postcode';
-import SignUpHeader from "../SignUp/SignUpHeader";
+
 import SignCommu from "./SignCommu";
+import SignUpHeader from "../SignUp/SignUpHeader";
 
 
 // var regExp = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
@@ -196,7 +197,7 @@ function SignInfomation() {
 //=================================================================================
     return (
         <div>
-            <SignUpHeader/>
+        <SignUpHeader/>
         <div className={"container"} id={"div-information"}>
             <div className={"div-userMain"}>
                 <p className={"nanumSquareB-font-normal"} style={{fontSize: "25px"}}>정보 입력</p>
