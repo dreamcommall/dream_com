@@ -36,6 +36,9 @@ function SignInfomation() {
     const [isEmail, setIsEmail] = useState(false);
     const [isPhone, setIsPhone] = useState(false);
 
+    //아이디 중복 체크 1:중복 //0:사용가능
+    const [isCheckedId, setIsCheckedId] = useState(0);
+
     // Daum 우편번호찾기 URL
     const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
 
@@ -224,7 +227,7 @@ function SignInfomation() {
                     </div>
                     <div className={"col-5"}>
                         <input type={"text"} maxLength={15} value={id} onChange={onChangeId}/>
-                        <button id={"userBtn"} className={"nanumSquareR-font-normal"} onClick={SignCommu}>중복 체크</button>
+                        <button id={"userBtn"} className={"nanumSquareR-font-normal"} onClick={() => SignCommu(id, setIsCheckedId)}>중복 체크</button>
                     </div>
                     <div className={"col-5"}>
                         {isId ? <p id={"p-SignInfo"} className={"message"} style={{color: "blue"}}>{idMessage}</p> :
