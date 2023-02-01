@@ -29,8 +29,8 @@ function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, fun
     const updateSearchTarget = (target) => {
         setSearchKeyword(target.value);
     }
-    
-    // 카테고리 제조사 선택여부를 초기화한다.
+
+    // 카테고리 명단이 바꼈다면 체크여부를 다 초기화한다.
     const initCompanyIsChecked = () => {
         let temp = [];
         for (let i = 0; i < companyList.length; ++i) {
@@ -38,7 +38,24 @@ function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, fun
         }
         setCompanyIsChecked(temp);
     }
-    
+
+    // 체크박스의 id값을 받는다(키 값이 0부터 순차적으로 들어온다)
+    // 제조사 명단을 클릭했을때 체크여부 값을 변경
+    const updateCompanyIsChecked = (id) => {
+        const splitStr = id.split("-");
+        const idx = splitStr[splitStr.length - 1].split("check")[1];
+
+        let temp = [];
+        for (let i = 0; i < companyIsChecked.length; ++i) {
+            if (i == idx) {
+                temp.push(!companyIsChecked[i]);
+                continue;
+            }
+            temp.push(companyIsChecked[i]);
+        }
+        setCompanyIsChecked(temp);
+    }
+
     // 초기화 버튼 클릭시 초기값으로 설정
     const initCompanyCheckList = () => {
         setCompanyCheckList([]);
@@ -52,21 +69,23 @@ function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, fun
         companyCheckList.forEach(item => { // 저장되어있는 제조사 선택명단을 불러옴
             temp.push(item);
         });
-        
-        if (temp.indexOf(target.value) == -1) { // 유저가 선택한 값이 있는지 확인
-            temp.push(target.value);
-        } else {
-            temp = temp.filter(item => item != target.value); // 있으면 제거
+
+        if (target.checked == true) { // 선택된 체크박스의 값이 ture면 실행
+            if (temp.indexOf(target.value) == -1) {
+                temp.push(target.value);
+            }
+        } else { // 선택된 체크박스의 값이 false면 실행
+            temp = temp.filter(item => item != target.value);
         }
         
         setCompanyCheckList(temp);
+        updateCompanyIsChecked(target.id);
     }
     
     const clearSearchOption = () => {
         if (window.confirm("초기화를 진행할까요?")) {
             setCategoryKey(-1)
             initCompanyCheckList();
-            initCompanyIsChecked();
         }
     }
 
@@ -77,18 +96,13 @@ function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, fun
     }
     
     useEffect(() => {
-        initCompanyCheckList();
         initCompanyIsChecked();
-    }, []);
+        initCompanyCheckList();
+    }, [companyList]);
     
     useEffect(() => {
-        initCompanyCheckList();
-        initCompanyIsChecked();
-    }, [categoryTitle, companyList]);
-    
-    useEffect(() => {;
         funcUpdateCompanies(companyCheckList);
-    }, [companyCheckList])
+    }, [companyCheckList]);
     
     return (
         <div>
@@ -128,8 +142,9 @@ function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, fun
                             {
                                 companyList.map(item => {
                                     return <div className={"d-flex align-items-center mx-3 nanumSquareR-font-normal"}>
-                                        <input onChange={(e) => {setCompanyCheck(e.target)}} checked={companyIsChecked[item.key]} style={{zoom : 1.5}} className={"mx-2"} type={"checkbox"}
-                                        value={item.companyName}/>
+                                        <input onChange={(e) => {setCompanyCheck(e.target)}} style={{zoom : 1.5}}
+                                        className={"mx-2"} type={"checkbox"} id={`input-company-list-check${item.key}`}
+                                        value={item.companyName} checked={companyIsChecked[item.key]}/>
                                         <span>{item.companyName}</span>
                                     </div>
                                 })

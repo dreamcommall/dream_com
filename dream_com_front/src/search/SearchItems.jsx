@@ -3,8 +3,6 @@ import SearchItem from "./SearchItem";
 import "../fonts/fontStyle.css"
 
 function SearchItems({searchItemInfo}) {
-    console.log(searchItemInfo);
-
     return (
         <div className={"my-4"} style={searchItemInfo.length == 0 ? {width : "100%"} : {width : "100%", borderBottom : "1px solid lightgray"}}>
             {

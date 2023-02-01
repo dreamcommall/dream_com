@@ -35,8 +35,6 @@ function SearchPageApp() {
         const coms = {
             com: selectedCompanies.join(",")
         }
-        console.log(`minPrice : ${minPrice}`);
-        console.log(`maxPrice : ${maxPrice}`);
         
         let productSearchUrl;
         // 검색옵션에 따라 url 주소값 변경
