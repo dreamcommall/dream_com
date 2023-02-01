@@ -23,24 +23,24 @@ function SignCommu(){
 
 
 
-    //회원가입 아이디 중복 체크
-    const signUpIdChk = () =>{
-        signUpSuccess(userid)
-            .then((response) =>{
-                console.log(response)
-
-                if (response === false){
-                    alert("사용가능한 아이디 입니다.")
-                    setUsableId(response);
-                }
-                else {
-                    alert("중복된 아이디 입니다")
-                    setUsableId(response);
-                    setUserid('');
-                }
-console.log('중복체크')
-            })
-    }
+    // 회원가입 아이디 중복 체크
+//     const signUpIdChk = () =>{
+//         signUpSuccess(userid)
+//             .then((response) =>{
+//                 console.log(response)
+//
+//                 if (response === false){
+//                     alert("사용가능한 아이디 입니다.")
+//                     setUsableId(response);
+//                 }
+//                 else {
+//                     alert("중복된 아이디 입니다")
+//                     setUsableId(response);
+//                     setUserid('');
+//                 }
+// console.log('중복체크')
+//             })
+//     }
 
 }
 
