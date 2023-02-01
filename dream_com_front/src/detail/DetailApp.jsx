@@ -22,6 +22,53 @@ function DetailApp() {
     const [reviewInfo, setReviewInfo] = useState(); // 상품의 리뷰 관련 정보들이 담아져있는 객체
     const [isLoad, setIsLoad] = useState(false); // 로딩창
     
+    // 하위 컴포넌트에서 사용한다.
+    // 선택한 리뷰의 좋아요 개수를 증가
+    const plusReviewLikeCount = (target) => {
+        const splitStr = target.id.split("-"); // 좋아요 버튼에 있는 태그의 id값에 리뷰번호가 저장되어있다.
+        const reviewNumber = splitStr[splitStr.length - 1].split("number")[1]; // 리뷰번호를 추출
+    
+        reviewLikeProcess(reviewNumber).then(result => {
+            if (result == true) {
+                alert("리뷰 추천에 성공했습니다.");
+            } else {
+                alert("리뷰 추천에 실패했습니다.");
+            }
+            setIsLoad(false);
+        });
+    }
+    
+    // 선택한 리뷰의 좋아요를 눌렀을때 axios 처리
+    const reviewLikeProcess = async (reviewNumber) => {
+        let success = false;
+        
+        setIsLoad(true);
+        
+        // 서버에게 선택한 리뷰번호를 기준으로 좋아요 개수를 증가하도록 요청
+        await axios.put("http://localhost:8080/addLikeCount", [], {params : {reviewNum : reviewNumber}})
+            .then(response => {
+                if (response.data == "success") {
+                    success = true;
+                }
+            })
+            .catch(err => {
+                console.log(`에러가 발생했습니다. 메세지 : ${err}`);
+                console.log("대상 리뷰를 추천하는데 실패했습니다.");
+            });
+    
+        // 서버로부터 상품의 리뷰를 불러온다.
+        await axios.get("http://localhost:8080/productReview", {params : {productNum : productNum, pageNum : reviewPageNum}})
+            .then(response => {
+                setReviewInfo(response.data);
+            })
+            .catch(err => {
+                console.log(`에러가 발생했습니다. 메세지 : ${err}`);
+                console.log("상품의 댓글을 불러오는데 실패했습니다.");
+            });
+        
+        return success;
+    }
+    
     const dataReceive = async () => {
         setIsLoad(true);
     
@@ -77,7 +124,7 @@ function DetailApp() {
                 <DetailNavMenu />
                 <SidebarApp />
                 <DetailHeader data={productInfo} />
-                <DetailBody productInfo={productInfo} reviewRate={totalReviewRate} reviewInfo={reviewInfo} />
+                <DetailBody productInfo={productInfo} reviewRate={totalReviewRate} reviewInfo={reviewInfo} funcPlusReviewLikeCount={plusReviewLikeCount}/>
                 <DetailFooter />
             </div>
             <Footer />
