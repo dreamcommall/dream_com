@@ -1,14 +1,23 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./DetailBodyProductInfoSummary.css"
 
 // 제품의 정보를 표시해주는 컴포넌트(하단에 위치)
-function DetailBodyProductInfoSummary({productNumber}) {
+function DetailBodyProductInfoSummary({productInfo}) {
+    const [productNumber, setProductNumber] = useState(0);
+    
+    useEffect(() => {
+        if (productInfo == undefined) {
+            return;
+        }
+        setProductNumber(productInfo[0].productNum);
+    }, [productInfo])
+    
     return (
         <div id={"div-detail-product-summary"}>
             <h4>상품 정보 제공 고시</h4>
             <div>
                 <p>상품번호</p>
-                <p>상품번호입니다.</p>
+                <p>{productNumber}</p>
             </div>
             <div>
                 <p>상품상태</p>

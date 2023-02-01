@@ -65,8 +65,12 @@ function DetailBodyProductSubInfo({productInfo}) {
                 <p className={"nanumSquareB-font-XNormal div-detail-product-info-title"}>판매가</p>
                 <div className={"mx-5"}>
                     <div className={"d-flex"}>
-                        <p className={"mb-1 me-1 nanumSquareR-font-normal"}>{productDiscount}% 할인</p>
-                        <p className={"mb-1 nanumSquareR-font-normal"}>{productPrice}원</p>
+                        {
+                            productDiscount == 0 ? null : <p id={"p-detail-product-sub-discount"} className={"mb-1 me-1 nanumSquareB-font-normal"}>{productDiscount}% 할인</p>
+                        }
+                        {
+                            productDiscount == 0 ? null : <p id={"p-detail-product-sub-price"} className={"mb-1 nanumSquareR-font-normal"}>{productPrice}원</p>
+                        }
                     </div>
                     <p className={"nanumSquareR-font-normal"}>{discountPrice}원</p>
                 </div>

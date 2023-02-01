@@ -1,29 +1,75 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "../../fonts/fontStyle.css"
 import "./DetailBodyProductReviewContents.css"
 
 // 리뷰의 내용을 표시하는 컴포넌트
 function DetailBodyProductReviewContents(props) {
+    const [stars, setStars] = useState([]); // 별점
+    const [defaultStars, setDefaultStars] = useState([]); // 빈 별점
+    
+    // 평점을 기반으로 별 개수 생성
+    const createStars = () => {
+        let temp = [];
+        let halfValue = props.data.score % 1.0;
+
+        for (let i = 0; i < Math.floor(props.data.score); ++i) {
+            temp.push({key: i, src: "/images/star16.png"});
+            setStars(temp);
+        }
+
+        if (halfValue >= 0.5) {
+            temp.push({key: temp.length + 1, src: "/images/starHalf16.png"});
+            setStars(temp);
+        }
+    }
+
+    // 평점을 기반으로 빈 별점 개수 생성
+    const createRemindStars = () => {
+        let temp = [];
+
+        for (let i = 0; i < Math.floor(5 - props.data.score); ++i) {
+            temp.push({key : i, src : "/images/star16_blank.png"});
+        }
+
+        setDefaultStars(temp);
+    }
+    
+    useEffect(() => {
+        createStars();
+        createRemindStars();
+    }, [props.data.score]);
+    
     return (
         <div className={"div-detail-review-contents-wrapper"}>
             <div className={"d-flex justify-content-between"}>
-                <p className={"nanumSquareB-font-normal"}>{props.data.userId}</p>
-                <p className={"nanumSquareR-font-normal"}>{props.data.createDate}</p>
+                <p className={"nanumSquareB-font-normal mb-1"}>{props.data.userId}</p>
+                <p className={"nanumSquareR-font-normal mb-1"}>{props.data.createDt}</p>
             </div>
             <div>
-                <p>별점</p>
+                <p>
+                    {
+                        stars.map(item => {
+                            return <img className={"img-detail-product-review-star-score"} width={16} height={16} key={item.key} src={item.src} />
+                        })
+                    }
+                    {
+                        defaultStars.map(item => {
+                            return <img className={"img-detail-product-review-star-score"} width={16} height={16} key={item.key} src={item.src} />
+                        })
+                    }
+                </p>
             </div>
             <div className={"d-flex"}>
-                <p className={"p-detail-simple-review"}><span>배송</span> {props.data.deliveryReview}</p>
-                <p className={"p-detail-simple-review"}><span>성능</span> {props.data.specReview}</p>
-                <p className={"p-detail-simple-review"}><span>소음</span> {props.data.noiseReview}</p>
-                <p className={"p-detail-simple-review"}><span>포장</span> {props.data.boxingReview}</p>
+                <p className={"p-detail-simple-review"}><span>배송</span> {props.data.dreviewMsg}</p>
+                <p className={"p-detail-simple-review"}><span>성능</span> {props.data.sreviewMsg}</p>
+                <p className={"p-detail-simple-review"}><span>소음</span> {props.data.nreviewMsg}</p>
+                <p className={"p-detail-simple-review"}><span>포장</span> {props.data.previewMsg}</p>
             </div>
             <div id={"div-detail-review-content"}>
-                <p className={"nanumSquareR-font-normal"}>{props.data.reviewContent}</p>
+                <p className={"nanumSquareR-font-normal"}>{props.data.content}</p>
             </div>
             <div id={"div-detail-review-photo"}>
-                <p>사진 & 동영상</p>
+                <p>{props.data.imgPath}</p>
             </div>
             <div className={"d-flex align-items-center mb-3"}>
                 <div className={"d-flex align-items-center div-detail-review-like-wrapper"}>

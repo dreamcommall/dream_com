@@ -3,7 +3,7 @@ import Pagination from 'react-bootstrap/Pagination';
 import "./DetailBodyReviewPagination.css"
 import {Link} from "react-router-dom";
 
-function DetailBodyReviewPagination({currentPageNumber, firstPageNumber, lastPageNumber, keyword}) {
+function DetailBodyReviewPagination({currentPageNumber, firstPageNumber, lastPageNumber, productNumber}) {
     const [pageNumberList, setPageNumberList] = useState([]); // 페이지 번호를 담기위한 공간
     
     useEffect(() => {
@@ -28,7 +28,8 @@ function DetailBodyReviewPagination({currentPageNumber, firstPageNumber, lastPag
                             <Pagination.Item>
                                 {
                                     currentPageNumber == firstPageNumber ? <div>{"<"}</div> :
-                                        <Link className={"link-search-pagination"} to={"#"}>
+                                        <Link className={"link-search-pagination"}
+                                            to={`/detail?productNum=${productNumber}&pageNum=${currentPageNumber - 1}`}>
                                             <div>{"<"}</div>
                                         </Link>
                                 }
@@ -36,7 +37,7 @@ function DetailBodyReviewPagination({currentPageNumber, firstPageNumber, lastPag
                         {
                             pageNumberList.map(item => {
                                 return <Pagination.Item>
-                                    <Link className={"link-search-pagination"} to={"#"}>
+                                    <Link className={"link-search-pagination"} to={`/detail?productNum=${productNumber}&pageNum=${item}`}>
                                         <div className={`red${currentPageNumber}` == `red${item}` ? `red${item} active` : `red${item}`}>
                                             {item}
                                         </div>
@@ -47,7 +48,8 @@ function DetailBodyReviewPagination({currentPageNumber, firstPageNumber, lastPag
                             <Pagination.Item>
                                 {
                                     currentPageNumber == lastPageNumber ? <div>{">"}</div> :
-                                        <Link className={"link-search-pagination"} to={"#"}>
+                                        <Link className={"link-search-pagination"}
+                                            to={`/detail?productNum=${productNumber}&pageNum=${currentPageNumber + 1}`}>
                                             <div>{">"}</div>
                                         </Link>
                                 }

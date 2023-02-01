@@ -72,3 +72,11 @@
 #span-detail-product-price {
     color: #e26e6e;
 }
+
+#p-detail-product-sub-discount {
+    color: red;
+}
+
+#p-detail-product-sub-price {
+    text-decoration: line-through;
+}
