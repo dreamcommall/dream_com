@@ -1,14 +1,18 @@
-#div-totalScore {
+#div-reviewModal-totalScore {
     text-align: center;
     padding-top: 20px;
     padding-bottom: 20px;
 }
-#div-stars {
+#div-reviewModal-stars {
     text-align: left;
     padding-left: 75px;
     padding-right: 50px;
 }
 
-.div-starImg {
+.div-reviewModal-starImg {
     margin-left: 20px;
+}
+
+.div-reviewModal-starImg {
+    cursor: pointer;
 }

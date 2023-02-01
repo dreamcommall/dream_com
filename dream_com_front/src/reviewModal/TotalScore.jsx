@@ -35,9 +35,9 @@ function TotalScore(props) {
     }
 
     return (
-        <div id={"div-totalScore"}>
+        <div id={"div-reviewModal-totalScore"}>
             <p className={"nanumSquareB-font-large"}>상품은 만족하셨나요?</p>
-            <div id={"div-stars"}>
+            <div id={"div-reviewModal-stars"}>
                 {startList.map(item => {
 
                     return (
@@ -45,7 +45,7 @@ function TotalScore(props) {
                             (item <= rate ?  "/images/star64_opacity.png" : "/images/star64_opacity.png")
                             : (item <= rate ? "/images/star64.png" : "/images/star64_blank.png"))}
                                 key={item} onMouseOver={() => mouseover(item)} onMouseOut={() => mouseout(item)}
-                                onClick={() => clickStar(item)} className={"div-starImg"} />
+                                onClick={() => clickStar(item)} className={"div-reviewModal-starImg"} />
                     )
                 })}
             </div>

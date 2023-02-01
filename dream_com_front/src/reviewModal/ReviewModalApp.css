@@ -2,7 +2,7 @@
     width: 600px;
 }
 
-#button-close-top {
+#button-reviewModal-close-top {
     border: 1px solid lightgrey;
     float: right;
     height: 40px;
@@ -13,34 +13,7 @@
     background-color: white;
 }
 
-#input-img {
-    display: none;
-}
-
-#div-img {
-    display: flex;
-    justify-content: center;
-    padding: 20px 0;
-}
-
-#div-img label span {
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 20px;
-}
-
-#div-previewImg {
-    display: flex;
-    justify-content: center;
-    padding: 20px 0px;
-}
-
-#img-previewImg {
-    max-width: 500px;
-    text-align: center;
-}
-
-#button-close-bottom {
+#button-reviewModal-close-bottom {
     width: 200px;
     height: 50px;
     margin-right: 10px;
@@ -48,9 +21,14 @@
     border: 1px solid black;
 }
 
-#button-insert {
+#button-reviewModal-insert {
     width: 200px;
     height: 50px;
     background-color: #e26e6e;
     border: 1px solid black;
+}
+
+#button-reviewModal-close-top:hover, #button-reviewModal-close-bottom:hover,
+#button-reviewModal-insert:hover{
+    cursor: pointer;
 }

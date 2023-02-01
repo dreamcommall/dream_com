@@ -8,16 +8,17 @@ function SimpleReview(props) {
         props.setting(e.target.value);
     }
     return (
-        <div id={"div-simpleReview"}>
+        <div id={"div-reviewModal-simpleReview"}>
             <p className={"text-center nanumSquareB-font-large"}>{props.title}</p>
-            <div id={"div-radioList"}>
+            <div id={"div-reviewModal-radioList"}>
                 {props.msg.map(item => {
                     return (
-                        <div key={item.key} className={"div-radio"}>
+                        <div key={item.key} className={"div-reviewModal-radio"}>
                             <div>
-                                <input type={"radio"} value={item.key} name={props.name} onClick={radioValue} defaultChecked={item.key === 1} />
+                                <input className={"input-reviewModal-radio"} type={"radio"} value={item.key}
+                                       name={props.name} onClick={radioValue} defaultChecked={item.key === 1} />
                             </div>
-                            <label htmlFor={item.key} className={"nanumSquareR-font-normal"}>{item.msg}</label>
+                            <label className={"nanumSquareR-font-normal"}>{item.msg}</label>
                         </div>
                     )
                 })}
