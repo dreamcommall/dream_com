@@ -14,8 +14,7 @@ const randomSpecComment = [
 // 랜덤으로 견적을 추천해주는 컴포넌트
 function RandomSpec({randomSpec, partNames}) {
     const [randomComment, setRandomComment] = useState("");
-    console.log(randomSpec);
-
+    
     useEffect(() => {
         const randomIdx = Number.parseInt(((Math.random() - 0.1) * (randomSpecComment.length)).toString());
         setRandomComment(randomSpecComment[randomIdx].title);

@@ -15,7 +15,7 @@ import ClickPrevent from "../common/ClickPrevent";
 // 제품 상세페이지에 구성되는 컴포넌트들을 모아서 보여주는 컴포넌트
 function DetailApp() {
     const [searchParams, setSearchParams] = useSearchParams(); // 파라미터를 가져오는 훅
-    const [productNum, setProductNum] = useState(230130001); // 클릭한 상품의 제품 번호
+    const [productNum, setProductNum] = useState(0); // 클릭한 상품의 제품 번호
     const [reviewPageNum, setReviewPageNum] = useState(1); // 상품의 리뷰 페이지 번호
     const [productInfo, setProductInfo] = useState(); // 조회해서 보고있는 상품의 정보
     const [totalReviewRate, setTotalReviewRate] = useState(); // 상품의 전체 평점 비율
@@ -109,9 +109,12 @@ function DetailApp() {
         setReviewPageNum(Number.parseInt(searchParams.get("pageNum")));
     }, [searchParams]);
     
-    // 상품번호와 리뷰 페이지 번호가 변경되면 데이터 재로딩
+    // 제품번호, 리뷰 페이지 번호가 변경되면 데이터 재로딩
     useEffect(() => {
-        dataReceive().then(() => {setIsLoad(false);})
+        if (productNum == 0) {
+            return;
+        }
+        dataReceive().then(() => {setIsLoad(false);});
     }, [productNum, reviewPageNum]);
     
     return (

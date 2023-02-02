@@ -7,6 +7,7 @@ import DetailBodyProductReviewSummary from "./DetailBodyProductReviewSummary";
 import DetailBodyProductReview from "./DetailBodyProductReview";
 import DetailBodyProductReviewContents from "./DetailBodyProductReviewContents";
 import DetailBodyReviewPagination from "./DetailBodyReviewPagination";
+import * as sessionStorageManager from "../../common/js/sessionStorageManager";
 
 // 제품 상세페이지의 가격정보 ~ 리뷰까지 보여주는 부분을 구성하는 컴포넌트
 function DetailBody({productInfo, reviewRate, reviewInfo, funcPlusReviewLikeCount}) {
@@ -27,13 +28,14 @@ function DetailBody({productInfo, reviewRate, reviewInfo, funcPlusReviewLikeCoun
         setReviews(reviewInfo.reviews);
     }, [reviewInfo]);
     
-    // 서버로부터 제품번호 가져오기
+    // 서버로부터 제품번호 가져오기 및 가져올때 세션 스토리지에 값 저장
     useEffect(() => {
         if (productInfo == undefined) {
             return;
         }
+        sessionStorageManager.saveHistory(productInfo[0].productTitle, productInfo[0].thumbnailImg, productInfo[0].productNum);
         setProductNum(productInfo[0].productNum);
-    }, [productInfo])
+    }, [productInfo]);
     
     return (
         <div>
