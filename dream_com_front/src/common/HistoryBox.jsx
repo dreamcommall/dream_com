@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import "../fonts/fontStyle.css";
 import "./HistoryBox.css";
 import {getAllHistory} from "./js/sessionStorageManager";
+import {Link} from "react-router-dom";
 
 // 작성자 : MoonNight285
 // 히스토리 박스를 그려주는 컴포넌트
@@ -31,7 +32,7 @@ function HistoryBox() {
                             historyList.map(item => {
                                 return (
                                     <div key={item.key} title={item.productTitle}>
-                                        <a href={`/detail?productNum=${item.productNum}`}><img className={"mb-3"} width={70} height={70} src={item.thumbnailImg} /></a>
+                                        <Link to={`/detail?productNum=${item.productNum}`}><img className={"mb-3"} width={70} height={70} src={item.thumbnailImg} /></Link>
                                     </div>
                                 );
                             })
