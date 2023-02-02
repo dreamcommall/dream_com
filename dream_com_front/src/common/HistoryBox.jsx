@@ -9,9 +9,16 @@ function HistoryBox() {
     const [historyList, setHistoryList] = useState([]); // 히스토리 상품이 담긴 배열
     
     // 세션 스토리지의 길이가 달라졌거나, 첫번째 상품의 이름의 값이 달라진경우 갱신
+    // useEffect(() => {
+    //     setHistoryList(getAllHistory());
+    // }, [sessionStorage.length, sessionStorage.getItem(`productNum0`)]);
+    
     useEffect(() => {
-        setHistoryList(getAllHistory());
-    }, [sessionStorage.length, sessionStorage.getItem(`productNum0`)]);
+        // sessionStorage.clear();
+        console.log(sessionStorage);
+        console.log(sessionStorage.getItem("productNum_230130003"));
+        console.log(JSON.parse(sessionStorage.getItem("productNum_230130003")));
+    }, []);
     
     return (
         <div id={"div-history-box"}>

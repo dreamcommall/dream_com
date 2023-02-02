@@ -6,37 +6,36 @@ export function saveHistory(productTitle, thumbnailImg, productNum) {
         return;
     }
     
-    if ((sessionStorage.length / 3).toFixed() == MAX_HISTORY_SAVE_COUNT) {
-        replaceHistory();
+    // if ((sessionStorage.length / 3).toFixed() == MAX_HISTORY_SAVE_COUNT) {
+    //     replaceHistory();
+    // }
+    
+    let productInfo = {
+        productTitle : productTitle.toString(),
+        thumbnailImg : thumbnailImg.toString(),
+        productNum : productNum.toString()
     }
     
-    let idx = (sessionStorage.length / 3).toFixed();
-    
-    sessionStorage.setItem(`productTitle${idx}`, productTitle);
-    sessionStorage.setItem(`thumbnailImg${idx}`, thumbnailImg);
-    sessionStorage.setItem(`productNum${idx}`, productNum);
+    sessionStorage.setItem(`productNum_${productNum}`, JSON.stringify(productInfo));
 }
 
 // 세션 스토리지에서 저장된 정보들을 가져오는 함수
 export function getAllHistory() {
-    let result = [];
-    let idx = (sessionStorage.length / 3).toFixed();
-    for (let i = 0; i < idx; ++i) {
-        result.push({
-            key : i,
-            productTitle : sessionStorage.getItem(`productTitle${i}`),
-            thumbnailImg : sessionStorage.getItem(`thumbnailImg${i}`),
-            productNum : sessionStorage.getItem(`productNum${i}`)
-        });
-    }
-    return result;
+    // let result = [];
+    // for (let i = 0; i < sessionStorage.length; ++i) {
+    //     result.push({
+    //         key : i,
+    //         productTitle : sessionStorage.getItem(`productTitle${i}`),
+    //         thumbnailImg : sessionStorage.getItem(`thumbnailImg${i}`),
+    //         productNum : sessionStorage.getItem(`productNum${i}`)
+    //     });
+    // }
+    // return result;
 }
 
 // 각 세션이름에 붙은 번호를 기준으로 세션 스토리지에 등록되어있는 데이터를 삭제합니다.
-function removeHistory(sessionNumber) {
-    sessionStorage.removeItem(`productTitle${sessionNumber}`);
-    sessionStorage.removeItem(`thumbnailImg${sessionNumber}`);
-    sessionStorage.removeItem(`productNum${sessionNumber}`);
+function removeHistory(productNum) {
+    sessionStorage.removeItem(`productNum_${productNum}`);
 }
 
 // 세션에 저장되어있는 데이터들을 하나씩 앞 번호로 이동시킵니다.
