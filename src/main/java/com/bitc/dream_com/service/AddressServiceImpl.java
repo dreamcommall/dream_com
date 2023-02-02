@@ -13,18 +13,13 @@ public class AddressServiceImpl implements AddressService{
     private AddressMapper addressMapper;
 
     @Override
-    public List<AddressDto> address() throws Exception {
-        return addressMapper.address();
+    public List<AddressDto> address(String userId) throws Exception {
+        return addressMapper.address(userId);
     }
 
     @Override
     public void insertAddress(AddressDto addressDto) throws Exception {
         addressMapper.insertAddress(addressDto);
-    }
-
-    @Override
-    public List<AddressDto> anotherAddress() throws Exception {
-        return addressMapper.anotherAddress();
     }
 
     @Override
