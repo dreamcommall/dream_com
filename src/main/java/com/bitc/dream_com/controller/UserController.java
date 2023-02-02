@@ -131,4 +131,11 @@ public class UserController {
         return result;
     }
 
+//    유저 정보 가져오기
+//    최종 수정일 : 2023-02-02
+//    최종 작성자 : 양민호
+    @RequestMapping(value="getUserInfo", method = RequestMethod.GET)
+    public Object getUserInfo(@RequestParam("userId") String userId) throws Exception {
+        return userService.getUserInfo(userId);
+    }
 }

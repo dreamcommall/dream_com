@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.mail.Message.RecipientType;
@@ -123,6 +124,11 @@ public class UserServiceImpl implements UserService {
     public int idChk(String userId) throws Exception {
         return userMapper.idChk(userId);
 
+    }
+
+    @Override
+    public List<UserDto> getUserInfo(String userId) throws Exception {
+        return userMapper.getUserInfo(userId);
     }
 
 
