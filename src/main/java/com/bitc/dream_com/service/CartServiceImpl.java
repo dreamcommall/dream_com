@@ -19,8 +19,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartDto> selectCart() throws Exception {
-        return testMapper.selectCart();
+    public List<CartDto> selectCart(String userId) throws Exception {
+        return testMapper.selectCart(userId);
     }
 
     @Override
