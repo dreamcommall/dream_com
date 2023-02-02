@@ -50,8 +50,12 @@ public class ProductController {
     @RequestMapping(value = "/fullProductInfo", method = RequestMethod.GET)
     public Object fullProductInfo(@RequestParam("productNum") int productNum) throws Exception {
         ProductDto products = productService.productData(productNum);
-
-        return getFullData(products);
+        if(products == null) {
+            return null;
+        }
+        else {
+            return getFullData(products);
+        }
     }
 
 //    클릭 수가 높은 제품 정보 불러오기
