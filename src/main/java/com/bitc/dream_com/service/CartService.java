@@ -8,7 +8,7 @@ import java.util.List;
 public interface CartService {
     void insertCart(CartDto cartDto) throws Exception;
 
-    List<CartDto> selectCart() throws Exception;
+    List<CartDto> selectCart(String userId) throws Exception;
 
     void updateCart(CartDto cartDto) throws Exception;
 
