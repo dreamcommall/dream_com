@@ -52,16 +52,17 @@
 }
 
 #inputGroup-detail-product-calculator {
-    width: 20%;
+    width: 25%;
 }
 
 #inputGroup-detail-product-calculator button {
-    width: 33.3%;
+    width: 40px;
 }
 
 #inputGroup-detail-product-calculator * {
     font-family: NanumSquareR;
     font-size: 20px;
+    text-align: center;
 }
 
 #inputGroup-detail-product-calculator button:hover {
@@ -70,4 +71,12 @@
 
 #span-detail-product-price {
     color: #e26e6e;
+}
+
+#p-detail-product-sub-discount {
+    color: red;
+}
+
+#p-detail-product-sub-price {
+    text-decoration: line-through;
 }

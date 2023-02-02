@@ -1,0 +1,22 @@
+#div-reviewModal-detailContent {
+    border-top: 1px solid lightgrey;
+    padding: 20px 0px 20px 0px;
+}
+
+#div-reviewModal-contentText {
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+#textarea-reviewModal {
+    resize: none;
+}
+
+#div-reviewModal-textLength {
+    position: absolute;
+    bottom: 8px;
+    right: 25px;
+    color: gray;
+}

@@ -11,7 +11,7 @@ public interface ReviewService {
 
     List<ReviewDto> getScore(int productNum) throws Exception;
 
-    void insertDetailReview(ReviewDto reviewDto) throws Exception;
+    int insertDetailReview(ReviewDto reviewDto) throws Exception;
 
     void insertSimpleReview(ReviewDto reviewDto) throws Exception;
 
@@ -32,4 +32,11 @@ public interface ReviewService {
 
     Page<ReviewDto> getReviewPaging(int productNum, int pageNum) throws Exception;
 
+    List<ReviewDto> noiseMsg() throws Exception;
+
+    List<ReviewDto> specMsg() throws Exception;
+
+    List<ReviewDto> packagingMsg() throws Exception;
+
+    List<ReviewDto> deliveryMsg() throws Exception;
 }

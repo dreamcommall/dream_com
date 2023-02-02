@@ -40,4 +40,10 @@
         insert into user values (#{userId}, #{userPw}, #{userName}, #{userGender}, #{userPost}, #{userAddr}, #{userTel},
                                  #{userEmail}, 'N')
     </insert>
+
+    <select id="idChk" resultType="int" parameterType="com.bitc.dream_com.dto.UserDto">
+        select count(user_id)
+        from user
+        where user_id = #{userId}
+    </select>
 </mapper>

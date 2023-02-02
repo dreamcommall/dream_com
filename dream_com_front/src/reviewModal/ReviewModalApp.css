@@ -1,0 +1,34 @@
+#div-reviewModal {
+    width: 600px;
+}
+
+#button-reviewModal-close-top {
+    border: 1px solid lightgrey;
+    float: right;
+    height: 40px;
+    width: 40px;
+    font-size: 25px;
+    border-radius: 4px;
+    margin-top: 4px;
+    background-color: white;
+}
+
+#button-reviewModal-close-bottom {
+    width: 200px;
+    height: 50px;
+    margin-right: 10px;
+    background-color: white;
+    border: 1px solid black;
+}
+
+#button-reviewModal-insert {
+    width: 200px;
+    height: 50px;
+    background-color: #e26e6e;
+    border: 1px solid black;
+}
+
+#button-reviewModal-close-top:hover, #button-reviewModal-close-bottom:hover,
+#button-reviewModal-insert:hover{
+    cursor: pointer;
+}
