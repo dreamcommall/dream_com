@@ -81,7 +81,7 @@ function NavigationBar() {
                                     onMouseOver={() => setTextLine(0)}
                                     onMouseOut={() => setTextLine(1)}
                                 >
-                                    <Nav.Link to="#action1"
+                                    <Nav.Link href="/login"
                                               style={textLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}} className={"nanumSquareB-font-normal"}>로그인</Nav.Link>
                                 </li>
                             </a>
@@ -90,7 +90,7 @@ function NavigationBar() {
                                     onMouseOver={() => setUserLine(0)}
                                     onMouseOut={() => setUserLine(1)}
                                 >
-                                    <Nav.Link href="/SignUp"
+                                    <Nav.Link href="/sign"
                                               style={userLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}} className={"nanumSquareB-font-normal"}>회원가입</Nav.Link>
                                 </li>
                             </a>

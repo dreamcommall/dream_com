@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import "../fonts/fontStyle.css"
 import "./Login.css"
+import {Link} from "react-router-dom";
 
 // 작성자 : YMKJJ
 // 기능 : 로그인 UI / 로그인 기능
@@ -82,7 +83,7 @@ function Login(){
                     </div>
                     <div className={"col-4"}>
                         <div>
-                            <a href={"#"} ><img src={"/images/mainLogo2.png"} style={imgSize}></img></a>
+                            <Link to={"/"}><img src={"/images/mainLogo2.png"} style={imgSize}></img></Link>
                         </div>
                         <div>
                             <input placeholder={"아이디"} value={userId} onChange={handleInputId} type={"text"}
@@ -104,15 +105,13 @@ function Login(){
                                     <label className={"ms-1 nanumSquareR-font-small"} style={fontSize}>자동로그인</label>
                                 </div>
                                 <div>
-                                    <a className={"text-decoration-none text-dark nanumSquareR-font-small"} href={"http://localhost:3000"}
-                                    style={fontSize}>아이디 찾기</a>
+                                    <Link to={"/findId"} className={"text-decoration-none text-dark nanumSquareR-font-small"} style={fontSize}>아이디 찾기</Link>
                                     <span className={"ms-2"}>|</span>
-                                    <a className={"text-decoration-none ms-2 text-dark nanumSquareR-font-small"} href={"http://localhost:3000"}
-                                    style={fontSize}>비밀번호 찾기</a>
+                                    <Link to={"/findPw"} className={"text-decoration-none ms-2 text-dark nanumSquareR-font-small"} style={fontSize}>비밀번호 찾기</Link>
                                 </div>
                                 </div>
                             <div className={"mt-2"}>
-                                <a className={"text-decoration-none text-dark nanumSquareR-font-Normal"} href={"http://localhost:3000"}><b>회원가입</b> ></a>
+                                <Link to={"/sign"} className={"text-decoration-none text-dark nanumSquareR-font-Normal"} href={"http://localhost:3000"}><b>회원가입</b> ></Link>
                             </div>
                             <p className={"nanumSquareR-font-small"} style={loginFooter}>
                                 Copyright © 2023 <b>DreamComputer</b> Co.,Ltd. All Rights Reserved.</p>
