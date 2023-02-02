@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import Slider from "react-slick";
 import "./slick.css"
 import "./slick-theme.css"
 import PopularProductImg from "./PopularProductImg";
 import PopularProductContents from "./PopularProductContents";
-import axios from "axios";
 import "../fonts/fontStyle.css"
+import "./PopularProduct.css"
 
 // slick 캐러셀 옵션 설정
 const settings = {
@@ -18,7 +18,6 @@ const settings = {
 
 // 현시간 인기상품을 보여주는 컴포넌트
 function PopularProduct({popularProductList}) {
-    
     return (
         <div className={"container mt-5"}>
             <div className={"d-flex justify-content-between"}>
@@ -33,9 +32,10 @@ function PopularProduct({popularProductList}) {
                         // 현시간 인기상품
                         popularProductList.map(item => {
                             return (
-                                <div title={item.productTitle} key={item.key}>
-                                    <PopularProductImg src={item.thumbnailImg} />
-                                    <PopularProductContents name={item.productTitle} price={item.productPrice} discountPercent={item.productDiscount} />
+                                <div title={item.productTitle} key={item.key} className={"div-main-popular-product-wrapper"}>
+                                    <PopularProductImg src={item.thumbnailImg} productNum={item.productNum} />
+                                    <PopularProductContents name={item.productTitle} price={item.productPrice} discountPercent={item.productDiscount}
+                                        productNum={item.productNum}/>
                                 </div>
                             );
                         })

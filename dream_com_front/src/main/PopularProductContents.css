@@ -1,12 +1,23 @@
 /* 현시간 인기상품의 상품명을 한줄로 제한 */
-#p-main-popular-content {
+.p-main-popular-content {
     overflow: hidden;
     width: 250px;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: black;
 }
 
 /* 현시간 인기상품의 세일표시 글의 색상 강조 */
-#p-main-popular-content-sale {
+.p-main-popular-content-sale {
     color: red;
+}
+
+/* 현시간 인기상품의 가격표시 글 색상 */
+.p-main-popular-content-price {
+    color: black;
+}
+
+/* 현시간 인기상품 링크 밑줄 제거 */
+.div-main-popular-content-wrapper a {
+    text-decoration: none;
 }
