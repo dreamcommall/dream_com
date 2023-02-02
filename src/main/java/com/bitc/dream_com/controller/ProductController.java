@@ -388,7 +388,7 @@ public class ProductController {
     ProductDetail productDetail;
 
     // 제품리스트의 모든 정보 취합 함수
-    public Object getFullData(List<ProductDto> dtoList) throws Exception {
+    public List<ProductDetail> getFullData(List<ProductDto> dtoList) throws Exception {
         List<ProductDetail> fullData = new ArrayList<>();
 
 //        상세 정보 저장
@@ -476,7 +476,7 @@ public class ProductController {
 
 
 //    하나의 제품데이터의 모든 정보 취합 함수 (매개변수만 달라짐)
-    public Object getFullData(ProductDto productDto) throws Exception {
+    public List<ProductDetail> getFullData(ProductDto productDto) throws Exception {
         List<ProductDetail> fullData = new ArrayList<>();
 
 //        상세 정보 저장
