@@ -1,25 +1,35 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import "../fonts/fontStyle.css";
 import Form from "react-bootstrap/Form";
 import "./NavigationBar.css";
+import {Link} from "react-router-dom";
+import axios from "axios";
 
 
 
 function NavigationBar() {
-
-    const [textLine, setTextLine] = useState(1)
-    const [userLine, setUserLine] = useState(1)
-    const [bestLine, setBestLine] = useState(1)
-    const [specialLine, setSpecialLine] = useState(1)
-    const [oneLine, setOneLine] = useState(1)
-    const [zoneLine, setZoneLine] = useState(1)
-    const [gLine, setGLine] = useState(1)
-
-
-
+    const [textLine, setTextLine] = useState(1);
+    const [userLine, setUserLine] = useState(1);
+    const [bestLine, setBestLine] = useState(1);
+    const [specialLine, setSpecialLine] = useState(1);
+    const [oneLine, setOneLine] = useState(1);
+    const [zoneLine, setZoneLine] = useState(1);
+    const [gLine, setGLine] = useState(1);
+    
+    useEffect(() => {
+        axios.get("http://localhost:8080/loginChk")
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(err => {
+                console.log(`에러메세지 : ${err}`);
+                console.log("로그인한 유저 정보를 취득하는데 실패했습니다.");
+            });
+    }, []);
+    
     return (
         <Navbar className={"container py-1"} id={"nav"} >
             <div >
@@ -77,12 +87,12 @@ function NavigationBar() {
                     <Form className={"container-fluid"}>
                         <Nav style={{marginLeft:"69%"}}>
                             <a>
-                                <li
+                                <li style={{height : "100%"}} className={"d-flex align-items-center me-2"}
                                     onMouseOver={() => setTextLine(0)}
                                     onMouseOut={() => setTextLine(1)}
                                 >
-                                    <Nav.Link href="/login"
-                                              style={textLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}} className={"nanumSquareB-font-normal"}>로그인</Nav.Link>
+                                    <Link to={"/login"} style={textLine ? {textDecorationLine: "none", color : "gray"}
+                                        : {textDecorationLine: "underline", color : "black"}} className={"nanumSquareB-font-normal"}>로그인</Link>
                                 </li>
                             </a>
                             <a>
@@ -90,8 +100,8 @@ function NavigationBar() {
                                     onMouseOver={() => setUserLine(0)}
                                     onMouseOut={() => setUserLine(1)}
                                 >
-                                    <Nav.Link href="/sign"
-                                              style={userLine ? {textDecorationLine: "none"} : {textDecorationLine: "underline"}} className={"nanumSquareB-font-normal"}>회원가입</Nav.Link>
+                                    <Link to={"/sign"} style={userLine ? {textDecorationLine: "none", color : "gray"}
+                                        : {textDecorationLine: "underline", color : "black"}} className={"nanumSquareB-font-normal"}>회원가입</Link>
                                 </li>
                             </a>
                         </Nav>

@@ -3,6 +3,8 @@ import axios from "axios";
 import "../fonts/fontStyle.css"
 import "./Login.css"
 import {Link} from "react-router-dom";
+import ClickPrevent from "../common/ClickPrevent";
+import Loading from "../common/Loading";
 
 // 작성자 : YMKJJ
 // 기능 : 로그인 UI / 로그인 기능
@@ -45,7 +47,14 @@ function Login(){
 
     const [userId,setUserId] = useState("");
     const [userPw,setUserPw] = useState("");
+    const [isLoad, setIsLoad] = useState(false); // 로딩창
 
+    // 로그인 성공후 목적지 링크로 이동한다.
+    const moveDestination = () => {
+        const link = document.querySelector("#link-hidden-user-login");
+        link.click();
+    }
+    
     const handleInputId = (e) => {
         setUserId(e.target.value);
     }
@@ -54,29 +63,35 @@ function Login(){
         setUserPw(e.target.value)
     }
 
-    const LoginChk = () => {
-        axios.post('http://localhost:8080/loginChk',null,{
+    const LoginChk = async () => {
+        let flag = false;
+        await setIsLoad(true);
+        await axios.post('http://localhost:8080/loginChk',null,{
             params:{
                 userId:userId,
                 userPw:userPw
             }})
             .then((req) => {
                 const {data} = req;
-                console.log(data)
                 if(data == 0){
                     alert(`아이디 & 비밀번호를 확인해주세요.`);
                 }
                 else {
                     alert(`${data.userId}님 반갑습니다.`);
+                    flag = true;
                 }
             })
             .catch((err) => {
-                console.log(err);
-                alert('통신실패')
-            })
+                console.log(`에러메세지 : ${err}`);
+                alert("로그인에 실패하였습니다.");
+            });
+        return flag;
     }
 
     return (
+        <div>
+            <ClickPrevent isLoading={isLoad} />
+            <Loading loadStatus={isLoad} />
             <div className={"container text-center"} style={commonStyle}>
                 <div className={"row"}>
                     <div className={"col-4"}>
@@ -91,11 +106,17 @@ function Login(){
                         </div>
                         <div>
                             <input placeholder={"비밀번호는 8~20자"} value={userPw} onChange={handleInputPw} type={"password"}
-                                    style={inputSize}/>
+                                   style={inputSize}/>
                         </div>
                         {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 2*/}
                         <div>
-                            <button style={loginBtn} onClick={LoginChk} className={"nanumSquareR-font-normal border-0 mt-3"}>로그인</button>
+                            <button style={loginBtn} onClick={() => {LoginChk().then((result) => {
+                                setIsLoad(false);
+                                if (result == true) {
+                                    moveDestination();
+                                }
+                            })}} className={"nanumSquareR-font-normal border-0 mt-3"}>로그인</button>
+                            <Link id={"link-hidden-user-login"} to={"/"}><button hidden={true}/></Link>
                         </div>
                         <div>
                             {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 1*/}
@@ -109,7 +130,7 @@ function Login(){
                                     <span className={"ms-2"}>|</span>
                                     <Link to={"/findPw"} className={"text-decoration-none ms-2 text-dark nanumSquareR-font-small"} style={fontSize}>비밀번호 찾기</Link>
                                 </div>
-                                </div>
+                            </div>
                             <div className={"mt-2"}>
                                 <Link to={"/sign"} className={"text-decoration-none text-dark nanumSquareR-font-Normal"} href={"http://localhost:3000"}><b>회원가입</b> ></Link>
                             </div>
@@ -119,6 +140,7 @@ function Login(){
                     </div>
                 </div>
             </div>
+        </div>
     )
 }
 

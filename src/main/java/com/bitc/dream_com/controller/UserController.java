@@ -18,29 +18,43 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //    로그인
-//    최종 수정일 : 2023.01.19
-//    최종 작성자 : 김영민
-
+    // 로그인
+    // 최종 수정일 : 2023.02.02
+    // 최종 작성자 : 김준영
     @RequestMapping(value = "/loginChk", method = RequestMethod.POST)
     public Object loginChk(@RequestParam("userId")String userId, @RequestParam("userPw")String userPw, HttpServletRequest request) throws Exception{
         HttpSession session = request.getSession();
         UserDto loginChk = userService.loginChk(userId,userPw);
-
-        if(session.getAttribute("LoginInfo") != null){
-            request.removeAttribute("LoginInfo");
-        }
-        else{
-            session.setAttribute(loginChk.getUserId(), "세션 있음");
-            session.setMaxInactiveInterval(1800);
-        }
-
-        if(loginChk == null){
+    
+        // DB에서 검색 결과가 없으면
+        if (loginChk == null) {
             return 0;
         }
-
-        else{
-            return loginChk;
+        
+        // 검색 결과는 있으나 아이디가 다른경우
+        if (loginChk.getUserId().equals(userId) == false) {
+            return 0;
+        }
+    
+        // 검색 결과 있으면서 아이디가 일치하는 경우
+        session.setAttribute("loginUserId", loginChk.getUserId());
+        session.setMaxInactiveInterval(1800);
+        
+        return loginChk;
+    }
+    
+    // 현재 로그인한 유저가 있는지 확인하는 함수
+    // 유저가 있으면 아이디값 반환 없으면 null 반환
+    // 최종 수정일 : 2023.02.02
+    // 최종 작성자 : 김준영
+    @RequestMapping(value = "/loginChk", method = RequestMethod.GET)
+    public String getLoginUserId(HttpServletRequest request) throws Exception {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("loginUserId") != null) {
+            session.setMaxInactiveInterval(1800);
+            return session.getAttribute("loginUserId").toString();
+        } else {
+            return null;
         }
     }
 
