@@ -1,16 +1,28 @@
 import React from "react";
+import "./PurchaseProductInfo.css"
 
 
-function PurchaseProductInfo(props) {
+function PurchaseProductInfo({purchaseProductList, quantity}) {
+    const deliveryCost = (productPrice) => {
+        if(productPrice < 100000) {
+            return 5000
+        } else if (productPrice < 300000) {
+            return 3000
+        }
+        else {
+            return 0
+        }
+    }
+
     return (
-        <table style={{marginTop: "100px", marginLeft: "10px", width: "1280px"}} className={"table"}>
+        <table id={"table-purchaseProductInfo"} className={"table"}>
             <thead>
             <tr style={{borderBottom: "2px solid"}} className={"nanumSquareR-font-large text-center"}>
                 <th width={"700px"} className={"text-start"}>
                     <div style={{float: "left", marginRight: "250px"}}>
                         <span>주문 상품</span>
                         <span style={{backgroundColor: "black", color: "white", borderRadius: "40px",
-                            paddingLeft: "20px", paddingRight: "20px", marginLeft: "10px"}}>{props.item.length}</span>
+                            paddingLeft: "20px", paddingRight: "20px", marginLeft: "10px"}}>{purchaseProductList.length}</span>
                     </div>
                     <div>상품명 / 옵션</div>
                 </th>
@@ -21,44 +33,95 @@ function PurchaseProductInfo(props) {
             </tr>
             </thead>
             <tbody>
-            {props.item.map((item) => {
-                return (
+            {purchaseProductList.map(item => {
+                return (item.inventoryQuantity > 0 ?
                     <tr className={"nanumSquareR-font-normal"} key={item.key} style={{backgroundColor: "white"}}>
                         <td>
                             <div style={{height: "120px"}}>
                                 <div className={"text-center"} style={{float: "left", marginRight: "30px"}}>
-                                    <img src={item.src} style={{width: "130px"}}/>
+                                    <img src={item.thumbnailImg} style={{width: "130px"}}/>
                                 </div>
                                 <div style={{paddingTop: "10px"}}>
-                                    <p>
-                                        [{item.title}]
+                                    <p className={"p-purchaseProductInfoTitle"}>
+                                        {item.productTitle}
                                     </p>
-                                    <p style={{textOverflow: "ellipsis"}}>
-                                        {item.name} / {item.spec.map(spec => {return(spec + " / ")})}
+                                    <p className={"p-purchaseProductInfoNameSpec"}>
+                                        [{item.productName}] / {item.partName.join("/")}
                                     </p>
                                 </div>
                             </div>
                         </td>
-                        {item.discount == 0 ?
+                        {item.productDiscount == 0 ?
                             <td className={"text-center"} style={{paddingTop: "50px"}}>
-                                <p className={"m-0"}>{item.price.toLocaleString("ko-KR")}원</p>
+                                <p className={"m-0"}>{item.productPrice.toLocaleString("ko-KR")}원</p>
                             </td> :
                             <td className={"text-center"} style={{paddingTop: "40px"}}>
                                 <p className={"m-0"}>
-                                    <del>{item.price.toLocaleString("ko-KR")}원</del>
+                                    <del>{item.productPrice.toLocaleString("ko-KR")}원</del>
                                 </p>
                                 <p className={"m-0"}>
-                                    <b style={{color: "red"}}>{(item.price * (1 - item.discount / 100)).toLocaleString("ko-KR")}원</b>
+                                    <b style={{color: "red"}}>{(item.productPrice * (1 - item.productDiscount / 100)).toLocaleString("ko-KR")}원</b>
                                 </p>
                             </td>
                         }
 
-                        <td className={"text-center"} style={{paddingTop: "50px"}}>{item.quantity}개</td>
+                        <td className={"text-center"} style={{paddingTop: "50px"}}>{item.key == 0 ? quantity : item.inventoryQuantity}개</td>
                         <td className={"text-center"} style={{paddingTop: "50px"}}>
-                            {(item.price * (1 - item.discount / 100) * item.quantity).toLocaleString("ko-KR")}원
+                            {(item.productPrice * (1 - item.productDiscount / 100) * item.inventoryQuantity).toLocaleString("ko-KR")}원
                         </td>
-                        <td className={"text-center"} style={{paddingTop: "50px"}}>{item.deliveryPrice.toLocaleString("ko-KR")}원</td>
+                        <td className={"text-center"} style={{paddingTop: "50px"}}>{deliveryCost(item.productPrice).toLocaleString("ko-KR")}원</td>
                     </tr>
+                        :
+                        <tr className={"nanumSquareR-font-normal tr-shortage-inventory"} key={item.key}>
+                            <td>
+                                <div style={{height: "120px"}}>
+                                    <div className={"text-center"} style={{float: "left", marginRight: "30px"}}>
+                                        <img className={"shortage-inventory-img"} src={item.thumbnailImg} style={{width: "130px"}}/>
+                                    </div>
+                                    <div style={{paddingTop: "10px"}}>
+                                        <p className={"p-purchaseProductInfoTitle"}>
+                                            {item.productTitle}
+                                        </p>
+                                        <p className={"p-purchaseProductInfoNameSpec"}>
+                                            [{item.productName}] / {item.partName.join("/")}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div id={"div-shortageInventoryMsg"} className={"nanumSquareB-font-XLarge"}>
+                                    {item.inventoryQuantity == 0 ?
+                                        <p className={"div-shortageInventoryMsg"}>
+                                            현재 준비된 수량이 모두 소진되었습니다.
+                                        </p>
+                                        :
+                                        <p className={"div-tooManySelectMsg"}>
+                                            선택한 제품 수량이 모자라 주문할 수 없습니다.
+                                        </p>
+                                    }
+
+                                </div>
+                            </td>
+                            {item.productDiscount == 0 ?
+                                <td className={"text-center"} style={{paddingTop: "50px"}}>
+                                    <p className={"m-0"}>{item.productPrice.toLocaleString("ko-KR")}원</p>
+                                </td> :
+                                <td className={"text-center"} style={{paddingTop: "40px"}}>
+                                    <p className={"m-0"}>
+                                        <del>{item.productPrice.toLocaleString("ko-KR")}원</del>
+                                    </p>
+                                    <p className={"m-0"}>
+                                        <b style={{color: "rgba(255, 0, 0, 0.5)"}}>{(item.productPrice * (1 - item.productDiscount / 100)).toLocaleString("ko-KR")}원</b>
+                                    </p>
+                                </td>
+                            }
+
+                            <td className={"text-center"} style={{paddingTop: "50px"}}>
+                                {item.inventoryQuantity < 0 ? "-" : item.inventoryQuantity+ "개"}
+                            </td>
+                            <td className={"text-center"} style={{paddingTop: "50px"}}>
+                                {(item.productPrice * (1 - item.productDiscount / 100)).toLocaleString("ko-KR")}원
+                            </td>
+                            <td className={"text-center"} style={{paddingTop: "50px"}}>{deliveryCost(item.productPrice).toLocaleString("ko-KR")}원</td>
+                        </tr>
                 )
             })}
             </tbody>
