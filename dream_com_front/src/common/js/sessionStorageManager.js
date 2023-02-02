@@ -1,71 +1,77 @@
-const MAX_HISTORY_SAVE_COUNT = 4;
-
 // 세션 스토리지에 상품의 섬네일 이미지와 제목, 그리고 상품번호를 저장합니다.
 export function saveHistory(productTitle, thumbnailImg, productNum) {
-    if (isHistory(productNum) == true) {
+    if (isHistory(productNum)) { // 제품 번호를 기준으로 히스토리가 존재하는지 확인
         return;
     }
-    
-    // if ((sessionStorage.length / 3).toFixed() == MAX_HISTORY_SAVE_COUNT) {
-    //     replaceHistory();
-    // }
-    
-    let productInfo = {
-        productTitle : productTitle.toString(),
-        thumbnailImg : thumbnailImg.toString(),
-        productNum : productNum.toString()
+
+    if (isMaxHistory()) { // 현재 저장된 히스토리 용량이 가득찼는지 확인
+        removeHistory();
     }
-    
-    sessionStorage.setItem(`productNum_${productNum}`, JSON.stringify(productInfo));
+
+    // 세션 스토리지에 히스토리 내용을 저장
+    let historyInfo = sessionStorage.getItem("historyInfo");
+    let arr = [];
+    if (historyInfo == null) { // 키 값이 존재하지 않는경우 신규로 생성
+        arr.push({
+            productTitle : productTitle.toString(),
+            thumbnailImg : thumbnailImg.toString(),
+            productNum : productNum.toString()
+        });
+    } else { // 키 값이 존재하는 경우 저장된 배열에 이어서 저장
+        let histories = sessionStorage.getItem("historyInfo");
+        histories = JSON.parse(histories);
+        arr = histories.values;
+        arr.push({
+            productTitle : productTitle.toString(),
+            thumbnailImg : thumbnailImg.toString(),
+            productNum : productNum.toString()
+        });
+    }
+    sessionStorage.setItem("historyInfo", JSON.stringify({values : arr}));
 }
 
 // 세션 스토리지에서 저장된 정보들을 가져오는 함수
+// 히스토리가 담긴 배열을 반환한다.
 export function getAllHistory() {
-    // let result = [];
-    // for (let i = 0; i < sessionStorage.length; ++i) {
-    //     result.push({
-    //         key : i,
-    //         productTitle : sessionStorage.getItem(`productTitle${i}`),
-    //         thumbnailImg : sessionStorage.getItem(`thumbnailImg${i}`),
-    //         productNum : sessionStorage.getItem(`productNum${i}`)
-    //     });
-    // }
-    // return result;
-}
-
-// 각 세션이름에 붙은 번호를 기준으로 세션 스토리지에 등록되어있는 데이터를 삭제합니다.
-function removeHistory(productNum) {
-    sessionStorage.removeItem(`productNum_${productNum}`);
-}
-
-// 세션에 저장되어있는 데이터들을 하나씩 앞 번호로 이동시킵니다.
-function replaceHistory() {
-    // 최대 저장가능한 개수보다 -1 만큼 반복을 동작
-    for (let i = 0; i < MAX_HISTORY_SAVE_COUNT - 1; ++i) {
-        let tempProductTitle = sessionStorage.getItem(`productTitle${i + 1}`);
-        let tempThumbnailImg = sessionStorage.getItem(`thumbnailImg${i + 1}`);
-        let tempProductNum = sessionStorage.getItem(`productNum${i + 1}`);
-        
-        removeHistory(i);
-        sessionStorage.setItem(`productTitle${i}`, tempProductTitle);
-        sessionStorage.setItem(`thumbnailImg${i}`, tempThumbnailImg);
-        sessionStorage.setItem(`productNum${i}`, tempProductNum);
+    let histories = sessionStorage.getItem("historyInfo");
+    if (histories == undefined || histories == null) { // 저장된 히스토리가 없으면 빈 배열을 반환한다.
+        return [];
     }
-    
-    // 마지막 데이터는 삭제한다.
-    // 번호가 0부터 시작하기때문에 -1
-    removeHistory(MAX_HISTORY_SAVE_COUNT - 1);
+
+    histories = JSON.parse(histories);
+    let arr = [];
+    arr = histories.values;
+    return arr;
+}
+
+// 히스토리 보관수가 최대값에 도달했는지 확인합니다.
+function isMaxHistory() {
+    const MAX_HISTORY_SAVE_COUNT = 4;
+    let arr = [];
+    arr = getAllHistory();
+    if (arr.length >= MAX_HISTORY_SAVE_COUNT) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// 가장 오래된 히스토리를 삭제하고 저장합니다.
+function removeHistory() {
+    let arr = [];
+    arr = getAllHistory();
+    arr = arr.slice(1);
+    sessionStorage.setItem("historyInfo", JSON.stringify({values : arr}));
 }
 
 // 세션에 이미 같은값이 존재하는지를 확인
 function isHistory(productNum) {
     let flag = false;
-    let idx = (sessionStorage.length / 3).toFixed();
-    for (let i = 0; i < idx; ++i) {
-        if (sessionStorage.getItem(`productNum${i}`) == productNum) {
+    let arr = getAllHistory();
+    arr.forEach(item => {
+        if (item.productNum == productNum) {
             flag = true;
-            break;
         }
-    }
+    });
     return flag;
 }
