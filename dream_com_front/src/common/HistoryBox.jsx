@@ -8,17 +8,10 @@ import {getAllHistory} from "./js/sessionStorageManager";
 function HistoryBox() {
     const [historyList, setHistoryList] = useState([]); // 히스토리 상품이 담긴 배열
     
-    // 세션 스토리지의 길이가 달라졌거나, 첫번째 상품의 이름의 값이 달라진경우 갱신
-    // useEffect(() => {
-    //     setHistoryList(getAllHistory());
-    // }, [sessionStorage.length, sessionStorage.getItem(`productNum0`)]);
-    
+    // 세션 스토리지에 담겨져있는 히스토리 정보가 변경된경우 재 랜더링
     useEffect(() => {
-        // sessionStorage.clear();
-        console.log(sessionStorage);
-        console.log(sessionStorage.getItem("productNum_230130003"));
-        console.log(JSON.parse(sessionStorage.getItem("productNum_230130003")));
-    }, []);
+        setHistoryList(getAllHistory());
+    }, [sessionStorage.getItem("historyInfo")]);
     
     return (
         <div id={"div-history-box"}>
