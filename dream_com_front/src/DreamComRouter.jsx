@@ -27,8 +27,8 @@ function DreamComRouter() {
                 <Route path={"/detail?"} element={<DetailApp />} />
                 <Route path={"/error"} element={<ErrorPageApp />} />
                 {/*purchaseApp 컴포넌트에 상세페이지에서 구매버튼 누른 제품 정보 / 로그인 된 아이디 전송*/}
-                {/*제품 정보에 들어가야 할 것 : 제품번호, 선택 수량*/}
-                <Route path={"/purchase"} element={<PurchaseApp purchaseProductNum={230130010} quantity={1} loginId={"testUser1"} />}></Route>
+                {/*url : ?productNum= ~ & quantity= ~ */}
+                <Route path={"/purchase?"} element={<PurchaseApp loginId={"testUser1"} />}></Route>
                 <Route path={"/sign"} element={<Clause />}></Route>
                 <Route path={"/signinfomation"} element={<SignInfomation />}></Route>
                 <Route path={"/signClear"} element={<SignClear />}></Route>
