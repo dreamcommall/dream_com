@@ -275,24 +275,24 @@ function SignInfomation() {
             })
     };
 
-    const timerCounter = () => {
-        useEffect(() => {
-            emailCodeTimerSec > 0 && setTimeout(() => setEmailCodeTimerSec(emailCodeTimerSec - 1), 1000);
-        },)
-
-
-        let i=2;
-        let j=59;
-        setInterval(function (){
-            for (i =2; i>=0; i--){
-
-                for (j =59; j>=0; j--){
-                    console.log(j);
-                }
-            }
-        },1000)
-
-    }
+    // const timerCounter = () => {
+    //     useEffect(() => {
+    //         emailCodeTimerSec > 0 && setTimeout(() => setEmailCodeTimerSec(emailCodeTimerSec - 1), 1000);
+    //     },)
+    //
+    //
+    //     let i=2;
+    //     let j=59;
+    //     setInterval(function (){
+    //         for (i =2; i>=0; i--){
+    //
+    //             for (j =59; j>=0; j--){
+    //                 console.log(j);
+    //             }
+    //         }
+    //     },1000)
+    //
+    // }
 
 
     //이메일 인증 번호 전송 통신 버튼
@@ -302,7 +302,7 @@ function SignInfomation() {
             .then((req) => {
                 alert("인증 코드가 발송 되었습니다")
                 console.log("인증 코드가 발송되었습니다")
-                timerCounter();
+                // timerCounter();
 
 
             })
