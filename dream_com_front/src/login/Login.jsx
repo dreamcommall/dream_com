@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import "../fonts/fontStyle.css"
 import "./Login.css"
@@ -51,8 +51,8 @@ function Login(){
 
     // 로그인 성공후 목적지 링크로 이동한다.
     const moveDestination = () => {
-        const link = document.querySelector("#link-hidden-user-login");
-        link.click();
+        // const link = document.querySelector("#link-hidden-user-login");
+        // link.click();
     }
     
     const handleInputId = (e) => {
@@ -63,9 +63,46 @@ function Login(){
         setUserPw(e.target.value)
     }
 
+    const test = async () => {
+        console.log(sessionStorage.getItem("loginUUID"));
+
+        await axios.post("http://localhost:8080/loginUserId", null,
+            {params : {userUUID : sessionStorage.getItem("loginUUID")}})
+            .then(response => {
+                alert(`${response.data}님 반갑습니다.`);
+            })
+            .catch(err => {
+                console.log(`에러메세지 : ${err}`);
+                console.log("로그인 한 유저정보 취득에 실패했습니다.");
+            });
+    }
+
+    // 로그인 처리 프로세스
+    // 로그인 후 성공하면 저장된 UUID를 이용해서 서버에게 유저 아이디를 내려받는다.
+    const DataReceive = async () => {
+        let flag = false;
+        setIsLoad(true);
+        await LoginChk().then(result => {
+            if (result == true) {
+                axios.post("http://localhost:8080/loginUserId", null,
+                    {params : {userUUID : sessionStorage.getItem("loginUUID")}})
+                    .then(response => {
+                        alert(`${response.data}님 반갑습니다.`);
+                        flag = true;
+                    })
+                    .catch(err => {
+                        console.log(`에러메세지 : ${err}`);
+                        console.log("로그인 한 유저정보 취득에 실패했습니다.");
+                    });
+            } else {
+                console.log("로그인 한 유저정보를 가져오는 도중 문제가 발생했습니다.");
+            }
+        });
+        return flag;
+    }
+
     const LoginChk = async () => {
         let flag = false;
-        await setIsLoad(true);
         await axios.post('http://localhost:8080/loginChk',null,{
             params:{
                 userId:userId,
@@ -77,7 +114,7 @@ function Login(){
                     alert(`아이디 & 비밀번호를 확인해주세요.`);
                 }
                 else {
-                    alert(`${data.userId}님 반갑습니다.`);
+                    sessionStorage.setItem("loginUUID", data);
                     flag = true;
                 }
             })
@@ -93,6 +130,7 @@ function Login(){
             <ClickPrevent isLoading={isLoad} />
             <Loading loadStatus={isLoad} />
             <div className={"container text-center"} style={commonStyle}>
+                <button onClick={test}>테스트 버튼</button>
                 <div className={"row"}>
                     <div className={"col-4"}>
                     </div>
@@ -110,7 +148,7 @@ function Login(){
                         </div>
                         {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 2*/}
                         <div>
-                            <button style={loginBtn} onClick={() => {LoginChk().then((result) => {
+                            <button style={loginBtn} onClick={() => {DataReceive().then((result) => {
                                 setIsLoad(false);
                                 if (result == true) {
                                     moveDestination();

@@ -19,6 +19,9 @@ public interface UserService {
     // 로그아웃 후 UUID 삭제
     boolean removeUserUUID(String uniqueId) throws Exception;
 
+    // UUID를 기반으로 저장소에 아이디가 있는지 확인
+    public String isUserUUID(String uniqueId) throws Exception;
+
     void deleteAccount(UserDto userDto) throws Exception;
 
     void join(UserDto userDto) throws Exception;

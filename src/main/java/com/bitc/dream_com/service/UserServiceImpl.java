@@ -5,6 +5,7 @@ import com.bitc.dream_com.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -25,7 +26,12 @@ public class UserServiceImpl implements UserService {
     JavaMailSender emailSender;
 
     // 유저의 아이디가 저장되는 저장소
-    private final ConcurrentHashMap<String, String> userSessions = new ConcurrentHashMap<>();
+    // 스케줄러를 담당하는 클래스에서도 사용하기 때문에 static으로 선언
+    private static final ConcurrentHashMap<String, String> userSessions = new ConcurrentHashMap<>();
+
+    // 유저의 아이디가 저장된 시간
+    // 스케줄러를 담당하는 클래스에서도 사용하기 때문에 static으로 선언
+    private static final ConcurrentHashMap<String, String> userSessionsCreateDt = new ConcurrentHashMap<>();
 
     public static final String ePw = createKey();
 
@@ -42,6 +48,7 @@ public class UserServiceImpl implements UserService {
     public String saveSessionUserId(String id) throws Exception {
         String uniqueId = createUserUUID();
         userSessions.put(uniqueId, id);
+        saveTimeUserUUID(uniqueId);
         return uniqueId;
     }
 
@@ -55,7 +62,38 @@ public class UserServiceImpl implements UserService {
         userSessions.remove(uniqueId);
         return isUserUUID(uniqueId) == null ? true : false;
     }
+
+    // 클라이언트에서 로그인을 시도한 후 해당 UUID가 생성된 시간을 저장합니다.
+    // 성공시 ture, 실패시 False가 반환됩니다.
+    // 최종 작성일 : 2023-02-03
+    // 마지막 작성자 : 김준영
+    private boolean saveTimeUserUUID(String uniqueId) throws Exception {
+        userSessionsCreateDt.put(uniqueId, LocalDateTime.now().toString());
+        return userSessionsCreateDt.getOrDefault(uniqueId, null) != null ? true : false;
+    }
+
+    // 클라이언트에서 요청이 들어오면 해당 UUID값의 저장된 시간을 갱신시킵니다.
+    // 성공시 true, 실패시 false가 반환됩니다.
+    // 최종 작성일 : 2023-02-03
+    // 마지막 작성자 : 김준영
+    private boolean refreshTimeUserUUID(String uniqueId) throws Exception {
+        String prevDate = userSessionsCreateDt.getOrDefault(uniqueId, null);
+        userSessionsCreateDt.put(uniqueId, LocalDateTime.now().toString());
+        if (!prevDate.equals(userSessionsCreateDt.get(uniqueId).toString())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     
+    // 저장되어있는 UUID의 마지막 사용시간을 확인하고 만료가 되었다면 만료된 값들을 반환합니다.
+    // List에 만료된 UUID 값들이 저장되어서 반환됩니다.
+    // 최종 작성일 : 2023-02-03
+    // 마지막 작성자 : 김준영
+    private List<String> checkTimeUserUUID() throws Exception {
+        return null;
+    }
+
     // 이 함수는 재귀적으로 동작합니다.
     // UUID를 생성해서 저장소에 있는지 확인하고 사용할수 있으면 값을 반환 사용할수 없다면 자신을 재호출한다.
     // 최종 작성일 : 2023-02-03
@@ -65,12 +103,17 @@ public class UserServiceImpl implements UserService {
         return isUserUUID(tempId) == null ? tempId : createUserUUID();
     }
 
-    // 유저의 UUID를 기준으로 현재 로그인 되어있는지 확인하고 되어있으면 해당 아이디를 반환한다.
+    // 유저의 UUID를 기준으로 현재 로그인 되어있는지 확인하고 되어있으면 저장시간 갱신 및 아이디를 반환한다.
     // 없는경우 null이 반환된다.
     // 최종 작성일 : 2023-02-03
     // 마지막 작성자 : 김준영
-    private String isUserUUID(String uniqueId) throws Exception {
-        return userSessions.getOrDefault(uniqueId, null);
+    @Override
+    public String isUserUUID(String uniqueId) throws Exception {
+        String userId = userSessions.getOrDefault(uniqueId, null);
+        if (userId != null) {
+            refreshTimeUserUUID(uniqueId);
+        }
+        return userId;
     }
 
     @Override

@@ -19,11 +19,10 @@ public class UserController {
     private UserService userService;
 
     // 로그인
-    // 최종 수정일 : 2023.02.02
+    // 최종 수정일 : 2023.02.03
     // 최종 작성자 : 김준영
     @RequestMapping(value = "/loginChk", method = RequestMethod.POST)
-    public Object loginChk(@RequestParam("userId")String userId, @RequestParam("userPw")String userPw, HttpServletRequest request) throws Exception{
-        HttpSession session = request.getSession();
+    public Object loginChk(@RequestParam("userId")String userId, @RequestParam("userPw")String userPw) throws Exception{
         UserDto loginChk = userService.loginChk(userId,userPw);
     
         // DB에서 검색 결과가 없으면
@@ -36,26 +35,17 @@ public class UserController {
             return 0;
         }
     
-        // 검색 결과 있으면서 아이디가 일치하는 경우
-        session.setAttribute("loginUserId", loginChk.getUserId());
-        session.setMaxInactiveInterval(1800);
-        
-        return loginChk;
+        // 검색 결과 있으면서 아이디가 일치하는 경우 아아디를 저장소에 저장하고 생성된 UUID를 반환한다.
+        return userService.saveSessionUserId(loginChk.getUserId());
     }
     
     // 현재 로그인한 유저가 있는지 확인하는 함수
     // 유저가 있으면 아이디값 반환 없으면 null 반환
-    // 최종 수정일 : 2023.02.02
+    // 최종 수정일 : 2023.02.03
     // 최종 작성자 : 김준영
-    @RequestMapping(value = "/loginChk", method = RequestMethod.GET)
-    public String getLoginUserId(HttpServletRequest request) throws Exception {
-        HttpSession session = request.getSession();
-        if (session.getAttribute("loginUserId") != null) {
-            session.setMaxInactiveInterval(1800);
-            return session.getAttribute("loginUserId").toString();
-        } else {
-            return null;
-        }
+    @RequestMapping(value = "/loginUserId", method = RequestMethod.POST)
+    public String getLoginUserId(@RequestParam("userUUID") String userUUID) throws Exception {
+        return userService.isUserUUID(userUUID);
     }
 
 //    회원 정보 수정
