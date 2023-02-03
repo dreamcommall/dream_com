@@ -26,13 +26,18 @@ public class PaymentServiceImpl implements PaymentService {
 
 //    구매 / 결제완료 (결제내역 추가)
     @Override
-    public void buy(PaymentDto paymentDto) throws Exception {
-        paymentMapper.buy(paymentDto);
+    public int buy(PaymentDto paymentDto) throws Exception {
+        return paymentMapper.buy(paymentDto);
     }
 
 //    전체 결제번호 데이터
     @Override
     public List<PaymentDto> usedNum() throws Exception {
         return paymentMapper.usedNum();
+    }
+
+    @Override
+    public int insertPaymentDetail(PaymentDto paymentDto) throws Exception {
+        return paymentMapper.insertPaymentDetail(paymentDto);
     }
 }

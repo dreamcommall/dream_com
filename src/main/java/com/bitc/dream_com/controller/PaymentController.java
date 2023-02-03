@@ -1,12 +1,15 @@
 package com.bitc.dream_com.controller;
 
 import com.bitc.dream_com.dto.PaymentDto;
+import com.bitc.dream_com.dto.ProductDto;
 import com.bitc.dream_com.service.PaymentService;
+import com.bitc.dream_com.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -14,15 +17,25 @@ import java.util.List;
 public class PaymentController {
     @Autowired
     private PaymentService paymentService;
+    @Autowired
+    private ProductService productService;
+    @Autowired
+    private ProductController productController;
 
 //    결제내역 불러오기
-//    최종 수정일 2023-01-19
+//    최종 수정일 2023-02-02
 //    최종 작성자 : 양민호
     @RequestMapping(value = "paymentData", method = RequestMethod.GET)
     public Object paymentData(@RequestParam("userId") String userId) throws Exception {
         List<PaymentDto> paymentData = paymentService.paymentData(userId);
+        List<ProductDto> paymentProductList = new ArrayList<>();
+        for(PaymentDto item: paymentData) {
+            int productNum = item.getProductNum();
+            ProductDto paymentProductInfo =productService.productData(productNum);
+            paymentProductList.add(paymentProductInfo);
+        }
 
-        return paymentData;
+        return productController.getFullData(paymentProductList);
     }
 
 //    결제취소
@@ -82,14 +95,6 @@ public class PaymentController {
 //        검사 완료된 번호 Dto에 저장
         paymentDto.setPaymentNum(paymentNum);
 
-//        임시데이터 (추후 삭제 필요)
-        paymentDto.setPaymentDate("2023-01-19 16:08:40");
-        paymentDto.setDeliveryAddr("우리집");
-        paymentDto.setMethodNum(2);
-        paymentDto.setProductNum(55555);
-        paymentDto.setQuantity(3);
-        paymentDto.setPrice(30000);
-//        ----------------------
 
 //        요청사항이 없을 경우
         if(paymentDto.getRequest() == null || paymentDto.getRequest() == "") {
@@ -97,10 +102,14 @@ public class PaymentController {
         }
 
 //        결제 테이블에 데이터 입력
-        paymentService.buy(paymentDto);
+        int resultPayment = paymentService.buy(paymentDto);
 
-        List<PaymentDto> paymentData = paymentService.paymentData(paymentDto.getUserId());
+//        결제 상세 테이블에 데이터 입력
+        int resultPaymentDetail = paymentService.insertPaymentDetail(paymentDto);
+        if(resultPayment + resultPaymentDetail == 2) {
+            return 1;
+        }
 
-        return paymentData;
+        return 0;
     }
 }

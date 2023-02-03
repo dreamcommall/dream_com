@@ -3,14 +3,12 @@
 <mapper namespace="com.bitc.dream_com.mapper.PaymentMapper">
 
 <!--    결제내역 불러오기-->
-<!--    최종 수정일 2023-01-19-->
+<!--    최종 수정일 2023-02-03-->
 <!--    최종 작성자 : 양민호-->
     <select id="paymentData" resultType="com.bitc.dream_com.dto.PaymentDto">
-        select p.*, pi.img_path, pr.product_title, pr.product_name, pr.product_discount, pm.method_name from payment p
-            join product_img pi on p.product_num = pi.product_num
-            join product pr on pr.product_num = p.product_num
-            join payment_method pm on p.method_num = pm.method_num
-        where p.user_id = #{userId} and pi.img_path like '%thumbnail'
+        select * from payment p
+            join payment_detail pd on p.payment_num = pd.payment_num
+        where p.user_id = #{userId}
     </select>
 
 <!--    결제취소-->
@@ -22,10 +20,10 @@
     </update>
 
 <!--    구매 / 결제완료 (결제내역 추가)-->
-<!--    최종 수정일 2023-01-19-->
+<!--    최종 수정일 2023-02-03-->
 <!--    최종 작성자 : 양민호-->
     <insert id="buy" parameterType="com.bitc.dream_com.dto.PaymentDto">
-        insert into payment values(#{paymentNum}, #{paymentDate}, #{deliveryAddr}, #{methodNum}, #{userId}, #{productNum}, #{quantity}, #{price}, #{request}, 1)
+        insert into payment values(#{paymentNum}, now(), #{deliveryAddr}, #{methodNum}, #{userId}, #{request}, 1)
     </insert>
 
 <!--    전체 결제번호 데이터-->
@@ -34,4 +32,11 @@
     <select id="usedNum" resultType="com.bitc.dream_com.dto.PaymentDto">
         select payment_num from payment
     </select>
+
+<!--    구매 / 결제 완료 (결제 상세 테이블에 내용 추가)-->
+<!--    최종 수정일 2023-02-03-->
+<!--    최종 작성자 : 양민호-->
+    <insert id="insertPaymentDetail" parameterType="com.bitc.dream_com.dto.PaymentDto">
+        insert into payment_detail(payment_num, produt_num, quantity, price) values (#{paymentnum}, #{productNum}, #{quantity}, #{price})
+    </insert>
 </mapper>
