@@ -53,4 +53,11 @@
     <select id="getUserInfo" resultType="com.bitc.dream_com.dto.UserDto">
         select * from user where user_id = #{userId}
     </select>
+
+<!--    회원 가입 시 기본 배송지 저장-->
+<!--    최종 수정일 2023-02-03-->
+<!--    최종 작성자 : 양민호-->
+    <insert id="addAddress" parameterType="com.bitc.dream_com.dto.UserDto">
+        insert into address(user_id, addr) values (#{userId}, #{userAddr})
+    </insert>
 </mapper>

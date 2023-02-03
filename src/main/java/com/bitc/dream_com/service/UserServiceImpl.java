@@ -50,8 +50,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void join(UserDto userDto) throws Exception {
-        userMapper.join(userDto);
+    public int join(UserDto userDto) throws Exception {
+        return userMapper.join(userDto);
     }
 
     private MimeMessage createMessage(String email)throws Exception{
@@ -129,6 +129,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getUserInfo(String userId) throws Exception {
         return userMapper.getUserInfo(userId);
+    }
+
+    @Override
+    public int addAddress(UserDto userDto) throws Exception {
+        return userMapper.addAddress(userDto);
     }
 
 
