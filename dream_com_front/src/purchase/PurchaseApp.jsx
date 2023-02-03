@@ -9,25 +9,40 @@ import Footer from "../common/Footer";
 import ClickPrevent from "../common/ClickPrevent";
 import Loading from "../common/Loading";
 import axios from "axios";
-import {Link, useSearchParams} from "react-router-dom";
+import {useParams, useSearchParams} from "react-router-dom";
 import ErrorPageApp from "../common/ErrorPage/ErrorPageApp";
 
 function PurchaseApp({loginId}) {
+    // url 파라미터
     const [param, setParam] = useSearchParams();
-    const [isLoad, setIsLoad] = useState(false); // 로딩창
+    // 로딩창
+    const [isLoad, setIsLoad] = useState(false);
+    //  상세페이지에서 구매버튼 클릭한 제품 + 장바구니 제품 목록
     const [purchaseProductList, setPurchaseProductList] = useState([]);
+    // 사용자 주소 목록
     const [addressList, setAddressList] = useState([]);
+    // 사용자 정보
     const [userInfo, setUserInfo] = useState({});
+    // url 파라미터로 넘어온 제품 수량
     const [quantity, setQuantity] = useState(0);
+    // 결제 방법
+    const [method, setMethod] = useState("none");
 
+    // 오류페이지 확인
     const [isCorrectPage, setIsCorrectPage] = useState(true);
 
+    // 파라미터 값
     let parameterProductNum = parseInt(param.get("productNum"));
-
     let parameterQuantity = parseInt(param.get("quantity"));
+    let parameterLength = param.toString().length;
 
 
 
+    // 영수증 정보
+    let etc_quantity = 0;
+    let totalPrice = 0;
+    let totalDiscount = 0;
+    let totalDeliveryPrice = 0;
 
     useEffect(() => {
         setQuantity(parameterQuantity);
@@ -42,6 +57,8 @@ function PurchaseApp({loginId}) {
             setIsCorrectPage(false);
         }
 
+
+
         // url이 바르게 입력 되었을 때 axios 통신 시작
         if(isCorrectPage) {
             setIsLoad(true);
@@ -51,9 +68,7 @@ function PurchaseApp({loginId}) {
         }
     }, []);
 
-    let totalPrice = 0;
-    let totalDiscount = 0;
-    let totalDeliveryPrice = 0;
+
 
     // 제품 주문금액 합계 / 할인금액 합계 계산
 
@@ -77,9 +92,8 @@ function PurchaseApp({loginId}) {
         totalDeliveryPrice += deliveryPrice;
     })
 
-    const receipt = [
-        {key: 1, price: totalPrice, discount: totalDiscount, deliveryPrice: totalDeliveryPrice, }
-    ]
+    // 영수증 정보 저장
+    const receipt = {price: totalPrice, discount: totalDiscount, deliveryPrice: totalDeliveryPrice};
 
     const purchaseData = async (productNum) => {
 
@@ -153,7 +167,8 @@ function PurchaseApp({loginId}) {
         setPurchaseProductList(tempPurchaseProductList);
     }
 
-    if(!isCorrectPage) {
+
+    if(!isCorrectPage && parameterLength > 0) {
         return (
             <ErrorPageApp />
         )
@@ -165,10 +180,10 @@ function PurchaseApp({loginId}) {
             {/*<NavigationBar />*/}
             <div className={"mt-3 mb-5"}>
                 <Loading loadStatus={isLoad}/>
-                <PurchaseHead purchaseProductList={purchaseProductList} quantity={quantity} />
-                <Receipt item={receipt} />
+                <PurchaseHead purchaseProductList={purchaseProductList} quantity={quantity}/>
+                <Receipt receipt={receipt} method={method} userInfo={userInfo} />
                 <DeliveryAddress addressList={addressList} userInfo={userInfo} />
-                <PaymentMethod />
+                <PaymentMethod setMethod={setMethod} />
             </div>
             {/*<Footer />*/}
         </div>
