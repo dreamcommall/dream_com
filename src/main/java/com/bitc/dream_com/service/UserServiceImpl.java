@@ -185,7 +185,7 @@ public class UserServiceImpl implements UserService {
     // 마지막 작성자 : 김준영
     @Override
     public boolean deleteDbUserUUID(String uniqueId) throws Exception {
-        userMapper.deleteDbUserUUID(uniqueId);
+        userMapper.deleteDbUserUUID((new StringBuffer(uniqueId).reverse().toString()));
         return userMapper.isDbUserUUID(uniqueId) == null ? true : false;
     }
 

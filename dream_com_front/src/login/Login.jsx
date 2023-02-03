@@ -64,8 +64,8 @@ function Login(){
     }
 
     const test = () => {
-        axios.post("http://localhost:8080/autoLogin", null,
-            {params : {autoUserUUID : "5c779421dc3e-aa49-eb84-fda9-86d8d2dd"}})
+        axios.post("http://localhost:8080/logout", null,
+            {params : {autoUserUUID : "07f9adbd134c-8819-1074-a7c0-0f5dc3a8"}})
             .then(response => {
                 alert(`${response.data}님 반갑습니다.`);
             })

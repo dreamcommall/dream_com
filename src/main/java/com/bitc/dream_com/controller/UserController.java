@@ -83,6 +83,7 @@ public class UserController {
     public String userLogout(@RequestParam(value = "userUUID", required = false) String userUUID,
         @RequestParam(value = "autoUserUUID", required = false) String autoUserUUID) throws Exception {
         if (userUUID == null) {
+            userService.removeUserUUID((new StringBuffer(autoUserUUID).reverse().toString()));
             return userService.deleteDbUserUUID(autoUserUUID) == true ? "success" : "fail";
         } else {
             return userService.removeUserUUID(userUUID) == true ? "success" : "fail";
