@@ -20,7 +20,7 @@ function RepeatProductContents({style, item}) {
                 </Link>
             </div>
             <Link to={`/detail?productNum=${item.productNum}`}>
-                <img width={179} height={179} src={item.thumbnailImg}/>
+                <img width={179} height={179} src={item.thumbnailImg} alt={"로딩 중이거나 이미지를 불러올 수 없습니다."}/>
             </Link>
         </div>
     );
