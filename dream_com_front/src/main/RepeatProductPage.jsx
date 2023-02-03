@@ -3,6 +3,7 @@ import {Carousel} from "react-bootstrap";
 import "../fonts/fontStyle.css"
 import RepeatProductContents from "./RepeatProductContents";
 import "./RepeatProductPage.css"
+import {Link} from "react-router-dom";
 
 // 작성자 : MoonNight285
 // 스크롤 할때마다 반복적으로 카테고리별로 상품의 정보를 보여줄 컴포넌트
@@ -32,11 +33,13 @@ function RepeatProductPage({categoryName, companyList, mainProductInfoList, subP
                                     return array.map(item => {
                                         return (
                                             <Carousel.Item key={item.key}>
-                                                <img title={item.productTitle} src={item.mainPageImg} alt={""} />
-                                                <div title={item.productTitle} style={{position : "relative", bottom : 75, fontSize : 20, backgroundColor : "#5A5A5A", height : 35}}
-                                                        className={"d-flex justify-content-center align-items-center"}>
-                                                    <span id={"span-repeat-main-img-title"} className={"nanumSquareR-font-XNormal"}>{item.productTitle}</span>
-                                                </div>
+                                                <Link to={`/detail?productNum=${item.productNum}`}>
+                                                    <img title={item.productTitle} src={item.mainPageImg} alt={""} />
+                                                    <div title={item.productTitle} style={{position : "relative", bottom : 75, fontSize : 20, backgroundColor : "#5A5A5A", height : 35}}
+                                                            className={"d-flex justify-content-center align-items-center"}>
+                                                        <span id={"span-repeat-main-img-title"} className={"nanumSquareR-font-XNormal"}>{item.productTitle}</span>
+                                                    </div>
+                                                </Link>
                                             </Carousel.Item>
                                         );
                                     });
