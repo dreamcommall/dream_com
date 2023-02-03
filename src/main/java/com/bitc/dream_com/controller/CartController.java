@@ -46,11 +46,13 @@ public class CartController {
 //        장바구니의 제품정보를 불러온 후 리스트에 저장
         for(CartDto item: cartProduct) {
         ProductDto productInfo = productService.productData(item.getProductNum());
-//        장바구니에 선택되어 있는 제품 수량이 재고 수량보다 많을 경우 선택 수량 0
+//        장바구니에 선택되어 있는 제품 수량이 재고 수량보다 많을 경우 제품 재고 -1
         if(item.getQuantity() > productInfo.getInventoryQuantity()) {
+//            제품 재고가 0일 경우 재고 0
             if(productInfo.getInventoryQuantity() > 0) {
                 productInfo.setInventoryQuantity(-1);
             }
+//            제품 제고가 충분할 경우 제품데이터 재고 수량을 장바구니에 저장된 수량으로 변경
         } else {
             productInfo.setInventoryQuantity(item.getQuantity());
         }
