@@ -14,7 +14,7 @@ public interface UserService {
     int checkInfo(UserDto userDto) throws Exception;
 
     // 로그인 후 유저의 아이디를 저장
-    String saveSessionUserId(String sessionId) throws Exception;
+    String saveSessionUserId(String id) throws Exception;
 
     // 로그아웃 후 UUID 삭제
     boolean removeUserUUID(String uniqueId) throws Exception;
