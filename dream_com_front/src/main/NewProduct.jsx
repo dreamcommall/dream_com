@@ -32,7 +32,7 @@ function NewProduct({newProductList}) {
                     {
                         newProductList.map(item => {
                             return <NewProductContents key={item.key} src={item.thumbnailImg} company={item.companyName[0]} content={item.productTitle}
-                                price={item.productPrice} discountPercent={item.productDiscount}/>
+                                price={item.productPrice} discountPercent={item.productDiscount} productNum={item.productNum}/>
                         })
                     }
                 </Slider>
