@@ -66,7 +66,7 @@ function Login(){
     const test = async () => {
         console.log(sessionStorage.getItem("loginUUID"));
 
-        await axios.post("http://localhost:8080/loginUserId", null,
+        await axios.post("http://localhost:8080/logout", null,
             {params : {userUUID : sessionStorage.getItem("loginUUID")}})
             .then(response => {
                 alert(`${response.data}님 반갑습니다.`);

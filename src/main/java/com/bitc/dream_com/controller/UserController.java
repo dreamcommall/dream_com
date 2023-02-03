@@ -48,6 +48,15 @@ public class UserController {
         return userService.isUserUUID(userUUID);
     }
 
+    // 로그아웃을 처리하는 함수
+    // 성공시 success 실패시 fail을 반환한다.
+    // 최종 수정일 : 2023.02.03
+    // 최종 작성자 : 김준영
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public String userLogout(@RequestParam("userUUID") String userUUID) throws Exception {
+        return userService.removeUserUUID(userUUID) == true ? "success" : "fail";
+    }
+
 //    회원 정보 수정
 //    최종 수정일 2023-01-19
 //    최종 작성자 : 양민호

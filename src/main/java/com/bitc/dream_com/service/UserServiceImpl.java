@@ -60,6 +60,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean removeUserUUID(String uniqueId) throws Exception {
         userSessions.remove(uniqueId);
+        userSessionsCreateDt.remove(uniqueId);
         return isUserUUID(uniqueId) == null ? true : false;
     }
 
