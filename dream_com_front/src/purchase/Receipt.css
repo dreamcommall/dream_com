@@ -1,4 +1,4 @@
-#div-receipt {
+#div-purchaseReceipt {
     width : 500px;
     height: 305px;
     position : sticky;
@@ -10,6 +10,27 @@
     margin-right: 285px;
 }
 
-#span_arrow {
+#purchaseReceipt-collapse {
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 
+#button-OpenIamport {
+    width: 300px;
+    height: 60px;
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+#button-disableIamport {
+    width: 300px;
+    height: 60px;
+    background-color: black;
+    color: white;
+    opacity: 50%;
+    border-radius: 10px;
+    margin-top: 20px;
 }
