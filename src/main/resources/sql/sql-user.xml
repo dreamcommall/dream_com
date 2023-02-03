@@ -53,4 +53,33 @@
     <select id="getUserInfo" resultType="com.bitc.dream_com.dto.UserDto">
         select * from user where user_id = #{userId}
     </select>
+
+<!--    파라미터로 받은 UUID가 사용중인지 확인한다.-->
+<!--    최종 수정일 : 2023-02-03-->
+<!--    최종 작성자 : 김준영-->
+    <select id="isDbUserUUID" resultType="String" parameterType="String">
+        select token_key from auto_login_key where token_key = #{key}
+    </select>
+
+<!--    파라미터로 받은 UUID와 ID값을 이용해 DB에 저장-->
+<!--    최종 수정일 : 2023-02-03-->
+<!--    최종 작성자 : 김준영-->
+    <insert id="createDbUserUUID" parameterType="com.bitc.dream_com.dto.AutoLoginDto">
+        insert into auto_login_key(user_id, token_key, create_time)
+        values(#{userId}, #{tokenKey}, NOW());
+    </insert>
+
+<!--    파라미터로 받은 UUID를 사용하는 유저 아이디를 반환합니다.-->
+<!--    최종 수정일 : 2023-02-03-->
+<!--    최종 작성자 : 김준영-->
+    <select id="isAutoUserId" parameterType="String" resultType="String">
+        select user_id from auto_login_key where token_key = #{key}
+    </select>
+
+<!--    파라미터로 받은 UUID와 일치하는 값을 삭제-->
+<!--    최종 수정일 : 2023-02-03-->
+<!--    최종 작성자 : 김준영-->
+    <delete id="deleteDbUserUUID" parameterType="String">
+        delete from auto_login_key where token_key = #{key}
+    </delete>
 </mapper>

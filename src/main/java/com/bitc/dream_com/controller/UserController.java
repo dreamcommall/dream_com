@@ -22,7 +22,8 @@ public class UserController {
     // 최종 수정일 : 2023.02.03
     // 최종 작성자 : 김준영
     @RequestMapping(value = "/loginChk", method = RequestMethod.POST)
-    public Object loginChk(@RequestParam("userId")String userId, @RequestParam("userPw")String userPw) throws Exception{
+    public Object loginChk(@RequestParam("userId")String userId, @RequestParam("userPw")String userPw,
+        @RequestParam(value = "isAutoLogin", defaultValue = "false") String isAutoLogin) throws Exception{
         UserDto loginChk = userService.loginChk(userId,userPw);
     
         // DB에서 검색 결과가 없으면
@@ -34,9 +35,15 @@ public class UserController {
         if (loginChk.getUserId().equals(userId) == false) {
             return 0;
         }
-    
-        // 검색 결과 있으면서 아이디가 일치하는 경우 아아디를 저장소에 저장하고 생성된 UUID를 반환한다.
-        return userService.saveSessionUserId(loginChk.getUserId());
+
+        if (isAutoLogin.equals("false")) {
+            // 검색 결과 있으면서 아이디가 일치하는 경우 아아디를 저장소에 저장하고 생성된 UUID를 반환한다.
+            return userService.saveSessionUserId(loginChk.getUserId());
+        } else {
+            // 검색 결과 있으면서 아이디가 일치하는 경우 아이디를 저장소랑 DB에 저장하고
+            // 역으로 변환된 UUID를 반환한다.
+            return userService.saveDbSessionUserId(loginChk.getUserId());
+        }
     }
     
     // 현재 로그인한 유저가 있는지 확인하는 함수
@@ -44,8 +51,28 @@ public class UserController {
     // 최종 수정일 : 2023.02.03
     // 최종 작성자 : 김준영
     @RequestMapping(value = "/loginUserId", method = RequestMethod.POST)
-    public String getLoginUserId(@RequestParam("userUUID") String userUUID) throws Exception {
-        return userService.isUserUUID(userUUID);
+    public String getLoginUserId(@RequestParam(value = "userUUID", required = false) String userUUID,
+        @RequestParam(value = "autoUserUUID", required = false) String autoUserUUID) throws Exception {
+        String targetId;
+        if (userUUID == null) {
+            targetId = new StringBuffer(autoUserUUID).reverse().toString();
+        } else {
+            targetId = userUUID;
+        }
+        return userService.isUserUUID(targetId);
+    }
+    
+    // 메인화면에 접속하면 자동 로그인을 하기위한 UUID값이 있는경우 자동 로그인을 진행합니다.
+    // 반환값으로 해당 UUID를 사용하는 아이디값이 반환됩니다. 없는 경우 null이 반환됩니다.
+    // 최종 수정일 : 2023.02.03
+    // 최종 작성자 : 김준영
+    @RequestMapping(value = "/autoLogin", method = RequestMethod.POST)
+    public String runAutoLogin(@RequestParam(value = "autoUserUUID", required = false) String autoUserUUID) throws Exception {
+        if (autoUserUUID != null) {
+            return userService.isDbUserId(autoUserUUID);
+        } else {
+            return null;
+        }
     }
 
     // 로그아웃을 처리하는 함수
@@ -53,8 +80,13 @@ public class UserController {
     // 최종 수정일 : 2023.02.03
     // 최종 작성자 : 김준영
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public String userLogout(@RequestParam("userUUID") String userUUID) throws Exception {
-        return userService.removeUserUUID(userUUID) == true ? "success" : "fail";
+    public String userLogout(@RequestParam(value = "userUUID", required = false) String userUUID,
+        @RequestParam(value = "autoUserUUID", required = false) String autoUserUUID) throws Exception {
+        if (userUUID == null) {
+            return userService.deleteDbUserUUID(autoUserUUID) == true ? "success" : "fail";
+        } else {
+            return userService.removeUserUUID(userUUID) == true ? "success" : "fail";
+        }
     }
 
 //    회원 정보 수정

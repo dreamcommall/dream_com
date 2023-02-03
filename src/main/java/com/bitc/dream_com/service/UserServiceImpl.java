@@ -1,5 +1,6 @@
 package com.bitc.dream_com.service;
 
+import com.bitc.dream_com.dto.AutoLoginDto;
 import com.bitc.dream_com.dto.UserDto;
 import com.bitc.dream_com.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,20 @@ public class UserServiceImpl implements UserService {
         userSessions.put(uniqueId, id);
         saveTimeUserUUID(uniqueId);
         return uniqueId;
+    }
+
+    // 로그인 후 자동로그인 옵션을 사용한다면 메모리에 로그인 처리 후 DB에 토큰 키를 저장합니다.
+    // 성공시 역순으로 변환된 UUID가 반환, 실패시 null이 반환됩니다.
+    // 최종 작성일 : 2023-02-03
+    // 마지막 작성자 : 김준영
+    @Override
+    public String saveDbSessionUserId(String id) throws Exception {
+        String uniqueId = saveSessionUserId(id);
+        if(createDbUserUUID(uniqueId, id)) {
+            return new StringBuffer(uniqueId).reverse().toString();
+        } else {
+            return null;
+        }
     }
 
     // 등록된 저장소에서 UUID를 삭제합니다.
@@ -114,7 +129,11 @@ public class UserServiceImpl implements UserService {
     // 마지막 작성자 : 김준영
     private String createUserUUID() throws Exception {
         String tempId = UUID.randomUUID().toString();
-        return isUserUUID(tempId) == null ? tempId : createUserUUID();
+        if (isUserUUID(tempId) == null && isDbUserUUID(tempId) == null) {
+            return tempId;
+        } else {
+            return createUserUUID();
+        }
     }
 
     // 유저의 UUID를 기준으로 현재 로그인 되어있는지 확인하고 되어있으면 저장시간 갱신 및 아이디를 반환한다.
@@ -128,6 +147,46 @@ public class UserServiceImpl implements UserService {
             refreshTimeUserUUID(uniqueId);
         }
         return userId;
+    }
+
+    // 새로 생성된 UUID가 DB에 저장되어있는지 확인합니다.
+    // DB에 저장할때 중복체크 용도입니다.
+    // 없는경우 null이 반환됩니다.
+    // 최종 작성일 : 2023-02-03
+    // 마지막 작성자 : 김준영
+    private String isDbUserUUID(String uniqueId) throws Exception {
+        return userMapper.isDbUserUUID(uniqueId);
+    }
+
+    // UUID를 받아서 DB에서 이 UUID를 사용하는 유저 아이디를 반환합니다.
+    // 없는경우 null이 반환됩니다.
+    // 최종 작성일 : 2023-02-03
+    // 마지막 작성자 : 김준영
+    @Override
+    public String isDbUserId(String uniqueId) throws Exception {
+        return userMapper.isAutoUserId((new StringBuffer(uniqueId)).reverse().toString());
+    }
+
+    // 새로 생성한 UUID를 DB에 저장합니다.
+    // 성공시 true, 실패시 false가 반환됩니다.
+    // 최종 작성일 : 2023-02-03
+    // 마지막 작성자 : 김준영
+    private boolean createDbUserUUID(String uniqueId, String userId) throws Exception {
+        AutoLoginDto autoLoginDto = new AutoLoginDto();
+        autoLoginDto.setUserId(userId);
+        autoLoginDto.setTokenKey(uniqueId);
+        userMapper.createDbUserUUID(autoLoginDto);
+        return userMapper.isDbUserUUID(uniqueId) != null ? true : false;
+    }
+
+    // UUID를 받아서 DB와 일치하는 값이 있으면 제거합니다.
+    // 성공시 true, 실패시 false가 반환됩니다.
+    // 최종 작성일 : 2023-02-03
+    // 마지막 작성자 : 김준영
+    @Override
+    public boolean deleteDbUserUUID(String uniqueId) throws Exception {
+        userMapper.deleteDbUserUUID(uniqueId);
+        return userMapper.isDbUserUUID(uniqueId) == null ? true : false;
     }
 
     @Override

@@ -34,4 +34,13 @@ public interface UserService {
     int idChk(String userId) throws Exception;
 
     List<UserDto> getUserInfo(String userId) throws Exception;
+
+    // UUID 생성하고 DB에도 저장한다.
+    String saveDbSessionUserId(String id) throws Exception;
+
+    // DB에 해당 UUID를 사용하는 유저 아이디를 반환
+    String isDbUserId(String uniqueId) throws Exception;
+
+    // DB에 저장되어있는 UUID를 삭제합니다.
+    boolean deleteDbUserUUID(String uniqueId) throws Exception;
 }
