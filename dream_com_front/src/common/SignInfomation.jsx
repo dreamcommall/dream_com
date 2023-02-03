@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./SignInfomation.css";
 import "../fonts/fontStyle.css";
 import {useDaumPostcodePopup} from 'react-daum-postcode';
@@ -16,23 +16,27 @@ import Loading from "./Loading";
 
 function SignInfomation() {
 
-// 초기값 세팅
+    // 초기값 세팅
     const [id, setId] = useState(""); //아이디
     const [name, setName] = useState(""); //이름
     const [password, setPassword] = useState(""); //비밀번호
     const [passwordConfirm, setPasswordConfirm] = useState(""); //비밀번호 확인
     const [email, setEmail] = useState(""); //이메일
     const [phone, setPhone] = useState(""); //휴대전화번호
+    const [gender, setGender] = useState("");//성별
+    const [enroll_company, setEnroll_company] = useState({address: '', zonecode: '', company: ''});
 
-// 오류메세지 상태 저장
+
+    // 오류메세지 상태 저장
     const [idMessage, setIdMessage] = useState("");
     const [nameMessage, setNameMessage] = useState("");
     const [passwordMessage, setPasswordMessage] = useState("");
     const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
     const [emailMessage, setEmailMessage] = useState("");
     const [phoneMessage, setPhoneMessage] = useState("");
+    const [emailCodeMessage, setEmailCodeMessage] = useState("");
 
-// 유효성 검사
+    // 유효성 검사
     const [isId, setIsId] = useState(false);
     const [isName, setIsName] = useState(false);
     const [isPassword, setIsPassword] = useState(false);
@@ -44,10 +48,15 @@ function SignInfomation() {
     const [isCheckedId, setIsCheckedId] = useState(0);
 
     //이메일 인증 코드
-    const [chkNumber, setChkNumber] = useState("")
+    const [chkNumber, setChkNumber] = useState("");
 
     // 로딩창
     const [isLoad, setIsLoad] = useState(false);
+
+    //이메일 인증코드 버튼 타이머
+    const [emailCodeTimerMin, setEmailCodeTimerMin] = useState(2);
+    const [emailCodeTimerSec, setEmailCodeTimerSec] = useState(59);
+    const [timerResult, setTimerResult] = useState(false);
 
     // Daum 우편번호찾기 URL
     const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
@@ -68,6 +77,11 @@ function SignInfomation() {
             setIsName(true);
         }
     };
+
+    const onGender = (e) => {
+        const currentGender = e.target.value;
+        setGender(currentGender);
+    }
 
 //ID 유효성 검사
     const onChangeId = (e) => {
@@ -143,7 +157,36 @@ function SignInfomation() {
     //가입완료 버튼시 빈 칸 검사
     const signUpBtn = () => {
         if (isId && isName && isEmail && isPhone && isPassword && isPasswordConfirm) {
-            alert('회원 가입 완료');
+
+            axios.put("http://localhost:8080/join", null,
+                {
+                    params: {
+                        userId: id,
+                        userName: name,
+                        userPw: password,
+                        userGender: gender,
+                        userPost: enroll_company.zonecode,
+                        userAddr: enroll_company.address,
+                        userTel: phone,
+                        userEmail: email,
+                    }
+                })
+                .then((req) => {
+                    console.log(req.data);
+                    // 가입 완료 시 / db 저장 완료 시
+                    if (req.data == 1) {
+
+                        // window.location.href=("/signClear")
+                        // 가입 실패 시 / db 저장 실패 시
+                    } else {
+
+                    }
+                })
+                .catch(err => {
+                    console.log("가입 완료 오류");
+                    console.log("에러메세지 : " + err);
+                })
+
         } else {
             if (!isId) {
                 setIdMessage("빈 칸 채워주세요");
@@ -175,16 +218,10 @@ function SignInfomation() {
 
     //우편번호 찾기 검색=======================================================
 
-    const [enroll_company, setEnroll_company] = useState({
-        address: '',
-        zonecode: '',
-        company: ''
-    });
 
     const handleInput = (e) => {
         setEnroll_company({
-            ...enroll_company,
-            [e.target.name]: e.target.value,
+            enroll_company, [e.target.name]: e.target.value,
         })
     }
 
@@ -238,13 +275,36 @@ function SignInfomation() {
             })
     };
 
+    const timerCounter = () => {
+        useEffect(() => {
+            emailCodeTimerSec > 0 && setTimeout(() => setEmailCodeTimerSec(emailCodeTimerSec - 1), 1000);
+        },)
+
+
+        let i=2;
+        let j=59;
+        setInterval(function (){
+            for (i =2; i>=0; i--){
+
+                for (j =59; j>=0; j--){
+                    console.log(j);
+                }
+            }
+        },1000)
+
+    }
+
 
     //이메일 인증 번호 전송 통신 버튼
     const SignUpEmailCodeBtn = () => {
-        axios.post("http://localhost:8080/sendEmail", null, {params: {email: "gudeh880@naver.com"}})
 
+        axios.post("http://localhost:8080/sendEmail", null, {params: {email: email}})
             .then((req) => {
+                alert("인증 코드가 발송 되었습니다")
                 console.log("인증 코드가 발송되었습니다")
+                timerCounter();
+
+
             })
             .catch(err => {
                 console.log("이메일 인증코드 발송 오류");
@@ -253,35 +313,24 @@ function SignInfomation() {
     }
     //이메일 인증번호 확인 통신 버튼
     const SignUpEmailCodeCheckBtn = () => {
+        const emailCheckCode = document.querySelector("#input-SignUpInformationEmailCheckCode").value;
+        // $("#input-emailCheckCode").val();
 
-        axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: chkNumber}})
+        axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: emailCheckCode}})
             .then((req) => {
                 console.log(req.data);
-            //     if (req.data === chkNumber) {
-            //         setChkNumber(0);
-            //         alert("이메일 인증에 성공하셨습니다")
-            //     } else {
-            //         setChkNumber (1);
-            //         alert("이메일 인증코드가 일치하지 않습니다")
-            //     }
+                if (req.data === chkNumber) {
+                    setChkNumber(1);
+                    alert("이메일 인증에 성공하셨습니다")
+                } else {
+                    setChkNumber(0);
+                    alert("이메일 인증코드가 일치하지 않습니다")
+                }
             })
             .catch(err => {
                 console.log("이메일 인증코드 비교 오류");
                 console.log(`에러메세지 : ${err}`);
             })
-
-    }
-
-    const SignUpEmailCheckClear = () => {
-//         console.log(chkNumber+"=="+);
-// if(){
-//     console.log("인증번호가 다릅니다");
-// }
-//
-// else {
-//
-//     console.log("인증 번호가 같습니다");
-// }
 
     }
 
@@ -296,7 +345,7 @@ function SignInfomation() {
                 </div>
 
                 <div className={"div-userList"}>
-                    <div className={"div-userId"}>
+                    <div className={"div-SignUpInformationUserId"}>
                         <div className={"col-1"}></div>
                         <div className={"col-2"}>
                             <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>이 름</p>
@@ -311,7 +360,7 @@ function SignInfomation() {
                         </div>
                     </div>
 
-                    <div className={"div-userId"}>
+                    <div className={"div-SignUpInformationUserId"}>
                         <div className={"col-1"}></div>
                         <div className={"col-2"}>
                             <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>아이디</p>
@@ -330,7 +379,7 @@ function SignInfomation() {
                         </div>
                     </div>
 
-                    <div className={"div-userId"}>
+                    <div className={"div-SignUpInformationUserId"}>
                         <div className={"col-1"}></div>
                         <div className={"col-2"}>
                             <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>비밀 번호</p>
@@ -347,7 +396,7 @@ function SignInfomation() {
                     </div>
 
 
-                    <div className={"div-userId"}>
+                    <div className={"div-SignUpInformationUserId"}>
                         <div className={"col-1"}></div>
                         <div className={"col-2"}>
                             <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>비밀 번호 확인</p>
@@ -367,19 +416,20 @@ function SignInfomation() {
                     </div>
 
 
-                    <div className={"div-userId"}>
+                    <div className={"div-SignUpInformationUserId"}>
                         <div className={"col-1"}></div>
                         <div className={"col-2"}>
                             <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>성 별</p>
                         </div>
                         <div className={"col-5"}>
-                            <input name={"gender"} type={"radio"}/> 남성
-                            <input name={"gender"} style={{marginLeft: "10px"}} type={"radio"}/> 여성
+                            <input name={"gender"} type={"radio"} onChange={onGender} value={"M"}/> 남성
+                            <input name={"gender"} style={{marginLeft: "10px"}} type={"radio"} onChange={onGender}
+                                   value={"F"}/> 여성
                         </div>
                     </div>
 
 
-                    <div className={"div-userId"}>
+                    <div className={"div-SignUpInformationUserId"}>
                         <div className={"col-1"}></div>
                         <div className={"col-2"}>
                             <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>휴대 전화</p>
@@ -401,7 +451,7 @@ function SignInfomation() {
                             <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>이메일</p>
                         </div>
                         <div className={"col-5"}>
-                            <div id={"div-userAdd"}>
+                            <div id={"div-SignUpInformationUserAdd"}>
                                 <div>
                                     <input type={"email"} maxLength={50} value={email}
                                            onChange={onChangeEmail}/>
@@ -411,7 +461,7 @@ function SignInfomation() {
                                     <span>00:00</span>
                                 </div>
                                 <div style={{marginTop: "10px"}}>
-                                    <input type={"text"} onChange={SignUpEmailCheckClear}/>
+                                    <input id={"input-SignUpInformationEmailCheckCode"} type={"text"}/>
                                     <button type={"submit"} id={"userBtn"} className={"nanumSquareR-font-normal"}
                                             onClick={SignUpEmailCodeCheckBtn}>인증 확인
                                     </button>
@@ -425,7 +475,7 @@ function SignInfomation() {
                         </div>
                     </div>
 
-                    <div className={"div-userId"}>
+                    <div className={"div-SignUpInformationUserId"}>
                         <div className={"col-1"}></div>
                         <div className={"col-2"}>
                             <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>우편 번호</p>
@@ -447,7 +497,7 @@ function SignInfomation() {
                             <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>주소</p>
                         </div>
                         <div className={"col-8"}>
-                            <div id={"div-userAdd"}>
+                            <div id={"div-SignUpInformationUserAdd"}>
                                 <div>
                                     <input type={"text"} id={"address"} placeholder={"주소"} style={{width: "45%"}}
                                            maxLength={50} onChange={handleInput} readOnly={true}
@@ -461,11 +511,12 @@ function SignInfomation() {
                         </div>
                     </div>
 
-                    <div className={"div-userId"} style={{borderBottom: "none"}}>
+                    <div className={"div-SignUpInformationUserId"} style={{borderBottom: "none"}}>
                         <div className={"col-10"}></div>
 
                         <div className={"col-2"}>
-                            <button id={"clearBtn"} className={"nanumSquareR-font-normal"} onClick={signUpBtn}>가입 완료
+                            <button id={"SignUpInformationClearBtn"} className={"nanumSquareR-font-normal"}
+                                    onClick={signUpBtn}>가입 완료
                             </button>
                         </div>
                     </div>
