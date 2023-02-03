@@ -5,6 +5,10 @@
     height: 435px;
 }
 
+#div-random-spec-wrapper a {
+    text-decoration: none;
+}
+
 /* 랜덤으로 추천해주는 스펙의 리스트 스타일 수정 */
 #div-random-spec-wrapper li {
     list-style: none;
@@ -35,4 +39,9 @@
     width: 390px;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: black;
+}
+
+#p-random-spec-price {
+    color: black;
 }
