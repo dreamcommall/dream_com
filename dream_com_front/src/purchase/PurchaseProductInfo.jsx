@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./PurchaseProductInfo.css"
 
 
@@ -13,6 +13,8 @@ function PurchaseProductInfo({purchaseProductList, quantity}) {
             return 0
         }
     }
+
+    const checkBoxList = document.getElementsByClassName("input-selectPurchaseProduct");
 
     return (
         <table id={"table-purchaseProductInfo"} className={"table"}>
@@ -37,16 +39,23 @@ function PurchaseProductInfo({purchaseProductList, quantity}) {
                 return (item.inventoryQuantity > 0 ?
                     <tr className={"nanumSquareR-font-normal"} key={item.key} style={{backgroundColor: "white"}}>
                         <td>
+                            <div className={"div-selectPurchaseProduct"}>
+                                <input className={"input-selectPurchaseProduct"} type={"checkbox"} value={item.productName}
+                                       defaultChecked={true}></input>
+                            </div>
                             <div style={{height: "120px"}}>
                                 <div className={"text-center"} style={{float: "left", marginRight: "30px"}}>
                                     <img src={item.thumbnailImg} style={{width: "130px"}}/>
                                 </div>
                                 <div style={{paddingTop: "10px"}}>
-                                    <p className={"p-purchaseProductInfoTitle"}>
+                                    <p className={"p-purchaseProductInfoTitle"} title={item.productTitle}>
                                         {item.productTitle}
                                     </p>
-                                    <p className={"p-purchaseProductInfoNameSpec"}>
-                                        [{item.productName}] / {item.partName.join("/")}
+                                    <p className={"mb-1"} title={item.productName}>
+                                        제품명 : 【 {item.productName} 】
+                                    </p>
+                                    <p className={"p-purchaseProductInfoNameSpec m-0"} title={item.partName.join("/")}>
+                                        {item.partName.join("/")}
                                     </p>
                                 </div>
                             </div>
@@ -82,8 +91,11 @@ function PurchaseProductInfo({purchaseProductList, quantity}) {
                                         <p className={"p-purchaseProductInfoTitle"}>
                                             {item.productTitle}
                                         </p>
-                                        <p className={"p-purchaseProductInfoNameSpec"}>
-                                            [{item.productName}] / {item.partName.join("/")}
+                                        <p className={"mb-1"}>
+                                            제품명 : 【 {item.productName} 】
+                                        </p>
+                                        <p className={"p-purchaseProductInfoNameSpec mb-1"}>
+                                            상세 스펙 : {item.partName.join("/")}
                                         </p>
                                     </div>
                                 </div>

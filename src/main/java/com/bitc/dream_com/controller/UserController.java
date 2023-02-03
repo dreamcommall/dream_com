@@ -98,13 +98,19 @@ public class UserController {
         return msg;
     }
 
-//    회원가입
-//    최종 작성 날짜 : 2023-01-25
+//    회원가입 (트리거가 없어서 회원 가입 시 입력한 주소를 기본 배송지로 설정)
+//    최종 작성 날짜 : 2023-02-03
 //    최종 작성자 : 양민호
     @RequestMapping(value = "join", method = RequestMethod.PUT)
-    public String join(UserDto userDto) throws Exception {
-        userService.join(userDto);
-        return "가입 완료";
+    public int join(UserDto userDto) throws Exception {
+//        회원 정보 테이블에 입력
+        int joinResult = userService.join(userDto);
+//        기본주소로 테이블에 입력
+        int addAddressResult =  userService.addAddress(userDto);
+        if(joinResult + addAddressResult == 2) {
+            return 1;
+        }
+            return 0;
     }
 
 //    이메일 인증(이메일 인증번호 전송)

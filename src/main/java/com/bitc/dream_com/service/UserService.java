@@ -14,11 +14,13 @@ public interface UserService {
 
     void deleteAccount(UserDto userDto) throws Exception;
 
-    void join(UserDto userDto) throws Exception;
+    int join(UserDto userDto) throws Exception;
 
     String sendEmail(String email) throws Exception;
 
     int idChk(String userId) throws Exception;
 
     List<UserDto> getUserInfo(String userId) throws Exception;
+
+    int addAddress(UserDto userDto) throws Exception;
 }

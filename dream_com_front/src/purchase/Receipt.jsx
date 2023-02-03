@@ -1,22 +1,82 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./Receipt.css";
 
-const style = {
-    button: {width: "300px", height: "60px", backgroundColor: "black", color: "white", borderRadius: "10px", marginTop: "20px"},
-    collapse: {borderTop: "1px solid lightgray", borderBottom: "1px solid lightgray", paddingTop: "10px", paddingBottom: "10px"}
-}
-function Receipt(props) {
+function Receipt({method, receipt, userInfo}) {
     // 체크박스 클릭 시 값 저장 / 체크박스 연속 클릭 방지
-    const [check1, setCheck1] = useState(0);
-    const [check2, setCheck2] = useState(0);
+    const [check1, setCheck1] = useState(false);
+    const [check2, setCheck2] = useState(false);
     const [time, setTime] = useState(0);
+
+    // 결제창 띄우기 매개변수 결제방법
+    const onClickPayment = () => {
+        const checkBoxList = document.getElementsByClassName("input-selectPurchaseProduct");
+        // 아임포트에 들어갈 상품명
+        let merchantName = "";
+        // 선택한 구매상품 개수
+        let etcProduct = "";
+        if(checkBoxList.length > 1) {
+            etcProduct = `외 ${checkBoxList.length - 1}개`;
+        }
+        // 선택한 구매상품 중 최상위 상품 이름을 상품명에 저장
+        for(let i = 0; i < checkBoxList.length; i++) {
+            if(checkBoxList[i].checked == true) {
+                merchantName = `${checkBoxList[i].value} ${etcProduct}`;
+                break;
+            }
+        }
+
+        const {IMP} = window;
+        IMP.init("imp43854825");
+        if(method == "none") {
+            alert("결제방법을 선택해 주세요");
+        }
+        else if(method == "bank") {
+            console.log("무통장");
+        }
+        else {
+            const data = {
+                pg: method,                           // PG사
+                pay_method: 'card',                           // 결제수단
+                merchant_uid: `mid_${new Date().getTime()}`,   // 주문번호
+                amount: receipt.price - receipt.discount + receipt.deliveryPrice,   // 결제금액
+                name: merchantName,                  // 주문명
+                buyer_name: userInfo.userName,                           // 구매자 이름
+                buyer_tel: userInfo.userTel,                     // 구매자 전화번호
+                buyer_email: userInfo.userEmail,               // 구매자 이메일
+                buyer_addr: userInfo.userAddr,                    // 구매자 주소
+                buyer_postcode: userInfo.userPost,                      // 구매자 우편번호
+            };
+
+
+
+            /* 4. 결제 창 호출하기 */
+            // IMP.request_pay(data, callback);
+        }
+    }
+
+    /* 3. 콜백 함수 정의하기 */
+    function callback(response) {
+        const {
+            success,
+            merchant_uid,
+            error_msg,
+        } = response;
+
+        if (success) {
+            alert('결제 성공');
+            console.log(success, merchant_uid, error_msg);
+        } else {
+            alert(`결제 실패: ${error_msg}`);
+        }
+    }
+
     const onOff1 = () => {
-        if(time == 0) {
-            if (check1 == 0) {
-                setCheck1(1);
+        if(time == false) {
+            if (check1 == false) {
+                setCheck1(true);
             }
             else {
-                setCheck1(0);
+                setCheck1(false);
             }
             setTime(1);
             window.setTimeout(() => {
@@ -27,11 +87,11 @@ function Receipt(props) {
     }
     const onOff2 = () => {
         if(time == 0) {
-            if (check2 == 0) {
-                setCheck2(1);
+            if (!check2) {
+                setCheck2(true);
             }
             else {
-                setCheck2(0);
+                setCheck2(false);
             }
             setTime(1);
             window.setTimeout(() => {
@@ -58,45 +118,30 @@ function Receipt(props) {
         }
     }
 
-    // 체크박스 모두 체크 시 안내
-    const value = () => {
-        if(check1 == 1 && check2 == 1) {
-            alert("체크 완료");
-        }
-    }
-
     return (
-        <div id={"div-receipt"}>
+        <div id={"div-purchaseReceipt"}>
             <div style={{width: "500px", border: "2px solid lightgray", padding: "20px"}}>
                 <p className={"nanumSquareB-font-XNormal"} >최종 결제 정보</p>
                 <div className={"nanumSquareR-font-normal"}>
                     <div style={{borderBottom: "1px dashed lightgray"}}>
                         <div className={"d-flex justify-content-between"}>
                             <p>상품 금액</p>
-                            {props.item.map(item => {
-                                return <p key={item.key}>{item.price.toLocaleString("ko-KR")}원</p>
-                            })}
+                            {<p>{receipt.price.toLocaleString("ko-KR")}원</p>}
                         </div>
                         <div className={"d-flex justify-content-between"}>
                             <p>할인 금액</p>
-                            {props.item.map(item => {
-                                return <p key={item.key}>{item.discount.toLocaleString("ko-KR")}원</p>
-                            })}
+                            <p>{receipt.discount.toLocaleString("ko-KR")}원</p>
                         </div>
                         <div className={"d-flex justify-content-between"}>
                             <p>배송비</p>
-                            {props.item.map(item => {
-                                return <p key={item.key}>{item.deliveryPrice.toLocaleString("ko-KR")}원</p>
-                            })}
+                            <p >{receipt.deliveryPrice.toLocaleString("ko-KR")}원</p>
                         </div>
                     </div>
                     <div className={"d-flex justify-content-between mt-3"}>
                         <p>최종 결제 금액</p>
-                        {props.item.map(item => {
-                            return  (<p key={item.key} className={"text-danger"}>
-                                        {(item.price - item.discount + item.deliveryPrice).toLocaleString("ko-KR")}원
-                                    </p>)
-                        })}
+                        {<p className={"text-danger"}>
+                            {(receipt.price - receipt.discount + receipt.deliveryPrice).toLocaleString("ko-KR")}원
+                        </p>}
                     </div>
                     <div className={"mt-4 form-check"}>
                         <input className={"form-check-input"} type={"checkbox"} id={"ageCheck"} onClick={onOff1} disabled={time == 1 ? true : false} />
@@ -110,23 +155,23 @@ function Receipt(props) {
                         <input className={"form-check-input"} type={"checkbox"} id={"Check"} onClick={onOff2} disabled={time == 1 ? true : false} />
                         <div>
                             <label className={"form-check-label d-flex justify-content-between"}>
-                                <div href={time == 1 ? "" : "#p-collapse"} data-bs-toggle={"collapse"} aria-controls={"p-collapse"} onClick={shape}>
+                                <div href={time == 1 ? "" : "#purchaseReceipt-collapse"}
+                                     data-bs-toggle={"collapse"} aria-controls={"purchaseReceipt-collapse"} onClick={shape}>
                                     개인정보 수집 및 이용에 동의합니다.&#8193;&#8193;&#8193;&#8193;&#8193;&#8193;&#8193;&#8193;
                                     {arrow == 0 ? <span>&#9660;</span> : <span>&#9650;</span>}
                                 </div>
                             </label>
                         </div>
-                        <p className={"collapse"} id={"p-collapse"} style={style.collapse}>
+                        <p className={"collapse"} id={"purchaseReceipt-collapse"}>
                             고객님께서는 개인정보 수집 및 이용에 대하여 동의를 거부하실 수 있으며, 거부 시 상품배송, 구매 및 결제가 제한됩니다.
                         </p>
 
                     </div>
                     <div className={"d-flex justify-content-center"}>
-                        {props.item.map(item => {
-                            return <button key={item.key} style={style.button} onClick={value}>
-                                {(item.price - item.discount + item.deliveryPrice).toLocaleString("ko-KR")}원 결제하기
-                            </button>
-                        })}
+                        {<button id={check1 && check2 ? "button-OpenIamport" : "button-disableIamport"}
+                                 onClick={onClickPayment} disabled={!(check1 && check2)}>
+                            {(receipt.price - receipt.discount + receipt.deliveryPrice).toLocaleString("ko-KR")}원 결제하기
+                        </button>}
                     </div>
                 </div>
             </div>
