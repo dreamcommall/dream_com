@@ -21,7 +21,7 @@
 width: 3%;
 }
 
-.div-userId {
+.div-SignUpInformationUserId {
     display: flex;
     border-bottom: 1px solid lightgray;
     /*margin-top: 10px;*/
@@ -43,14 +43,14 @@ width: 3%;
     background-color: lightgray;
 }
 
-#clearBtn {
+#SignUpInformationClearBtn {
     border: none;
    width: 150px;
     height: 40px;
     flex-direction: row-reverse;
 }
 
-.div-userAdd{
+.div-SignUpInformationUserAdd{
 
     flex-direction: column;
 }

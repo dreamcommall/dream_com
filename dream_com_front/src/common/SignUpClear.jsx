@@ -6,17 +6,18 @@ import "../fonts/fontStyle.css"
 import SignUpHeader from "../SignUp/SignUpHeader";
 
 
+
 function SignClear(){
 
-    const [btnMove,setBtnMove] =useState(true)
+
 
     const handleLogin =()=>{
-        setBtnMove(true);
+      window.location.href="/Login"
     }
 
     // 경매를 선택한 경우
     const handleMain = ()=>{
-        setBtnMove(false);
+      window.location.href= "/"
     }
 
     return(
@@ -37,7 +38,7 @@ function SignClear(){
 
             </div>
             <div className={"btnChk"}>
-                {btnMove ? <yacA/> : <yacTerms/>}
+
                 <div className={"col"}>
 
                     <button style={{marginLeft:"50%", backgroundColor:"black", color:"white"}} id={"btnClear"} onClick={() =>handleLogin(true)}>로그인</button>

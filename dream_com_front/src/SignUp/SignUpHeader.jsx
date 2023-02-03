@@ -9,7 +9,9 @@ function SignUpHeader() {
         <div>
             <div className={"container"} id={"signMain"}>
                 <div id={"Sign-mainLogo"}>
+                    <a href={"/"}>
                     <img style={{width:"70%"}} src={SignMainLogo}/>
+                    </a>
                 </div>
                 <div id={"SignText"}>
                     <p style={{fontSize:"40px", paddingTop:"10px"}} className={"nanumSquareB-font-normal"}>회원가입</p>
