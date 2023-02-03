@@ -15,8 +15,4 @@ public class PaymentDto {
     private int price;
     private String request;
     private int state;
-    private String imgPath;
-    private String productTitle;
-    private String productName;
-    private String productDiscount;
 }
