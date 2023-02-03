@@ -63,20 +63,6 @@ function Login(){
         setUserPw(e.target.value)
     }
 
-    const test = async () => {
-        console.log(sessionStorage.getItem("loginUUID"));
-
-        await axios.post("http://localhost:8080/logout", null,
-            {params : {userUUID : sessionStorage.getItem("loginUUID")}})
-            .then(response => {
-                alert(`${response.data}님 반갑습니다.`);
-            })
-            .catch(err => {
-                console.log(`에러메세지 : ${err}`);
-                console.log("로그인 한 유저정보 취득에 실패했습니다.");
-            });
-    }
-
     // 로그인 처리 프로세스
     // 로그인 후 성공하면 저장된 UUID를 이용해서 서버에게 유저 아이디를 내려받는다.
     const DataReceive = async () => {
@@ -130,7 +116,6 @@ function Login(){
             <ClickPrevent isLoading={isLoad} />
             <Loading loadStatus={isLoad} />
             <div className={"container text-center"} style={commonStyle}>
-                <button onClick={test}>테스트 버튼</button>
                 <div className={"row"}>
                     <div className={"col-4"}>
                     </div>

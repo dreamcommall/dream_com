@@ -22,6 +22,9 @@ public interface UserService {
     // UUID를 기반으로 저장소에 아이디가 있는지 확인
     public String isUserUUID(String uniqueId) throws Exception;
 
+    // 저장된 UUID가 만료되었는지 확인합니다.
+    List<String> checkTimeUserUUID(int standMinuteTime) throws Exception;
+
     void deleteAccount(UserDto userDto) throws Exception;
 
     void join(UserDto userDto) throws Exception;

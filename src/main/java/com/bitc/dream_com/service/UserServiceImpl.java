@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.mail.Message.RecipientType;
@@ -88,11 +86,26 @@ public class UserServiceImpl implements UserService {
     }
     
     // 저장되어있는 UUID의 마지막 사용시간을 확인하고 만료가 되었다면 만료된 값들을 반환합니다.
+    // 매개변수로 만료기준을 판단하기위한 기준시간을 받습니다.
     // List에 만료된 UUID 값들이 저장되어서 반환됩니다.
     // 최종 작성일 : 2023-02-03
     // 마지막 작성자 : 김준영
-    private List<String> checkTimeUserUUID() throws Exception {
-        return null;
+    @Override
+    public List<String> checkTimeUserUUID(int standMinuteTime) throws Exception {
+        if (userSessionsCreateDt.size() == 0) { // 저장되어있는 값이 하나도 없는경우 null 반환
+            return null;
+        }
+
+        List<String> deleteList = new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now();
+        for (String key : userSessionsCreateDt.keySet()) {
+            LocalDateTime targetDt = LocalDateTime.parse(userSessionsCreateDt.get(key));
+            targetDt = targetDt.plusMinutes(standMinuteTime); // 저장되어있는 시간에 만료기준 시간만큼 더한다.
+            if (now.isBefore(targetDt) == false) { // 현재 시간대보다 저장된 시간이 더 이전값이면 삭제명단에 포함한다.
+                deleteList.add(key);
+            }
+        }
+        return deleteList;
     }
 
     // 이 함수는 재귀적으로 동작합니다.
