@@ -2,24 +2,21 @@ package com.bitc.dream_com.service;
 
 import com.bitc.dream_com.dto.UserDto;
 import com.bitc.dream_com.mapper.UserMapper;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -27,11 +24,53 @@ public class UserServiceImpl implements UserService {
     @Autowired
     JavaMailSender emailSender;
 
+    // 유저의 아이디가 저장되는 저장소
+    private final ConcurrentHashMap<String, String> userSessions = new ConcurrentHashMap<>();
+
     public static final String ePw = createKey();
 
     @Override
     public UserDto loginChk(String userId, String userPw) throws Exception {
         return userMapper.loginChk(userId, userPw);
+    }
+
+    // 로그인 후 유저의 아이디를 받아서 UUID를 생성해 Map에 저장한다.
+    // 저장후 생성된 UUID값을 반환환다.
+    // 최종 작성일 : 2023-02-03
+    // 마지막 작성자 : 김준영
+    @Override
+    public String saveSessionUserId(String id) throws Exception {
+        String uniqueId = createUserUUID();
+        userSessions.put(uniqueId, id);
+        return uniqueId;
+    }
+
+    // 등록된 저장소에서 UUID를 삭제합니다.
+    // 로그아웃 후 진행되는 함수입니다.
+    // 삭제 성공시 true, 실패시 false가 반환됩니다.
+    // 최종 작성일 : 2023-02-03
+    // 마지막 작성자 : 김준영
+    @Override
+    public boolean removeUserUUID(String uniqueId) throws Exception {
+        userSessions.remove(uniqueId);
+        return isUserUUID(uniqueId) == null ? true : false;
+    }
+    
+    // 이 함수는 재귀적으로 동작합니다.
+    // UUID를 생성해서 저장소에 있는지 확인하고 사용할수 있으면 값을 반환 사용할수 없다면 자신을 재호출한다.
+    // 최종 작성일 : 2023-02-03
+    // 마지막 작성자 : 김준영
+    private String createUserUUID() throws Exception {
+        String tempId = UUID.randomUUID().toString();
+        return isUserUUID(tempId) == null ? tempId : createUserUUID();
+    }
+
+    // 유저의 UUID를 기준으로 현재 로그인 되어있는지 확인하고 되어있으면 해당 아이디를 반환한다.
+    // 없는경우 null이 반환된다.
+    // 최종 작성일 : 2023-02-03
+    // 마지막 작성자 : 김준영
+    private String isUserUUID(String uniqueId) throws Exception {
+        return userSessions.getOrDefault(uniqueId, null);
     }
 
     @Override
