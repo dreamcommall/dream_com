@@ -43,4 +43,7 @@ public interface UserService {
 
     // DB에 저장되어있는 UUID를 삭제합니다.
     boolean deleteDbUserUUID(String uniqueId) throws Exception;
+
+    // DB에 저장되어있는 UUID 값중 만료된 값들을 조회합니다.
+    public List<String> checkDbTimeUserUUID(int standardDay) throws Exception;
 }

@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
     // 최종 작성일 : 2023-02-03
     // 마지막 작성자 : 김준영
     @Override
-    public List<String> checkTimeUserUUID(int standMinuteTime) throws Exception {
+    public List<String> checkTimeUserUUID(int standardMinuteTime) throws Exception {
         if (userSessionsCreateDt.size() == 0) { // 저장되어있는 값이 하나도 없는경우 null 반환
             return null;
         }
@@ -115,12 +115,23 @@ public class UserServiceImpl implements UserService {
         LocalDateTime now = LocalDateTime.now();
         for (String key : userSessionsCreateDt.keySet()) {
             LocalDateTime targetDt = LocalDateTime.parse(userSessionsCreateDt.get(key));
-            targetDt = targetDt.plusMinutes(standMinuteTime); // 저장되어있는 시간에 만료기준 시간만큼 더한다.
+            targetDt = targetDt.plusMinutes(standardMinuteTime); // 저장되어있는 시간에 만료기준 시간만큼 더한다.
             if (now.isBefore(targetDt) == false) { // 현재 시간대보다 저장된 시간이 더 이전값이면 삭제명단에 포함한다.
                 deleteList.add(key);
             }
         }
         return deleteList;
+    }
+
+    // DB에 저장되어있는 UUID중 만료된 값들을 저장하여 List 형태로 반환합니다.
+    // 매개변수로 만료기준 날짜를 받습니다.
+    // 최종 작성일 : 2023-02-04
+    // 마지막 작성자 : 김준영
+    @Override
+    public List<String> checkDbTimeUserUUID(int standardDay) throws Exception {
+        LocalDateTime standardDateTime = LocalDateTime.now();
+        standardDateTime = standardDateTime.minusDays(standardDay);
+        return userMapper.searchUUIDExpire(standardDateTime.toString());
     }
 
     // 이 함수는 재귀적으로 동작합니다.
@@ -180,6 +191,7 @@ public class UserServiceImpl implements UserService {
     }
 
     // UUID를 받아서 DB와 일치하는 값이 있으면 제거합니다.
+    // 반드시 역으로 변환된 UUID를 받아야 정상적으로 작동합니다!
     // 성공시 true, 실패시 false가 반환됩니다.
     // 최종 작성일 : 2023-02-03
     // 마지막 작성자 : 김준영

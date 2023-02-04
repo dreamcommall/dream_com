@@ -4,6 +4,7 @@ import com.bitc.dream_com.dto.AutoLoginDto;
 import com.bitc.dream_com.dto.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -33,4 +34,8 @@ public interface UserMapper {
     
     // DB에 일치하는 UUID를 삭제합니다.
     void deleteDbUserUUID(String uniqueId) throws Exception;
+
+    // DB에 저장된 UUID중 만료된 UUID를 반환합니다.
+    // 매개변수로 만료기준 날짜를 입력받습니다.
+    List<String> searchUUIDExpire(String time) throws Exception;
 }

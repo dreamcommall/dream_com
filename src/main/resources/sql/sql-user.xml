@@ -82,4 +82,14 @@
     <delete id="deleteDbUserUUID" parameterType="String">
         delete from auto_login_key where token_key = #{key}
     </delete>
+
+<!--    파라미터로 받은 기준 날짜를 넘긴 키들을 반환한다.-->
+<!--    만료기간 검사-->
+<!--    최종 수정일 : 2023-02-04-->
+<!--    최종 작성자 : 김준영-->
+    <select id="searchUUIDExpire" parameterType="String" resultType="String">
+        <![CDATA[
+            select token_key from auto_login_key where create_time <= #{time}
+        ]]>
+    </select>
 </mapper>
