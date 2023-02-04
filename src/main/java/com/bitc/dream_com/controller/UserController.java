@@ -54,7 +54,7 @@ public class UserController {
     public String getLoginUserId(@RequestParam(value = "userUUID", required = false) String userUUID,
         @RequestParam(value = "autoUserUUID", required = false) String autoUserUUID) throws Exception {
         String targetId;
-        if (userUUID == null) {
+        if (autoUserUUID != null) {
             targetId = new StringBuffer(autoUserUUID).reverse().toString();
         } else {
             targetId = userUUID;

@@ -33,7 +33,7 @@ function DreamComRouter() {
                 <Route path={"/signinfomation"} element={<SignInfomation />}></Route>
                 <Route path={"/signClear"} element={<SignClear />}></Route>
                 <Route path={"/emailchk"} element={<EmailTest />}></Route>
-                <Route path={"/login"} element={<Login />}></Route>
+                <Route path={"/login?"} element={<Login />}></Route>
                 <Route path={"/findId"} element={<FindId />}></Route>
                 <Route path={"/findPw"} element={<FindPw />}></Route>
                 <Route path={"/idchk"} element={<LoginChk />}></Route>
