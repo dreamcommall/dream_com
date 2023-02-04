@@ -42,13 +42,23 @@ function NavigationBar() {
             userUUID : sessionStorage.getItem("loginUUID"),
             autoUserUUID : localStorage.getItem("autoLoginUUID")
             }}).then(response => {
-            sessionStorage.removeItem("loginUUID");
-            localStorage.removeItem("autoLoginUUID");
-            setLoginUserId(null);
+            if (response.data == "fail") { // 로그아웃 실패시 에러 페이지로 이동
+                moveErrorPage();
+            } else { // 로그아웃 성공시 로그아웃 완료 페이지로 이동
+                sessionStorage.removeItem("loginUUID");
+                localStorage.removeItem("autoLoginUUID");
+                setLoginUserId(null);
+            }
         }).catch(err => {
             console.log(`에러메세지 : ${err}`);
             console.log("로그아웃에 실패했습니다.");
         });
+    }
+
+    // 로그아웃 실패시 에러 페이지로 이동
+    const moveErrorPage = () => {
+        const button = document.querySelector("#button-header-error-page");
+        button.click();
     }
 
     return (
@@ -139,6 +149,10 @@ function NavigationBar() {
                     </Form>
                 </Navbar>
             </div>
+            {/*에러 발생시 에러 페이지 테스트 용도 코드입니다.*/}
+            {/*<Link to={`/error?errorNumber=${{test1 : "hello", test2 : "world!"}}&errorMsg=${"test 메세지"}`}>*/}
+            {/*    <button id={"button-header-error-page"} onClick={moveErrorPage} hidden={true}/>*/}
+            {/*</Link>*/}
         </Navbar>
     );
 }
