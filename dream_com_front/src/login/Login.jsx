@@ -104,8 +104,10 @@ function Login(){
                 else {
                     if (isAutoLogin == false) { // 자동 로그인을 사용하지 않았다면
                         sessionStorage.setItem("loginUUID", data);
+                        localStorage.removeItem("autoLoginUUID");
                     } else { // 자동 로그인을 사용했다면
                         localStorage.setItem("autoLoginUUID", data);
+                        sessionStorage.removeItem("loginUUID");
                     }
                     flag = true;
                 }

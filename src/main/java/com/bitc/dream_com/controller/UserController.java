@@ -54,10 +54,12 @@ public class UserController {
     public String getLoginUserId(@RequestParam(value = "userUUID", required = false) String userUUID,
         @RequestParam(value = "autoUserUUID", required = false) String autoUserUUID) throws Exception {
         String targetId;
-        if (autoUserUUID != null) {
+        if (autoUserUUID != null) { // 자동 로그인 했을때
             targetId = new StringBuffer(autoUserUUID).reverse().toString();
-        } else {
+        } else if(userUUID != null) { // 일반 로그인 했을때
             targetId = userUUID;
+        } else { // 자동 로그인, 일반 로그인 안했을때
+            return null;
         }
         return userService.isUserUUID(targetId);
     }

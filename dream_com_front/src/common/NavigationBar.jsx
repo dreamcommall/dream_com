@@ -15,7 +15,41 @@ function NavigationBar() {
     const [oneLine, setOneLine] = useState(1);
     const [zoneLine, setZoneLine] = useState(1);
     const [gLine, setGLine] = useState(1);
+    const [loginUserId, setLoginUserId] = useState(null); // 로그인 한 유저의 아이디
     const pageUrl = useLocation();
+
+    // 서버에게 현재 로그인한 유저를 요청합니다.
+    // 없는경우 null이 반환됩니다.
+    useEffect(() => {
+        axios.post("http://localhost:8080/loginUserId", null, {params : {
+            userUUID : sessionStorage.getItem("loginUUID"),
+            autoUserUUID : localStorage.getItem("autoLoginUUID")
+        }}).then(response => {
+            if (response.data == null || response.data == undefined || response.data == "") {
+                setLoginUserId(null);
+            } else {
+                setLoginUserId(response.data);
+            }
+        }).catch(err => {
+            console.log(`에러메세지 : ${err}`);
+            console.log("유저 아이디 취득에 실패했습니다.");
+        });
+    }, []);
+
+    // 로그아웃 후 정상적으로 로그아웃이 진행되었다면 세션,로컬 스토리지에 있는 UUID를 제거한다.
+    const logout = () => {
+        axios.post("http://localhost:8080/logout", null, {params : {
+            userUUID : sessionStorage.getItem("loginUUID"),
+            autoUserUUID : localStorage.getItem("autoLoginUUID")
+            }}).then(response => {
+            sessionStorage.removeItem("loginUUID");
+            localStorage.removeItem("autoLoginUUID");
+            setLoginUserId(null);
+        }).catch(err => {
+            console.log(`에러메세지 : ${err}`);
+            console.log("로그아웃에 실패했습니다.");
+        });
+    }
 
     return (
         <Navbar className={"container py-1"} id={"nav"}>
@@ -81,9 +115,12 @@ function NavigationBar() {
                                     onMouseOver={() => setTextLine(0)}
                                     onMouseOut={() => setTextLine(1)}
                                 >
-                                    <Link to={`/login?prev=${pageUrl.pathname + pageUrl.search}`} style={textLine ? {textDecorationLine: "none", color: "gray"}
-                                        : {textDecorationLine: "underline", color: "black"}}
-                                          className={"nanumSquareB-font-normal"}>로그인</Link>
+                                    {
+                                        loginUserId == null ? <Link to={`/login?prev=${pageUrl.pathname + pageUrl.search}`} style={textLine ? {textDecorationLine: "none", color: "gray"}
+                                            : {textDecorationLine: "underline", color: "black"}} className={"nanumSquareB-font-normal"}>로그인</Link>
+                                            : <Link onClick={logout} style={textLine ? {textDecorationLine: "none", color: "gray"}
+                                                : {textDecorationLine: "underline", color: "black"}} className={"nanumSquareB-font-normal"}>로그아웃</Link>
+                                    }
                                 </li>
                             </a>
                             <a>
@@ -91,9 +128,11 @@ function NavigationBar() {
                                     onMouseOver={() => setUserLine(0)}
                                     onMouseOut={() => setUserLine(1)}
                                 >
-                                    <Link to={"/sign"} style={userLine ? {textDecorationLine: "none", color: "gray"}
-                                        : {textDecorationLine: "underline", color: "black"}}
-                                          className={"nanumSquareB-font-normal"}>회원가입</Link>
+                                    {
+                                        loginUserId == null ? <Link to={"/sign"} style={userLine ? {textDecorationLine: "none", color: "gray"}
+                                            : {textDecorationLine: "underline", color: "black"}} className={"nanumSquareB-font-normal"}>회원가입</Link>
+                                            : <span id={"span-header-welcome"} className={"nanumSquareB-font-normal"}>{loginUserId}님 환영합니다!</span>
+                                    }
                                 </li>
                             </a>
                         </Nav>
