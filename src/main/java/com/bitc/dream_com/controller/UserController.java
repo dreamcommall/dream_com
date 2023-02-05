@@ -18,9 +18,18 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // 로그인
-    // 최종 수정일 : 2023.02.03
-    // 최종 작성자 : 김준영
+    /**
+     * 로그인을 요청하면 실행되는 함수입니다.
+     *
+     * @author 김준영, 양민호
+     * @param userId 로그인을 위한 유저 아이디
+     * @param userPw 로그인을 위한 유저의 암호
+     * @param isAutoLogin 자동 로그인을 사용하는지 확인용도의 값
+     * @return 성공적으로 작업이 수행됬다면 기본 로그인으로 요청한 경우 UUID값이 반환되고,
+     * 자동 로그인으로 요청한 경우 역으로 변환된 UUID값이 반환됩니다.
+     * 만약 실패한 경우 0이 반환됩니다.
+     * @apiNote 최종 수정일 2023-02-03
+     */
     @RequestMapping(value = "/loginChk", method = RequestMethod.POST)
     public Object loginChk(@RequestParam("userId")String userId, @RequestParam("userPw")String userPw,
         @RequestParam(value = "isAutoLogin", defaultValue = "false") String isAutoLogin) throws Exception{
@@ -45,11 +54,18 @@ public class UserController {
             return userService.saveDbSessionUserId(loginChk.getUserId());
         }
     }
-    
-    // 현재 로그인한 유저가 있는지 확인하는 함수
-    // 유저가 있으면 아이디값 반환 없으면 null 반환
-    // 최종 수정일 : 2023.02.03
-    // 최종 작성자 : 김준영
+
+    /**
+     * 현재 로그인 한 유저의 아이디값을 반환하는 함수입니다.<br>
+     * <b>파라미터로 userUUID를 받는경우 기본 로그인으로 진행,<br> autoUserUUID를 받는경우 자동 로그인을 진행합니다.</b>
+     *
+     * @author 김준영
+     * @param userUUID 웹 브라우저에 저장된 유저를 식별하기 위한 UUID값 입니다.
+     * @param autoUserUUID 웹 브라우저에 저장된 유저를 식별하기 위한 역으로 변환된 UUID값 입니다.
+     * @return 성공적으로 작업이 수행된 경우 전달받은 UUID를 사용하는 아이디가 반환됩니다.
+     * 일치하는게 없는경우 null이 반환됩니다.
+     * @apiNote 최종 수정일 2023-02-03
+     */
     @RequestMapping(value = "/loginUserId", method = RequestMethod.POST)
     public String getLoginUserId(@RequestParam(value = "userUUID", required = false) String userUUID,
         @RequestParam(value = "autoUserUUID", required = false) String autoUserUUID) throws Exception {
@@ -87,10 +103,18 @@ public class UserController {
         }
     }
 
-    // 로그아웃을 처리하는 함수
-    // 성공시 success 실패시 fail을 반환한다.
-    // 최종 수정일 : 2023.02.03
-    // 최종 작성자 : 김준영
+    /**
+     * 로그아웃을 처리하는 함수입니다.<br>
+     * <b>파라미터로 반드시 userUUID 또는 autoUserUUID를 받아야합니다.</b><br>
+     * userUUID를 받는경우 기본 로그인한 유저의 로그아웃을 진행,
+     * autoUserUUID를를 받는경우 자동 로그인한 유저의 로그아웃을 진행합니다.
+     *
+     * @author 김준영
+     * @param userUUID 웹 브라우저에 저장된 유저를 식별하기 위한 UUID값 입니다.
+     * @param autoUserUUID 웹 브라우저에 저장된 유저를 식별하기 위한 역으로 변환된 UUID값 입니다.
+     * @return 성공적으로 작업이 수행된 경우 success, 실패한 경우 fail을 반환합니다.
+     * @apiNote 최종 수정일 2023-02-03
+     */
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public String userLogout(@RequestParam(value = "userUUID", required = false) String userUUID,
         @RequestParam(value = "autoUserUUID", required = false) String autoUserUUID) throws Exception {

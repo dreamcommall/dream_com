@@ -24,12 +24,16 @@ public class UserServiceImpl implements UserService {
     @Autowired
     JavaMailSender emailSender;
 
-    // 유저의 아이디가 저장되는 저장소
-    // 스케줄러를 담당하는 클래스에서도 사용하기 때문에 static으로 선언
+    /**
+     * 로그인 후 유저의 아이디를 저장하기 위한 저장소입니다.<br>
+     * 스케줄러를 담당하는 클래스에서도 사용하기 때문에 static으로 선언되었습니다.
+     */
     private static final ConcurrentHashMap<String, String> userSessions = new ConcurrentHashMap<>();
 
-    // 유저의 아이디가 저장된 시간
-    // 스케줄러를 담당하는 클래스에서도 사용하기 때문에 static으로 선언
+    /**
+     * 로그인 후 유저의 아이디가 저장된 시점을 저장하기 위한 저장소입니다.<br>
+     * 스케줄러를 담당하는 클래스에서도 사용하기 때문에 static으로 선언되었습니다.
+     */
     private static final ConcurrentHashMap<String, String> userSessionsCreateDt = new ConcurrentHashMap<>();
 
     public static final String ePw = createKey();
@@ -39,10 +43,14 @@ public class UserServiceImpl implements UserService {
         return userMapper.loginChk(userId, userPw);
     }
 
-    // 로그인 후 유저의 아이디를 받아서 UUID를 생성해 Map에 저장한다.
-    // 저장후 생성된 UUID값을 반환환다.
-    // 최종 작성일 : 2023-02-03
-    // 마지막 작성자 : 김준영
+    /**
+     * 로그인 후 유저의 아이디를 세션(저장소)에 저장합니다.
+     *
+     * @author 김준영
+     * @param id 유저 아이디
+     * @return 성공적으로 작업이 수행된 경우 새로 생성된 UUID값을 반환합니다.
+     * @apiNote 최종 수정일 2023-02-03
+     */
     @Override
     public String saveSessionUserId(String id) throws Exception {
         String uniqueId = createUserUUID();
@@ -51,10 +59,14 @@ public class UserServiceImpl implements UserService {
         return uniqueId;
     }
 
-    // 로그인 후 자동로그인 옵션을 사용한다면 메모리에 로그인 처리 후 DB에 토큰 키를 저장합니다.
-    // 성공시 역순으로 변환된 UUID가 반환, 실패시 null이 반환됩니다.
-    // 최종 작성일 : 2023-02-03
-    // 마지막 작성자 : 김준영
+    /**
+     * 자동 로그인 후 처리되는 함수이며, UUID를 신규 생성후 DB에도 저장합니다.
+     *
+     * @author 김준영
+     * @param id 자동 로그인을 요청한 유저 아이디
+     * @return 성공적으로 작업이 수행된 경우 역으로 변환 된 UUID을 반환, 실패시 null를 반환합니다.
+     * @apiNote 최종 수정일 2023-02-03
+     */
     @Override
     public String saveDbSessionUserId(String id) throws Exception {
         String uniqueId = saveSessionUserId(id);
@@ -65,11 +77,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    // 등록된 저장소에서 UUID를 삭제합니다.
-    // 로그아웃 후 진행되는 함수입니다.
-    // 삭제 성공시 true, 실패시 false가 반환됩니다.
-    // 최종 작성일 : 2023-02-03
-    // 마지막 작성자 : 김준영
+    /**
+     * 로그아웃 후 저장소에 저장된 UUID값을 키값으로 가지는 값을 삭제합니다.
+     *
+     * @author 김준영
+     * @param uniqueId 로그인했다고 식별하기위한 UUID
+     * @return 성공적으로 작업이 수행된 경우 true, 실패시 false를 반환합니다.
+     * @apiNote 최종 수정일 2023-02-03
+     */
     @Override
     public boolean removeUserUUID(String uniqueId) throws Exception {
         userSessions.remove(uniqueId);
@@ -77,19 +92,27 @@ public class UserServiceImpl implements UserService {
         return isUserUUID(uniqueId) == null ? true : false;
     }
 
-    // 클라이언트에서 로그인을 시도한 후 해당 UUID가 생성된 시간을 저장합니다.
-    // 성공시 ture, 실패시 False가 반환됩니다.
-    // 최종 작성일 : 2023-02-03
-    // 마지막 작성자 : 김준영
+    /**
+     * 클라이언트에서 로그인을 시도한 후 해당 UUID가 생성된 시간을 저장합니다.
+     *
+     * @author 김준영
+     * @param uniqueId 로그인했다고 식별하기위한 UUID
+     * @return 성공적으로 작업이 수행된 경우 true, 실패시 false를 반환합니다.
+     * @apiNote 최종 수정일 2023-02-03
+     */
     private boolean saveTimeUserUUID(String uniqueId) throws Exception {
         userSessionsCreateDt.put(uniqueId, LocalDateTime.now().toString());
         return userSessionsCreateDt.getOrDefault(uniqueId, null) != null ? true : false;
     }
 
-    // 클라이언트에서 요청이 들어오면 해당 UUID값의 저장된 시간을 갱신시킵니다.
-    // 성공시 true, 실패시 false가 반환됩니다.
-    // 최종 작성일 : 2023-02-03
-    // 마지막 작성자 : 김준영
+    /**
+     * 클라이언트에서 요청이 들어오면 해당 UUID값의 저장된 시간을 갱신시킵니다.
+     *
+     * @author 김준영
+     * @param uniqueId 로그인했다고 식별하기위한 UUID
+     * @return 성공적으로 작업이 수행된 경우 true, 실패시 false를 반환합니다.
+     * @apiNote 최종 수정일 2023-02-03
+     */
     private boolean refreshTimeUserUUID(String uniqueId) throws Exception {
         String prevDate = userSessionsCreateDt.getOrDefault(uniqueId, null);
         userSessionsCreateDt.put(uniqueId, LocalDateTime.now().toString());
@@ -99,12 +122,17 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
-    
-    // 저장되어있는 UUID의 마지막 사용시간을 확인하고 만료가 되었다면 만료된 값들을 반환합니다.
-    // 매개변수로 만료기준을 판단하기위한 기준시간을 받습니다.
-    // List에 만료된 UUID 값들이 저장되어서 반환됩니다.
-    // 최종 작성일 : 2023-02-03
-    // 마지막 작성자 : 김준영
+
+    /**
+     * 세션에 저장된 UUID가 만료되었는지 확인합니다.
+     * 만료기준은 스케줄러를 사용하는 클래스를 참고하세요.<br>
+     * 클래스 이름 : UserScheduler
+     *
+     * @author 김준영
+     * @param standardMinuteTime 만료기준(분)
+     * @return 성공적으로 작업이 수행된 경우 만료가 된 UUID 목록을 반환, 실패시 null를 반환합니다.
+     * @apiNote 최종 수정일 2023-02-03
+     */
     @Override
     public List<String> checkTimeUserUUID(int standardMinuteTime) throws Exception {
         if (userSessionsCreateDt.size() == 0) { // 저장되어있는 값이 하나도 없는경우 null 반환
@@ -123,10 +151,15 @@ public class UserServiceImpl implements UserService {
         return deleteList;
     }
 
-    // DB에 저장되어있는 UUID중 만료된 값들을 저장하여 List 형태로 반환합니다.
-    // 매개변수로 만료기준 날짜를 받습니다.
-    // 최종 작성일 : 2023-02-04
-    // 마지막 작성자 : 김준영
+    /**
+     * DB에 저장되어있는 UUID 값중 만료된 값들을 조회합니다.
+     * 스케줄러에서 사용하며 만료된 값들을 삭제하기위해 실행됩니다.
+     *
+     * @author 김준영
+     * @param standardDay 만료기준(일)
+     * @return 성공적으로 작업이 수행된 경우 만료된 UUID 목록, 실패 또는 값이 없는경우 null를 반환합니다.
+     * @apiNote 최종 수정일 2023-02-04
+     */
     @Override
     public List<String> checkDbTimeUserUUID(int standardDay) throws Exception {
         LocalDateTime standardDateTime = LocalDateTime.now();
@@ -134,10 +167,14 @@ public class UserServiceImpl implements UserService {
         return userMapper.searchUUIDExpire(standardDateTime.toString());
     }
 
-    // 이 함수는 재귀적으로 동작합니다.
-    // UUID를 생성해서 저장소에 있는지 확인하고 사용할수 있으면 값을 반환 사용할수 없다면 자신을 재호출한다.
-    // 최종 작성일 : 2023-02-03
-    // 마지막 작성자 : 김준영
+    /**
+     * <b>이 함수는 재귀적으로 동작합니다.</b><br>
+     * UUID를 생성해서 저장소에 있는지 확인하고 사용할수 있으면 값을 반환 사용할수 없다면 자신을 재호출합니다.
+     *
+     * @author 김준영
+     * @return 성공적으로 작업이 수행된 경우 신규 UUID값, 실패시 자신을 재호출합니다.
+     * @apiNote 최종 수정일 2023-02-03
+     */
     private String createUserUUID() throws Exception {
         String tempId = UUID.randomUUID().toString();
         if (isUserUUID(tempId) == null && isDbUserUUID(tempId) == null) {
@@ -147,10 +184,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    // 유저의 UUID를 기준으로 현재 로그인 되어있는지 확인하고 되어있으면 저장시간 갱신 및 아이디를 반환한다.
-    // 없는경우 null이 반환된다.
-    // 최종 작성일 : 2023-02-03
-    // 마지막 작성자 : 김준영
+    /**
+     * UUID를 기반으로 저장소에 아이디가 있는지 확인합니다.
+     *
+     * @author 김준영
+     * @param uniqueId 로그인했다고 식별하기위한 UUID
+     * @return 성공적으로 작업이 수행된 경우 해당 유저 아이디, 실패시 null를 반환합니다.
+     * @apiNote 최종 수정일 2023-02-03
+     */
     @Override
     public String isUserUUID(String uniqueId) throws Exception {
         String userId = userSessions.getOrDefault(uniqueId, null);
@@ -160,28 +201,40 @@ public class UserServiceImpl implements UserService {
         return userId;
     }
 
-    // 새로 생성된 UUID가 DB에 저장되어있는지 확인합니다.
-    // DB에 저장할때 중복체크 용도입니다.
-    // 없는경우 null이 반환됩니다.
-    // 최종 작성일 : 2023-02-03
-    // 마지막 작성자 : 김준영
+    /**
+     * 새로 생성된 UUID가 DB에 저장되어있는지 확인합니다.
+     *
+     * @author 김준영
+     * @param uniqueId 로그인했다고 식별하기위한 UUID
+     * @return 성공적으로 작업이 수행된 경우 해당 UUID, 일치하는 값이 없는경우 null를 반환합니다.
+     * @apiNote 최종 수정일 2023-02-03
+     */
     private String isDbUserUUID(String uniqueId) throws Exception {
         return userMapper.isDbUserUUID(uniqueId);
     }
 
-    // UUID를 받아서 DB에서 이 UUID를 사용하는 유저 아이디를 반환합니다.
-    // 없는경우 null이 반환됩니다.
-    // 최종 작성일 : 2023-02-03
-    // 마지막 작성자 : 김준영
+    /**
+     * DB에서 매개변수로 전달받은 UUID를 사용하는 유저의 아이디를 반환합니다.
+     *
+     * @author 김준영
+     * @param uniqueId 역으로 변환된 UUID
+     * @return 성공적으로 작업이 수행된 경우 해당 UUID를 사용하는 유저 아이디를 반환, 실패시 null를 반환합니다.
+     * @apiNote 최종 수정일 2023-02-03
+     */
     @Override
     public String isDbUserId(String uniqueId) throws Exception {
         return userMapper.isAutoUserId((new StringBuffer(uniqueId)).reverse().toString());
     }
 
-    // 새로 생성한 UUID를 DB에 저장합니다.
-    // 성공시 true, 실패시 false가 반환됩니다.
-    // 최종 작성일 : 2023-02-03
-    // 마지막 작성자 : 김준영
+    /**
+     * 새로 생성한 UUID를 DB에 저장합니다.
+     *
+     * @author 김준영
+     * @param uniqueId 로그인했다고 식별하기위한 UUID
+     * @param userId 유저 아이디
+     * @return 성공적으로 작업이 수행된 경우 true, 실패시 false를 반환합니다.
+     * @apiNote 최종 수정일 2023-02-03
+     */
     private boolean createDbUserUUID(String uniqueId, String userId) throws Exception {
         AutoLoginDto autoLoginDto = new AutoLoginDto();
         autoLoginDto.setUserId(userId);
@@ -190,11 +243,15 @@ public class UserServiceImpl implements UserService {
         return userMapper.isDbUserUUID(uniqueId) != null ? true : false;
     }
 
-    // UUID를 받아서 DB와 일치하는 값이 있으면 제거합니다.
-    // 반드시 역으로 변환된 UUID를 받아야 정상적으로 작동합니다!
-    // 성공시 true, 실패시 false가 반환됩니다.
-    // 최종 작성일 : 2023-02-03
-    // 마지막 작성자 : 김준영
+    /**
+     * DB에 저장되어있는 UUID를 삭제합니다.
+     * 로그아웃 진행 후 동작합니다.
+     *
+     * @author 김준영
+     * @param uniqueId 역으로 변환된 UUID
+     * @return 성공적으로 작업이 수행된 경우 true, 실패시 false를 반환합니다.
+     * @apiNote 최종 수정일 2023-02-03
+     */
     @Override
     public boolean deleteDbUserUUID(String uniqueId) throws Exception {
         userMapper.deleteDbUserUUID((new StringBuffer(uniqueId).reverse().toString()));
