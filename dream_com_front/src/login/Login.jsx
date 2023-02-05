@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import "../fonts/fontStyle.css"
 import "./Login.css"
-import {Link} from "react-router-dom";
+import {Link, useLocation, useSearchParams} from "react-router-dom";
 import ClickPrevent from "../common/ClickPrevent";
 import Loading from "../common/Loading";
 
@@ -44,17 +44,18 @@ const loginFooter = {
 }
 
 function Login(){
-
     const [userId,setUserId] = useState("");
     const [userPw,setUserPw] = useState("");
     const [isLoad, setIsLoad] = useState(false); // 로딩창
+    const [isAutoLogin, setIsAutoLogin] = useState(false); // 자동 로그인
+    const [prevUrl, setPrevUrl] = useSearchParams();
 
-    // 로그인 성공후 목적지 링크로 이동한다.
+    // 로그인 성공후 이전 링크로 이동한다.
     const moveDestination = () => {
         const link = document.querySelector("#link-hidden-user-login");
         link.click();
     }
-    
+
     const handleInputId = (e) => {
         setUserId(e.target.value);
     }
@@ -63,13 +64,37 @@ function Login(){
         setUserPw(e.target.value)
     }
 
+    // 로그인 처리 프로세스
+    // 로그인 후 성공하면 저장된 UUID를 이용해서 서버에게 유저 아이디를 내려받는다.
+    // 최종적으로 로그인 이전 페이지로 이동한다.
+    const DataReceive = () => {
+        setIsLoad(true);
+        LoginChk().then(result => {
+            if (result == true) {
+                getUserId().then(getResult => {
+                    setIsLoad(false);
+                    if (getResult == true) {
+                        moveDestination();
+                    }
+                }).catch(err => {
+                    setIsLoad(false);
+                })
+            } else {
+                setIsLoad(false);
+            }
+        }).catch(err => {
+            setIsLoad(false);
+        })
+    }
+
+    // 로그인 진행
     const LoginChk = async () => {
         let flag = false;
-        await setIsLoad(true);
         await axios.post('http://localhost:8080/loginChk',null,{
             params:{
                 userId:userId,
-                userPw:userPw
+                userPw:userPw,
+                isAutoLogin : isAutoLogin
             }})
             .then((req) => {
                 const {data} = req;
@@ -77,7 +102,13 @@ function Login(){
                     alert(`아이디 & 비밀번호를 확인해주세요.`);
                 }
                 else {
-                    alert(`${data.userId}님 반갑습니다.`);
+                    if (isAutoLogin == false) { // 자동 로그인을 사용하지 않았다면
+                        sessionStorage.setItem("loginUUID", data);
+                        localStorage.removeItem("autoLoginUUID");
+                    } else { // 자동 로그인을 사용했다면
+                        localStorage.setItem("autoLoginUUID", data);
+                        sessionStorage.removeItem("loginUUID");
+                    }
                     flag = true;
                 }
             })
@@ -87,6 +118,25 @@ function Login(){
             });
         return flag;
     }
+
+    // 로그인 후 유저아이디 취득
+    const getUserId = async () => {
+        let flag = false;
+        await axios.post("http://localhost:8080/loginUserId", null,
+            {params : {userUUID : sessionStorage.getItem("loginUUID"),
+                    autoUserUUID : localStorage.getItem("autoLoginUUID")}})
+            .then(response => {
+                alert(`${response.data}님 반갑습니다.`);
+                flag = true;
+            })
+            .catch(err => {
+                console.log(`에러메세지 : ${err}`);
+                console.log("로그인 한 유저정보 취득에 실패했습니다.");
+                flag = false;
+            });
+        return flag;
+    }
+
 
     return (
         <div>
@@ -110,20 +160,16 @@ function Login(){
                         </div>
                         {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 2*/}
                         <div>
-                            <button style={loginBtn} onClick={() => {LoginChk().then((result) => {
-                                setIsLoad(false);
-                                if (result == true) {
-                                    moveDestination();
-                                }
-                            })}} className={"nanumSquareR-font-normal border-0 mt-3"}>로그인</button>
-                            <Link id={"link-hidden-user-login"} to={"/"}><button hidden={true}/></Link>
+                            <button style={loginBtn} onClick={DataReceive} className={"nanumSquareR-font-normal border-0 mt-3"}>로그인</button>
+                            <Link id={"link-hidden-user-login"} to={`${prevUrl.get("prev")}`}><button hidden={true}/></Link>
                         </div>
                         <div>
                             {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 1*/}
                             <div className={"d-flex justify-content-between mb-5"}>
                                 <div>
-                                    <input className={"form-check-input ms-1 me-1"} style={{marginTop:"5px"}} type={"checkbox"} />
-                                    <label className={"ms-1 nanumSquareR-font-small"} style={fontSize}>자동로그인</label>
+                                    <input className={"form-check-input ms-1 me-1"} style={{marginTop:"5px"}}
+                                            checked={isAutoLogin} onChange={() => {setIsAutoLogin(!isAutoLogin)}} type={"checkbox"} />
+                                    <label onClick={() => {setIsAutoLogin(!isAutoLogin)}} className={"ms-1 nanumSquareR-font-small"} style={fontSize}>자동로그인</label>
                                 </div>
                                 <div>
                                     <Link to={"/findId"} className={"text-decoration-none text-dark nanumSquareR-font-small"} style={fontSize}>아이디 찾기</Link>

@@ -25,7 +25,7 @@ function DreamComRouter() {
                 <Route path={"/"} element={<MainPageApp />}></Route>
                 <Route path={`/search?`} element={<SearchPageApp />}></Route>
                 <Route path={"/detail?"} element={<DetailApp />} />
-                <Route path={"/error"} element={<ErrorPageApp />} />
+                <Route path={"/error?"} element={<ErrorPageApp />} />
                 {/*purchaseApp 컴포넌트에 상세페이지에서 구매버튼 누른 제품 정보 / 로그인 된 아이디 전송*/}
                 {/*url : ?productNum= ~ & quantity= ~ */}
                 <Route path={"/purchase?"} element={<PurchaseApp loginId={"testUser1"} />}></Route>
@@ -33,11 +33,12 @@ function DreamComRouter() {
                 <Route path={"/signinfomation"} element={<SignInfomation />}></Route>
                 <Route path={"/signClear"} element={<SignClear />}></Route>
                 <Route path={"/emailchk"} element={<EmailTest />}></Route>
-                <Route path={"/login"} element={<Login />}></Route>
+                <Route path={"/login?"} element={<Login />}></Route>
                 <Route path={"/findId"} element={<FindId />}></Route>
                 <Route path={"/findPw"} element={<FindPw />}></Route>
                 <Route path={"/idchk"} element={<LoginChk />}></Route>
                 <Route path={"review"} element={<ModalFrameTest />}></Route>
+                <Route path={"*"} element={<ErrorPageApp />}></Route>
             </Routes>
         </BrowserRouter>
     )
