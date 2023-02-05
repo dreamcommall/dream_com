@@ -201,6 +201,44 @@ public class UserServiceImpl implements UserService {
         return userMapper.isDbUserUUID(uniqueId) == null ? true : false;
     }
 
+    /**
+     * DB에 저장된 UUID중 매개변수로 전달받은 id를 가지는 UUID를 반환합니다.
+     *
+     * @author  김준영
+     * @param id 유저 아이디
+     * @return 해당 유저아이디를 가지는 UUID, 없는경우 null이 반환
+     * @apiNote 최종 수정일 2023-02-05
+     */
+    @Override
+    public String searchDbUUID(String id) throws Exception {
+        return userMapper.searchDbUserUUID(id);
+    }
+
+    /**
+     * 자동 로그인시 사용되는 함수이며, 전달받은 UUID와 ID값을 세션에 등록합니다.
+     *
+     * @author  김준영
+     * @param uniqueId 자동 로그인을 식별하는 UUID
+     * @param userId 자동 로그인을 하는 유저 아이디
+     * @return 성공시 true, 실패시 false를 반환
+     * @apiNote 최종 수정일 2023-02-05
+     */
+    @Override
+    public boolean registerSessionAutoLoginUser(String uniqueId, String userId) throws Exception {
+        boolean isSaveUserSessions = false;
+        boolean isSaveCreateDt = false;
+        userSessions.put(uniqueId, userId);
+        if (userSessions.getOrDefault(uniqueId, null) != null) {
+            isSaveUserSessions = true;
+            isSaveCreateDt = saveTimeUserUUID(uniqueId);
+        }
+        if (isSaveUserSessions == true && isSaveCreateDt == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public void updateProfile(UserDto userDto) throws Exception {
         userMapper.updateProfile(userDto);

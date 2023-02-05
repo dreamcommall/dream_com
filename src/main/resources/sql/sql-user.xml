@@ -92,4 +92,11 @@
             select token_key from auto_login_key where create_time <= #{time}
         ]]>
     </select>
+
+<!--    파라미터로 받은 유저 아이디를 가지는 UUID를 반환합니다.-->
+<!--    최종 수정일 : 2023-02-05-->
+<!--    최종 작성자 : 김준영-->
+    <select id="searchDbUserUUID" parameterType="String" resultType="String">
+        select token_key from auto_login_key where user_id = #{id}
+    </select>
 </mapper>

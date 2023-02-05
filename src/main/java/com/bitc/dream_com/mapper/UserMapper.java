@@ -38,4 +38,14 @@ public interface UserMapper {
     // DB에 저장된 UUID중 만료된 UUID를 반환합니다.
     // 매개변수로 만료기준 날짜를 입력받습니다.
     List<String> searchUUIDExpire(String time) throws Exception;
+
+    /**
+     * DB에 저장된 UUID중 매개변수로 전달받은 id를 가지는 UUID를 반환합니다.
+     *
+     * @author  김준영
+     * @param id 유저 아이디
+     * @return 해당 유저아이디를 가지는 UUID, 없는경우 null이 반환
+     * @apiNote 최종 수정일 2023-02-05
+     */
+    String searchDbUserUUID(String id) throws Exception;
 }

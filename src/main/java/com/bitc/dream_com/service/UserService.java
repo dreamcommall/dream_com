@@ -45,5 +45,26 @@ public interface UserService {
     boolean deleteDbUserUUID(String uniqueId) throws Exception;
 
     // DB에 저장되어있는 UUID 값중 만료된 값들을 조회합니다.
-    public List<String> checkDbTimeUserUUID(int standardDay) throws Exception;
+    List<String> checkDbTimeUserUUID(int standardDay) throws Exception;
+
+    /**
+     * DB에 저장된 UUID중 매개변수로 전달받은 id를 가지는 UUID를 반환합니다.
+     *
+     * @author  김준영
+     * @param id 유저 아이디
+     * @return 해당 유저아이디를 가지는 UUID, 없는경우 null이 반환
+     * @apiNote 최종 수정일 2023-02-05
+     */
+    String searchDbUUID(String id) throws Exception;
+
+    /**
+     * 자동 로그인시 사용되는 함수이며, 전달받은 UUID와 ID값을 세션에 등록합니다.
+     *
+     * @author  김준영
+     * @param uniqueId 자동 로그인을 식별하는 UUID
+     * @param userId 자동 로그인을 하는 유저 아이디
+     * @return 성공시 true, 실패시 false를 반환
+     * @apiNote 최종 수정일 2023-02-05
+     */
+    boolean registerSessionAutoLoginUser(String uniqueId, String userId) throws Exception;
 }

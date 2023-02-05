@@ -63,17 +63,27 @@ public class UserController {
         }
         return userService.isUserUUID(targetId);
     }
-    
-    // 메인화면에 접속하면 자동 로그인을 하기위한 UUID값이 있는경우 자동 로그인을 진행합니다.
-    // 반환값으로 해당 UUID를 사용하는 아이디값이 반환됩니다. 없는 경우 null이 반환됩니다.
-    // 최종 수정일 : 2023.02.03
-    // 최종 작성자 : 김준영
+
+    /**
+     * 프론트에서 메인화면에 접속했을때 자동 로그인을 위한 UUID값이 존재한다면 자동 로그인을 실행합니다.
+     *
+     * @author 김준영
+     * @param autoUserUUID 자동 로그인을 하기위한 유저의 UUID
+     * @return 성공적으로 작업이 수행됬다면 success, 실패했다면 fail을 반환합니다.
+     * @apiNote 최종 수정일 2023-02-05
+     */
     @RequestMapping(value = "/autoLogin", method = RequestMethod.POST)
     public String runAutoLogin(@RequestParam(value = "autoUserUUID", required = false) String autoUserUUID) throws Exception {
         if (autoUserUUID != null) {
-            return userService.isDbUserId(autoUserUUID);
+            String targetId = userService.isDbUserId(autoUserUUID);
+            String targetUUID = userService.searchDbUUID(targetId);
+            if (userService.registerSessionAutoLoginUser(targetUUID, targetId)) {
+                return "success";
+            } else {
+                return "fail";
+            }
         } else {
-            return null;
+            return "fail";
         }
     }
 
