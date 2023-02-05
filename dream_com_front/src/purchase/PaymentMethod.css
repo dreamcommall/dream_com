@@ -6,25 +6,19 @@
     border-right: 1px solid lightgray;
 }
 
-.span-paymentMethodBox1 {
-    padding: 5px;
-    border-radius: 5px;
-    height: 83px;
-    width: 120px;
-    margin-left: 108px;
-    margin-right: 217px;
-}
-
-.span-paymentMethodBox2 {
-    padding: 5px;
+.span-paymentMethodBoxOff {
+    padding: 10px 5px 5px;
+    border: 2px solid white;
     border-radius: 5px;
     height: 83px;
     width: 120px;
 }
 
-.span-paymentMethodBox3 {
-    padding-top: 25px;
+.span-paymentMethodBoxOn {
+    padding: 10px 5px 5px;
+    border: 2px solid lightgrey;
     border-radius: 5px;
     height: 83px;
     width: 120px;
 }
+

@@ -18,7 +18,7 @@ public class ProductScheduler {
 //    최근 클릭 수 3시간마다 업데이트 스케줄러
 //    최종 수정일 2023-01-17
 //    최종 작성자 : 양민호
-    @Scheduled(cron = "0 0/5 * * * *")
+    @Scheduled(cron = "0 0 0/3 * * *")
     public void test() throws Exception {
 //        클릭 수 높은 10개 가져오기
         List<ProductDto> products = productService.getTopClickedProduct();

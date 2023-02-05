@@ -36,13 +36,15 @@ function PurchaseApp({loginId}) {
     let parameterQuantity = parseInt(param.get("quantity"));
     let parameterLength = param.toString().length;
 
+    // 주문상품 선택 버튼 클릭 시 변경될 state
+    const [checkClick, setCheckClick] = useState(false);
+
 
 
     // 영수증 정보
-    let etc_quantity = 0;
-    let totalPrice = 0;
-    let totalDiscount = 0;
-    let totalDeliveryPrice = 0;
+    const [receiptPrice, setReceiptPrice] = useState(0);
+    const [receiptDiscount, setReceiptDiscount] = useState(0);
+    const [receiptDeliveryPrice, setReceiptDeliveryPrice] = useState(0);
 
     useEffect(() => {
         setQuantity(parameterQuantity);
@@ -68,42 +70,64 @@ function PurchaseApp({loginId}) {
         }
     }, []);
 
-
-
-    // 제품 주문금액 합계 / 할인금액 합계 계산
-
-    purchaseProductList.forEach(item => {
-        const price = item.productPrice * item.inventoryQuantity;
-        totalPrice += price;
-
-        const discount =  item.productPrice * (item.productDiscount / 100) * item.inventoryQuantity;
-        totalDiscount += discount;
-
+    // 상품 체크박스 선택 했을 경우 영수증 정보 업데이트
+    useEffect(() => {
+        let price = 0;
+        let discount = 0;
         let deliveryPrice = 0;
-        if(price == 0) {
-            deliveryPrice = 0
-        } else if(price < 100000) {
-            deliveryPrice = 5000;
-        } else if(price < 300000) {
-            deliveryPrice = 3000;
-        } else {
-            deliveryPrice = 0;
+        const checkBoxList = document.getElementsByClassName("input-selectPurchaseProduct");
+        for(let i = 0; i < checkBoxList.length; i++) {
+            purchaseProductList.map(item => {
+                if(checkBoxList[i].checked && item.productName == checkBoxList[i].value) {
+                    const result = calReceipt(item.productPrice, item.productDiscount, item.inventoryQuantity)
+                    price += result[0];
+                    discount += result[1];
+                    deliveryPrice += result[2];
+                }
+            })
         }
-        totalDeliveryPrice += deliveryPrice;
-    })
+        setReceiptPrice(price);
+        setReceiptDeliveryPrice(deliveryPrice);
+        setReceiptDiscount(discount);
+    }, [checkClick])
+
+    // 영수증 정보 계산
+    const calReceipt = (price, discount, stock) => {
+        if(stock != -1) {
+            const calPrice = price * stock;
+            const calDisc = price * (discount / 100) * stock;
+            let calDelP = 0;
+            if(price == 0) {
+                calDelP = 0
+            } else if(price < 100000) {
+                calDelP = 5000;
+            } else if(price < 300000) {
+                calDelP = 3000;
+            } else {
+                calDelP = 0;
+            }
+            return [calPrice, calDisc, calDelP];
+        }
+        return [0, 0, 0];
+    }
 
     // 영수증 정보 저장
-    const receipt = {price: totalPrice, discount: totalDiscount, deliveryPrice: totalDeliveryPrice};
+    const receipt = {price: receiptPrice, discount: receiptDiscount, deliveryPrice: receiptDeliveryPrice};
+
+
 
     const purchaseData = async (productNum) => {
-
         // 상세페이지에서 구매버튼누른 제품 데이터 + 장바구니에 있는 제품 데이터 임시 저장
         let tempPurchaseProductList = [];
-        let tempPurchaseProductNum = 0;
         // 배송지 정보 임시 저장
         let tempAddressList = [];
         // 유저 정보 임시 저장
         let tempUserInfo = {};
+
+        // 영수증에 들어갈 정보
+        let tempPrice = 0;
+        let tempDiscount = 0;
+        let tempDeliveryPrice = 0;
 
         if(!isNaN(productNum)) {
             // 구매버튼 누른 제품 데이터 받아오기
@@ -112,7 +136,13 @@ function PurchaseApp({loginId}) {
                     if(req.data == "") {
                         setIsCorrectPage(false);
                     } else {
-                        tempPurchaseProductList.push(req.data[0]);
+                        const data = req.data[0];
+                        data.inventoryQuantity = parameterQuantity;
+                        tempPurchaseProductList.push(data);
+                        const tempReceipt = calReceipt(data.productPrice, data.productDiscount, data.inventoryQuantity);
+                        tempPrice = tempReceipt[0];
+                        tempDiscount = tempReceipt[1];
+                        tempDeliveryPrice = tempReceipt[2];
                     }
                 })
                 .catch(err => {
@@ -129,6 +159,10 @@ function PurchaseApp({loginId}) {
                     req.data.forEach((item) => {
                         if(item.productNum != parameterProductNum) {
                             tempPurchaseProductList.push(item);
+                            const tempReceipt =  calReceipt(item.productPrice, item.productDiscount, item.inventoryQuantity);
+                            tempPrice += tempReceipt[0];
+                            tempDiscount += tempReceipt[1];
+                            tempDeliveryPrice += tempReceipt[2];
                         }
                     });
                 })
@@ -165,6 +199,9 @@ function PurchaseApp({loginId}) {
         }
         // 구매목록 + 장바구니 목록 리스트 저장
         setPurchaseProductList(tempPurchaseProductList);
+        setReceiptPrice(tempPrice);
+        setReceiptDiscount(tempDiscount);
+        setReceiptDeliveryPrice(tempDeliveryPrice);
     }
 
 
@@ -180,8 +217,8 @@ function PurchaseApp({loginId}) {
             {/*<NavigationBar />*/}
             <div className={"mt-3 mb-5"}>
                 <Loading loadStatus={isLoad}/>
-                <PurchaseHead purchaseProductList={purchaseProductList} quantity={quantity}/>
-                <Receipt receipt={receipt} method={method} userInfo={userInfo} />
+                <PurchaseHead purchaseProductList={purchaseProductList} quantity={quantity} setting={setCheckClick} value={checkClick} />
+                <Receipt receipt={receipt} method={method} userInfo={userInfo} purchaseProductList={purchaseProductList} />
                 <DeliveryAddress addressList={addressList} userInfo={userInfo} />
                 <PaymentMethod setMethod={setMethod} />
             </div>
