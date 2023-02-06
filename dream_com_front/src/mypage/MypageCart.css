@@ -1,17 +1,24 @@
-
 #Quantity{
     padding-top: 55px;
 }
 
-#Quantity input{
-    width: 30px;
-    padding-left: 7px;
-    border: 1px solid #f7f9fa;
+.cartList img{
+    display: flex;
+    position: absolute;
+    width: 100px;
+    height: 120px;
+    margin-left: 0;
 }
 
 #Quantity button{
     width: 30px;
     border: 1px solid #f7f9fa;
+}
+
+.productQuantity{
+    width: 30px;
+    border: 1px solid #f7f9fa;
+    font-size: 15px;
 }
 
 .title{
@@ -53,7 +60,7 @@
 }
 
 .productTitle{
-    font-size: 19px;
+    font-size: 18px;
     text-decoration: none;
     color: black;
 }
@@ -92,3 +99,7 @@
 .tableCart:hover{
     background: #f7f9fa;
 }
+
+
+
+

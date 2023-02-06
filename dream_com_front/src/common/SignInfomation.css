@@ -17,9 +17,6 @@
     margin: 0;
     align-items: center;
 }
-.col-1{
-width: 3%;
-}
 
 .div-SignUpInformationUserId {
     display: flex;

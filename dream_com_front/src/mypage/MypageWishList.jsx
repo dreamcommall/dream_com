@@ -10,7 +10,7 @@ function MypageWishList(){
                     <tr className={"tableWishList"}>
                         <div className={"ms-1 nanumSquareR-font-normal wishListSection"}>
                             <input className={"float-start wishCheck"} type={"checkbox"} />
-                            <a href={"#"}><img id={"wishImg"} src={"images/logo192.png"} /></a>
+                            <a className={"wishImg"} href={"#"}><img src={"images/logo192.png"} /></a>
                             <div className={"wishListProductInfo"}>
                                 <div className={"mt-2 productDate"}>2023.01.31</div>
                                 <div className={"mt-2"}>

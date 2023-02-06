@@ -15,6 +15,8 @@ import ErrorPageApp from "./common/ErrorPage/ErrorPageApp";
 import ModalFrameTest from "./reviewModal/ModalFrameTest";
 import SignInfomation from "./common/SignInfomation";
 import BuyProductList from "./mypage/BuyProductList";
+import MypageCart from "./mypage/MypageCart";
+import MypageWishList from "./mypage/MypageWishList";
 
 // 작성자 : MoonNight285
 // 라우터 관리 컴포넌트
@@ -44,6 +46,8 @@ function DreamComRouter() {
                 <Route path={"/error"} element={<ErrorPageApp />} />
                 <Route path={"/purchase"} element={<PurchaseApp />}></Route>
                 <Route path={"/mypage"} element={<BuyProductList />}></Route>
+                <Route path={"/mypageCart"} element={<MypageCart />}></Route>
+                <Route path={"/mypageWishList"} element={<MypageWishList />}></Route>
             </Routes>
         </BrowserRouter>
     )
