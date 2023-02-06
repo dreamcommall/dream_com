@@ -106,7 +106,7 @@ function DetailApp() {
     // URL 주소 변경되면 URL 파라미터에 있는 상품번호와 리뷰 페이지 번호 파싱
     useEffect(() => {
         setProductNum(Number.parseInt(searchParams.get("productNum")));
-        setReviewPageNum(Number.parseInt(searchParams.get("pageNum")));
+        searchParams.get("pageNum") == null ? setReviewPageNum(1) : setReviewPageNum(Number.parseInt(searchParams.get("pageNum")));
     }, [searchParams]);
     
     // 제품번호, 리뷰 페이지 번호가 변경되면 데이터 재로딩
@@ -114,7 +114,10 @@ function DetailApp() {
         if (productNum == 0) {
             return;
         }
-        dataReceive().then(() => {setIsLoad(false);});
+        dataReceive().then(() => {
+            setIsLoad(false);
+            window.scrollTo(0, 0);
+        });
     }, [productNum, reviewPageNum]);
     
     return (

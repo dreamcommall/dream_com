@@ -55,6 +55,7 @@ function DetailBodyProductReviewSummary({productInfo, reviewRate}) {
     
     // 점수가 변동되면 별 개수 생성
     useEffect(() => {
+        setStars([]);
         createStars();
         createRemindStars();
     }, [score]);
