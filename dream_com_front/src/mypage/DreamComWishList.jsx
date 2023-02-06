@@ -1,21 +1,20 @@
 import React from "react";
 import HeaderD from "../common/HeaderD";
 import NavigationBar from "../common/NavigationBar";
-import BuyProductList from "./BuyProductList";
-import Footer from "../common/Footer";
 import MyPageNav from "./MyPageNav";
+import Footer from "../common/Footer";
+import MypageWishList from "./MypageWishList";
 
-function Mypage(){
-
+function DreamComWishList(){
     return(
         <div>
             <HeaderD />
             <NavigationBar />
             <MyPageNav />
-            <BuyProductList />
+            <MypageWishList />
             <Footer />
         </div>
     )
 }
 
-export default Mypage;
+export default DreamComWishList;

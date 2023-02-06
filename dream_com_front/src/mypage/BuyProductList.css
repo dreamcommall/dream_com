@@ -1,20 +1,16 @@
-#deliveryInformation li{
+.deliveryInformation li{
     font-size: 14px;
     color: gray;
 }
 
-#table{
-    list-style: none;
-}
-
-thead tr th{
+.buyProductListThead tr th{
     font-size: 16px;
     border: 1px solid gray;
     border-left: 0;
     border-right: 0;
 }
 
-tbody tr td{
+.buyProductListTbody tr td{
     border: none
 }
 
@@ -22,7 +18,7 @@ tbody tr td{
     background: #f7f9fa;
 }
 
-tbody img{
+.buyProductListTbody img{
     display: flex;
     position: absolute;
     width: 100px;
@@ -32,14 +28,10 @@ tbody img{
 
 .productInfo{
     display: block;
-    margin-left: 90px;
+    margin-left: 110px;
 }
 
-tbody td tr ul li div {
-    font-size: 10px;
-}
-
-tbody ul{
+.buyProductListTbody ul{
     list-style: none;
 }
 
@@ -51,7 +43,7 @@ tbody ul{
     font-weight: bold;
 }
 
-#listStyle{
+.listStylePrice{
     display: block;
     font-size: 16px;
     padding-top: 50px;
@@ -80,14 +72,14 @@ tbody ul{
 }
 
 .accordionButton{
-    width: 300px;
+    width: 100%;
     height: 30px;
     background: white;
     border: 1px solid #d3d3d3;
     font-size: 15px;
 }
 
-#accordionExample{
+.accordionExample{
     font-size: 15px;
 }
 
@@ -95,4 +87,8 @@ tbody ul{
     background: #e26e6e;
     color: white;
 }
-
+.productReview{
+    padding: 5px 5px;
+    overflow: auto;
+    height: 70px;
+}
