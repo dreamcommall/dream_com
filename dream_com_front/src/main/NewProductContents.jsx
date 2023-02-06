@@ -13,20 +13,20 @@ import {Link} from "react-router-dom";
 function NewProductContents({src, company, content, price, discountPercent, productNum}) {
     return (
         <div className={"div-new-product-contents"} title={content}>
-            <Link to={`/detail?productNum=${productNum}`}>
+            <Link to={`/detail?productNum=${productNum}&pageNum=1`}>
                 <img src={src} />
             </Link>
             <h6 title={company} className={"nanumSquareR-font-normal"}>{company}</h6>
             <p className={"mb-1 nanumSquareR-font-normal p-main-new-product-content"}>
-                <Link to={`/detail?productNum=${productNum}`}>{content}</Link>
+                <Link to={`/detail?productNum=${productNum}&pageNum=1`}>{content}</Link>
             </p>
             <div className={"d-flex justify-content-between me-1 div-new-product-price-info"}>
                 {
-                    discountPercent == 0 ? <p /> : <Link to={`/detail?productNum=${productNum}`}>
+                    discountPercent == 0 ? <p /> : <Link to={`/detail?productNum=${productNum}&pageNum=1`}>
                         <p className={"nanumSquareB-font-normal p-main-new-product-sale"}>{discountPercent}% 할인</p>
                     </Link>
                 }
-                <Link to={`/detail?productNum=${productNum}`}>
+                <Link to={`/detail?productNum=${productNum}&pageNum=1`}>
                     <p className={"nanumSquareR-font-normal p-main-new-product-price"}>{price - ((price / 100) * discountPercent)}원</p>
                 </Link>
             </div>
