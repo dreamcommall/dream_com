@@ -4,9 +4,10 @@ import "../../fonts/fontStyle.css"
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import {Link} from "react-router-dom";
 
 // 제품의 가격정보등을 보여주는 컴포넌트
-function DetailBodyProductSubInfo({productInfo}) {
+function DetailBodyProductSubInfo({productInfo, loginUserId}) {
     const [productNum, setProductNum] = useState(0); // 상품번호
     const [productDiscount, setProductDiscount] = useState(0); // 할인율
     const [productPrice, setProductPrice] = useState(0); // 가격
@@ -17,7 +18,36 @@ function DetailBodyProductSubInfo({productInfo}) {
     const [totalPrice, setTotalPrice] = useState(0); // 총 합계 금액
     const [quantity, setQuantity] = useState(0); // 제품의 재고 수량
     const [productCount, setProductCount] = useState(0); // 제품 개수 선택에 사용되는 값
-
+    
+    // 찜 목록 클릭시 저장
+    const addWishList = () => {
+        if (loginUserId == null) {
+            const linker = document.querySelector("#link-hidden-detail-product-login-linker");
+            linker.click();
+        }
+    }
+    
+    // 장바구니 클릭시 저장
+    const addShoppingCart = () => {
+        if (loginUserId == null) {
+            const linker = document.querySelector("#link-hidden-detail-product-login-linker");
+            linker.click();
+        }
+    }
+    
+    // 구매하기 클릭시 페이지 이동
+    const purchaseProduct = () => {
+        if (loginUserId == null) {
+            const linker = document.querySelector("#link-hidden-detail-product-login-linker");
+            linker.click();
+        } else if (productCount == 0) {
+            alert("제품 개수는 0일수 없습니다.");
+        } else {
+            const linker = document.querySelector("#link-hidden-detail-product-purchase-linker");
+            linker.click();
+        }
+    }
+    
     // 제품 개수 선택(증가)
     const plusProductCount = () => {
         if (productCount == quantity) {
@@ -106,9 +136,11 @@ function DetailBodyProductSubInfo({productInfo}) {
                 <p className={"nanumSquareB-font-large"}>총 합계 금액 <span id={"span-detail-product-price"}>{totalPrice}원</span></p>
             </div>
             <div id={"div-detail-product-purchase-option"}>
-                <div><img src={"images/heart.png"} /></div>
-                <div><img src={"images/shopping-cart.png"} /></div>
-                <div><p className={"mb-0 nanumSquareB-font-normal"}>구매하기</p></div>
+                <div onClick={addWishList}><img src={"images/heart.png"} /></div>
+                <div onClick={addShoppingCart}><img src={"images/shopping-cart.png"} /></div>
+                <div onClick={purchaseProduct}><p className={"mb-0 nanumSquareB-font-normal"}>구매하기</p></div>
+                <Link to={`/login?prev=/detail?productNum=${productNum}&pageNum=1`} id={"link-hidden-detail-product-login-linker"}><button hidden={true}/></Link>
+                <Link to={`/purchase?productNum=${productNum}&quantity=${productCount}`} id={"link-hidden-detail-product-purchase-linker"}><button hidden={true}/></Link>
             </div>
         </div>
     );
