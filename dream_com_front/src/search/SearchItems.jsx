@@ -9,7 +9,7 @@ function SearchItems({searchItemInfo}) {
                 searchItemInfo.length == 0 ? <div style={{height : 375}} className={"d-flex justify-content-center align-items-center"}>
                         <p className={"nanumSquareB-font-XNormal"}>조회된 결과가 없습니다.</p></div> :
                 searchItemInfo.map(item => {
-                    return <SearchItem key={item.key} searchItemInfo={item}/>
+                    return <SearchItem key={item.key} searchItemInfo={item} />
                 })
             }
         </div>

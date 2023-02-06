@@ -35,6 +35,7 @@ function DetailBodyProductReviewContents({reviewData, funcPlusReviewLikeCount}) 
     }
     
     useEffect(() => {
+        setStars([]);
         createStars();
         createRemindStars();
     }, [reviewData.score]);

@@ -33,7 +33,7 @@ function RepeatProductPage({categoryName, companyList, mainProductInfoList, subP
                                     return array.map(item => {
                                         return (
                                             <Carousel.Item key={item.key}>
-                                                <Link to={`/detail?productNum=${item.productNum}`}>
+                                                <Link to={`/detail?productNum=${item.productNum}&pageNum=1`}>
                                                     <img title={item.productTitle} src={item.mainPageImg} alt={"로딩 중이거나 이미지를 불러올 수 없습니다."} />
                                                     <div title={item.productTitle} style={{position : "relative", bottom : 75, fontSize : 20, backgroundColor : "#5A5A5A", height : 35}}
                                                             className={"d-flex justify-content-center align-items-center"}>

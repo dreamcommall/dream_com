@@ -32,7 +32,7 @@ function HistoryBox() {
                             historyList.map(item => {
                                 return (
                                     <div key={item.key} title={item.productTitle}>
-                                        <Link to={`/detail?productNum=${item.productNum}`}><img className={"mb-3"} width={70} height={70} src={item.thumbnailImg} /></Link>
+                                        <Link to={`/detail?productNum=${item.productNum}&pageNum=1`}><img className={"mb-3"} width={70} height={70} src={item.thumbnailImg} /></Link>
                                     </div>
                                 );
                             })

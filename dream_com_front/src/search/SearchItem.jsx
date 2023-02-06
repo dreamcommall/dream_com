@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "../fonts/fontStyle.css"
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import "./SearchItem.css"
 
 function SearchItem({searchItemInfo}) {
@@ -15,7 +15,6 @@ function SearchItem({searchItemInfo}) {
     const [productDiscount, setProductDiscount] = useState(0); // 제품 할인율
     const [productPrice, setProductPrice] = useState(0); // 제품 가격
     const [productNum, setProductNum] = useState(0); // 제품 번호
-    const [isLogin, setIsLogin] = useState(false); // 로그인 했는지 상태
     
     const createStars = () => {
         let temp = [];
@@ -66,11 +65,11 @@ function SearchItem({searchItemInfo}) {
 
     return (
         <div className={"d-flex align-items-center"} style={{border : "1px solid lightgray", borderBottom : "none"}}>
-            <Link to={`/detail?productNum=${productNum}`} className={"link-search-item"}><img className={"m-3"} width={175} height={175} src={thumbnailImg} /></Link>
+            <Link to={`/detail?productNum=${productNum}&pageNum=1`} className={"link-search-item"}><img className={"m-3"} width={175} height={175} src={thumbnailImg} /></Link>
             <div style={{width : "100%"}}>
                 <div className={"d-flex"}>
                     <div style={{width : "55%"}}>
-                        <Link to={`/detail?productNum=${productNum}`} className={"link-search-item"}><p className={"my-2 nanumSquareR-font-normal"}><b>{productTitle}</b></p></Link>
+                        <Link to={`/detail?productNum=${productNum}&pageNum=1`} className={"link-search-item"}><p className={"my-2 nanumSquareR-font-normal"}><b>{productTitle}</b></p></Link>
                         <p className={"mb-1 nanumSquareR-font-small"}>
                             {
                                 specList.map(item => {
@@ -97,8 +96,6 @@ function SearchItem({searchItemInfo}) {
                             <p className={"nanumSquareR-font-small"}>등록월 : {productCreateDt}</p>
                             <span className={"mx-1 nanumSquareR-font-small"}>|</span>
                             <p className={"nanumSquareR-font-small"}>상품의견 {reviewCount}건</p>
-                            <span className={"mx-1 nanumSquareR-font-small"}>|</span>
-                            <Link to={isLogin == false ? "/login" : ""} className={"link-search-item"}><p className={"nanumSquareR-font-small"}>찜하기</p></Link>
                         </div>
                     </div>
                     <div style={{width : "30%"}}></div>

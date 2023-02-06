@@ -158,7 +158,7 @@ function SearchPageApp() {
                 <SearchMenu keyword={searchParams.get("keyword")} categoryMenu={categoryMenus} companyList={companies}
                             funcUpdateCategory={updateSelectedCategory} funcUpdateCompanies={updateSelectedCompanies}
                             funcUpdateMinPrice={updateMinPrice} funcUpdateMaxPrice={updateMaxPrice}/>
-                <SearchItems searchItemInfo={productInfoList}/>
+                <SearchItems searchItemInfo={productInfoList} />
                 <SearchItemPagination currentPageNumber={currentPageNumber} firstPageNumber={firstPageNumber}
                     lastPageNumber={lastPageNumber} keyword={searchParams.get("keyword")}/>
             </div>

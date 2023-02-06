@@ -43,7 +43,7 @@ function RandomSpec({randomSpec, partNames}) {
             </div>
             <h5 className={"text-center mb-4 nanumSquareB-font-XNormal"}>{randomComment} 제품</h5>
             <div className={"d-flex mb-0"}>
-                <Link to={`/detail?productNum=${productNum}`}>
+                <Link to={`/detail?productNum=${productNum}&pageNum=1`}>
                     <img width={225} height={225} className={"ms-4 pe-2"} src={thumbnailImg} alt={"이미지를 표시할수 없습니다."} />
                 </Link>
                 <div>
@@ -68,16 +68,16 @@ function RandomSpec({randomSpec, partNames}) {
                 randomSpec.map(item => {
                     return (
                         <div title={item.productTitle} key={item.key}>
-                            <Link to={`/detail?productNum=${productNum}`}>
+                            <Link to={`/detail?productNum=${productNum}&pageNum=1`}>
                                 <p id={"p-random-spec-product-title"} className={"mx-4 mt-2 mb-1 nanumSquareR-font-normal"}>{item.productTitle}</p>
                             </Link>
                             <div className={"d-flex mx-4"}>
                                 {
-                                    item.productDiscount == 0 ? <p/> : <Link to={`/detail?productNum=${productNum}`}>
+                                    item.productDiscount == 0 ? <p/> : <Link to={`/detail?productNum=${productNum}&pageNum=1`}>
                                         <p id={"p-random-spec-sale"} className={"me-3 nanumSquareB-font-normal"}>{item.productDiscount}% 할인</p>
                                     </Link>
                                 }
-                                <Link to={`/detail?productNum=${productNum}`}>
+                                <Link to={`/detail?productNum=${productNum}&pageNum=1`}>
                                     <p id={"p-random-spec-price"} className={"nanumSquareR-font-normal"}>{item.productPrice - ((item.productPrice / 100) * item.productDiscount)}원</p>
                                 </Link>
                             </div>

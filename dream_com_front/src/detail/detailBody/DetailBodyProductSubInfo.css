@@ -41,6 +41,10 @@
     align-items: center;
 }
 
+#div-detail-product-purchase-option div:hover {
+    cursor: pointer;
+}
+
 #div-detail-product-purchase-option p {
     width: 100%;
     height: 100%;
