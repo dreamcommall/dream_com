@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from "react";
 import "./Receipt.css";
+import axios from "axios";
 
-function Receipt({method, receipt, userInfo}) {
+function Receipt({method, receipt, userInfo, purchaseProductList}) {
     // 체크박스 클릭 시 값 저장 / 체크박스 연속 클릭 방지
     const [check1, setCheck1] = useState(false);
     const [check2, setCheck2] = useState(false);
     const [time, setTime] = useState(0);
 
+    const checkBoxList = document.getElementsByClassName("input-selectPurchaseProduct");
+
     // 결제창 띄우기 매개변수 결제방법
     const onClickPayment = () => {
-        const checkBoxList = document.getElementsByClassName("input-selectPurchaseProduct");
         // 아임포트에 들어갈 상품명
         let merchantName = "";
         // 선택한 구매상품 개수
@@ -19,26 +21,23 @@ function Receipt({method, receipt, userInfo}) {
         }
         // 선택한 구매상품 중 최상위 상품 이름을 상품명에 저장
         for(let i = 0; i < checkBoxList.length; i++) {
-            if(checkBoxList[i].checked == true) {
+            if(checkBoxList[i].checked) {
                 merchantName = `${checkBoxList[i].value} ${etcProduct}`;
                 break;
             }
         }
-
         const {IMP} = window;
         IMP.init("imp43854825");
         if(method == "none") {
             alert("결제방법을 선택해 주세요");
         }
-        else if(method == "bank") {
-            console.log("무통장");
-        }
         else {
             const data = {
-                pg: method,                           // PG사
-                pay_method: 'card',                           // 결제수단
+                pg: 'html5_inicis',                           // PG사
+                pay_method: method,                           // 결제수단
                 merchant_uid: `mid_${new Date().getTime()}`,   // 주문번호
-                amount: receipt.price - receipt.discount + receipt.deliveryPrice,   // 결제금액
+                // amount: receipt.price - receipt.discount + receipt.deliveryPrice,   // 결제금액
+                amount: 1000,   // 결제금액
                 name: merchantName,                  // 주문명
                 buyer_name: userInfo.userName,                           // 구매자 이름
                 buyer_tel: userInfo.userTel,                     // 구매자 전화번호
@@ -47,10 +46,8 @@ function Receipt({method, receipt, userInfo}) {
                 buyer_postcode: userInfo.userPost,                      // 구매자 우편번호
             };
 
-
-
             /* 4. 결제 창 호출하기 */
-            // IMP.request_pay(data, callback);
+            IMP.request_pay(data, callback);
         }
     }
 
@@ -61,10 +58,46 @@ function Receipt({method, receipt, userInfo}) {
             merchant_uid,
             error_msg,
         } = response;
-
+        // 결제 완료 후
         if (success) {
-            alert('결제 성공');
-            console.log(success, merchant_uid, error_msg);
+            const list = [];
+            // 임의의 리스트에 선택한 결제 제품 정보 저장
+            for(let i = 0; i < checkBoxList.length; i++) {
+                purchaseProductList.map(item => {
+                    if (checkBoxList[i].checked && checkBoxList[i].value == item.productName) {
+                        const obj = {
+                            productNum: item.productNum,
+                            price: item.productPrice * (1 - item.productDiscount / 100) * item.inventoryQuantity,
+                            quantity: item.inventoryQuantity
+                        }
+                        list.push(obj);
+                    }
+                })
+            }
+            // 폼 데이터에 paymentDto 정보 문자열로 저장
+            const formData = new FormData;
+            const paymentDto = {
+                deliveryAddr: userInfo.userAddr,
+                methodName: method,
+                userId: userInfo.userId,
+                request: document.getElementById("select-purchaseRequest").value
+            }
+            formData.append("paymentDto", JSON.stringify(paymentDto))
+            // 폼 데이터에 선택한 제품 정보 문자열로 저장
+            formData.append("paymentDetail", JSON.stringify(list))
+            // 통신
+            axios.put("http://localhost:8080/buy", formData)
+                .then(req => {
+                    if(req.data) {
+                        alert("결제완료");
+                        window.location = "/";
+                    } else {
+
+                    }
+                })
+                .catch(err => {
+
+                })
         } else {
             alert(`결제 실패: ${error_msg}`);
         }

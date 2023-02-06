@@ -37,7 +37,17 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public int insertPaymentDetail(PaymentDto paymentDto) throws Exception {
-        return paymentMapper.insertPaymentDetail(paymentDto);
+    public int insertPaymentDetail(int paymentNum, List<Object> details) throws Exception {
+        return paymentMapper.insertPaymentDetail(paymentNum, details);
+    }
+
+    @Override
+    public int minusInventoryQuantity(List<Object> details) throws Exception{
+        return paymentMapper.minusInventoryQuantity(details);
+    }
+
+    @Override
+    public int deleteCart(String userId, List<Object> details) throws Exception {
+        return paymentMapper.deleteCart(userId, details);
     }
 }

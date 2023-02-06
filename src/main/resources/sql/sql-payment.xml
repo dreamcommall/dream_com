@@ -36,7 +36,28 @@
 <!--    구매 / 결제 완료 (결제 상세 테이블에 내용 추가)-->
 <!--    최종 수정일 2023-02-03-->
 <!--    최종 작성자 : 양민호-->
-    <insert id="insertPaymentDetail" parameterType="com.bitc.dream_com.dto.PaymentDto">
-        insert into payment_detail(payment_num, produt_num, quantity, price) values (#{paymentnum}, #{productNum}, #{quantity}, #{price})
+    <insert id="insertPaymentDetail">
+        <foreach collection="details" item="item" separator=";">
+            insert into payment_detail(payment_num, product_num, quantity, price)
+            values (#{paymentNum}, #{item.productNum}, #{item.quantity}, #{item.price})
+        </foreach>
     </insert>
+
+<!--    제품 재고량 결제 수만큼 감소-->
+<!--    최종 수정일 2023-02-05-->
+<!--    최종 작성자 : 양민호-->
+    <update id="minusInventoryQuantity">
+        <foreach collection="details" item="item" separator=";">
+            update product set inventory_quantity = inventory_quantity - #{item.quantity} where product_num = #{item.productNum}
+        </foreach>
+    </update>
+
+<!--    결제한 상품만 장바구니에서 삭제-->
+<!--    최종 수정일 2023-02-05-->
+<!--    최종 작성자 : 양민호-->
+    <delete id="deleteCart">
+        <foreach collection="details" item="item" separator=";">
+            delete from cart where user_id = #{userId} and product_num = #{item.productNum}
+        </foreach>
+    </delete>
 </mapper>

@@ -48,7 +48,7 @@ function DeliveryAddress({addressList, userInfo}) {
                         })}
                         <p>{userInfo.userName} : <span>{userInfo.userTel}</span></p>
                         <label htmlFor={"request"} className={"form-label"}>요청사항</label>
-                        <select className={"form-select nanumSquareR-font-normal"} onChange={setReq}
+                        <select className={"form-select nanumSquareR-font-normal"} onChange={setReq} id={"select-purchaseRequest"}
                                 style={style.form} defaultValue={"없음"}>
                             <option value={"없음"}>요청사항을 선택해 주세요.</option>
                             <option value={"부재시 문앞에 놓아주세요."}>부재시 문앞에 놓아주세요.</option>

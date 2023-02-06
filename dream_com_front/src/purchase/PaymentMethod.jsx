@@ -21,27 +21,20 @@ function PaymentMethod({setMethod}) {
                 <p>결제 수단</p>
             </div>
             <div id={"div-purchase-paymentMethod"} className={"nanumSquareB-font-normal py-4 px-5"}>
-                <div className={"d-flex"}>
-                    <span className={"text-center span-paymentMethodBox1"} onClick={() => setClick(1, "kakaopay")}
-                          style={box == 1 ? {border: "2px solid lightgray"} : {border: "2px solid white"}}>
+                <div className={"d-flex justify-content-around"}>
+                    <span className={box == 1 ? "text-center span-paymentMethodBoxOn" : "text-center span-paymentMethodBoxOff"}
+                          onClick={() => setClick(1, "kakaopay")}>
                         <img src={"/images/kakaoPayLogo.png"} style={{width: "100px"}} />
                         <p>카카오 페이</p>
                     </span>
-                    <span className={"text-center span-paymentMethodBox2"} onClick={() => setClick(2, "html5_inicis")}
-                          style={box == 2 ? {border: "2px solid lightgray"} : {border: "2px solid white"}}>
-                        <img src={"/images/naverPayLogo.png"} style={{width: "100px"}} />
-                        <p>네이버 페이</p>
-                    </span>
-                </div>
-                <div className={"d-flex mt-3"}>
-                    <span className={"text-center span-paymentMethodBox1"} onClick={() => setClick(3, "tosspay")}
-                          style={box == 3 ? {border: "2px solid lightgray"} : {border: "2px solid white"}}>
+                    <span className={box == 2 ? "text-center span-paymentMethodBoxOn" : "text-center span-paymentMethodBoxOff"}
+                          onClick={() => setClick(2, "tosspay")}>
                         <img src={"/images/tossLogo.png"} style={{width: "100px"}} />
                         <p>toss</p>
                     </span>
-                    <span className={"text-center span-paymentMethodBox3"} onClick={() => setClick(4, "bank")}
-                          style={box == 4 ? {border: "2px solid lightgray"} : {border: "2px solid white"}}>
-                        <p>무통장 입금</p>
+                    <span className={box == 3 ? "text-center span-paymentMethodBoxOn" : "text-center span-paymentMethodBoxOff"}
+                          onClick={() => setClick(3, "card")}>
+                        <p className={"mt-3 "}>카드결제</p>
                     </span>
                 </div>
             </div>

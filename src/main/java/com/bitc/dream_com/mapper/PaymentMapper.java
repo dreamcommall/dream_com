@@ -19,5 +19,9 @@ public interface PaymentMapper {
 //    전체 결제번호 데이터
     List<PaymentDto> usedNum() throws Exception;
 
-    int insertPaymentDetail(PaymentDto paymentDto) throws Exception;
+    int insertPaymentDetail(int paymentNum, List<Object> details) throws Exception;
+
+    int minusInventoryQuantity(List<Object> details) throws Exception;
+
+    int deleteCart(String userId, List<Object> details) throws Exception;
 }

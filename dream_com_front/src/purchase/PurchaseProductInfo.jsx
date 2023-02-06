@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import "./PurchaseProductInfo.css"
 
 
-function PurchaseProductInfo({purchaseProductList, quantity}) {
+function PurchaseProductInfo(props) {
     const deliveryCost = (productPrice) => {
         if(productPrice < 100000) {
             return 5000
@@ -13,8 +13,14 @@ function PurchaseProductInfo({purchaseProductList, quantity}) {
             return 0
         }
     }
+    const set = () => {
+        if(props.value) {
+            props.setting(false)
+        }else {
+            props.setting(true);
+        }
+    }
 
-    const checkBoxList = document.getElementsByClassName("input-selectPurchaseProduct");
 
     return (
         <table id={"table-purchaseProductInfo"} className={"table"}>
@@ -24,7 +30,7 @@ function PurchaseProductInfo({purchaseProductList, quantity}) {
                     <div style={{float: "left", marginRight: "250px"}}>
                         <span>주문 상품</span>
                         <span style={{backgroundColor: "black", color: "white", borderRadius: "40px",
-                            paddingLeft: "20px", paddingRight: "20px", marginLeft: "10px"}}>{purchaseProductList.length}</span>
+                            paddingLeft: "20px", paddingRight: "20px", marginLeft: "10px"}}>{props.purchaseProductList.length}</span>
                     </div>
                     <div>상품명 / 옵션</div>
                 </th>
@@ -35,13 +41,13 @@ function PurchaseProductInfo({purchaseProductList, quantity}) {
             </tr>
             </thead>
             <tbody>
-            {purchaseProductList.map(item => {
+            {props.purchaseProductList.map(item => {
                 return (item.inventoryQuantity > 0 ?
                     <tr className={"nanumSquareR-font-normal"} key={item.key} style={{backgroundColor: "white"}}>
                         <td>
                             <div className={"div-selectPurchaseProduct"}>
                                 <input className={"input-selectPurchaseProduct"} type={"checkbox"} value={item.productName}
-                                       defaultChecked={true}></input>
+                                       defaultChecked={true} onClick={set}></input>
                             </div>
                             <div style={{height: "120px"}}>
                                 <div className={"text-center"} style={{float: "left", marginRight: "30px"}}>
@@ -74,7 +80,7 @@ function PurchaseProductInfo({purchaseProductList, quantity}) {
                             </td>
                         }
 
-                        <td className={"text-center"} style={{paddingTop: "50px"}}>{item.key == 0 ? quantity : item.inventoryQuantity}개</td>
+                        <td className={"text-center"} style={{paddingTop: "50px"}}>{item.key == 0 ? props.quantity : item.inventoryQuantity}개</td>
                         <td className={"text-center"} style={{paddingTop: "50px"}}>
                             {(item.productPrice * (1 - item.productDiscount / 100) * item.inventoryQuantity).toLocaleString("ko-KR")}원
                         </td>
