@@ -2,6 +2,9 @@ package com.bitc.dream_com.dto;
 
 import lombok.Data;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 public class UserDto {
     private String userId;
@@ -13,4 +16,10 @@ public class UserDto {
     private String userTel;
     private String userEmail;
     private String userState;
+
+    private Set<UserRole> roleset = new HashSet<>();
+
+    public void addRole(UserRole userRole) {
+        roleset.add(userRole);
+    }
 }

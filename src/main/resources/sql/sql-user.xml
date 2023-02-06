@@ -106,4 +106,8 @@
     <select id="searchDbUserUUID" parameterType="String" resultType="String">
         select token_key from auto_login_key where user_id = #{id}
     </select>
+
+    <select id="findId" resultType="com.bitc.dream_com.dto.UserDto">
+        select * from user where user_id = #{username}
+    </select>
 </mapper>

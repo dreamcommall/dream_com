@@ -92,11 +92,11 @@ function Receipt({method, receipt, userInfo, purchaseProductList}) {
                         alert("결제완료");
                         window.location = "/";
                     } else {
-
+                        alert("결제실패");
                     }
                 })
                 .catch(err => {
-
+                    alert("통신 실패");
                 })
         } else {
             alert(`결제 실패: ${error_msg}`);
