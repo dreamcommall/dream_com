@@ -18,12 +18,12 @@ function BuyProductList() {
                     <table className={"table ms-3 nanumSquareR-font-small"}>
                         <thead>
                         <tr className={"text-center"}>
-                            <th>상품정보</th>
-                            <th>주문일자</th>
-                            <th>결제번호</th>
-                            <th>주문금액(수량)</th>
-                            <th>배송상태</th>
-                            <th>주문상태</th>
+                            <th className={"col-4"}>상품정보</th>
+                            <th className={"col-2"}>주문일자</th>
+                            <th className={"col-1"}>결제번호</th>
+                            <th className={"col-2"}>주문금액(수량)</th>
+                            <th className={"col-1"}>배송상태</th>
+                            <th className={"col-2"}>주문상태</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -75,7 +75,7 @@ function BuyProductList() {
                             <td className={"nanumSquareR-font-normal text-center deliveryState"}>
                                 <div className={"deliveryState"}>배송완료</div>
                             </td>
-                            <td className={"orderState text-center"}>
+                            <td className={"orderState"}>
                                 <div className={"mt-1"}>
                                     <button className={"mt-2"}>환불요청</button>
                                     <button className={"mt-2"}>리뷰쓰기</button>
