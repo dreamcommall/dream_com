@@ -48,7 +48,8 @@ function Login(){
     const [userPw,setUserPw] = useState("");
     const [isLoad, setIsLoad] = useState(false); // 로딩창
     const [isAutoLogin, setIsAutoLogin] = useState(false); // 자동 로그인
-    const [prevUrl, setPrevUrl] = useSearchParams();
+    const [prevUrl, setPrevUrl] = useState(""); // 이전 경로
+    const useLocationPrevUrl = useLocation();
 
     // 로그인 성공후 이전 링크로 이동한다.
     const moveDestination = () => {
@@ -136,6 +137,15 @@ function Login(){
             });
         return flag;
     }
+    
+    // 이전 페이지 경로 가져오기
+    useEffect(() => {
+        let url = useLocationPrevUrl.search.split("prev=")[1];
+        if (url == undefined) {  // 만약 이전 페이지 값이 없는경우 메인 페이지로 이동
+            url = "/";
+        }
+        setPrevUrl(url);
+    }, []);
 
 
     return (
@@ -161,7 +171,7 @@ function Login(){
                         {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 2*/}
                         <div>
                             <button style={loginBtn} onClick={DataReceive} className={"nanumSquareR-font-normal border-0 mt-3"}>로그인</button>
-                            <Link id={"link-hidden-user-login"} to={`${prevUrl.get("prev")}`}><button hidden={true}/></Link>
+                            <Link id={"link-hidden-user-login"} to={prevUrl}><button hidden={true}/></Link>
                         </div>
                         <div>
                             {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 1*/}

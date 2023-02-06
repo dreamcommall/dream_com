@@ -8,15 +8,15 @@ import {Link} from "react-router-dom";
 function PopularProductContents({name, price, discountPercent, productNum}) {
     return (
         <div className={"text-center mt-2 div-main-popular-content-wrapper"}>
-            <Link to={`/detail?productNum=${productNum}`}><p className={"mb-1 nanumSquareR-font-normal p-main-popular-content"}>{name}</p></Link>
+            <Link to={`/detail?productNum=${productNum}&pageNum=1`}><p className={"mb-1 nanumSquareR-font-normal p-main-popular-content"}>{name}</p></Link>
             <div className={"d-flex justify-content-center"}>
                 {
                     discountPercent == 0 ? <p/> :
-                        <Link to={`/detail?productNum=${productNum}`}>
+                        <Link to={`/detail?productNum=${productNum}&pageNum=1`}>
                             <p className={"nanumSquareB-font-normal p-main-popular-content-sale"}>{discountPercent}% </p>
                         </Link>
                 }
-                <Link to={`/detail?productNum=${productNum}`}>
+                <Link to={`/detail?productNum=${productNum}&pageNum=1`}>
                     <p className={"nanumSquareR-font-normal mx-2 p-main-popular-content-price"}>{price - ((price / 100) * discountPercent)}원</p>
                 </Link>
             </div>
