@@ -20,9 +20,12 @@ public class SecurityDetailService implements UserDetailsService {
     @Autowired
     private UserMapper userMapper;
 
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<UserDto> result = userMapper.findId(username);
+
 
         if(result.isEmpty()) {
             throw new UsernameNotFoundException("이메일 및 비밀번호를 확인하세요");
@@ -34,12 +37,11 @@ public class SecurityDetailService implements UserDetailsService {
 
         UserSecurityDto securityDto = new UserSecurityDto(
                 user.getUserId(),
-                user.getUserPw(),
+                "{bcrypt}" + user.getUserPw(),
                 user.getRoleset().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.name())).collect(Collectors.toSet())
         );
 
         securityDto.setUserName(user.getUserName());
-
         return securityDto;
     }
 }

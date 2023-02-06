@@ -11,16 +11,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .headers().frameOptions().disable();
+        http.csrf().disable();
 
         http.authorizeHttpRequests()
-                .antMatchers("/mypage").hasRole("ROLE_USER")
+//                .antMatchers("/searchProduct").hasRole("USER")
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated();
-        http.formLogin()
-                .permitAll()
-                .loginPage("/login");
+        http.formLogin();
 
         return http.build();
     }
