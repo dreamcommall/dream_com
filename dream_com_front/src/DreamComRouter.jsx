@@ -4,7 +4,6 @@ import MainPageApp from "./main/MainPageApp";
 import SearchPageApp from "./search/SearchPageApp";
 import PurchaseApp from "./purchase/PurchaseApp";
 import DetailApp from "./detail/DetailApp";
-import SignInfomation from "./common/SignInfomation";
 import SignClear from "./common/SignUpClear";
 import EmailTest from "./EmailTest";
 import Clause from "./SignUp/Clause";
@@ -14,6 +13,7 @@ import FindId from "./findId/FindId";
 import FindPw from "./findId/FindPw";
 import ErrorPageApp from "./common/ErrorPage/ErrorPageApp";
 import ModalFrameTest from "./reviewModal/ModalFrameTest";
+import SignInfomation from "./common/SignInfomation";
 
 // 작성자 : MoonNight285
 // 라우터 관리 컴포넌트
@@ -39,6 +39,9 @@ function DreamComRouter() {
                 <Route path={"/idchk"} element={<LoginChk />}></Route>
                 <Route path={"review"} element={<ModalFrameTest />}></Route>
                 <Route path={"*"} element={<ErrorPageApp />}></Route>
+                <Route path={"/detail"} element={<DetailApp />} />
+                <Route path={"/error"} element={<ErrorPageApp />} />
+                <Route path={"/purchase"} element={<PurchaseApp />}></Route>
             </Routes>
         </BrowserRouter>
     )

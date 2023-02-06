@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import java.util.Random;
+import java.util.UUID;
 
 import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
@@ -24,6 +29,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     JavaMailSender emailSender;
 
+    public static String ePw = createKey();
     /**
      * 로그인 후 유저의 아이디를 저장하기 위한 저장소입니다.<br>
      * 스케줄러를 담당하는 클래스에서도 사용하기 때문에 static으로 선언되었습니다.
@@ -35,8 +41,6 @@ public class UserServiceImpl implements UserService {
      * 스케줄러를 담당하는 클래스에서도 사용하기 때문에 static으로 선언되었습니다.
      */
     private static final ConcurrentHashMap<String, String> userSessionsCreateDt = new ConcurrentHashMap<>();
-
-    public static final String ePw = createKey();
 
     @Override
     public UserDto loginChk(String userId, String userPw) throws Exception {
@@ -317,8 +321,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private MimeMessage createMessage(String email)throws Exception{
-//        System.out.println("보내는 대상 : "+ email);
-//        System.out.println("인증 번호 : "+ePw);
         MimeMessage message = emailSender.createMimeMessage();
 
         message.addRecipients(RecipientType.TO, email);//보내는 대상
@@ -331,7 +333,7 @@ public class UserServiceImpl implements UserService {
         msg+="<strong>'회원가입'</strong>을 위해 이메일 인증을 진행합니다.";
         msg+= "<p>아래 발급된 이메일 인증번호를 복사하거나 직접 입력하여 인증을 완료해주세요.<p>";
         msg+= "<br>";
-        msg+= "<p>개인정보 보호를 위해 인증번호는 5분 간 유효합니다.<p>";
+        msg+= "<p>개인정보 보호를 위해 인증번호는 3분 간 유효합니다.<p>";
         msg+= "<br>";
         msg+= "<div style='font-family:verdana';>";
         msg+= "<h3 style='color:blue;'>회원가입 인증 코드입니다.</h3>";
@@ -346,29 +348,34 @@ public class UserServiceImpl implements UserService {
     }
 
     public static String createKey() {
-        StringBuffer key = new StringBuffer();
-        Random rnd = new Random();
+            StringBuffer key = new StringBuffer();
+            Random rnd = new Random();
 
-        for (int i = 0; i < 8; i++) { // 인증코드 8자리
-            int index = rnd.nextInt(3); // 0~2 까지 랜덤
+            for (int i = 0; i < 8; i++) { // 인증코드 8자리
+                int index = rnd.nextInt(3); // 0~2 까지 랜덤
 
-            switch (index) {
-                case 0:
-                    key.append((char) ((int) (rnd.nextInt(26)) + 97));
-                    //  a~z  (ex. 1+97=98 => (char)98 = 'b')
-                    break;
-                case 1:
-                    key.append((char) ((int) (rnd.nextInt(26)) + 65));
-                    //  A~Z
-                    break;
-                case 2:
-                    key.append((rnd.nextInt(10)));
-                    // 0~9
-                    break;
+                switch (index) {
+                    case 0:
+                        key.append((char) ((int) (rnd.nextInt(26)) + 97));
+                        //  a~z  (ex. 1+97=98 => (char)98 = 'b')
+                        break;
+                    case 1:
+                        key.append((char) ((int) (rnd.nextInt(26)) + 65));
+                        //  A~Z
+                        break;
+                    case 2:
+                        key.append((rnd.nextInt(10)));
+                        // 0~9
+                        break;
+                }
             }
-        }
         return key.toString();
     }
+
+//    public void testSession(HttpSession session){
+//        session.setAttribute();
+//    }
+
     @Override
     public String sendEmail(String email)throws Exception {
         // TODO Auto-generated method stub

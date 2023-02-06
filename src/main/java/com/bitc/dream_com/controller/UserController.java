@@ -3,14 +3,21 @@ package com.bitc.dream_com.controller;
 import com.bitc.dream_com.dto.UserDto;
 import com.bitc.dream_com.service.UserService;
 import com.bitc.dream_com.service.UserServiceImpl;
+import org.apache.ibatis.javassist.compiler.ast.Member;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.server.Session;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.net.PasswordAuthentication;
-import java.util.Properties;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static com.bitc.dream_com.service.UserServiceImpl.createKey;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -30,6 +37,11 @@ public class UserController {
      * 만약 실패한 경우 0이 반환됩니다.
      * @apiNote 최종 수정일 2023-02-03
      */
+    private static final ConcurrentHashMap<String, String> emailSession = new ConcurrentHashMap<>();
+//    로그인
+//    최종 수정일 : 2023.01.19
+//    최종 작성자 : 김영민
+
     @RequestMapping(value = "/loginChk", method = RequestMethod.POST)
     public Object loginChk(@RequestParam("userId")String userId, @RequestParam("userPw")String userPw,
         @RequestParam(value = "isAutoLogin", defaultValue = "false") String isAutoLogin) throws Exception{
@@ -181,28 +193,41 @@ public class UserController {
             return 0;
     }
 
-//    이메일 인증(이메일 인증번호 전송)
+//    이메일 인증(이메일 인증번호 전송 전송과 동시에 UUID 생성하여 map에 저장)
 //    최종 작성 날짜 : 2023.02.01
 //    최종 작성자 : 김영민
     @RequestMapping(value = "/sendEmail",method = RequestMethod.POST)
     public String sendEmail(@RequestParam String email) throws Exception{
-        String sendEmail = userService.sendEmail(email);
-//        System.out.println("controller : " + sendEmail);
-        return sendEmail;
+        UserServiceImpl.ePw = UserServiceImpl.createKey();
+        String sessionId = UUID.randomUUID().toString();
+
+        emailSession.put(sessionId,UserServiceImpl.ePw);
+        Timer timer = new Timer();
+        TimerTask expirationDt = new TimerTask() {
+            @Override
+            public void run() {
+                emailSession.remove(sessionId);
+                timer.cancel();
+            }
+        };
+        timer.schedule(expirationDt,(3000*60));
+        userService.sendEmail(email);
+
+        return sessionId;
     }
+
 
 //    이메일 인증
 //    최종 작성 날짜 : 2023.02.01
 //    최종 작성자 : 김영민
     @RequestMapping(value = "EmailChk",method = RequestMethod.POST)
-    public int EmailChk(@RequestParam("chkNumber") String chkNumber) throws Exception{
-        System.out.println(UserServiceImpl.ePw);
-        if( UserServiceImpl.ePw.equals(chkNumber)){
-//            1이 나오면 중복
+
+    public int EmailChk(@RequestParam("chkNumber") String chkNumber, @RequestParam("uniqueId") String uniqueId) throws Exception{
+
+        if(emailSession.get(uniqueId).equals(chkNumber)){
             return 1;
         }
         else{
-//            0이 나오면 가입 가능
             return 0;
         }
     }
