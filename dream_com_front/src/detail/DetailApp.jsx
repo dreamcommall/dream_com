@@ -24,6 +24,40 @@ function DetailApp() {
     const [isLoad, setIsLoad] = useState(false); // 로딩창
     
     // 하위 컴포넌트에서 사용한다.
+    // 현재 페이지에서 보고있는 제품을 내 찜목록에 추가한다.
+    const addWishList = (userId, productNumber) => {
+        setIsLoad(true);
+        axios.put("http://localhost:8080/updateWishList", null, {params : {userId : userId, productNum : productNumber}})
+            .then(response => {
+                if (response.data == "찜목록 업데이트 완료") {
+                    setIsLoad(false);
+                    alert("찜목록에 추가했습니다!");
+                }
+            }).catch(err => {
+            console.log(`에러가 발생했습니다. 메세지 : ${err}`);
+            console.log("찜목록을 추가하는데 실패했습니다.");
+        });
+    }
+    
+    // 하위 컴포넌트에서 사용한다.
+    // 현재 페이지에서 보고있는 제품을 장바구니에 추가한다.
+    const addShoppingCart = (userId, productNumber, quantity) => {
+        setIsLoad(true);
+        axios.post("http://localhost:8080/insertCart", null, {params : {
+            userId : userId, productNum : productNumber, quantity : quantity
+            }}).then(response => {
+                console.log(response.data);
+                if (response.data == "입력완료.") {
+                    setIsLoad(false);
+                    alert("장바구니에 추가했습니다.");
+                }
+        }).catch(err => {
+            console.log(`에러가 발생했습니다. 메세지 : ${err}`);
+            console.log("장바구니에 상품을 추가하는데 실패했습니다.");
+        });
+    }
+    
+    // 하위 컴포넌트에서 사용한다.
     // 선택한 리뷰의 좋아요 개수를 증가
     const plusReviewLikeCount = (target) => {
         const splitStr = target.id.split("-"); // 좋아요 버튼에 있는 태그의 id값에 리뷰번호가 저장되어있다.
@@ -155,8 +189,12 @@ function DetailApp() {
                 <DetailNavMenu />
                 <SidebarApp />
                 <DetailHeader data={productInfo} />
-                <DetailBody productInfo={productInfo} reviewRate={totalReviewRate} reviewInfo={reviewInfo} funcPlusReviewLikeCount={plusReviewLikeCount}
-                    loginUserId={loginUserId}/>
+                <DetailBody productInfo={productInfo} reviewRate={totalReviewRate} reviewInfo={reviewInfo}
+                    loginUserId={loginUserId} func={{
+                    plusReviewLikeCount : plusReviewLikeCount,
+                    addWishList : addWishList,
+                    addShoppingCart : addShoppingCart
+                }}/>
                 <DetailFooter />
             </div>
             <Footer />

@@ -7,7 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import {Link} from "react-router-dom";
 
 // 제품의 가격정보등을 보여주는 컴포넌트
-function DetailBodyProductSubInfo({productInfo, loginUserId}) {
+function DetailBodyProductSubInfo({productInfo, loginUserId, func}) {
     const [productNum, setProductNum] = useState(0); // 상품번호
     const [productDiscount, setProductDiscount] = useState(0); // 할인율
     const [productPrice, setProductPrice] = useState(0); // 가격
@@ -24,6 +24,8 @@ function DetailBodyProductSubInfo({productInfo, loginUserId}) {
         if (loginUserId == null) {
             const linker = document.querySelector("#link-hidden-detail-product-login-linker");
             linker.click();
+        } else {
+            func.addWishList(loginUserId, productNum);
         }
     }
     
@@ -32,6 +34,8 @@ function DetailBodyProductSubInfo({productInfo, loginUserId}) {
         if (loginUserId == null) {
             const linker = document.querySelector("#link-hidden-detail-product-login-linker");
             linker.click();
+        } else {
+            func.addShoppingCart(loginUserId, productNum, productCount);
         }
     }
     

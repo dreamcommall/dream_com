@@ -15,6 +15,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void insertCart(CartDto cartDto) throws Exception {
+        testMapper.deleteCart(cartDto);
         testMapper.insertCart(cartDto);
     }
 

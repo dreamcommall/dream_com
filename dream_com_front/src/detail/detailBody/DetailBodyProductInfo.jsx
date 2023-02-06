@@ -4,7 +4,7 @@ import "./DetailBodyProductInfo.css"
 import DetailBodyProductSubInfo from "./DetailBodyProductSubInfo";
 
 // 상품의 이미지나 가격정보를 보여주는 컴포넌트
-function DetailBodyProductInfo({productInfo, loginUserId}) {
+function DetailBodyProductInfo({productInfo, loginUserId, func}) {
     const [mainThumbnails, setMainThumbnails] = useState(); // 캐러셀에 사용되는 메인 섬네일
     const [miniThumbnails, setMiniThumbnails] = useState([]); // 캐러셀에 사용되는 미니 셈네일을 담을 배열
 
@@ -42,7 +42,7 @@ function DetailBodyProductInfo({productInfo, loginUserId}) {
                     }
                 </div>
             </div>
-            <DetailBodyProductSubInfo productInfo={productInfo} loginUserId={loginUserId} />
+            <DetailBodyProductSubInfo productInfo={productInfo} loginUserId={loginUserId} func={func} />
         </div>
     );
 }

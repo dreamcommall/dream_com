@@ -10,7 +10,7 @@ import DetailBodyReviewPagination from "./DetailBodyReviewPagination";
 import * as sessionStorageManager from "../../common/js/sessionStorageManager";
 
 // 제품 상세페이지의 가격정보 ~ 리뷰까지 보여주는 부분을 구성하는 컴포넌트
-function DetailBody({productInfo, reviewRate, reviewInfo, funcPlusReviewLikeCount, loginUserId}) {
+function DetailBody({productInfo, reviewRate, reviewInfo, loginUserId, func}) {
     const [firstPage, setFirstPage] = useState(1); // 상품 리뷰의 시작 페이지 번호
     const [currentPage, setCurrentPage] = useState(1); // 상품 리뷰의 현재 페이지 번호
     const [lastPage, setLastPage] = useState(1); // 상품 리뷰의 마지막 페이지 번호
@@ -39,7 +39,7 @@ function DetailBody({productInfo, reviewRate, reviewInfo, funcPlusReviewLikeCoun
     
     return (
         <div>
-            <DetailBodyProductInfo productInfo={productInfo} loginUserId={loginUserId}/>
+            <DetailBodyProductInfo productInfo={productInfo} loginUserId={loginUserId} func={func}/>
             <DetailBodyProductPurchaseTip />
             <DetailBodyProductMainImg productInfo={productInfo} />
             <DetailBodyProductInfoSummary productInfo={productInfo} />
@@ -47,7 +47,7 @@ function DetailBody({productInfo, reviewRate, reviewInfo, funcPlusReviewLikeCoun
             <DetailBodyProductReview />
             {
                 reviews.map(item => {
-                    return <DetailBodyProductReviewContents key={item.key} reviewData={item} funcPlusReviewLikeCount={funcPlusReviewLikeCount}/>
+                    return <DetailBodyProductReviewContents key={item.key} reviewData={item} funcPlusReviewLikeCount={func.plusReviewLikeCount}/>
                 })
             }
             <DetailBodyReviewPagination firstPageNumber={firstPage} lastPageNumber={lastPage} currentPageNumber={currentPage} productNumber={productNum} />

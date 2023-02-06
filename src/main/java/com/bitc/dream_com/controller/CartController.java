@@ -20,12 +20,16 @@ public class CartController {
 
     @Autowired
     private ProductController productController;
-
-//    기능 : 장바구니 저장
-//    최종 수정일 : 2023.01.19
-//    최종 작성자 : 김영민
-
-    @RequestMapping(value = "/insertCart", method = RequestMethod.GET)
+    
+    /**
+     * 장바구니 저장
+     *
+     * @author 김영민, 김준영
+     * @param cartDto 장바구니를 저장하기위한 DTO
+     * @return 성공적으로 작업이 수행됬다면 입력완료가 반환됩니다.
+     * @apiNote 최종 수정일 2023-02-06
+     */
+    @RequestMapping(value = "/insertCart", method = RequestMethod.POST)
     public String insertCart(CartDto cartDto) throws Exception {
         System.out.println(cartDto);
         cartService.insertCart(cartDto);
@@ -68,31 +72,39 @@ public class CartController {
 
         return fullData;
     }
-
-//    기능 : 장바구니 수정
-//    최종 수정일 : 2023.01.19
-//    최종 작성자 : 김영민
-
-    @RequestMapping(value = "/updateCart",method = RequestMethod.GET)
+    
+    
+    /**
+     * 장바구니 수정
+     *
+     * @author 김영민, 김준영
+     * @param cartDto 장바구니를 저장하기위한 DTO
+     * @return 성공적으로 작업이 수행됬다면 수정완료가 반환됩니다.
+     * @apiNote 최종 수정일 2023-02-06
+     */
+    @RequestMapping(value = "/updateCart",method = RequestMethod.POST)
     public String updateCart(CartDto cartDto) throws Exception{
         cartService.updateCart(cartDto);
 
         return "수정완료";
     }
-
-//    기능 : 장바구니 삭제
-//    최종 수정일 : 2023.01.19
-//    최종 작성자 : 김영민
-
-    @RequestMapping(value = "/deleteCart",method = RequestMethod.GET)
-    public String deleteCart(CartDto cartdto) throws Exception{
-        cartService.deleteCart(cartdto);
+    
+    /**
+     * 장바구니 삭제
+     *
+     * @author 김영민, 김준영
+     * @param cartDto 장바구니를 저장하기위한 DTO
+     * @return 성공적으로 작업이 수행됬다면 입력완료가 반환됩니다.
+     * @apiNote 최종 수정일 2023-02-06
+     */
+    @RequestMapping(value = "/deleteCart",method = RequestMethod.POST)
+    public String deleteCart(CartDto cartDto) throws Exception{
+        cartService.deleteCart(cartDto);
 
         return "redirect:http://localhost:3000";
     }
-
-
-    @RequestMapping(value = "/insertReview",method = RequestMethod.GET)
+    
+    @RequestMapping(value = "/insertReview",method = RequestMethod.POST)
     public void insertReview(ReviewDto reviewDto) throws Exception{
         cartService.insertReview(reviewDto);
     }
