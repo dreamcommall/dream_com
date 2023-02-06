@@ -14,6 +14,7 @@ import FindPw from "./findId/FindPw";
 import ErrorPageApp from "./common/ErrorPage/ErrorPageApp";
 import ModalFrameTest from "./reviewModal/ModalFrameTest";
 import SignInfomation from "./common/SignInfomation";
+import BuyProductList from "./mypage/BuyProductList";
 
 // 작성자 : MoonNight285
 // 라우터 관리 컴포넌트
@@ -42,6 +43,7 @@ function DreamComRouter() {
                 <Route path={"/detail"} element={<DetailApp />} />
                 <Route path={"/error"} element={<ErrorPageApp />} />
                 <Route path={"/purchase"} element={<PurchaseApp />}></Route>
+                <Route path={"/mypage"} element={<BuyProductList />}></Route>
             </Routes>
         </BrowserRouter>
     )
