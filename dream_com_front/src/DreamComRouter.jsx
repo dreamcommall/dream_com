@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, createBrowserRouter, Route, RouterProvider, Routes} from "react-router-dom";
 import MainPageApp from "./main/MainPageApp";
 import SearchPageApp from "./search/SearchPageApp";
 import PurchaseApp from "./purchase/PurchaseApp";
@@ -17,6 +17,9 @@ import SignInfomation from "./common/SignInfomation";
 import BuyProductList from "./mypage/BuyProductList";
 import MypageCart from "./mypage/MypageCart";
 import MypageWishList from "./mypage/MypageWishList";
+import Mypage from "./mypage/Mypage";
+import DreamComCart from "./mypage/DreamComCart";
+import DreamComWishList from "./mypage/DreamComWishList";
 
 // 작성자 : MoonNight285
 // 라우터 관리 컴포넌트
@@ -45,9 +48,9 @@ function DreamComRouter() {
                 <Route path={"/detail"} element={<DetailApp />} />
                 <Route path={"/error"} element={<ErrorPageApp />} />
                 <Route path={"/purchase"} element={<PurchaseApp />}></Route>
-                <Route path={"/mypage"} element={<BuyProductList />}></Route>
-                <Route path={"/mypageCart"} element={<MypageCart />}></Route>
-                <Route path={"/mypageWishList"} element={<MypageWishList />}></Route>
+                <Route path={"/mypageOrder"} element={<Mypage />}></Route>
+                <Route path={"/mypageCart"} element={<DreamComCart />}></Route>
+                <Route path={"/myPageWishList"} element={<DreamComWishList />}></Route>
             </Routes>
         </BrowserRouter>
     )
