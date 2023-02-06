@@ -4,7 +4,8 @@ import MainPageApp from "./main/MainPageApp";
 import SearchPageApp from "./search/SearchPageApp";
 import PurchaseApp from "./purchase/PurchaseApp";
 import DetailApp from "./detail/DetailApp";
-import SignClear from "./common/SignUpClear";
+import SignInfomation from "./common/SignInfomation";
+
 import EmailTest from "./EmailTest";
 import Clause from "./SignUp/Clause";
 import LoginChk from "./LoginChk";
@@ -13,7 +14,7 @@ import FindId from "./findId/FindId";
 import FindPw from "./findId/FindPw";
 import ErrorPageApp from "./common/ErrorPage/ErrorPageApp";
 import ModalFrameTest from "./reviewModal/ModalFrameTest";
-import SignInfomation from "./common/SignInfomation";
+import ProcessClear from "./common/ProcessClear";
 
 // 작성자 : MoonNight285
 // 라우터 관리 컴포넌트
@@ -31,7 +32,7 @@ function DreamComRouter() {
                 <Route path={"/purchase?"} element={<PurchaseApp loginId={"testUser1"} />}></Route>
                 <Route path={"/sign"} element={<Clause />}></Route>
                 <Route path={"/signinfomation"} element={<SignInfomation />}></Route>
-                <Route path={"/signClear"} element={<SignClear />}></Route>
+                <Route path={"/clearTitle/:titleNames"} element={<ProcessClear />}></Route>
                 <Route path={"/emailchk"} element={<EmailTest />}></Route>
                 <Route path={"/login?"} element={<Login />}></Route>
                 <Route path={"/findId"} element={<FindId />}></Route>
