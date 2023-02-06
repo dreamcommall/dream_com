@@ -9,14 +9,14 @@ function BuyProductList() {
                 <div className={"col"}>
                     <h4 className={"mt-5 ms-3 nanumSquareR-font-large"}><strong>주문내역 조회</strong></h4>
                     <hr className={"ms-3"}/>
-                    <ul id={"deliveryInformation"} className={"mb-5"}>
+                    <ul className={"mb-5 deliveryInformation"}>
                         <li className={"nanumSquareR-font-small"}>픽업대기, 픽업완료는 무탠픽업(매장픽업) 주문에만 해당됩니다.</li>
                         <li className={"nanumSquareR-font-small"}>출고 완료 직후 교환 / 환불 요청을 하더라도 상품을 수령하신 후 택배 업체를 통해 보내주셔야
                             처리 가능합니다.
                         </li>
                     </ul>
                     <table className={"table ms-3 nanumSquareR-font-small"}>
-                        <thead>
+                        <thead className={"buyProductListThead"}>
                         <tr className={"text-center"}>
                             <th className={"col-4"}>상품정보</th>
                             <th className={"col-2"}>주문일자</th>
@@ -26,7 +26,7 @@ function BuyProductList() {
                             <th className={"col-2"}>주문상태</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody className={"buyProductListTbody"}>
                         <tr className={"tableHover"}>
                             {/* 상품정보 */}
                             <td>
@@ -38,7 +38,7 @@ function BuyProductList() {
                                                 M100
                                             </div>
                                             <div className={"nanumSquareR-font-small mt-2"}>1,500,000 원</div>
-                                            <div className="accordion nanumSquareR-font-normal mt-3" id="accordionExample">
+                                            <div className="accordion nanumSquareR-font-normal mt-3 accordionExample">
                                                 <div className="accordion-item">
                                                     <p className="accordion-header" id="headingOne">
                                                         <button type="button" data-bs-toggle="collapse" className={"accordionButton"}
@@ -66,7 +66,7 @@ function BuyProductList() {
                             </td>
                             {/* 주문 금액 (수량) */}
                             <td className={"nanumSquareR-font-normal"}>
-                                <div id={"listStyle"} className={"text-center"}>
+                                <div className={"text-center listStylePrice"}>
                                     <div>120,000 원</div>
                                     <span>2개</span>
                                 </div>
@@ -83,9 +83,9 @@ function BuyProductList() {
                                 </div>
                             </td>
                         </tr>
-                        </tbody>
-                        <tbody>
-                        <tr>
+
+                        {/* 예시로 한번더 */}
+                        <tr className={"tableHover"}>
                             {/* 상품정보 */}
                             <td>
                                 <div className={"mt-0"}>
@@ -96,7 +96,20 @@ function BuyProductList() {
                                                 M100
                                             </div>
                                             <div className={"nanumSquareR-font-small mt-2"}>1,500,000 원</div>
-                                            <div className={"nanumSquareR-font-small mt-2"}>옵션</div>
+                                            <div className="accordion nanumSquareR-font-normal mt-3 accordionExample">
+                                                <div className="accordion-item">
+                                                    <p className="accordion-header" id="headingOne">
+                                                        <button type="button" data-bs-toggle="collapse" className={"accordionButton"}
+                                                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            내가 쓴 리뷰 보기
+                                                        </button>
+                                                    </p>
+                                                    <div id="collapseOne" className="accordion-collapse collapse"
+                                                         aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                        <div className={"ms-2 pt-1"}>포토샵을 할 수 있는 노트북 찾다가 이걸로 골랐어요 그전에 쓰던 다른 노트북보다 화면은 큰데 훨씬 얇고 가볍네요</div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </li>
                                     </ul>
                                 </div>
@@ -111,7 +124,7 @@ function BuyProductList() {
                             </td>
                             {/* 주문 금액 (수량) */}
                             <td className={"nanumSquareR-font-normal"}>
-                                <div id={"listStyle"} className={"text-center"}>
+                                <div className={"text-center listStylePrice"}>
                                     <div>120,000 원</div>
                                     <span>2개</span>
                                 </div>
