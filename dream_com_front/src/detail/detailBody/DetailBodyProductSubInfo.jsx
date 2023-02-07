@@ -31,6 +31,11 @@ function DetailBodyProductSubInfo({productInfo, loginUserId, func}) {
     
     // 장바구니 클릭시 저장
     const addShoppingCart = () => {
+        if (productCount == 0) {
+            alert("장바구니에 담을 수 있는 개수는 반드시 1개 이상이어야 합니다.");
+            return;
+        }
+
         if (loginUserId == null) {
             const linker = document.querySelector("#link-hidden-detail-product-login-linker");
             linker.click();

@@ -43,7 +43,7 @@ function DetailBody({productInfo, reviewRate, reviewInfo, loginUserId, func}) {
             <DetailBodyProductPurchaseTip />
             <DetailBodyProductMainImg productInfo={productInfo} />
             <DetailBodyProductInfoSummary productInfo={productInfo} />
-            <DetailBodyProductReviewSummary productInfo={productInfo} reviewRate={reviewRate} />
+            <DetailBodyProductReviewSummary productInfo={productInfo} reviewRate={reviewRate} reviews={reviews} />
             <DetailBodyProductReview />
             {
                 reviews.map(item => {

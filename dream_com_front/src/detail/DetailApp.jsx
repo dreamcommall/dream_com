@@ -175,9 +175,12 @@ function DetailApp() {
         }
         dataReceive().then(() => {
             setIsLoad(false);
-            window.scrollTo(0, 0);
         });
     }, [productNum, reviewPageNum]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [productNum]);
     
     return (
         <div className={"container-fluid"}>

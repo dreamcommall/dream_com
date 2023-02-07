@@ -48,6 +48,7 @@ function NavigationBar() {
                 sessionStorage.removeItem("loginUUID");
                 localStorage.removeItem("autoLoginUUID");
                 setLoginUserId(null);
+                moveLogoutPage();
             }
         }).catch(err => {
             console.log(`에러메세지 : ${err}`);
@@ -58,6 +59,12 @@ function NavigationBar() {
     // 로그아웃 실패시 에러 페이지로 이동
     const moveErrorPage = () => {
         const button = document.querySelector("#button-header-error-page");
+        button.click();
+    }
+    
+    // 로그아웃 성공시 로그아웃 완료 페이지로 이동
+    const moveLogoutPage = () => {
+        const button = document.querySelector("#link-logout-complete");
         button.click();
     }
 
@@ -131,6 +138,7 @@ function NavigationBar() {
                                             : <Link onClick={logout} style={textLine ? {textDecorationLine: "none", color: "gray"}
                                                 : {textDecorationLine: "underline", color: "black"}} className={"nanumSquareB-font-normal"}>로그아웃</Link>
                                     }
+                                    <Link id={"link-logout-complete"} to={"/clearTitle/logOutClear"}><button hidden={true}/></Link>
                                 </li>
                             </a>
                             <a>
