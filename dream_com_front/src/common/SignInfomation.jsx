@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import "./SignInfomation.css";
 import "../fonts/fontStyle.css";
 import {useDaumPostcodePopup} from 'react-daum-postcode';
-
 import SignUpHeader from "../SignUp/SignUpHeader";
 import axios from "axios";
 import ClickPrevent from "./ClickPrevent";
@@ -13,6 +12,7 @@ import Loading from "./Loading";
 // var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
 // var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/; //  8 ~ 10자 영문, 숫자 조합
 
+let sessionName = "";
 
 function SignInfomation() {
 
@@ -50,16 +50,20 @@ function SignInfomation() {
     //이메일 인증 코드
     const [chkNumber, setChkNumber] = useState("");
 
+    const[timerCode, setTimerCode] = useState(false);
+
     // 로딩창
     const [isLoad, setIsLoad] = useState(false);
 
     //이메일 인증코드 버튼 타이머
     const [emailCodeTimerMin, setEmailCodeTimerMin] = useState(2);
     const [emailCodeTimerSec, setEmailCodeTimerSec] = useState(59);
-    const [timerResult, setTimerResult] = useState(false);
+
 
     // Daum 우편번호찾기 URL
     const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
+
+
 
     //이름 유효성 검사
     const onChangeName = (e) => {
@@ -70,7 +74,7 @@ function SignInfomation() {
             setNameMessage("닉네임은 2글자 이상 5글자 이하로 입력해주세요!");
             setIsName(false);
         } else if (nameRegExp.test(currentName)) {
-            setNameMessage("숫자로 넣지마세요");
+            setNameMessage("한글만 넣어주세요");
             setIsName(false);
         } else {
             setNameMessage("사용가능한 닉네임 입니다.");
@@ -275,24 +279,35 @@ function SignInfomation() {
             })
     };
 
-    // const timerCounter = () => {
-    //     useEffect(() => {
-    //         emailCodeTimerSec > 0 && setTimeout(() => setEmailCodeTimerSec(emailCodeTimerSec - 1), 1000);
-    //     },)
-    //
-    //
-    //     let i=2;
-    //     let j=59;
-    //     setInterval(function (){
-    //         for (i =2; i>=0; i--){
-    //
-    //             for (j =59; j>=0; j--){
-    //                 console.log(j);
-    //             }
-    //         }
-    //     },1000)
-    //
-    // }
+    let TIME = 179;
+
+    let cron;
+
+    const startBtn = () => {
+        cron = setInterval(() => {
+            const min = Math.floor(TIME / 60);
+            const sec = Math.floor(TIME % 60);
+            setEmailCodeTimerMin(min)
+            setEmailCodeTimerSec(sec)
+            console.log(`${min} : ${sec}`);
+
+
+            TIME--;
+
+            if ((min <= 0) && (sec <= 0)) {
+                clearInterval(cron);
+            }
+            return ()=>clearInterval(cron)
+        }, 1000);
+
+    }
+
+    //이메일 인증코드 전송 버튼에 2가지 동작의 함수
+    const emailEventBtn = () => {
+setTimerCode(!timerCode);
+        startBtn();
+        SignUpEmailCodeBtn();
+    }
 
 
     //이메일 인증 번호 전송 통신 버튼
@@ -300,9 +315,11 @@ function SignInfomation() {
 
         axios.post("http://localhost:8080/sendEmail", null, {params: {email: email}})
             .then((req) => {
+
+                sessionName = req.data;
+
                 alert("인증 코드가 발송 되었습니다")
                 console.log("인증 코드가 발송되었습니다")
-                // timerCounter();
 
 
             })
@@ -313,25 +330,33 @@ function SignInfomation() {
     }
     //이메일 인증번호 확인 통신 버튼
     const SignUpEmailCodeCheckBtn = () => {
+setTimerCode(!timerCode)
+        clearInterval(cron);
+
         const emailCheckCode = document.querySelector("#input-SignUpInformationEmailCheckCode").value;
         // $("#input-emailCheckCode").val();
-
-        axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: emailCheckCode}})
+        console.log(sessionName);
+        axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: emailCheckCode, uniqueId: sessionName}})
             .then((req) => {
+
+                console.log(sessionName);
                 console.log(req.data);
                 if (req.data === chkNumber) {
                     setChkNumber(1);
                     alert("이메일 인증에 성공하셨습니다")
+
+
                 } else {
                     setChkNumber(0);
                     alert("이메일 인증코드가 일치하지 않습니다")
+
                 }
             })
             .catch(err => {
                 console.log("이메일 인증코드 비교 오류");
                 console.log(`에러메세지 : ${err}`);
             })
-
+        console.log(sessionName);
     }
 
 
@@ -367,9 +392,7 @@ function SignInfomation() {
                         </div>
                         <div className={"col-5"}>
                             <input type={"text"} maxLength={15} value={id} onChange={onChangeId}/>
-                            <button id={"userBtn"} className={"nanumSquareR-font-normal"} onClick={SignUpIdChkBtn}>중복
-                                체크
-                            </button>
+                            <button  className={"userBtn nanumSquareR-font-normal"} onClick={SignUpIdChkBtn}>중복 체크</button>
                             {/*() => SignCommu(id, setIsCheckedId)*/}
                             <Loading loadStatus={isLoad}/>
                         </div>
@@ -455,14 +478,15 @@ function SignInfomation() {
                                 <div>
                                     <input type={"email"} maxLength={50} value={email}
                                            onChange={onChangeEmail}/>
-                                    <button id={"userBtn"} className={"nanumSquareR-font-normal"}
-                                            onClick={SignUpEmailCodeBtn}>이메일 전송
-                                    </button>
-                                    <span>00:00</span>
+                                    <button id={"emailButton"} className={"userBtn nanumSquareR-font-normal"} onClick={() => {emailEventBtn()}} >이메일 전송</button>
+                                    {timerCode ? <span> {`${emailCodeTimerMin} : ${emailCodeTimerSec}`}</span> :null}
+
+
+
                                 </div>
                                 <div style={{marginTop: "10px"}}>
                                     <input id={"input-SignUpInformationEmailCheckCode"} type={"text"}/>
-                                    <button type={"submit"} id={"userBtn"} className={"nanumSquareR-font-normal"}
+                                    <button type={"submit"} id={"userBtn"} className={"userBtn nanumSquareR-font-normal"}
                                             onClick={SignUpEmailCodeCheckBtn}>인증 확인
                                     </button>
                                 </div>
@@ -484,7 +508,7 @@ function SignInfomation() {
                             <input type={"text"} id={"postCode"} readOnly={true} name={"address"} onChange={handleInput}
                                    value={enroll_company.zonecode}/>
 
-                            <button id={"userBtn"} className={"nanumSquareR-font-normal"} onClick={handleClick}>우편번호검색
+                            <button className={"userBtn nanumSquareR-font-normal"} onClick={handleClick}>우편번호검색
                             </button>
 
 
