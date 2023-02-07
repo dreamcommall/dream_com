@@ -12,7 +12,6 @@ function SignUpHeader() {
     // console.log(location);
 
     const {pathname} = useLocation()
-    console.log(pathname);
 
 
     return (
