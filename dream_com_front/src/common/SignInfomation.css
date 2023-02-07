@@ -29,16 +29,19 @@ width: 3%;
     height: 60px;
 }
 
-#userBtn {
+.userBtn {
     font-size: 15px;
     margin-left: 10px;
     width: 120px;
     height: 26px;
     border: none;
 }
+
+
 #userBtn:hover{
     background-color: lightgray;
 }
+
 #clearBtn:hover{
     background-color: lightgray;
 }
