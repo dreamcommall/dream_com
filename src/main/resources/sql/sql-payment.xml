@@ -8,6 +8,8 @@
     <select id="paymentData" resultType="com.bitc.dream_com.dto.PaymentDto">
         select * from payment p
             join payment_detail pd on p.payment_num = pd.payment_num
+            join user u on u.user_id = p.user_id
+            join payment_method pm on pm.method_num = p.method_num
         where p.user_id = #{userId}
     </select>
 
