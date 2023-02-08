@@ -155,7 +155,7 @@ function clause() {
                         </li>
                     </ul>
 
-                        <Link to={"/signInfomation"}>
+                        <Link to={"/informationSign"}>
                             <button className="next-button" style={{fontFamily: "nanumSquareB-font-normal"}}
                                     disabled={ageCheck == true && useCheck == true ? false : true}>확인</button>
                         </Link>

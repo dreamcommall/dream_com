@@ -8,6 +8,7 @@ import heartIcon from "../images/header/heart.png"
 import heartHover from "../images/header/heart hover.png"
 
 import Keyword from "./Keyword";
+import {Link} from "react-router-dom";
 
 
 function HeaderD({keyword}) {
@@ -45,7 +46,7 @@ function HeaderD({keyword}) {
                             paddingTop: "10%"
                         }}>
 
-                            <a>
+                            <Link to={"/informationMyPage"}>
                                 <li style={{listStyle: "none", marginLeft:"-40px"}}
                                     onMouseOver={() => setUseHover(0)}
                                     onMouseOut={() => setUseHover(1)}
@@ -53,7 +54,7 @@ function HeaderD({keyword}) {
 
                                     <img style={{width: "45px"}} src={isUseHover ? useIcon : useHover}/>
                                 </li>
-                            </a>
+                            </Link>
                             <a>
                                 <li style={{listStyle: "none"}}
                                     onMouseOver={() => setShopHover(0)}
