@@ -6,15 +6,42 @@ import SignUpHeader from "../SignUp/SignUpHeader";
 import axios from "axios";
 import ClickPrevent from "./ClickPrevent";
 import Loading from "./Loading";
+import {Link, useLocation, useParams} from "react-router-dom";
 
 
 // var regExp = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 // var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
 // var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/; //  8 ~ 10자 영문, 숫자 조합
 
+//페이지 경로 나누기
+const inforPage = {
+    informationMyPage: {
+        upDateBtnName: "수정 완료",
+        // url: "/clearTitle/basicInformation",
+
+    },
+
+    informationSign: {
+        upDateBtnName: "가입 완료",
+        url: "/clearTitle/signClear",
+
+    }
+}
+
+
 let sessionName = "";
 
 function SignInfomation() {
+
+    const {informationName} = useParams()
+    const informationPage = inforPage[informationName]
+    const inforLocation = useLocation();
+
+
+    const {pathname} = inforLocation
+
+    const [informationHandleBtn, setInformationHandleBtn] = useState(true)
+
 
     // 초기값 세팅
     const [id, setId] = useState(""); //아이디
@@ -50,7 +77,7 @@ function SignInfomation() {
     //이메일 인증 코드
     const [chkNumber, setChkNumber] = useState("");
 
-    const[timerCode, setTimerCode] = useState(false);
+    const [timerCode, setTimerCode] = useState(false);
 
     // 로딩창
     const [isLoad, setIsLoad] = useState(false);
@@ -62,7 +89,6 @@ function SignInfomation() {
 
     // Daum 우편번호찾기 URL
     const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
-
 
 
     //이름 유효성 검사
@@ -156,35 +182,21 @@ function SignInfomation() {
             setIsPhone(true);
         }
     };
-
-
-    //가입완료 버튼시 빈 칸 검사
-    const signUpBtn = () => {
+ //정보 수정 버튼
+    const signUpDataBtn = () => {
         if (isId && isName && isEmail && isPhone && isPassword && isPasswordConfirm) {
-
-            axios.put("http://localhost:8080/join", null,
-                {
-                    params: {
-                        userId: id,
-                        userName: name,
-                        userPw: password,
-                        userGender: gender,
-                        userPost: enroll_company.zonecode,
-                        userAddr: enroll_company.address,
-                        userTel: phone,
-                        userEmail: email,
-                    }
-                })
+            axios.get( "http://localhost:8080/getUserInfo", {params: {userId: id}})
                 .then((req) => {
                     console.log(req.data);
-                    // 가입 완료 시 / db 저장 완료 시
-                    if (req.data == 1) {
-
-                        // window.location.href=("/signClear")
-                        // 가입 실패 시 / db 저장 실패 시
-                    } else {
-
-                    }
+                    //수정 완료 시 / db 저장 완료 시
+                    // if (req.data == 1) {
+                    //
+                    //
+                    //   window.location.href="/clearTitle/basicInformation"
+                    //
+                    // } else {
+                    //
+                    // }
                 })
                 .catch(err => {
                     console.log("가입 완료 오류");
@@ -217,6 +229,73 @@ function SignInfomation() {
                 setIsPasswordConfirm(false);
             }
         }
+    };
+
+
+
+    //회원가입완료 버튼시 빈 칸 검사
+    const signUpBtn = () => {
+        if (isId && isName && isEmail && isPhone && isPassword && isPasswordConfirm) {
+
+            axios.put("http://localhost:8080/join", null,
+                {
+                    params: {
+                        userId: id,
+                        userName: name,
+                        userPw: password,
+                        userGender: gender,
+                        userPost: enroll_company.zonecode,
+                        userAddr: enroll_company.address,
+                        userTel: phone,
+                        userEmail: email,
+                    }
+                })
+                .then((req) => {
+                    console.log(req);
+                    // 가입 완료 시 / db 저장 완료 시
+                    if (req.data == 1) {
+
+                        window.location.href="/clearTitle/signClear"
+                        // 가입 실패 시 / db 저장 실패 시
+                    } else {
+
+                    }
+                })
+                .catch(err => {
+                    console.log("가입 완료 오류");
+                    console.log("에러메세지 : " + err);
+
+                })
+
+
+        } else {
+            if (!isId) {
+                setIdMessage("빈 칸 채워주세요");
+                setIsId(false);
+            }
+            if (!isName) {
+                setNameMessage("빈 칸 채워주세요");
+                setIsName(false);
+            }
+            if (!isEmail) {
+                setEmailMessage("빈 칸 채워주세요");
+                setIsEmail(false);
+            }
+            if (!isPhone) {
+                setPhoneMessage("빈 칸 채워주세요");
+                setIsPhone(false);
+            }
+            if (!isPassword) {
+                setPasswordMessage("빈 칸 채워주세요");
+                setIsPassword(false);
+            }
+            if (!isPasswordConfirm) {
+                setPasswordConfirmMessage("빈 칸 채워주세요");
+                setIsPasswordConfirm(false);
+            }
+        }
+
+
     };
 
 
@@ -289,7 +368,7 @@ function SignInfomation() {
             const sec = Math.floor(TIME % 60);
             setEmailCodeTimerMin(min)
             setEmailCodeTimerSec(sec)
-            console.log(`${min} : ${sec}`);
+
 
 
             TIME--;
@@ -297,17 +376,19 @@ function SignInfomation() {
             if ((min <= 0) && (sec <= 0)) {
                 clearInterval(cron);
             }
-            return ()=>clearInterval(cron)
+            return () => clearInterval(cron)
         }, 1000);
 
     }
 
     //이메일 인증코드 전송 버튼에 2가지 동작의 함수
     const emailEventBtn = () => {
-setTimerCode(!timerCode);
+        setTimerCode(!timerCode);
         startBtn();
         SignUpEmailCodeBtn();
     }
+
+
 
 
     //이메일 인증 번호 전송 통신 버튼
@@ -330,7 +411,7 @@ setTimerCode(!timerCode);
     }
     //이메일 인증번호 확인 통신 버튼
     const SignUpEmailCodeCheckBtn = () => {
-setTimerCode(!timerCode)
+        setTimerCode(!timerCode)
         clearInterval(cron);
 
         const emailCheckCode = document.querySelector("#input-SignUpInformationEmailCheckCode").value;
@@ -360,10 +441,27 @@ setTimerCode(!timerCode)
     }
 
 
+    const signMyPageData=()=>{
+
+        axios.get( "http://localhost:8080/getUserInfo", {params: {userId: "test1"}})
+
+            .then((req)=>{
+                console.log(req.data);
+            })
+
+            .catch((err)=>{
+                console.log(`마이페이지 에러`);
+                console.log(`에러메세지 : ${err}`);
+            })
+    }
+    useEffect(() => {
+        signMyPageData();
+    }, []);
+
     return (
         <div className={"container-fluid"}>
             <ClickPrevent isLoading={isLoad}/>
-            <SignUpHeader/>
+            {pathname == "/informationSign" ? <SignUpHeader/> : null}
             <div className={"container"} id={"div-information"}>
                 <div className={"div-userMain"}>
                     <p id={"p-SignInfo"} className={"nanumSquareB-font-normal"} style={{fontSize: "25px"}}>정보 입력</p>
@@ -391,9 +489,12 @@ setTimerCode(!timerCode)
                             <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>아이디</p>
                         </div>
                         <div className={"col-5"}>
-                            <input type={"text"} maxLength={15} value={id} onChange={onChangeId}/>
-                            <button  className={"userBtn nanumSquareR-font-normal"} onClick={SignUpIdChkBtn}>중복 체크</button>
-                            {/*() => SignCommu(id, setIsCheckedId)*/}
+                            {pathname == "/informationSign" ?
+                                <input type={"text"} maxLength={15} value={id} onChange={onChangeId}/>:<input type={"text"} maxLength={15} value={id} onChange={onChangeId} disabled={true}/>}
+                            {pathname == "/informationSign" ?
+                                <button className={"userBtn nanumSquareR-font-normal"} onClick={SignUpIdChkBtn}>중복 체크</button> : null}
+
+
                             <Loading loadStatus={isLoad}/>
                         </div>
                         <div className={"col-5"}>
@@ -444,11 +545,19 @@ setTimerCode(!timerCode)
                         <div className={"col-2"}>
                             <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>성 별</p>
                         </div>
-                        <div className={"col-5"}>
+                        {pathname == "/informationSign" ? <div className={"col-5"}>
                             <input name={"gender"} type={"radio"} onChange={onGender} value={"M"}/> 남성
                             <input name={"gender"} style={{marginLeft: "10px"}} type={"radio"} onChange={onGender}
                                    value={"F"}/> 여성
-                        </div>
+                        </div> : <div className={"col-5"}>
+                            <input name={"gender"} type={"radio"} onChange={onGender} value={"M"} disabled={true}/> 남성
+                            <input name={"gender"} style={{marginLeft: "10px"}} type={"radio"} onChange={onGender}
+                                   value={"F"} disabled={true}/> 여성
+                        </div>}
+                        {/*<div className={"col-5"}>*/}
+                        {/*    <input name={"gender"} type={"radio"} onChange={onGender} value={"M"}/> 남성*/}
+                        {/*    <input name={"gender"} style={{marginLeft: "10px"}} type={"radio"} onChange={onGender} value={"F"}/> 여성*/}
+                        {/*</div>*/}
                     </div>
 
 
@@ -476,19 +585,19 @@ setTimerCode(!timerCode)
                         <div className={"col-5"}>
                             <div id={"div-SignUpInformationUserAdd"}>
                                 <div>
-                                    <input type={"email"} maxLength={50} value={email}
-                                           onChange={onChangeEmail}/>
-                                    <button id={"emailButton"} className={"userBtn nanumSquareR-font-normal"} onClick={() => {emailEventBtn()}} >이메일 전송</button>
-                                    {timerCode ? <span> {`${emailCodeTimerMin} : ${emailCodeTimerSec}`}</span> :null}
-
+                                    {pathname == "/informationSign" ?
+                                    <input type={"email"} maxLength={50} value={email} onChange={onChangeEmail}/>:<input type={"email"} maxLength={50} value={email} onChange={onChangeEmail} disabled={true}/>}
+                                    {pathname == "/informationSign" ?
+                                    <button id={"emailButton"} className={"userBtn nanumSquareR-font-normal"}
+                                                onClick={() => {emailEventBtn()}}>이메일 전송</button> :<input type={"email"} maxLength={50} value={email} onChange={onChangeEmail} disabled={true}/> }
+                                    {timerCode ? <span> {`${emailCodeTimerMin} : ${emailCodeTimerSec}`}</span> : null}
 
 
                                 </div>
                                 <div style={{marginTop: "10px"}}>
-                                    <input id={"input-SignUpInformationEmailCheckCode"} type={"text"}/>
-                                    <button type={"submit"} id={"userBtn"} className={"userBtn nanumSquareR-font-normal"}
-                                            onClick={SignUpEmailCodeCheckBtn}>인증 확인
-                                    </button>
+                                    {pathname == "/informationSign" ?
+                                    <input id={"input-SignUpInformationEmailCheckCode"} type={"text"}/>: <input id={"input-SignUpInformationEmailCheckCode"} type={"text"} disabled={true}/>}
+                                    {pathname == "/informationSign" ? <button type={"submit"} id={"userBtn"} className={"userBtn nanumSquareR-font-normal"} onClick={SignUpEmailCodeCheckBtn}>인증 확인</button> : null}
                                 </div>
                             </div>
                         </div>
@@ -539,9 +648,12 @@ setTimerCode(!timerCode)
                         <div className={"col-10"}></div>
 
                         <div className={"col-2"}>
-                            <button id={"SignUpInformationClearBtn"} className={"nanumSquareR-font-normal"}
-                                    onClick={signUpBtn}>가입 완료
-                            </button>
+                            {informationHandleBtn ?
+                                    <button id={"SignUpInformationClearBtn"} className={"nanumSquareR-font-normal"} onClick={signUpBtn}>
+                                        {informationPage.upDateBtnName}</button>
+                                 : <button id={"SignUpInformationClearBtn"} className={"nanumSquareR-font-normal"} onClick={signUpDataBtn}
+                                           >{informationPage.upDateBtnName}</button>}
+
                         </div>
                     </div>
                 </div>
@@ -552,3 +664,12 @@ setTimerCode(!timerCode)
 }
 
 export default SignInfomation;
+//
+// {clearBtn ?(
+//         <Link to={profile.url}>
+//             <button style={{marginLeft: "60%", backgroundColor: "black", color: "white"}}
+//                     id={"btnClear"} onClick={()=>handleClear}>{profile.buttonName}</button></Link>):
+//     (<Link to={profile.url}>
+//         <button style={{marginLeft: "60%", backgroundColor: "black", color: "white"}}
+//                 id={"btnClear"} onClick={()=>handleClear}>{profile.buttonName}</button></Link>)
+// }

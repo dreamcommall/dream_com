@@ -37,12 +37,11 @@ width: 3%;
     border: none;
 }
 
-
-#userBtn:hover{
+.userBtn:hover{
     background-color: lightgray;
 }
 
-#clearBtn:hover{
+#SignUpInformationClearBtn:hover{
     background-color: lightgray;
 }
 
@@ -54,16 +53,15 @@ width: 3%;
 }
 
 .div-SignUpInformationUserAdd{
-
     flex-direction: column;
 }
+
 .div-userAddClass{
     display: flex;
     border-bottom: 1px solid lightgray;
     /*margin-top: 10px;*/
     align-items: center;
     height: 100px;
-
 }
 
 
