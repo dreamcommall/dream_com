@@ -31,7 +31,7 @@ function DreamComRouter() {
                 {/*url : ?productNum= ~ & quantity= ~ */}
                 <Route path={"/purchase?"} element={<PurchaseApp loginId={"testUser1"} />}></Route>
                 <Route path={"/sign"} element={<Clause />}></Route>
-                <Route path={"/signinfomation"} element={<SignInfomation />}></Route>
+                <Route path={":informationName"} element={<SignInfomation />}></Route>
                 <Route path={"/clearTitle/:titleNames"} element={<ProcessClear />}></Route>
                 <Route path={"/emailchk"} element={<EmailTest />}></Route>
                 <Route path={"/login?"} element={<Login />}></Route>
