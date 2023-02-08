@@ -55,7 +55,9 @@ function ProcessClear() {
         <div>
             {pathname == "/clearTitle/signClear" ? <SignUpHeader/> : null}
 
-            <div className={"signClear"}>
+
+            <div className={"signClear"}
+                style={{marginTop: pathname !== "/clearTitle/signClear" ? "150px" : null}}>
                 <div id={"signCMain"}>
                     <div className={"signClearMain"}>
                         <div>
