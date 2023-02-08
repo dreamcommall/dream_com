@@ -170,7 +170,7 @@ function Mypage() {
             <div style={{height : blankHeight}} className={"row"}>
                 <div className={"col d-flex justify-content-center"}>
                     {
-                        orderList.length == 0 ? <p style={{marginTop : "190px"}} className={"nanumSquareR-font-large"}>주문 배송 & 구매내역이 존재하지 않습니다.</p> : ""
+                        orderList.length == 0 ? <p style={{marginTop : "235px"}} className={"nanumSquareR-font-large"}>주문 배송 & 구매내역이 존재하지 않습니다.</p> : ""
                     }
                 </div>
             </div>
