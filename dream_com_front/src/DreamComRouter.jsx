@@ -31,7 +31,7 @@ function DreamComRouter() {
                 <Route path={"/error?"} element={<ErrorPageApp />} />
                 {/*purchaseApp 컴포넌트에 상세페이지에서 구매버튼 누른 제품 정보 / 로그인 된 아이디 전송*/}
                 {/*url : ?productNum= ~ & quantity= ~ */}
-                <Route path={"/purchase?"} element={<PurchaseApp loginId={"testUser1"} />}></Route>
+                <Route path={"/purchase?"} element={<PurchaseApp />}></Route>
                 <Route path={"/sign"} element={<Clause />}></Route>
                 <Route path={"/signinfomation"} element={<SignInfomation />}></Route>
                 <Route path={"/clearTitle/:titleNames"} element={<ProcessClear />}></Route>
@@ -40,6 +40,28 @@ function DreamComRouter() {
                 <Route path={"/findId"} element={<FindId />}></Route>
                 <Route path={"/findPw"} element={<FindPw />}></Route>
                 <Route path={"/idchk"} element={<LoginChk />}></Route>
+                {/* 리뷰 작성 모달 적용 방법*/}
+                {/*모달 사용 할 페이지에 적용*/}
+                {/*-----------------------*/}
+                {/* const [modalIsOpen, setModalIsOpen] = useState(false);
+
+                    const modalOpen = () => {
+                        setModalIsOpen(true);
+                    }
+
+                    return (
+                    ... 기타 내용
+                    <button onClick={modalOpen}>모달 버튼</button>
+                    {modalIsOpen && (
+                        <ModalFrame setModalIsOpen={setModalIsOpen}>
+                            <ReviewModalApp setModalIsOpen={setModalIsOpen} productNum={productNum} userId={userId} />
+                        </ModalFrame>
+                    )}
+                    ... 기타 내용
+                    )
+                */}
+                {/*------------------------*/}
+                {/* 모달 연결 후 아래 Route 의 ModalFrameTest 부분 삭제 + 해당 주석 삭제 필요 */}
                 <Route path={"review"} element={<ModalFrameTest />}></Route>
                 <Route path={"*"} element={<ErrorPageApp />}></Route>
                 <Route path={"/detail"} element={<DetailApp />} />

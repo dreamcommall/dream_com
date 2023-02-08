@@ -7,10 +7,14 @@ import com.bitc.dream_com.service.ReviewService;
 import com.github.pagehelper.PageInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.format.DateTimeFormatters;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -222,8 +226,14 @@ public class ReviewController {
 //        객체타입을 문자열로 변환하여 가져온 파라미터 정보를 Dto타입으로 변환
         ProductDto product = new ObjectMapper().readValue(productNum, ProductDto.class);
         UserDto user = new ObjectMapper().readValue(userId, UserDto.class);
+//        현재 시간
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        String now = date.format(formatter) + time.getHour() + time.getMinute() + time.getSecond();
+
         // 새롭게 저장할 파일 명
-        String fileId = user.getUserId() + "_" + product.getProductNum();
+        String fileId = now + "_" + user.getUserId() + "_" + product.getProductNum();
 
 //        이미지 파일 저장될 경로
         String UPLOAD_PATH = "C:\\java505\\intelliJ\\react\\dream_com\\dream_com_front\\public\\images\\reviewImage";
@@ -234,10 +244,6 @@ public class ReviewController {
                 String originName = file.getOriginalFilename();
                 // 확장자 ex) jpg
                 String fileExtension = originName.substring(originName.lastIndexOf(".") + 1);
-                // 원본 파일이름 ex) 파일
-                originName = originName.substring(0, originName.lastIndexOf("."));
-                // 파일 사이즈
-                long fileSize = file.getSize();
 
 
                 File fileSave = new File(UPLOAD_PATH, fileId + "." + fileExtension);
@@ -254,6 +260,6 @@ public class ReviewController {
             System.out.println(e.getMessage());
         }
 
-        return UPLOAD_PATH + fileId;
+        return "/images/reviewImage/" + fileId;
     }
 }

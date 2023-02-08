@@ -2,7 +2,6 @@ import React from "react";
 import "./ReviewModalImage.css";
 
 function ReviewModalImage({setImgPath, previewImg}) {
-    console.log(previewImg);
     return (
         <div id={"div-reviewModal-imgUpload"}>
             <div id={"div-reviewModal-img"}>
