@@ -17,6 +17,7 @@ import ProcessClear from "./common/ProcessClear";
 import Mypage from "./mypage/Mypage";
 import DreamComCart from "./mypage/DreamComCart";
 import DreamComWishList from "./mypage/DreamComWishList";
+import ReviewModalApp from "./reviewModal/ReviewModalApp";
 
 // 작성자 : MoonNight285
 // 라우터 관리 컴포넌트
@@ -70,6 +71,7 @@ function DreamComRouter() {
                 <Route path={"/mypageOrder"} element={<Mypage />}></Route>
                 <Route path={"/mypageCart"} element={<DreamComCart />}></Route>
                 <Route path={"/myPageWishList"} element={<DreamComWishList />}></Route>
+                <Route path={"/review/modal"} element={<ReviewModalApp />}></Route>
             </Routes>
         </BrowserRouter>
     )

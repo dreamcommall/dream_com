@@ -13,7 +13,7 @@ function Mypage() {
     const [loginUserId, setLoginUserId] = useState(); // 로그인 한 유저의 아이디
     const [orderList, setOrderList] = useState([]); // 주문내역 목록
     const [reviews, setReviews] = useState(); // 유저가 작성한 리뷰 목록
-    const [blankHeight, setBlankHeight] = useState(""); // 주문내역이 없어서 텅비는 문제를 해결하기위해 선언
+    const [blankHeight, setBlankHeight] = useState("0px"); // 주문내역이 없어서 텅비는 문제를 해결하기위해 선언
     const [isLoad, setIsLoad] = useState(false); // 로딩창
     
     // 주문내역이 너무 없어서 텅 비는 문제를 해결하기위해 주문내역 개수에 따라 빈 높이값을 조절
@@ -26,7 +26,6 @@ function Mypage() {
             setBlankHeight("125px");
         }
     }
-    
     
     // 주문 내역에 있는 제품번호와 리뷰 내용에 있는 제품번호를 매칭시켜서 해당 제품의 리뷰 내용을 저장한다.
     // 매개변수 : 주문 내역의 리뷰 번호
@@ -167,7 +166,7 @@ function Mypage() {
                     </tbody>
                 </table>
             </div>
-            <div style={{height : blankHeight}} className={"row"}>
+            <div style={orderList.length < 3 ? {height : blankHeight} : {height : "50px"}} className={"row"}>
                 <div className={"col d-flex justify-content-center"}>
                     {
                         orderList.length == 0 ? <p style={{marginTop : "235px"}} className={"nanumSquareR-font-large"}>주문 배송 & 구매내역이 존재하지 않습니다.</p> : ""
