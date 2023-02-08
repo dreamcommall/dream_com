@@ -1,5 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./FindId.css"
+import "./FindIdSuccess.css"
+import ClickPrevent from "../common/ClickPrevent";
+import Loading from "../common/Loading";
+import axios from "axios";
 
 const ChangeCss = () => {
     document.getElementById("HandPhone").style.color = '#e26e6e';
@@ -8,8 +12,8 @@ const ChangeCss = () => {
     document.getElementById("Email").style.border = 'solid 1px #e0e0e0';
     document.getElementById("Email").style.borderBottom = '1px solid #e26e6e';
     document.getElementById("Email").style.color = 'black';
-    document.getElementById("findEmail").style.display= 'none';
-    document.getElementById("findPhone").style.display= 'block';
+    document.getElementById("findEmail").style.display= 'block';
+    document.getElementById("findPhone").style.display= 'none';
 
 }
 
@@ -20,85 +24,207 @@ const ChangeCss2 = () => {
     document.getElementById("HandPhone").style.border = 'solid 1px #e0e0e0';
     document.getElementById("HandPhone").style.borderBottom = '1px solid #e26e6e';
     document.getElementById("HandPhone").style.color = 'black';
-    document.getElementById("findPhone").style.display= 'none';
-    document.getElementById("findEmail").style.display= 'block';
+    document.getElementById("findPhone").style.display= 'block';
+    document.getElementById("findEmail").style.display= 'none';
 }
 
 function FindId(){
+    // 로딩창
+    const [isLoad, setIsLoad] = useState(false);
+    // 입력한 이메일 값
+    const [email, setEmail] = useState(null);
+    // 인증번호 코드
+    const [chkNumber, setChkNumber] = useState(null);
+
+    const [authCode, setAuthCode] = useState(null);
+    // 인증 후 가입된 아이디 목록
+    const [userIdList, setUserIdList] = useState([]);
+    //  ???
     const [name,setName] = useState("");
+    // 이메일 인증번호와 입력한 번호 일치하는지 확인
+    const [check, setCheck] = useState(false);
+    // 인증 완료 여부
+    const [auth, setAuth] = useState(false);
 
     const nameHandleChange = (e) => {
         setName(e.target.value)
     }
 
-    return(
-        <div className={"container mt-5"}>
-           <div className={"row findId"}>
-               <div className={"col-3"}></div>
-               <div className={"col-5 ms-4 mt-4"}>
-                   <div>
-                       <ul>
-                           <li style={{float:"left"}}>
-                               <a className={"nanumSquareR-font-normal"} onClick={ChangeCss}
-                                  id={"HandPhone"} href={"#"}><b>휴대폰으로 찾기</b></a>
-                           </li>
-                           <li style={{float:"right"}}><a className={"nanumSquareR-font-normal"}
-                                                          id={"Email"} href={"#"} onClick={ChangeCss2}><b>이메일로 찾기</b></a>
-                           </li>
-                       </ul>
-                   </div>
+    // 인증 메일 보내기
+    const sendMail = async () => {
+        await axios.post("http://localhost:8080/sendEmail", null, {params: {email: email}})
+            .then(req => {
+                alert("이메일 전송이 완료되었습니다.");
+                setAuthCode(req.data);
+            })
+            .catch(err => {
+                console.log("통신 에러");
+            })
+    }
 
-                   <div id={"findPhone"}>
-                       <div>
-                           <input type="radio" className={"mt-5 ms-5"} checked={true} id={"radio"}/>
-                           <label className={"ms-2 nanumSquareR-font-normal"} style={{color:"#e26e6e"}}><b>휴대폰 번호로 찾기</b></label>
-                           <p className={"mt-2 ms-5 nanumSquareR-font-normal"}>가입 당시 입력한 휴대전화 번호를 통해 아이디를 찾을 수 있습니다.</p>
-                       </div>
-                       <ul className={"mt-5"} id={"testUl"}>
-                           <li>
-                               <label className={"nanumSquareR-font-normal mt-2 me-5"}>이름</label>
-                               <input className={"findInput nanumSquareR-font-normal"} />
-                           </li>
-                           <li>
-                               <label className={"nanumSquareR-font-normal me-3 mt-5"}>전화번호</label>
-                               <input className={"PhoneInput"} placeholder={"특수문자를 제외한 숫자로만 입력"} />
-                               <button className={"ms-3 nanumSquareR-font-normal"}>인증번호</button>
-                           </li>
-                           <li>
-                               <label className={"nanumSquareR-font-normal me-3 mt-5"}>인증번호</label>
-                               <input className={"findInput nanumSquareR-font-normal"} />
-                           </li>
-                       </ul>
-                   </div>
 
-                   <div id={"findEmail"} style={{display:'none'}}>
-                       <div>
-                           <input type="radio" className={"mt-5 ms-5"} checked={true} id={"radio"}/>
-                           <label className={"ms-2 nanumSquareR-font-normal"} style={{color:"#e26e6e"}}><b>이메일로 찾기</b></label>
-                           <p className={"mt-2 ms-5 nanumSquareR-font-normal"}>가입 당시 입력한 이메일 주소를 통해 아이디를 찾을 수 있습니다.</p>
-                       </div>
-                       <ul className={"mt-5"} id={"testUl"}>
-                           <li>
-                               <label className={"nanumSquareR-font-normal mt-2 me-5"}>이름</label>
-                               <input className={"findInput nanumSquareR-font-normal"} />
-                           </li>
-                           <li>
-                               <label className={"nanumSquareR-font-normal mt-5"} style={{marginRight:"34px"}}>이메일</label>
-                               <input className={"EmailInput nanumSquareR-font-normal"} placeholder={"이메일을 입력하세요."}/>
-                               <button className={"ms-3 nanumSquareR-font-normal"}>인증번호</button>
-                           </li>
-                           <li>
-                               <label className={"nanumSquareR-font-normal me-3 mt-5"}>인증번호</label>
-                               <input className={"findInput nanumSquareR-font-normal"} />
-                           </li>
-                       </ul>
-                   </div>
-                   <hr className={"ms-4 mt-5"}/>
-                   <div className={"text-center mt-4"}>
-                       <button className={"nanumSquareR-font-large"} id={"nextBtn"}>다음</button>
-                   </div>
-               </div>
-           </div>
+    // 인증번호 확인
+    const authCheck = () => {
+        axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: chkNumber, uniqueId: authCode}})
+            .then(req => {
+                if(req.data === 1) {
+                    setCheck(true);
+                } else {
+                    alert("인증번호를 확인해주세요");
+                }
+            })
+            .catch(err => {
+                console.log("통신 에러");
+            })
+    }
+
+    useEffect(() => {
+        if(!check) {
+            return;
+        }
+        setAuth(true);
+    }, [check])
+
+    // 인증번호 일치된 후 가입된 아이디 불러오기
+    useEffect(() => {
+        if(!auth) {
+            return;
+        }
+        setIsLoad(true);
+        getId().then(() => {
+            setIsLoad(false);
+        })
+    }, [auth])
+
+
+    const getId = async () => {
+        await axios.get("http://localhost:8080/getUserInfo", {params: {userId: "testUser1"}})
+            .then(req => {
+                const temp = req.data;
+                setUserIdList(temp);
+            })
+            .catch(err => {
+                console.log("통신 에러");
+            })
+    }
+
+    // 입력한 이메일 번호 저장
+    const enteredEmail = (e) => {
+        setEmail(e.target.value);
+    }
+    // 입력한 인증번호 저장
+    const enteredChkNumber = (e) => {
+        setChkNumber(e.target.value);
+    }
+
+
+
+
+    if(!auth) {
+        return(
+            <div className={"container mt-5"}>
+                <div className={"row findId"}>
+                    <div className={"col-3"}></div>
+                    <div className={"col-5 ms-4 mt-4"}>
+                        <div>
+                            <ul>
+                                <li style={{float:"left"}}>
+                                    <a className={"nanumSquareR-font-normal"} onClick={ChangeCss}
+                                       id={"HandPhone"} href={"#"}><b>이메일로 찾기</b></a>
+                                </li>
+                                <li style={{float:"right"}}><a className={"nanumSquareR-font-normal"}
+                                                               id={"Email"} href={"#"} onClick={ChangeCss2}><b>휴대폰으로 찾기</b></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div id={"findPhone"} style={{display:'none'}}>
+                            <div>
+                                <input type="radio" className={"mt-5 ms-5"} defaultChecked={true} id={"radio"}/>
+                                <label className={"ms-2 nanumSquareR-font-normal"} style={{color:"#e26e6e"}}><b>휴대폰 번호로 찾기</b></label>
+                                <p className={"mt-2 ms-5 nanumSquareR-font-normal"}>가입 당시 입력한 휴대전화 번호를 통해 아이디를 찾을 수 있습니다.</p>
+                            </div>
+                            <ul className={"mt-5"} id={"testUl"}>
+                                <li>
+                                    <label className={"nanumSquareR-font-normal mt-2 me-5"}>이름</label>
+                                    <input className={"findInput nanumSquareR-font-normal"} />
+                                </li>
+                                <li>
+                                    <label className={"nanumSquareR-font-normal me-3 mt-5"}>전화번호</label>
+                                    <input className={"PhoneInput"} placeholder={"특수문자를 제외한 숫자로만 입력"} />
+                                    <button className={"ms-3 nanumSquareR-font-normal"}>인증요청</button>
+                                </li>
+                                <li>
+                                    <label className={"nanumSquareR-font-normal me-3 mt-5"}>인증번호</label>
+                                    <input className={"findInput nanumSquareR-font-normal"} />
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div id={"findEmail"}>
+                            <div>
+                                <input type="radio" className={"mt-5 ms-5"} defaultChecked={true} id={"radio"}/>
+                                <label className={"ms-2 nanumSquareR-font-normal"} style={{color:"#e26e6e"}}><b>이메일로 찾기</b></label>
+                                <p className={"mt-2 ms-5 nanumSquareR-font-normal"}>가입 당시 입력한 이메일 주소를 통해 아이디를 찾을 수 있습니다.</p>
+                            </div>
+                            <ul className={"mt-5"} id={"testUl"}>
+                                <li>
+                                    <label className={"nanumSquareR-font-normal mt-2 me-5"}>이름</label>
+                                    <input className={"findInput nanumSquareR-font-normal"} />
+                                </li>
+                                <li>
+                                    <label className={"nanumSquareR-font-normal mt-5"} style={{marginRight:"34px"}}>이메일</label>
+                                    <input className={"EmailInput nanumSquareR-font-normal"} placeholder={"이메일을 입력하세요."} onChange={enteredEmail} />
+                                    <button className={"ms-3 nanumSquareR-font-normal"} onClick={sendMail}>인증요청</button>
+                                </li>
+                                <li>
+                                    <label className={"nanumSquareR-font-normal me-3 mt-5"}>인증번호</label>
+                                    <input className={"findInput nanumSquareR-font-normal"} onChange={enteredChkNumber} />
+                                </li>
+                            </ul>
+                        </div>
+                        <hr className={"ms-4 mt-5"}/>
+                        <div className={"text-center mt-4"}>
+                            <button className={"nanumSquareR-font-large"} id={"nextBtn"} onClick={authCheck}>다음</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    return (
+        <div className={"container-fluid mt-5"}>
+            <ClickPrevent isLoading={isLoad} />
+            <Loading loadStatus={isLoad}/>
+            <div className={"container mt-4 nanumSquareR-font-normal"}>
+                <div id={"findIdSuccessBody"}>
+                    <div className={"nanumSquareB-font-large mb-3"}>
+                        <span id={"findIdSuccessTitle"}>아이디찾기</span>
+                    </div>
+                    <p>회원님이 가입하신 아이디 목록 입니다</p>
+                    <div id={"findIdSuccessMain"}>
+                        {userIdList.map(item => {
+                            return (
+                                <div className={"text-center"}>
+                                    <div className={"row mb-2"}>
+                                        <div className={"col-4"}>{item.userId}</div>
+                                        <div className={"col-8"}>가입날짜 : {item.userSignDate}</div>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <div className={"row text-center nanumSquareR-font-large"} id={"FindIdToPageButtons"}>
+                        <div className={"col-6"}>
+                            <button id={"FindIdToLogin"}>로그인</button>
+                        </div>
+                        <div className={"col-6"}>
+                            <button id={"FindIdToFindPw"}>비밀번호 찾기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

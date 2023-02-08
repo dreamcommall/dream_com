@@ -17,7 +17,6 @@ import ProcessClear from "./common/ProcessClear";
 import Mypage from "./mypage/Mypage";
 import DreamComCart from "./mypage/DreamComCart";
 import DreamComWishList from "./mypage/DreamComWishList";
-import FindIdSuccess from "./findId/FindIdSuccess";
 
 // 작성자 : MoonNight285
 // 라우터 관리 컴포넌트
@@ -64,7 +63,6 @@ function DreamComRouter() {
                 {/*------------------------*/}
                 {/* 모달 연결 후 아래 Route 의 ModalFrameTest 부분 삭제 + 해당 주석 삭제 필요 */}
                 <Route path={"review"} element={<ModalFrameTest />}></Route>
-                <Route path={"findIdSuccess"} element={<FindIdSuccess />}></Route>
                 <Route path={"*"} element={<ErrorPageApp />}></Route>
                 <Route path={"/detail"} element={<DetailApp />} />
                 <Route path={"/error"} element={<ErrorPageApp />} />
