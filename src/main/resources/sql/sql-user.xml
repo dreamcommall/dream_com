@@ -38,7 +38,7 @@
 <!--    최종 작성자 : 양민호-->
     <insert id="join" parameterType="com.bitc.dream_com.dto.UserDto">
         insert into user values (#{userId}, #{userPw}, #{userName}, #{userGender}, #{userPost}, #{userAddr}, #{userTel},
-                                 #{userEmail}, 'N')
+                                 #{userEmail}, 'N', now())
     </insert>
 
     <select id="idChk" resultType="int" parameterType="com.bitc.dream_com.dto.UserDto">
