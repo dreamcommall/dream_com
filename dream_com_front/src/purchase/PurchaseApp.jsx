@@ -12,7 +12,9 @@ import axios from "axios";
 import {useParams, useSearchParams} from "react-router-dom";
 import ErrorPageApp from "../common/ErrorPage/ErrorPageApp";
 
-function PurchaseApp({loginId}) {
+function PurchaseApp() {
+    // 로그인 된 유저 아이디
+    const [userId, setUserId] = useState(null);
     // url 파라미터
     const [param, setParam] = useSearchParams();
     // 로딩창
@@ -55,20 +57,38 @@ function PurchaseApp({loginId}) {
         if(isNaN(parameterProductNum) || parseInt(param.get("quantity")) <= 0) {
             setIsCorrectPage(false);
         }
-        if(loginId == null) {
-            setIsCorrectPage(false);
+        getUUIDInfo();
+    }, []);
+
+    //  아이디 정보 가져온 후 set 완료되면 페이지 그리기
+    useEffect(() => {
+        if(userId == null) {
+            return;
         }
-
-
-
         // url이 바르게 입력 되었을 때 axios 통신 시작
-        if(isCorrectPage) {
             setIsLoad(true);
             purchaseData(parameterProductNum).then(() => {
                 setIsLoad(false);
             });
-        }
-    }, []);
+    }, [userId]);
+
+
+    // UUID로 로그인 아이디 가져오기
+    const getUUIDInfo = () => {
+        const loginUUID = sessionStorage.getItem("loginUUID");
+        const autoLoginUUID = sessionStorage.getItem("autoLoginUUID")
+        axios.post("http://localhost:8080/loginUserId", null, {params: {userUUID: loginUUID, autoUserUUID: autoLoginUUID}})
+            .then(req => {
+                if(req.data != null || req.data !== "" || req.data !== "undefined") {
+                    setUserId(req.data);
+                    setIsCorrectPage(true);
+                }
+            })
+            .catch(err => {
+                console.log("통신 오류");
+            })
+    }
+
 
     // 상품 체크박스 선택 했을 경우 영수증 정보 업데이트
     useEffect(() => {
@@ -89,7 +109,8 @@ function PurchaseApp({loginId}) {
         setReceiptPrice(price);
         setReceiptDeliveryPrice(deliveryPrice);
         setReceiptDiscount(discount);
-    }, [checkClick])
+    }, [checkClick]);
+
 
     // 영수증 정보 계산
     const calReceipt = (price, discount, stock) => {
@@ -151,9 +172,9 @@ function PurchaseApp({loginId}) {
                 });
         }
 
-        if(loginId != null) {
+        if(userId != null) {
             // 로그인 되어있는 사용자의 장바구니 목록 가져오기
-            await axios.get("http://localhost:8080/selectCart", {params: {userId: loginId}})
+            await axios.get("http://localhost:8080/selectCart", {params: {userId: userId}})
                 .then(req => {
                     // 장바구니 목록 개수만큼 정보 불러오기 반복, 저장
                     req.data.forEach((item) => {
@@ -171,7 +192,7 @@ function PurchaseApp({loginId}) {
                 });
 
             // 로그인된 사용자의 배송지 정보 가져오기
-            await axios.post("http://localhost:8080/address", null, {params: {userId: loginId}})
+            await axios.post("http://localhost:8080/address", null, {params: {userId: userId}})
                 .then(req => {
                     // 로그인 정보가 없을 때
                     if(req.data == "") {
@@ -188,7 +209,7 @@ function PurchaseApp({loginId}) {
 
 
             //     사용자 정보 가져오기
-            await  axios.get("http://localhost:8080/getUserInfo", {params: {userId: loginId}})
+            await  axios.get("http://localhost:8080/getUserInfo", {params: {userId: userId}})
                 .then(req => {
                     tempUserInfo = req.data[0];
                     setUserInfo(tempUserInfo);
@@ -204,8 +225,12 @@ function PurchaseApp({loginId}) {
         setReceiptDeliveryPrice(tempDeliveryPrice);
     }
 
-
     if(!isCorrectPage && parameterLength > 0) {
+        return (
+            <ErrorPageApp />
+        )
+    }
+    if(!isCorrectPage) {
         return (
             <ErrorPageApp />
         )
@@ -213,8 +238,8 @@ function PurchaseApp({loginId}) {
     return(
         <div className={"container-fluid"}>
             <ClickPrevent isLoading={isLoad} />
-            {/*<HeaderD />*/}
-            {/*<NavigationBar />*/}
+            <HeaderD />
+            <NavigationBar />
             <div className={"mt-3 mb-5"}>
                 <Loading loadStatus={isLoad}/>
                 <PurchaseHead purchaseProductList={purchaseProductList} quantity={quantity} setting={setCheckClick} value={checkClick} />
@@ -222,7 +247,7 @@ function PurchaseApp({loginId}) {
                 <DeliveryAddress addressList={addressList} userInfo={userInfo} />
                 <PaymentMethod setMethod={setMethod} />
             </div>
-            {/*<Footer />*/}
+            <Footer />
         </div>
     )
 }

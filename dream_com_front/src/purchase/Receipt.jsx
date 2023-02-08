@@ -26,12 +26,15 @@ function Receipt({method, receipt, userInfo, purchaseProductList}) {
                 break;
             }
         }
+
         const {IMP} = window;
+
         IMP.init("imp43854825");
         if(method == "none") {
             alert("결제방법을 선택해 주세요");
-        }
-        else {
+        } else if (receipt.price === 0) {
+            alert("구매하실 제품을 선택해 주세요");
+        } else {
             const data = {
                 pg: 'html5_inicis',                           // PG사
                 pay_method: method,                           // 결제수단
@@ -89,8 +92,7 @@ function Receipt({method, receipt, userInfo, purchaseProductList}) {
             axios.put("http://localhost:8080/buy", formData)
                 .then(req => {
                     if(req.data) {
-                        alert("결제완료");
-                        window.location = "/";
+                        window.location = "/clearTitle/paymentClear";
                     } else {
 
                     }
