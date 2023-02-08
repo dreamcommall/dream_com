@@ -4,7 +4,8 @@ import ModalFrame from "./ModalFrame";
 
 function ModalFrameTest() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-
+    const productNum = 230130007;
+    const userId = "testUser1";
     const modalOpen = () => {
         setModalIsOpen(true);
     }
@@ -13,7 +14,7 @@ function ModalFrameTest() {
             <button onClick={modalOpen}>모달 버튼</button>
             {modalIsOpen && (
                 <ModalFrame setModalIsOpen={setModalIsOpen}>
-                    <ReviewModalApp setModalIsOpen={setModalIsOpen} />
+                    <ReviewModalApp setModalIsOpen={setModalIsOpen} productNum={productNum} userId={userId} />
                 </ModalFrame>
             )}
         </div>
