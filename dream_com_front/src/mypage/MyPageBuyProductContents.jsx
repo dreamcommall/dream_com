@@ -1,13 +1,14 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import "./MyPageBuyProductContents.css";
 
 function MyPageBuyProductContents({orderInfo, review}) {
     return (
-        <div className={"mt-0"}>
+        <div title={orderInfo.productTitle}>
             <Link to={`/detail?productNum=${orderInfo.productNum}&pageNum=1`}><img src={orderInfo.thumbnailImg} /></Link>
             <ul>
                 <li className={"productInfo mt-1"}>
-                    <div className={"nanumSquareR-font-small"}>{orderInfo.productTitle}</div>
+                    <div className={"nanumSquareR-font-small my-page-buy-product-title"}>{orderInfo.productTitle}</div>
                     <div className={"nanumSquareR-font-small mt-2"}>{Number.parseInt(orderInfo.productPrice).toLocaleString()} 원</div>
                     <div className="accordion nanumSquareR-font-normal mt-3">
                         <div className="accordion-item">

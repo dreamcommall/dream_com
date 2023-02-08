@@ -10,8 +10,9 @@
     border-right: 0;
 }
 
-.buyProductListTbody tr td{
-    border: none
+.buyProductListTbody tr > td{
+    border: none;
+    height: 175px;
 }
 
 .tableHover:hover{
@@ -36,29 +37,15 @@
 }
 
 .listStyle{
+    height: 100%;
     display: flex;
     justify-content: center;
-    padding-top: 55px;
+    align-items: center;
     font-size: 16px;
     font-weight: bold;
 }
-
-.listStylePrice{
-    display: block;
-    font-size: 16px;
-    padding-top: 50px;
-    font-weight: bold;
-}
-
-.deliveryState {
-    font-weight: bold;
-    font-size: 16px;
-    padding-top: 55px;
-}
-
 
 .orderState button{
-    margin-left: 50px;
     font-size: 15px;
     width: 100px;
     height: 32px;
