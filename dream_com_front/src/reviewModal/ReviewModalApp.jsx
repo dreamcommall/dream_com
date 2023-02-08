@@ -6,8 +6,12 @@ import SimpleReview from "./SimpleReview";
 import axios from "axios";
 import ReviewDetailContent from "./ReviewDetailContent";
 import ReviewModalImage from "./ReviewModalImage";
+import Loading from "../common/Loading";
 
 function ReviewModalApp(props) {
+    // 리뷰 작성 할 제품 정보
+    const [productInfo, setProductInfo] = useState({});
+
     // 리뷰 메세지 종류
     const [deliveryMsgList, setDeliveryMsgList] = useState([]);
     const [specMsgList, setSpecMsgList] = useState([]);
@@ -32,12 +36,69 @@ function ReviewModalApp(props) {
     const [saveImgPath, setSaveImgPath] = useState(null);
     // 이미지 미리보기 state
     const [previewImg, setPreviewImg] = useState([]);
+    // 로딩창
+    const [isLoad, setIsLoad] = useState(false);
+
+    const [check, setCheck] = useState(false);
 
     let temp = [];
 
-    // 간단리뷰 메시지 목록 불러오기
+
     useEffect(() => {
-        axios.get("http://localhost:8080/simpleReviewMsg")
+        setIsLoad(true);
+        productAndReviewMsgInfo().then(() => {
+            setIsLoad(false);
+        });
+    }, []);
+
+
+    // 리뷰 필수 요소 선택 확인 후 리뷰 저장
+    const insertReview = () => {
+        // 필수요소 확인
+        if(rate === 0) {
+            alert("별점을 선택해주세요");
+        } else if (noiseMsgNum == 1) {
+            alert("소음리뷰를 선택해주세요");
+        } else if (specMsgNum == 1) {
+            alert("성능 리뷰를 선택해 주세요")
+        } else if (deliveryMsgNum == 1) {
+            alert("배송상태 리뷰를 선택해 주세요");
+        } else if (packagingMsgNum == 1) {
+            alert("포장상태 리뷰를 선택해 주세요");
+        } else {
+            // 리뷰파일 저장
+            if(uploadedImg != null) {
+                uploadReviewImg();
+            }
+            else {
+                setCheck(true);
+            }
+        }
+    }
+
+    useEffect(() => {
+        if(saveImgPath == null) {
+            return;
+        }
+        setCheck(true);
+    },[saveImgPath])
+
+    // 업로드 이미지 경로 저장 후 리뷰 작성
+    useEffect(() => {
+        if(!check) {
+            return;
+        }
+        setIsLoad(true);
+        axiosInsertReview().then(() => {
+            setIsLoad(false);
+        });
+    }, [check])
+
+
+    // 리뷰에 쓰일 제품 정보 불러오기
+    const productAndReviewMsgInfo = async () => {
+    //      간단리뷰 메시지 목록 불러오기
+        await axios.get("http://localhost:8080/simpleReviewMsg")
             .then(req => {
                 temp = req.data["delivery"];
                 setDeliveryMsgList(temp);
@@ -49,36 +110,19 @@ function ReviewModalApp(props) {
                 setPackagingMsgList(temp);
             })
             .catch(err => {
-                console.log("통신 오류")
+                console.log("통신 오류");
             })
-    }, []);
 
-
-    // 리뷰 필수 요소 선택 확인 후 리뷰 저장
-    const insertReview = () => {
-        // 필수요소 확인
-        if(rate == 0) {
-            alert("별점을 선택해주세요");
-        } else if (noiseMsgNum == 1) {
-            alert("소음리뷰를 선택해주세요");
-        } else if (specMsgNum == 1) {
-            alert("성능 리뷰를 선택해 주세요")
-        } else if (deliveryMsgNum == 1) {
-            alert("배송상태 리뷰를 선택해 주세요");
-        } else if (packagingMsgNum == 1) {
-            alert("포장상태 리뷰를 선택해 주세요");
-        } else {
-        //     리뷰파일 저장
-            if(uploadedImg != null) {
-                uploadReviewImg();
-            }
-        //     리뷰 저장
-            axiosInsertReview();
-        }
+    //     제품 정보 불러오기
+        await axios.get("http://localhost:8080/fullProductInfo", {params: {productNum: props.productNum}})
+            .then(req => {
+                const obj = req.data[0];
+                setProductInfo(obj);
+            })
+            .catch(err => {
+                console.log("통신오류")
+            })
     }
-
-
-
 
     // 업로드이미지 정보 저장 + 미리보기 이미지정보 저장
     const setImgPath = (e) => {
@@ -109,19 +153,19 @@ function ReviewModalApp(props) {
         }
     }
 
-    // 리뷰 파일 저장
-    const uploadReviewImg = (props) => {
+    // 리뷰 이미지 파일 저장
+    const uploadReviewImg = () => {
         const formData = new FormData();
         Object.values(uploadedImg).forEach(item => {formData.append("file", item)})
         formData.append("file", uploadedImg);
 
         // 제품번호
         const productNum = {
-            productNum: 230130002
+            productNum: props.productNum
         };
         // 유저 아이디
         const userId = {
-            userId: "test1"
+            userId: props.userId
         }
         // 제품 번호와 유저아이디 직렬화
         formData.append("productNum", JSON.stringify(productNum));
@@ -142,10 +186,10 @@ function ReviewModalApp(props) {
     }
 
     // 리뷰 작성 axios
-    const axiosInsertReview = () => {
-        const productNum = 230130001;
-        const userId = "test1";
-        axios.get("http://localhost:8080/insertDetailReview", {params: {productNum: productNum, userId: userId,
+    const axiosInsertReview = async () => {
+        const productNum = props.productNum;
+        const userId = props.userId;
+        await axios.get("http://localhost:8080/insertDetailReview", {params: {productNum: productNum, userId: userId,
                 dReviewNum: deliveryMsgNum, sReviewNum: specMsgNum, pReviewNum: packagingMsgNum, nReviewNum: noiseMsgNum,
                 score: rate, imgPath: saveImgPath, content: content}})
             .then(req => {
@@ -177,12 +221,13 @@ function ReviewModalApp(props) {
             <div id={"div-reviewModal-body"}>
                 <div style={{borderBottom: "10px solid lightgrey"}}>
                     <div className={'nanumSquareB-font-XLarge border-bottom text-center'}>
-                <span>
-                    리뷰쓰기
-                </span>
+                        <span>
+                            리뷰쓰기
+                        </span>
                         <button id={"button-reviewModal-close-top"} onClick={closeModal}>X</button>
                     </div>
-                    <ReviewModalProductInfo title={"제품 판매글 제목"} productNum={"제품 번호"} />
+                    <Loading loadStatus={isLoad}/>
+                    <ReviewModalProductInfo productInfo={productInfo} />
                 </div>
                 <TotalScore setting={setRate} />
                 <SimpleReview title={"소음은 어떤가요?"} msg={noiseMsgList} setting={setNoiseMsgNum} name={"noise"} />

@@ -1,8 +1,19 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import "./PurchaseProductInfo.css"
 
 
 function PurchaseProductInfo(props) {
+    // 첫렌더링 시 구매 가능한 제품 개수
+    let quantity = 0;
+    props.purchaseProductList.forEach(item => {
+        if(item.inventoryQuantity > 0) {
+            quantity += 1;
+        }
+    })
+    // 체스박스 선택한 제품 개수
+    const [selectQuantity, setSelectQuantity] = useState(0);
+
+    // 배송비 계산
     const deliveryCost = (productPrice) => {
         if(productPrice < 100000) {
             return 5000
@@ -13,13 +24,30 @@ function PurchaseProductInfo(props) {
             return 0
         }
     }
+
+    // 체크박스 클릭 시 제품 state 업데이트
     const set = () => {
+        const checkbox = document.getElementsByClassName("input-selectPurchaseProduct");
+        let checkedLength = 0;
+        for(let i = 0; i < checkbox.length; i++) {
+            if(checkbox[i].checked) {
+                checkedLength += 1;
+            }
+        }
+
+        if(checkedLength === 0) {
+            setSelectQuantity(-1);
+        }else {
+            setSelectQuantity(checkedLength);
+        }
+
         if(props.value) {
             props.setting(false)
         }else {
             props.setting(true);
         }
     }
+
 
 
     return (
@@ -29,8 +57,9 @@ function PurchaseProductInfo(props) {
                 <th width={"700px"} className={"text-start"}>
                     <div style={{float: "left", marginRight: "250px"}}>
                         <span>주문 상품</span>
-                        <span style={{backgroundColor: "black", color: "white", borderRadius: "40px",
-                            paddingLeft: "20px", paddingRight: "20px", marginLeft: "10px"}}>{props.purchaseProductList.length}</span>
+                        <span id={"selectedPurchaseQuantity"}>
+                            {selectQuantity === 0 ? quantity : (selectQuantity === -1 ? 0 : selectQuantity)}
+                        </span>
                     </div>
                     <div>상품명 / 옵션</div>
                 </th>

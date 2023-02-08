@@ -1,6 +1,8 @@
 package com.bitc.dream_com.controller;
 
+import com.bitc.dream_com.dto.PaymentAndProductDto;
 import com.bitc.dream_com.dto.PaymentDto;
+import com.bitc.dream_com.dto.ProductDetail;
 import com.bitc.dream_com.dto.ProductDto;
 import com.bitc.dream_com.service.PaymentService;
 import com.bitc.dream_com.service.ProductService;
@@ -27,14 +29,19 @@ public class PaymentController {
     @RequestMapping(value = "paymentData", method = RequestMethod.GET)
     public Object paymentData(@RequestParam("userId") String userId) throws Exception {
         List<PaymentDto> paymentData = paymentService.paymentData(userId);
-        List<ProductDto> paymentProductList = new ArrayList<>();
+        List<PaymentAndProductDto> paymentDataList = new ArrayList<>();
         for(PaymentDto item: paymentData) {
             int productNum = item.getProductNum();
             ProductDto paymentProductInfo =productService.productData(productNum);
-            paymentProductList.add(paymentProductInfo);
+            ProductDetail data = productController.getFullData(paymentProductInfo).get(0);
+            PaymentAndProductDto paymentAndProduct = new PaymentAndProductDto(paymentProductInfo, data.getCompanyName(),
+                    data.getPartName(), data.getThumbnailImg(), data.getCarouselImg(), data.getMainPageImg(),
+                    data.getDetailImg(), data.getScore(), data.getReviewCount());
+            paymentAndProduct.setPaymentDto(item);
+            paymentDataList.add(paymentAndProduct);
         }
 
-        return productController.getFullData(paymentProductList);
+        return paymentDataList;
     }
 
 //    결제취소

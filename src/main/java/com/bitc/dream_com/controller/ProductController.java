@@ -44,7 +44,7 @@ public class ProductController {
     }
 
 
-//    상세페이지 상품 정보 불러오기
+//    상세페이지 제품 정보 불러오기 / 특정 제품 정보 불러오기
 //    최종 수정일 2023-02-02
 //    최종 작성자 : 양민호
     @RequestMapping(value = "/fullProductInfo", method = RequestMethod.GET)
