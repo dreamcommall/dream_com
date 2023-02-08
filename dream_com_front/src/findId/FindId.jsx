@@ -4,6 +4,8 @@ import "./FindIdSuccess.css"
 import ClickPrevent from "../common/ClickPrevent";
 import Loading from "../common/Loading";
 import axios from "axios";
+import FindIdSuccess from "./FindIdSuccess";
+import {Link} from "react-router-dom";
 
 const ChangeCss = () => {
     document.getElementById("HandPhone").style.color = '#e26e6e';
@@ -33,9 +35,15 @@ function FindId(){
     const [isLoad, setIsLoad] = useState(false);
     // 입력한 이메일 값
     const [email, setEmail] = useState(null);
-    // 인증번호 코드
+    // 입력한 인증번호 코드
     const [chkNumber, setChkNumber] = useState(null);
+    // 입력한 이름
+    const [userName, setUserName] = useState(null);
+    // 인증번호 입력칸 disable
+    const [successSendEmail, setSuccessSendEmail] = useState(false);
 
+
+    // 인증 여부
     const [authCode, setAuthCode] = useState(null);
     // 인증 후 가입된 아이디 목록
     const [userIdList, setUserIdList] = useState([]);
@@ -52,32 +60,47 @@ function FindId(){
 
     // 인증 메일 보내기
     const sendMail = async () => {
-        await axios.post("http://localhost:8080/sendEmail", null, {params: {email: email}})
-            .then(req => {
-                alert("이메일 전송이 완료되었습니다.");
-                setAuthCode(req.data);
-            })
-            .catch(err => {
-                console.log("통신 에러");
-            })
+        let exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+        if(userName == null || userName === "") {
+            alert("이름을 입력해주세요");
+        } else if(!exptext.test(email)) {
+            alert("이메일 형식이 아닙니다.");
+        }
+        else {
+            await axios.post("http://localhost:8080/sendEmail", null, {params: {email: email}})
+                .then(req => {
+                    alert("이메일 전송이 완료되었습니다.");
+                    setAuthCode(req.data);
+                    setSuccessSendEmail(true);
+                })
+                .catch(err => {
+                    console.log("통신 에러");
+                })
+        }
     }
 
 
-    // 인증번호 확인
-    const authCheck = () => {
-        axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: chkNumber, uniqueId: authCode}})
-            .then(req => {
-                if(req.data === 1) {
-                    setCheck(true);
-                } else {
-                    alert("인증번호를 확인해주세요");
-                }
-            })
-            .catch(err => {
-                console.log("통신 에러");
-            })
+    // 인증번호 후 아이디 확인 페이지로
+    const authCheck = async () => {
+        if(chkNumber == null || chkNumber === "") {
+            alert("인증코드를 입력하세요")
+        } else {
+            setIsLoad(true);
+            await axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: chkNumber, uniqueId: authCode}})
+                .then(req => {
+                    setIsLoad(false);
+                    if(req.data === 1) {
+                        setCheck(true);
+                    } else {
+                        alert("인증번호를 확인해주세요");
+                    }
+                })
+                .catch(err => {
+                    console.log("통신 에러");
+                })
+        }
     }
-
+    // 인증번호 확인 후 인증여부변수 변경
     useEffect(() => {
         if(!check) {
             return;
@@ -108,6 +131,11 @@ function FindId(){
             })
     }
 
+    // 입력한 이름 저장
+    const enteredName = (e) => {
+        setUserName(e.target.value);
+    }
+
     // 입력한 이메일 번호 저장
     const enteredEmail = (e) => {
         setEmail(e.target.value);
@@ -123,6 +151,8 @@ function FindId(){
     if(!auth) {
         return(
             <div className={"container mt-5"}>
+                <ClickPrevent isLoading={isLoad} />
+                <Loading loadStatus={isLoad}/>
                 <div className={"row findId"}>
                     <div className={"col-3"}></div>
                     <div className={"col-5 ms-4 mt-4"}>
@@ -170,7 +200,7 @@ function FindId(){
                             <ul className={"mt-5"} id={"testUl"}>
                                 <li>
                                     <label className={"nanumSquareR-font-normal mt-2 me-5"}>이름</label>
-                                    <input className={"findInput nanumSquareR-font-normal"} />
+                                    <input className={"findInput nanumSquareR-font-normal"} onChange={enteredName} />
                                 </li>
                                 <li>
                                     <label className={"nanumSquareR-font-normal mt-5"} style={{marginRight:"34px"}}>이메일</label>
@@ -184,8 +214,10 @@ function FindId(){
                             </ul>
                         </div>
                         <hr className={"ms-4 mt-5"}/>
-                        <div className={"text-center mt-4"}>
-                            <button className={"nanumSquareR-font-large"} id={"nextBtn"} onClick={authCheck}>다음</button>
+                        <div className={"d-flex justify-content-center mt-4"}>
+                            <Link to={"/findId?success"} id={"nextBtn"}>
+                                <button className={"nanumSquareR-font-large"} id={"nextBtn"} disabled={!successSendEmail} onClick={authCheck}>아이디 확인</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -194,38 +226,7 @@ function FindId(){
     }
 
     return (
-        <div className={"container-fluid mt-5"}>
-            <ClickPrevent isLoading={isLoad} />
-            <Loading loadStatus={isLoad}/>
-            <div className={"container mt-4 nanumSquareR-font-normal"}>
-                <div id={"findIdSuccessBody"}>
-                    <div className={"nanumSquareB-font-large mb-3"}>
-                        <span id={"findIdSuccessTitle"}>아이디찾기</span>
-                    </div>
-                    <p>회원님이 가입하신 아이디 목록 입니다</p>
-                    <div id={"findIdSuccessMain"}>
-                        {userIdList.map(item => {
-                            return (
-                                <div className={"text-center"}>
-                                    <div className={"row mb-2"}>
-                                        <div className={"col-4"}>{item.userId}</div>
-                                        <div className={"col-8"}>가입날짜 : {item.userSignDate}</div>
-                                    </div>
-                                </div>
-                            )
-                        })}
-                    </div>
-                    <div className={"row text-center nanumSquareR-font-large"} id={"FindIdToPageButtons"}>
-                        <div className={"col-6"}>
-                            <button id={"FindIdToLogin"}>로그인</button>
-                        </div>
-                        <div className={"col-6"}>
-                            <button id={"FindIdToFindPw"}>비밀번호 찾기</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <FindIdSuccess userIdList={userIdList} isLoad={isLoad} />
     )
 }
 
