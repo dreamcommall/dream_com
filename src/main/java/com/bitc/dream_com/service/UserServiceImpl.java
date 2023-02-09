@@ -301,8 +301,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateProfile(UserDto userDto) throws Exception {
-        userMapper.updateProfile(userDto);
+    public List<UserDto> getSignedId(String userEmail, String userName) throws Exception {
+        return userMapper.getSignedId(userEmail, userName);
+    }
+
+    @Override
+    public int checkSignedInfo(String userEmail, String userName) throws Exception {
+        return userMapper.checkSignedInfo(userEmail, userName);
+    }
+
+    @Override
+    public int updateProfile(UserDto userDto) throws Exception {
+        return userMapper.updateProfile(userDto);
     }
 
     @Override

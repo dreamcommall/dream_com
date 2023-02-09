@@ -1,6 +1,7 @@
 import React from "react";
 import ClickPrevent from "../common/ClickPrevent";
 import Loading from "../common/Loading";
+import {Link} from "react-router-dom";
 
 function FindIdSuccess({userIdList, isLoad}) {
     return (
@@ -17,9 +18,9 @@ function FindIdSuccess({userIdList, isLoad}) {
                         {userIdList.map(item => {
                             return (
                                 <div className={"text-center"} key={item.userSignDate}>
-                                    <div className={"row mb-2"}>
-                                        <div className={"col-4"}>{item.userId}</div>
-                                        <div className={"col-8"}>가입날짜 : {item.userSignDate.slice(0, 10)}</div>
+                                    <div className={"row my -2"}>
+                                        <div className={"col-5"}>{item.userId}</div>
+                                        <div className={"col-7"}>가입날짜 : {item.userSignDate.slice(0, 10)}</div>
                                     </div>
                                 </div>
                             )
@@ -27,10 +28,14 @@ function FindIdSuccess({userIdList, isLoad}) {
                     </div>
                     <div className={"row text-center nanumSquareR-font-large"} id={"FindIdToPageButtons"}>
                         <div className={"col-6"}>
-                            <button id={"FindIdToLogin"}>로그인</button>
+                            <Link to={"/login"}>    
+                                <button id={"FindIdToLogin"}>로그인</button>
+                            </Link>
                         </div>
                         <div className={"col-6"}>
-                            <button id={"FindIdToFindPw"}>비밀번호 찾기</button>
+                            <Link to={"/findPw"}>
+                                <button id={"FindIdToFindPw"}>비밀번호 찾기</button>
+                            </Link>
                         </div>
                     </div>
                 </div>

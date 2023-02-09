@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import "./FindId.css"
-import "./FindIdSuccess.css"
+import "./FindId.css";
+import "./FindIdSuccess.css";
 import ClickPrevent from "../common/ClickPrevent";
 import Loading from "../common/Loading";
 import axios from "axios";
@@ -34,46 +34,42 @@ function FindId(){
     // 로딩창
     const [isLoad, setIsLoad] = useState(false);
     // 입력한 이메일 값
-    const [email, setEmail] = useState(null);
+    const [email, setEmail] = useState("");
     // 입력한 인증번호 코드
-    const [chkNumber, setChkNumber] = useState(null);
+    const [chkNumber, setChkNumber] = useState("");
     // 입력한 이름
-    const [userName, setUserName] = useState(null);
+    const [userName, setUserName] = useState("");
     // 인증번호 입력칸 disable
     const [successSendEmail, setSuccessSendEmail] = useState(false);
 
 
-    // 인증 여부
-    const [authCode, setAuthCode] = useState(null);
+    // 인증코드 전송 후 받아오는 값
+    const [uniqueId, setUniqueId] = useState("");
     // 인증 후 가입된 아이디 목록
     const [userIdList, setUserIdList] = useState([]);
-    //  ???
-    const [name,setName] = useState("");
     // 이메일 인증번호와 입력한 번호 일치하는지 확인
     const [check, setCheck] = useState(false);
     // 인증 완료 여부
     const [auth, setAuth] = useState(false);
 
-    const nameHandleChange = (e) => {
-        setName(e.target.value)
-    }
-
     // 인증 메일 보내기
-    const sendMail = async () => {
+    const sendMailButton = async () => {
         let exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-        if(userName == null || userName === "") {
+        if(userName === "") {
             alert("이름을 입력해주세요");
         } else if(!exptext.test(email)) {
             alert("이메일 형식이 아닙니다.");
         }
         else {
-            await axios.post("http://localhost:8080/sendEmail", null, {params: {email: email}})
+            await axios.post("http://localhost:8080/checkSignedInfo", null, {params: {userEmail: email, userName: userName}})
                 .then(req => {
-                    alert("이메일 전송이 완료되었습니다.");
-                    setAuthCode(req.data);
-                    setSuccessSendEmail(true);
+                    if(req.data === 0) {
+                        alert("회원가입 정보가 일치하지 않습니다.")
+                    } else {
+                        sendMailAxios();
+                    }
                 })
-                .catch(err => {
+                .catch(err=> {
                     console.log("통신 에러");
                 })
         }
@@ -82,13 +78,11 @@ function FindId(){
 
     // 인증번호 후 아이디 확인 페이지로
     const authCheck = async () => {
-        if(chkNumber == null || chkNumber === "") {
+        if(chkNumber === "") {
             alert("인증코드를 입력하세요")
         } else {
-            setIsLoad(true);
-            await axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: chkNumber, uniqueId: authCode}})
+            await axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: chkNumber, uniqueId: uniqueId}})
                 .then(req => {
-                    setIsLoad(false);
                     if(req.data === 1) {
                         setCheck(true);
                     } else {
@@ -119,9 +113,22 @@ function FindId(){
         })
     }, [auth])
 
+    // 이메일 보내기
+    const sendMailAxios = async () => {
+        await axios.post("http://localhost:8080/sendEmail", null, {params: {email: email}})
+            .then(req => {
+                alert("이메일 전송이 완료되었습니다.");
+                setUniqueId(req.data);
+                setSuccessSendEmail(true);
+            })
+            .catch(err => {
+                console.log("통신 에러");
+            })
+    }
 
+    // 아이디 정보 가져오기
     const getId = async () => {
-        await axios.get("http://localhost:8080/getUserInfo", {params: {userId: "testUser1"}})
+        await axios.post("http://localhost:8080/getSignedId", null, {params: {userEmail: email, userName: userName}})
             .then(req => {
                 const temp = req.data;
                 setUserIdList(temp);
@@ -205,7 +212,7 @@ function FindId(){
                                 <li>
                                     <label className={"nanumSquareR-font-normal mt-5"} style={{marginRight:"34px"}}>이메일</label>
                                     <input className={"EmailInput nanumSquareR-font-normal"} placeholder={"이메일을 입력하세요."} onChange={enteredEmail} />
-                                    <button className={"ms-3 nanumSquareR-font-normal"} onClick={sendMail}>인증요청</button>
+                                    <button className={"ms-3 nanumSquareR-font-normal"} onClick={sendMailButton}>인증요청</button>
                                 </li>
                                 <li>
                                     <label className={"nanumSquareR-font-normal me-3 mt-5"}>인증번호</label>
