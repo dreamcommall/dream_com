@@ -25,14 +25,19 @@ public class CartController {
      * 장바구니 저장
      *
      * @author 김영민, 김준영
-     * @param cartDto 장바구니를 저장하기위한 DTO
+     * @param userId : 로그인된 아이디값을 가져옵니다.
+     * @param productNumArray : 찜목록에서 선택한 제품, 상품상세보기에서 찜한 상품의 번호를 전부 가져옵니다.
+     * @param quantity : 상품 상세보기의 상품 갯수를 가져옵니다.
      * @return 성공적으로 작업이 수행됬다면 입력완료가 반환됩니다.
-     * @apiNote 최종 수정일 2023-02-06
+     * @apiNote 최종 수정일 2023-02-09
      */
     @RequestMapping(value = "/insertCart", method = RequestMethod.POST)
-    public String insertCart(CartDto cartDto) throws Exception {
-        System.out.println(cartDto);
-        cartService.insertCart(cartDto);
+    public String insertCart(@RequestParam("userId") String userId, @RequestParam("productNum") String productNumArray, @RequestParam("quantity") int quantity)  throws Exception {
+        String[] productNum = productNumArray.split(",");
+
+        for(int i = 0; i < productNum.length; i++){
+            cartService.insertCart(userId,Integer.parseInt(productNum[i]),quantity);
+        }
 
         return "입력완료.";
     }
@@ -69,7 +74,6 @@ public class CartController {
         for(ProductDetail item: fullData) {
             item.setKey(item.getKey() + 1);
         }
-
         return fullData;
     }
     
@@ -93,17 +97,22 @@ public class CartController {
      * 장바구니 삭제
      *
      * @author 김영민, 김준영
-     * @param cartDto 장바구니를 저장하기위한 DTO
+     * @param userId : 로그인된 아이디값을 가져옵니다.
+     * @param productNumArray : 장바구니에서 선택한 제품의 번호를 전부 가져옵니다.
      * @return 성공적으로 작업이 수행됬다면 입력완료가 반환됩니다.
-     * @apiNote 최종 수정일 2023-02-06
+     * @apiNote 최종 수정일 2023-02-09
      */
-    @RequestMapping(value = "/deleteCart",method = RequestMethod.POST)
-    public String deleteCart(CartDto cartDto) throws Exception{
-        cartService.deleteCart(cartDto);
+    @RequestMapping(value = "/deleteCart", method = RequestMethod.POST)
+    public String deleteCart(@RequestParam("userId") String userId, @RequestParam("productNum") String productNumArray)  throws Exception {
+        String[] productNum = productNumArray.split(",");
 
-        return "redirect:http://localhost:3000";
+        for(int i = 0; i < productNum.length; i++){
+            cartService.deleteCart(userId,Integer.parseInt(productNum[i]));
+        }
+
+        return "입력완료.";
     }
-    
+
     @RequestMapping(value = "/insertReview",method = RequestMethod.POST)
     public void insertReview(ReviewDto reviewDto) throws Exception{
         cartService.insertReview(reviewDto);

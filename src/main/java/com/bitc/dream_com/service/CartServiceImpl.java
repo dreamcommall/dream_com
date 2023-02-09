@@ -14,9 +14,9 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public void insertCart(CartDto cartDto) throws Exception {
-        testMapper.deleteCart(cartDto);
-        testMapper.insertCart(cartDto);
+    public void insertCart(String userId, int productNum, int quantity) throws Exception {
+        testMapper.deleteCart(userId, productNum);
+        testMapper.insertCart(userId, productNum, quantity);
     }
 
     @Override
@@ -30,10 +30,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void deleteCart(CartDto cartdto) throws Exception {
-        testMapper.deleteCart(cartdto);
+    public void deleteCart(String userId, int productNum) throws Exception {
+        testMapper.deleteCart(userId,productNum);
     }
-
 
 
     @Override

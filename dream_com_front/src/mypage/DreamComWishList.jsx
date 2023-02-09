@@ -7,13 +7,16 @@ import MypageWishList from "./MypageWishList";
 
 function DreamComWishList(){
     return(
-        <div>
-            <HeaderD />
-            <NavigationBar />
+
+    <div className={"container-fluid"}>
+        <HeaderD />
+        <NavigationBar />
+        <div className={"container"}>
             <MyPageNav />
             <MypageWishList />
-            <Footer />
         </div>
+        <Footer />
+    </div>
     )
 }
 

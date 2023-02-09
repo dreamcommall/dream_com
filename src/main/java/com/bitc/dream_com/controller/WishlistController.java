@@ -57,8 +57,14 @@ public class WishlistController {
 //    최종 수정일 2023-01-17
 //    최종 작성자 : 양민호
     @RequestMapping(value = "deleteWishList", method = RequestMethod.DELETE)
-    public String deleteWishList(@RequestParam("userId") String userId, @RequestParam("productNum") int productNum) throws Exception {
-        wishlistService.deleteWishList(userId, productNum);
+    public String deleteWishList(@RequestParam("userId") String userId, @RequestParam("productNum") String productNumArray) throws Exception {
+
+        String[] productNum = productNumArray.split(",");
+
+        for(int i = 0; i < productNum.length; i++){
+            System.out.println(productNum[i]);
+            wishlistService.deleteWishList(userId,Integer.parseInt(productNum[i]));
+        }
 
         return "찜목록 삭제 완료";
     }
