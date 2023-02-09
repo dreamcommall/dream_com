@@ -5,12 +5,13 @@ import {Link} from "react-router-dom";
 
 function FindIdSuccess({userIdList, isLoad}) {
     return (
-        <div className={"container-fluid mt-5"}>
+        <div className={"row mt-5"} id={"findIdSuccessBody"}>
             <ClickPrevent isLoading={isLoad} />
             <Loading loadStatus={isLoad}/>
-            <div className={"container mt-4 nanumSquareR-font-normal"}>
-                <div id={"findIdSuccessBody"}>
-                    <div className={"nanumSquareB-font-large mb-3"}>
+            <div className={"col-3"}></div>
+            <div className={"col-6 mt-4 nanumSquareR-font-normal"}>
+                <div id={"findIdSuccessContent"}>
+                    <div className={"nanumSquareB-font-large mt-5 mb-3"}>
                         <span id={"findIdSuccessTitle"}>아이디찾기</span>
                     </div>
                     <p>회원님이 가입하신 아이디 목록 입니다</p>
