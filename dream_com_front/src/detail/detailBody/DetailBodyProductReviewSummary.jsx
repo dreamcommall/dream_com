@@ -153,17 +153,23 @@ function DetailBodyProductReviewSummary({productInfo, reviewRate, reviews}) {
                     <div>
                         <p className={"p-detail-review-summary-content-title"}>배송</p>
                         <p className={"p-detail-review-summary-content-comment"}>{maxDreviewMsg.reviewName}</p>
-                        <p className={"p-detail-review-summary-content-percent"}>{(maxDreviewMsg.number / reviews.length * 100).toFixed()}%</p>
+                        <p className={"p-detail-review-summary-content-percent"}>{
+                            reviews.length != 0 ? (maxDreviewMsg.number / reviews.length * 100).toFixed() : 0
+                        }%</p>
                     </div>
                     <div>
                         <p className={"p-detail-review-summary-content-title"}>성능</p>
                         <p className={"p-detail-review-summary-content-comment"}>{maxPreviewMsg.reviewName}</p>
-                        <p className={"p-detail-review-summary-content-percent"}>{(maxPreviewMsg.number / reviews.length * 100).toFixed()}%</p>
+                        <p className={"p-detail-review-summary-content-percent"}>{
+                            reviews.length != 0 ? (maxPreviewMsg.number / reviews.length * 100).toFixed() : 0
+                        }%</p>
                     </div>
                     <div>
                         <p className={"p-detail-review-summary-content-title"}>소음</p>
                         <p className={"p-detail-review-summary-content-comment"}>{maxNreviewMsg.reviewName}</p>
-                        <p className={"p-detail-review-summary-content-percent"}>{(maxNreviewMsg.number / reviews.length * 100).toFixed()}%</p>
+                        <p className={"p-detail-review-summary-content-percent"}>{
+                            reviews.length != 0 ? (maxNreviewMsg.number / reviews.length * 100).toFixed() : 0
+                        }%</p>
                     </div>
                 </div>
             </div>

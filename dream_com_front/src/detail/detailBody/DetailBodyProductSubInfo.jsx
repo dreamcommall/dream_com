@@ -108,10 +108,11 @@ function DetailBodyProductSubInfo({productInfo, loginUserId, func}) {
                             productDiscount == 0 ? null : <p id={"p-detail-product-sub-discount"} className={"mb-1 me-1 nanumSquareB-font-normal"}>{productDiscount}% 할인</p>
                         }
                         {
-                            productDiscount == 0 ? null : <p id={"p-detail-product-sub-price"} className={"mb-1 nanumSquareR-font-normal"}>{productPrice}원</p>
+                            productDiscount == 0 ? null : <p id={"p-detail-product-sub-price"} className={"mb-1 nanumSquareR-font-normal"}>{
+                                productPrice.toLocaleString()}원</p>
                         }
                     </div>
-                    <p className={"nanumSquareR-font-normal"}>{discountPrice}원</p>
+                    <p className={"nanumSquareR-font-normal"}>{discountPrice.toLocaleString()}원</p>
                 </div>
             </div>
             <div className={"d-flex align-items-center mx-3 div-detail-product-info-underline"}>
@@ -138,11 +139,11 @@ function DetailBodyProductSubInfo({productInfo, loginUserId, func}) {
                         <Form.Control value={productCount == undefined ? 0 : productCount}/>
                         <Button variant="outline-secondary" onClick={plusProductCount}>+</Button>
                     </InputGroup>
-                    <p className={"mb-0 nanumSquareB-font-XNormal"}>{totalPrice}원</p>
+                    <p className={"mb-0 nanumSquareB-font-XNormal"}>{totalPrice.toLocaleString()}원</p>
                 </div>
             </div>
             <div className={"d-flex justify-content-end me-3"}>
-                <p className={"nanumSquareB-font-large"}>총 합계 금액 <span id={"span-detail-product-price"}>{totalPrice}원</span></p>
+                <p className={"nanumSquareB-font-large"}>총 합계 금액 <span id={"span-detail-product-price"}>{totalPrice.toLocaleString()}원</span></p>
             </div>
             <div id={"div-detail-product-purchase-option"}>
                 <div onClick={addWishList}><img src={"images/heart.png"} /></div>

@@ -78,7 +78,8 @@ function RandomSpec({randomSpec, partNames}) {
                                     </Link>
                                 }
                                 <Link to={`/detail?productNum=${productNum}&pageNum=1`}>
-                                    <p id={"p-random-spec-price"} className={"nanumSquareR-font-normal"}>{item.productPrice - ((item.productPrice / 100) * item.productDiscount)}원</p>
+                                    <p id={"p-random-spec-price"} className={"nanumSquareR-font-normal"}>
+                                        {(item.productPrice - ((item.productPrice / 100) * item.productDiscount)).toLocaleString()}원</p>
                                 </Link>
                             </div>
                         </div>

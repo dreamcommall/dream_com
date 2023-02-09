@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "../fonts/fontStyle.css"
 import Button from 'react-bootstrap/Button'
 import "./SearchMenu.css"
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 // 제조사 체크박스 선택부분에 버그가 존재
 // 상태값 변동이 제대로 안됨
@@ -12,6 +12,7 @@ function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, fun
     const [companyCheckList, setCompanyCheckList] = useState([]);
     const [searchKeyword, setSearchKeyword] = useState(""); // 검색키워드
     const [companyIsChecked, setCompanyIsChecked] = useState([]); // 선택한 카테고리의 제조사명단의 체크여부값
+    const navigate = useNavigate(); // 페이지 URL 주소 변경
     
     // 검색 input 태그에서 엔터키 누르면 작동
     const onEnterPress = (e) => {
@@ -23,7 +24,7 @@ function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, fun
     
     useEffect(() => {
         setSearchKeyword(keyword);
-    }, [keyword])
+    }, [keyword]);
     
     // 검색 input 태그에서 값이 변경될때마다 상태변경
     const updateSearchTarget = (target) => {
@@ -84,9 +85,12 @@ function SearchMenu({keyword, categoryMenu, companyList, funcUpdateCategory, fun
     
     const clearSearchOption = () => {
         if (window.confirm("초기화를 진행할까요?")) {
-            setCategoryKey(-1)
+            setCategoryKey(-1);
+            setSearchKeyword("");
             initCompanyIsChecked();
-            initCompanyCheckList();
+            initCompanyCheckList()
+            navigate(`/search?keyword=${""}`);
+            window.location.reload();
         }
     }
 

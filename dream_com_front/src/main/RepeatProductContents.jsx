@@ -16,7 +16,7 @@ function RepeatProductContents({style, item}) {
                     </Link>
                 }
                 <Link to={`/detail?productNum=${item.productNum}&pageNum=1`}>
-                    <p className={"mx-1 nanumSquareR-font-normal mb-2 p-repeat-category-item-price"}>{item.productPrice - ((item.productPrice / 100) * item.productDiscount)}원</p>
+                    <p className={"mx-1 nanumSquareR-font-normal mb-2 p-repeat-category-item-price"}>{(item.productPrice - ((item.productPrice / 100) * item.productDiscount)).toLocaleString()}원</p>
                 </Link>
             </div>
             <Link to={`/detail?productNum=${item.productNum}&pageNum=1`}>

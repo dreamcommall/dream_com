@@ -8,7 +8,7 @@ import axios from "axios";
 import ClickPrevent from "../common/ClickPrevent";
 import Loading from "../common/Loading";
 import "./BuyProductList.css";
-import {Outlet, useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import ModalFrame from "../reviewModal/ModalFrame";
 import ReviewModalApp from "../reviewModal/ReviewModalApp";
 
@@ -137,6 +137,15 @@ function Mypage() {
     useEffect(() => {
         controlBlankHeight();
     }, [orderList]);
+    
+    // 댓글을 작성한 경우 데이터 재 로딩
+    useEffect(() => {
+        if (modalIsOpen == false && loginUserId != undefined) {
+            setIsLoad(true);
+            getOrderList();
+            getUserReview();
+        }
+    }, [modalIsOpen]);
     
     return(
         <div className={"container-fluid"}>
