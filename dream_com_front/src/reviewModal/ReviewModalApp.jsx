@@ -49,6 +49,7 @@ function ReviewModalApp(props) {
         productAndReviewMsgInfo().then(() => {
             setIsLoad(false);
         });
+
     }, []);
 
 
@@ -76,6 +77,7 @@ function ReviewModalApp(props) {
         }
     }
 
+    // 이미지 경로 저장
     useEffect(() => {
         if(saveImgPath == null) {
             return;

@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import "./FindPw.css"
+import axios from "axios";
 
 const ChangeCss = () => {
     document.getElementById("HandPhone").style.color = '#e26e6e';
@@ -8,8 +9,8 @@ const ChangeCss = () => {
     document.getElementById("Email").style.border = 'solid 1px #e0e0e0';
     document.getElementById("Email").style.borderBottom = '1px solid #e26e6e';
     document.getElementById("Email").style.color = 'black';
-    document.getElementById("findEmail").style.display= 'none';
-    document.getElementById("findPhone").style.display= 'block';
+    document.getElementById("findEmail").style.display= 'block';
+    document.getElementById("findPhone").style.display= 'none';
 
 }
 
@@ -20,15 +21,68 @@ const ChangeCss2 = () => {
     document.getElementById("HandPhone").style.border = 'solid 1px #e0e0e0';
     document.getElementById("HandPhone").style.borderBottom = '1px solid #e26e6e';
     document.getElementById("HandPhone").style.color = 'black';
-    document.getElementById("findPhone").style.display= 'none';
-    document.getElementById("findEmail").style.display= 'block';
+    document.getElementById("findPhone").style.display= 'block';
+    document.getElementById("findEmail").style.display= 'none';
 }
 
 function FindPw(){
-    const [name,setName] = useState("");
+    // 로딩창
+    const [isLoad, setIsLoad] = useState(false);
+    // 입력한 아이디 값
+    const [userId, setUserId] = useState("");
+    // 입력한 이름
+    const [userName, setUserName] = useState("");
+    // 입력한 이메일 값
+    const [email, setEmail] = useState("");
+    // 입력한 인증번호 코드
+    const [chkNumber, setChkNumber] = useState("");
+    // 인증번호 입력칸 disable
+    const [successSendEmail, setSuccessSendEmail] = useState(false);
 
-    const nameHandleChange = (e) => {
-        setName(e.target.value)
+
+    // 인증코드 전송 후 받아오는 값
+    const [uniqueId, setUniqueId] = useState("");
+    // 인증 후 가입된 아이디 목록
+    const [userIdList, setUserIdList] = useState([]);
+    // 이메일 인증번호와 입력한 번호 일치하는지 확인
+    const [check, setCheck] = useState(false);
+    // 인증 완료 여부
+    const [auth, setAuth] = useState(false);
+
+    // 인증 메일 보내기
+    const sendMailButton = async () => {
+        let exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+        if(userName === "") {
+            alert("이름을 입력해주세요");
+        } else if(!exptext.test(email)) {
+            alert("이메일 형식이 아닙니다.");
+        }
+        else {
+            await axios.post("http://localhost:8080/checkSignedInfo", null, {params: {userEmail: email, userName: userName}})
+                .then(req => {
+                    if(req.data === 0) {
+                        alert("회원가입 정보가 일치하지 않습니다.")
+                    } else {
+                        sendMailAxios();
+                    }
+                })
+                .catch(err=> {
+                    console.log("통신 에러");
+                })
+        }
+    }
+
+    // 이메일 보내기
+    const sendMailAxios = async () => {
+        await axios.post("http://localhost:8080/sendEmail", null, {params: {email: email}})
+            .then(req => {
+                alert("이메일 전송이 완료되었습니다.");
+                setUniqueId(req.data);
+                setSuccessSendEmail(true);
+            })
+            .catch(err => {
+                console.log("통신 에러");
+            })
     }
 
     return(
@@ -40,15 +94,15 @@ function FindPw(){
                         <ul>
                             <li style={{float:"left"}}>
                                 <a className={"nanumSquareR-font-normal"} onClick={ChangeCss}
-                                   id={"HandPhone"} href={"#"}><b>휴대폰으로 찾기</b></a>
+                                   id={"HandPhone"} href={"#"}><b>이메일로 찾기</b></a>
                             </li>
                             <li style={{float:"right"}}><a className={"nanumSquareR-font-normal"}
-                                                           id={"Email"} href={"#"} onClick={ChangeCss2}><b>이메일로 찾기</b></a>
+                                                           id={"Email"} href={"#"} onClick={ChangeCss2}><b>휴대폰으로 찾기</b></a>
                             </li>
                         </ul>
                     </div>
 
-                    <div id={"findPhone"}>
+                    <div id={"findPhone"} style={{display:'none'}}>
                         <div>
                             <input type="radio" className={"mt-5 ms-5"} checked={true} id={"radio"}/>
                             <label className={"ms-2 nanumSquareR-font-normal"} style={{color:"#e26e6e"}}><b>휴대폰 번호로 찾기</b></label>
@@ -77,7 +131,7 @@ function FindPw(){
                         </ul>
                     </div>
 
-                    <div id={"findEmail"} style={{display:'none'}}>
+                    <div id={"findEmail"}>
                         <div>
                             <input type="radio" className={"mt-5 ms-5"} checked={true} id={"radio"}/>
                             <label className={"ms-2 nanumSquareR-font-normal"} style={{color:"#e26e6e"}}><b>이메일로 찾기</b></label>
@@ -107,7 +161,7 @@ function FindPw(){
                     </div>
                     <hr className={"ms-4 mt-5"}/>
                     <div className={"text-center mt-4"}>
-                        <button className={"nanumSquareR-font-large"} id={"nextBtn"}>다음</button>
+                        <button className={"nanumSquareR-font-large"} id={"nextBtn"} disabled={!successSendEmail}>다음</button>
                     </div>
                 </div>
             </div>
