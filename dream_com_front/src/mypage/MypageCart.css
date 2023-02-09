@@ -26,6 +26,7 @@
 }
 
 .cartTableTitle{
+    border-top: 1px solid black;
     padding: 15px;
 }
 
@@ -113,9 +114,11 @@
     margin-top: 93px;
 }
 
-/*.test{*/
-/*    height: 100vh;*/
-/*}*/
+.cartInformation li{
+    margin-top: 1px;
+    color: gray;
+    font-size: 14px;
+}
 
 
 

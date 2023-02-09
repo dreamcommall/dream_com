@@ -3,6 +3,7 @@ package com.bitc.dream_com.controller;
 import com.bitc.dream_com.dto.*;
 import com.bitc.dream_com.service.CartService;
 import com.bitc.dream_com.service.ProductService;
+import com.bitc.dream_com.service.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -87,10 +88,16 @@ public class CartController {
      * @apiNote 최종 수정일 2023-02-06
      */
     @RequestMapping(value = "/updateCart",method = RequestMethod.POST)
-    public String updateCart(CartDto cartDto) throws Exception{
-        cartService.updateCart(cartDto);
+    public int updateCart(CartDto cartDto) throws Exception{
 
-        return "수정완료";
+
+        ProductDto productDto = productService.productData(cartDto.getProductNum());
+        if(productDto.getInventoryQuantity() < cartDto.getQuantity()){
+            return -1;
+        }
+        else{
+            return cartService.updateCart(cartDto);
+        }
     }
     
     /**

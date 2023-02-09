@@ -114,8 +114,13 @@ function MypageWishList() {
 
     return (
         <div className={"container mypageWishList"}>
-            <h3 className={"ms-3"}>WishList</h3>
+            <h3 className={"ms-3"}>찜 목록</h3>
             <hr className={"ms-3"}/>
+            <ul className={"mb-5 cartInformation ms-3"}>
+                <li className={"nanumSquareR-font-small"}>찜목록에는 최대 100개의 상품을 보관할 수 있으며, 찜한 상품은 등록일로부터 최대 1년간 저장됩니다.</li>
+                <li className={"nanumSquareR-font-small"}>찜한 상품은 수량이 1개 입니다.</li>
+            </ul>
+            {/*<hr className={"ms-3 mb-5"}/>*/}
             <table className={"table"}>
                 <tbody>
                 {
@@ -133,7 +138,7 @@ function MypageWishList() {
                                                 <div className={"mt-0"}>{item.productTitle}</div>
                                             </a>
                                         </div>
-                                        <div className={"mt-2"}><strong>{item.productPrice} 원</strong></div>
+                                        <div className={"mt-2"}><strong>{item.productPrice.toLocaleString()} 원</strong></div>
                                         <div className={"productCompany"}>{item.companyName}</div>
                                     </div>
                                 </div>
