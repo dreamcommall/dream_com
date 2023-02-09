@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./FindPw.css"
 import axios from "axios";
 import HeaderD from "../common/HeaderD";
@@ -47,8 +47,6 @@ function FindPw(){
 
     // 인증코드 전송 후 받아오는 값
     const [uniqueId, setUniqueId] = useState("");
-    // 인증 후 가입된 아이디 목록
-    const [userIdList, setUserIdList] = useState([]);
     // 이메일 인증번호와 입력한 번호 일치하는지 확인
     const [check, setCheck] = useState(false);
     // 인증 완료 여부
@@ -57,7 +55,9 @@ function FindPw(){
     // 인증 메일 보내기
     const sendMailButton = async () => {
         let exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-        if(userName === "") {
+        if(userId === "") {
+            alert("아이디를 입력해주세요");
+        } else if(userName === "") {
             alert("이름을 입력해주세요");
         } else if(!exptext.test(email)) {
             alert("이메일 형식이 아닙니다.");
@@ -70,8 +70,9 @@ function FindPw(){
                         alert("회원가입 정보가 일치하지 않습니다.");
                         setIsLoad(false);
                     } else {
-                        sendMailAxios();
-                        setIsLoad(false);
+                        sendMailAxios().then(() => {
+                            setIsLoad(false);
+                        });
                     }
                 })
                 .catch(err=> {
@@ -93,6 +94,34 @@ function FindPw(){
             })
     }
 
+    // 인증번호 후 아이디 확인 페이지로
+    const authCheck = async () => {
+        if(chkNumber === "") {
+            alert("인증코드를 입력하세요")
+        } else {
+            await axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: chkNumber, uniqueId: uniqueId}})
+                .then(req => {
+                    if(req.data === 1) {
+                        setCheck(true);
+                    } else {
+                        alert("인증번호를 확인해주세요");
+                    }
+                })
+                .catch(err => {
+                    console.log("통신 에러");
+                })
+        }
+    }
+
+    // 인증번호 확인 후 인증여부변수 변경
+    useEffect(() => {
+        if(!check) {
+            return;
+        }
+        alert("인증이 완료되었습니다.")
+    }, [check])
+
+    // 입력한 아이디 저장
     const enteredUserId = (e) => {
         setUserId(e.target.value);
     }
@@ -110,7 +139,6 @@ function FindPw(){
     const enteredChkNumber = (e) => {
         setChkNumber(e.target.value);
     }
-
 
     return(
         <div className={"container-fluid"}>
@@ -183,17 +211,17 @@ function FindPw(){
                                 <li>
                                     <label className={"nanumSquareR-font-normal mt-5"} style={{marginRight:"34px"}}>이메일</label>
                                     <input className={"EmailInput nanumSquareR-font-normal"} placeholder={"이메일을 입력하세요."} onChange={enteredEmail} />
-                                    <button className={"ms-3 nanumSquareR-font-normal"}>인증요청</button>
+                                    <button className={"ms-3 nanumSquareR-font-normal"} onClick={sendMailButton}>인증요청</button>
                                 </li>
                                 <li>
                                     <label className={"nanumSquareR-font-normal me-3 mt-5"}>인증번호</label>
-                                    <input className={"findInput"} onChange={enteredChkNumber} />
+                                    <input className={"findInput"} onChange={enteredChkNumber} disabled={!successSendEmail} />
                                 </li>
                             </ul>
                         </div>
                         <hr className={"ms-4 mt-5"}/>
                         <div className={"text-center mt-4"}>
-                            <button className={"nanumSquareR-font-large"} id={"nextBtn"} disabled={!successSendEmail}>다음</button>
+                            <button className={"nanumSquareR-font-large"} id={"nextBtn"} onClick={authCheck} disabled={!successSendEmail}>다음</button>
                         </div>
                     </div>
                 </div>

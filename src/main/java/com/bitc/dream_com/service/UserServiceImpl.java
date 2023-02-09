@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import java.util.Random;
 import java.util.UUID;
@@ -311,6 +309,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void sendUrlEmail(String email, String userId) throws Exception {
+        String url = createUserUUID();
+
+    }
+
+    @Override
     public int updateProfile(UserDto userDto) throws Exception {
         return userMapper.updateProfile(userDto);
     }
@@ -330,7 +334,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.join(userDto);
     }
 
-    private MimeMessage createMessage(String email)throws Exception{
+    private MimeMessage createSignMessage(String email)throws Exception{
         MimeMessage message = emailSender.createMimeMessage();
 
         message.addRecipients(RecipientType.TO, email);//보내는 대상
@@ -387,9 +391,9 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public String sendEmail(String email)throws Exception {
+    public String sendSignEmail(String email)throws Exception {
         // TODO Auto-generated method stub
-        MimeMessage message = createMessage(email);
+        MimeMessage message = createSignMessage(email);
         try{//예외처리
             emailSender.send(message);
         }catch(MailException es){

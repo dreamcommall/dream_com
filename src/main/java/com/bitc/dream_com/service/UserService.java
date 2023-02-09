@@ -2,8 +2,6 @@ package com.bitc.dream_com.service;
 
 import com.bitc.dream_com.dto.UserDto;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface UserService {
@@ -59,7 +57,7 @@ public interface UserService {
 
     int join(UserDto userDto) throws Exception;
 
-    String sendEmail(String email) throws Exception;
+    String sendSignEmail(String email) throws Exception;
 
     int idChk(String userId) throws Exception;
 
@@ -133,4 +131,6 @@ public interface UserService {
     List<UserDto> getSignedId(String userEmail, String userName) throws Exception;
 
     int checkSignedInfo(String userEmail, String userName) throws Exception;
+
+    void sendUrlEmail(String email, String userId) throws Exception;
 }

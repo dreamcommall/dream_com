@@ -3,21 +3,11 @@ package com.bitc.dream_com.controller;
 import com.bitc.dream_com.dto.UserDto;
 import com.bitc.dream_com.service.UserService;
 import com.bitc.dream_com.service.UserServiceImpl;
-import org.apache.ibatis.javassist.compiler.ast.Member;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.server.Session;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.net.PasswordAuthentication;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static com.bitc.dream_com.service.UserServiceImpl.createKey;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -204,7 +194,7 @@ public class UserController {
             }
         };
         timer.schedule(expirationDt,(3000*60));
-        userService.sendEmail(email);
+        userService.sendSignEmail(email);
 
         return sessionId;
     }
@@ -278,5 +268,11 @@ public class UserController {
             return 1;
         }
         return 0;
+    }
+
+    @RequestMapping(value = "sendChangePwdUrl", method = RequestMethod.POST)
+    public  Object sendChangePwdUrl(@RequestParam("email") String email, @RequestParam("userId") String userId) throws Exception {
+        userService.sendUrlEmail(email, userId);
+        return "";
     }
 }

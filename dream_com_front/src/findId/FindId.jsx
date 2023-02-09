@@ -229,14 +229,15 @@ function FindId(){
                                     </li>
                                     <li>
                                         <label className={"nanumSquareR-font-normal me-3 mt-5"}>인증번호</label>
-                                        <input className={"findInput nanumSquareR-font-normal"} onChange={enteredChkNumber} />
+                                        <input className={"findInput nanumSquareR-font-normal"} onChange={enteredChkNumber} disabled={!successSendEmail} />
                                     </li>
                                 </ul>
                             </div>
                             <hr className={"ms-4 mt-5"}/>
                             <div className={"d-flex justify-content-center mt-4"}>
                                 <Link to={"/findId?success"} id={"nextBtn"}>
-                                    <button className={"nanumSquareR-font-large"} id={"nextBtn"} disabled={!successSendEmail} onClick={authCheck}>아이디 확인</button>
+                                    <button className={"nanumSquareR-font-large"} id={"nextBtn"}
+                                            onClick={authCheck} disabled={!successSendEmail}>아이디 확인</button>
                                 </Link>
                             </div>
                         </div>
