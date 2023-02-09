@@ -30,9 +30,12 @@ public class CartController {
      * @apiNote 최종 수정일 2023-02-06
      */
     @RequestMapping(value = "/insertCart", method = RequestMethod.POST)
-    public String insertCart(CartDto cartDto) throws Exception {
-        System.out.println(cartDto);
-        cartService.insertCart(cartDto);
+    public String insertCart(@RequestParam("userId") String userId, @RequestParam("productNum") String productNumArray, @RequestParam("quantity") int quantity)  throws Exception {
+        String[] productNum = productNumArray.split(",");
+
+        for(int i = 0; i < productNum.length; i++){
+            cartService.insertCart(userId,Integer.parseInt(productNum[i]),quantity);
+        }
 
         return "입력완료.";
     }
@@ -69,7 +72,6 @@ public class CartController {
         for(ProductDetail item: fullData) {
             item.setKey(item.getKey() + 1);
         }
-
         return fullData;
     }
     
@@ -97,13 +99,17 @@ public class CartController {
      * @return 성공적으로 작업이 수행됬다면 입력완료가 반환됩니다.
      * @apiNote 최종 수정일 2023-02-06
      */
-    @RequestMapping(value = "/deleteCart",method = RequestMethod.POST)
-    public String deleteCart(CartDto cartDto) throws Exception{
-        cartService.deleteCart(cartDto);
+    @RequestMapping(value = "/deleteCart", method = RequestMethod.POST)
+    public String deleteCart(@RequestParam("userId") String userId, @RequestParam("productNum") String productNumArray)  throws Exception {
+        String[] productNum = productNumArray.split(",");
 
-        return "redirect:http://localhost:3000";
+        for(int i = 0; i < productNum.length; i++){
+            cartService.deleteCart(userId,Integer.parseInt(productNum[i]));
+        }
+
+        return "입력완료.";
     }
-    
+
     @RequestMapping(value = "/insertReview",method = RequestMethod.POST)
     public void insertReview(ReviewDto reviewDto) throws Exception{
         cartService.insertReview(reviewDto);

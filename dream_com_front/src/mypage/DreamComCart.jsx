@@ -7,11 +7,13 @@ import Footer from "../common/Footer";
 
 function DreamComCart(){
     return(
-        <div>
+        <div className={"container-fluid"}>
             <HeaderD />
             <NavigationBar />
-            <MyPageNav />
-            <MypageCart />
+            <div className={"container"}>
+                <MyPageNav />
+                <MypageCart />
+            </div>
             <Footer />
         </div>
     )
