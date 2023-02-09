@@ -70,7 +70,7 @@ function DetailBodyProductReviewContents({reviewData, funcPlusReviewLikeCount}) 
                 <p className={"nanumSquareR-font-normal"}>{reviewData.content}</p>
             </div>
             <div id={"div-detail-review-photo"}>
-                <img src={reviewData.imgPath}></img>
+                <img width={"20%"} height={"85%"} src={reviewData.imgPath}></img>
             </div>
             <div className={"d-flex align-items-center mb-3"}>
                 <div onClick={(e) => {funcPlusReviewLikeCount(e.target)}}
