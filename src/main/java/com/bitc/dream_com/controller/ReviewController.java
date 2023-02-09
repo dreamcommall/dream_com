@@ -235,6 +235,7 @@ public class ReviewController {
         // 새롭게 저장할 파일 명
         String fileId = now + "_" + user.getUserId() + "_" + product.getProductNum();
         String path = new File("./").getCanonicalPath();
+        String fileName = "";
 
 //        이미지 파일 저장될 경로
         String UPLOAD_PATH = path + "\\dream_com_front\\public\\images\\reviewImage";
@@ -246,7 +247,7 @@ public class ReviewController {
                 // 확장자 ex) jpg
                 String fileExtension = originName.substring(originName.lastIndexOf(".") + 1);
 
-
+                fileName = fileId + "." + fileExtension;
                 File fileSave = new File(UPLOAD_PATH, fileId + "." + fileExtension);
                 // 폴더가 없을 경우 폴더 만들기
                 if(!fileSave.exists()) {
@@ -261,6 +262,6 @@ public class ReviewController {
             System.out.println(e.getMessage());
         }
 
-        return "/images/reviewImage/" + fileId;
+        return "/images/reviewImage/" + fileName;
     }
 }
