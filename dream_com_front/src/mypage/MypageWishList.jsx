@@ -114,7 +114,7 @@ function MypageWishList() {
 
     return (
         <div className={"container mypageWishList"}>
-            <h3 className={"ms-3"}>WishList</h3>
+            <h3 className={"ms-3 nanumSquareB-font-large"}>찜목록</h3>
             <hr className={"ms-3"}/>
             <table className={"table"}>
                 <tbody>

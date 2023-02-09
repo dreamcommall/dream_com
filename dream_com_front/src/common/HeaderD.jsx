@@ -46,7 +46,7 @@ function HeaderD({keyword}) {
                             paddingTop: "10%"
                         }}>
 
-                            <Link to={"/informationMyPage"}>
+                            <Link to={"/mypage/order"}>
                                 <li style={{listStyle: "none", marginLeft:"-40px"}}
                                     onMouseOver={() => setUseHover(0)}
                                     onMouseOut={() => setUseHover(1)}
