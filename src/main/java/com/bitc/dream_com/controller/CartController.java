@@ -59,7 +59,7 @@ public class CartController {
         if(item.getQuantity() > productInfo.getInventoryQuantity()) {
 //            제품 재고가 0일 경우 재고 0
             if(productInfo.getInventoryQuantity() > 0) {
-                productInfo.setInventoryQuantity(-1);
+                productInfo.setInventoryQuantity(productInfo.getInventoryQuantity());
             }
 //            제품 제고가 충분할 경우 제품데이터 재고 수량을 장바구니에 저장된 수량으로 변경
         } else {

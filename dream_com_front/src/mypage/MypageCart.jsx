@@ -10,6 +10,7 @@ function MypageCart() {
     const [price, setPrice] = useState(0);
     const [discountMoney, setDiscountMoney] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0);
+    const [blankHeight, setBlankHeight] = useState("0px");
 
     // userId 별로 장바구니 불러오기
     useEffect(() => {
@@ -35,12 +36,11 @@ function MypageCart() {
             }
         })
             .then((req) => {
+                console.log(req.data)
                 setCartList(req.data);
             })
-            .catch((err) => {
-                console.log(userId)
-            })
 
+        // if(cartList.inventory)
     }, [userId]);
 
     // 총 가격 계산해주는 Effect
@@ -54,9 +54,13 @@ function MypageCart() {
         setPrice(productPriceSum);
         setDiscountMoney(productDiscount);
         setTotalPrice(productPriceSum - productDiscount);
-    }, [cartList, totalPrice])
+    }, [cartList])
 
-    // 수량 -1
+    useEffect(() => {
+        controlBlankHeight();
+    }, [cartList]);
+
+    // 수량 +1
     const plusQuantity = (id, productNum) => {
         document.getElementById(id).value = parseInt(document.getElementById(id).value) + 1
         axios.post("http://localhost:8080/updateCart", null, {
@@ -73,19 +77,26 @@ function MypageCart() {
     }
     // 수량 - 1
     const minusQuantity = (id, productNum) => {
-        document.getElementById(id).value = parseInt(document.getElementById(id).value) - 1
+        if(document.getElementById(id).value <= 1){
+            alert('수량을 1개 이하로 선택하실수 없습니다.')
+            return document.getElementById(id).value
+        }
 
-        axios.post("http://localhost:8080/updateCart", null, {
-            params: {
-                userId: userId,
-                quantity: parseInt(document.getElementById(id).value),
-                productNum: productNum
-            }
-        })
-            .then((req) => {
-                alert('수량이 변경되었습니다.')
-                window.location.reload();
+        else{
+            document.getElementById(id).value = parseInt(document.getElementById(id).value) - 1
+
+            axios.post("http://localhost:8080/updateCart", null, {
+                params: {
+                    userId: userId,
+                    quantity: parseInt(document.getElementById(id).value),
+                    productNum: productNum
+                }
             })
+                .then((req) => {
+                    alert('수량이 변경되었습니다.')
+                    window.location.reload();
+                })
+        }
     }
 
     // 장바구니 삭제
@@ -116,6 +127,15 @@ function MypageCart() {
             })
     }
 
+    const controlBlankHeight = () => {
+        if (cartList.length == 0) {
+            setBlankHeight("525px");
+        } else if (cartList.length == 1) {
+            setBlankHeight("325px");
+        } else if (cartList.length == 2) {
+            setBlankHeight("125px");
+        }
+    }
 
     return (
         <div>
@@ -141,7 +161,7 @@ function MypageCart() {
                                     <div className={"cartList"}>
                                         <input className={"productNum"} type={"checkbox"} value={item.productNum}
                                                id={`checked${item.key}`} key={item.key}/>
-                                        <a href={"#"}><img src={item.mainPageImg}/></a>
+                                        <a href={"#"}><img src={item.thumbnailImg}/></a>
                                         <div className={"productTitle"}>
                                             <a href={"#"}>
                                                 <div>{item.productTitle}</div>
@@ -179,7 +199,7 @@ function MypageCart() {
                 }
                 </tbody>
             </table>
-            <div className={"text-center nanumSquareR-font-normal"}>
+            <div className={"text-center nanumSquareR-font-normal"} style={cartList.length == 0 ? {display:"none"} : {display: "block"}}>
                 <div className={"totalPrice"}>총 상품금액: {price}</div>
                 <div className={"float-start ms-4 mt-3"}>-</div>
                 <div className={"totalSale"}>총 할인금액 : {discountMoney}</div>
@@ -188,9 +208,16 @@ function MypageCart() {
             </div>
             <br/>
             <br/>
-            <div className={"mb-5"}>
+            <div className={"mb-5"} style={cartList.length == 0 ? {display:"none"} : {display: "block"}}>
                 <button className={"deleteCart"} onClick={deleteCart}>장바구니 비우기</button>
                 <Link to={"/purchase"}><button className={"buyCart"}>구매하기</button></Link>
+            </div>
+            <div style={cartList.length < 3 ? {height : blankHeight} : {height : "50px"}} className={"row"}>
+                <div className={"col d-flex justify-content-center"}>
+                    {
+                        cartList.length == 0 ? <p style={{marginTop : "235px"}} className={"nanumSquareR-font-large"}>장바구니에 상품이 존재하지 않습니다.</p> : ""
+                    }
+                </div>
             </div>
         </div>
     )
