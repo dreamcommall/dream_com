@@ -1,16 +1,12 @@
 import React, {useEffect, useState} from "react";
 import MyPageBuyProductContents from "./MyPageBuyProductContents";
-import ModalFrameTest from "../reviewModal/ModalFrameTest";
-import ModalFrame from "../reviewModal/ModalFrame";
 
-function BuyProductList({orderInfo, review, paymentInfo}) {
+function BuyProductList({orderInfo, review, paymentInfo, funcGetProductNumber}) {
     // 배송 상태가 배송완료가 아닌경우 환불, 리뷰, 구매확정을 못하게 하기위해 선언
-    const [buttonDisable, setButtonDisable] = useState(true);
-
-    const openReviewPage = () => {
-        window.open("/review/modal");
-    }
-
+    const [purchaseEnable, setPurchaseEnable] = useState(false); // 구매가 사용가능한 상태인가?
+    const [refundEnable, setRefundEnable] = useState(false); // 환불이 가능한 상태인가?
+    const [reviewEnable, setReviewEnable] = useState(false); // 리뷰 작성이 가능한 상태인가?
+    
     // 배송 상태값(기본은 숫자)을 받아서 문자형으로 바꾼다.
     const paymentStateNumberToString = (stateNumber) => {
         switch (stateNumber) {
@@ -22,6 +18,8 @@ function BuyProductList({orderInfo, review, paymentInfo}) {
                 return "배송중"
             case 3 :
                 return "배송완료"
+            case 4 :
+                return "구매확정"
         }
     }
 
@@ -31,7 +29,13 @@ function BuyProductList({orderInfo, review, paymentInfo}) {
         }
 
         if (paymentInfo.state == 3) {
-            setButtonDisable(false);
+            setPurchaseEnable(true);
+            setRefundEnable(false);
+            setReviewEnable(false);
+        } else if (paymentInfo.state == 4) {
+            setPurchaseEnable(false);
+            setRefundEnable(true);
+            setReviewEnable(true);
         }
     }, [paymentInfo]);
     
@@ -73,14 +77,13 @@ function BuyProductList({orderInfo, review, paymentInfo}) {
             <td className={"listStyle"}>
                 <div>
                     <div className={"orderState"}>
-                        <button disabled={buttonDisable}>환불요청</button>
+                        <button disabled={!refundEnable}>환불요청</button>
                     </div>
                     <div className={"orderState"}>
-                        <button disabled={buttonDisable} className={"mt-2"} onClick={openReviewPage}>리뷰쓰기</button>
-                        <ModalFrameTest />
+                        <button disabled={!(reviewEnable && (review == null))} className={"mt-2"} onClick={() => {funcGetProductNumber(orderInfo.productNum)}}>리뷰쓰기</button>
                     </div>
                     <div className={"orderState"}>
-                        <button disabled={buttonDisable} className={"mt-2"}>구매확정</button>
+                        <button disabled={!purchaseEnable} className={"mt-2"}>구매확정</button>
                     </div>
                 </div>
             </td>

@@ -5,6 +5,7 @@ import "./Login.css"
 import {Link, useLocation, useSearchParams} from "react-router-dom";
 import ClickPrevent from "../common/ClickPrevent";
 import Loading from "../common/Loading";
+import loginChk from "../LoginChk";
 
 // 작성자 : YMKJJ
 // 기능 : 로그인 UI / 로그인 기능
@@ -63,6 +64,12 @@ function Login(){
 
     const handleInputPw = (e) => {
         setUserPw(e.target.value)
+    }
+
+    const enterKey = (e) => {
+        if(e.key === 'Enter'){
+            document.getElementById("loginBtn").click();
+        }
     }
 
     // 로그인 처리 프로세스
@@ -162,15 +169,15 @@ function Login(){
                         </div>
                         <div>
                             <input placeholder={"아이디"} value={userId} onChange={handleInputId} type={"text"}
-                                   className={"border-1 border-bottom-0 nanumSquareR-font-small"} style={inputSize}/>
+                                   className={"border-1 border-bottom-0 nanumSquareR-font-small"} style={inputSize} onKeyDown={(e)=>{enterKey(e)}}/>
                         </div>
                         <div>
                             <input placeholder={"비밀번호는 8~20자"} value={userPw} onChange={handleInputPw} type={"password"}
-                                   style={inputSize}/>
+                                   style={inputSize} onKeyPress={enterKey} />
                         </div>
                         {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 2*/}
                         <div>
-                            <button style={loginBtn} onClick={DataReceive} className={"nanumSquareR-font-normal border-0 mt-3"}>로그인</button>
+                            <button id={"loginBtn"} style={loginBtn} onClick={DataReceive} className={"nanumSquareR-font-normal border-0 mt-3"}>로그인</button>
                             <Link id={"link-hidden-user-login"} to={prevUrl}><button hidden={true}/></Link>
                         </div>
                         <div>

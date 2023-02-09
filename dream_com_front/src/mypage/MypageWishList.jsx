@@ -6,6 +6,8 @@ import axios from "axios";
 function MypageWishList() {
     const [userId, setUserId] = useState(null);
     const [wishList, setWishList] = useState([]);
+    const [blankHeight, setBlankHeight] = useState("0px");
+
     useEffect(() => {
         axios.post("http://localhost:8080/loginUserId", null, {
             params: {
@@ -39,6 +41,10 @@ function MypageWishList() {
             })
 
     }, [userId]);
+
+    useEffect(() => {
+        controlBlankHeight();
+    }, [wishList]);
 
     const deleteWishList = () => {
         const inputList = document.querySelectorAll(".wishCheck");
@@ -96,9 +102,19 @@ function MypageWishList() {
             })
     }
 
+    const controlBlankHeight = () => {
+        if (wishList.length == 0) {
+            setBlankHeight("600px");
+        } else if (wishList.length == 1) {
+            setBlankHeight("325px");
+        } else if (wishList.length == 2) {
+            setBlankHeight("125px");
+        }
+    }
+
     return (
         <div className={"container mypageWishList"}>
-            <h3 className={"ms-3"}>WishList</h3>
+            <h3 className={"ms-3 nanumSquareB-font-large"}>찜목록</h3>
             <hr className={"ms-3"}/>
             <table className={"table"}>
                 <tbody>
@@ -109,7 +125,7 @@ function MypageWishList() {
                                 <div className={"ms-1 nanumSquareR-font-normal wishListSection"}>
                                     <input className={"float-start wishCheck"} value={item.productNum}
                                            type={"checkbox"}/>
-                                    <a href={"#"}><img className={"wishImg"} src={item.carouselImg[0]}/></a>
+                                    <a href={"#"}><img className={"wishImg"} src={item.thumbnailImg}/></a>
                                     <div className={"wishListProductInfo"}>
                                         <div className={"mt-2 productDate"}>{item.productCreateDt}</div>
                                         <div className={"mt-2"}>
@@ -118,6 +134,7 @@ function MypageWishList() {
                                             </a>
                                         </div>
                                         <div className={"mt-2"}><strong>{item.productPrice} 원</strong></div>
+                                        <div className={"productCompany"}>{item.companyName}</div>
                                     </div>
                                 </div>
                             </tr>
@@ -126,7 +143,14 @@ function MypageWishList() {
                 }
                 </tbody>
             </table>
-            <div className={"mb-5"}>
+            <div style={wishList.length < 3 ? {height : blankHeight} : {height : "50px"}} className={"row"}>
+                <div className={"col d-flex justify-content-center"}>
+                    {
+                        wishList.length == 0 ? <p style={{marginTop : "235px"}} className={"nanumSquareR-font-large"}>찜한 상품이 존재하지 않습니다.</p> : ""
+                    }
+                </div>
+            </div>
+            <div className={"mb-5"} style={wishList.length == 0 ? {display:"none"} : {display: "block"}}>
                 <button className={"addWishList"} onClick={insertCart}>장바구니 추가</button>
                 <button className={"deleteWishList"} onClick={deleteWishList}>찜 해제</button>
             </div>

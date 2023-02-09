@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter, createBrowserRouter, Route, RouterProvider, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import MainPageApp from "./main/MainPageApp";
 import SearchPageApp from "./search/SearchPageApp";
 import PurchaseApp from "./purchase/PurchaseApp";
@@ -17,7 +17,6 @@ import ProcessClear from "./common/ProcessClear";
 import Mypage from "./mypage/Mypage";
 import DreamComCart from "./mypage/DreamComCart";
 import DreamComWishList from "./mypage/DreamComWishList";
-import ReviewModalApp from "./reviewModal/ReviewModalApp";
 import FindPwSuccess from "./findId/FindPwSuccess";
 
 // 작성자 : MoonNight285
@@ -70,10 +69,9 @@ function DreamComRouter() {
                 <Route path={"/detail"} element={<DetailApp />} />
                 <Route path={"/error"} element={<ErrorPageApp />} />
                 <Route path={"/purchase"} element={<PurchaseApp />}></Route>
-                <Route path={"/mypageOrder"} element={<Mypage />}></Route>
+                <Route path={"/mypage/order"} element={<Mypage />}></Route>
                 <Route path={"/mypageCart"} element={<DreamComCart />}></Route>
                 <Route path={"/myPageWishList"} element={<DreamComWishList />}></Route>
-                <Route path={"/review/modal"} element={<ReviewModalApp />}></Route>
             </Routes>
         </BrowserRouter>
     )
