@@ -234,9 +234,10 @@ public class ReviewController {
 
         // 새롭게 저장할 파일 명
         String fileId = now + "_" + user.getUserId() + "_" + product.getProductNum();
+        String path = new File("./").getCanonicalPath();
 
 //        이미지 파일 저장될 경로
-        String UPLOAD_PATH = "C:\\java505\\intelliJ\\react\\dream_com\\dream_com_front\\public\\images\\reviewImage";
+        String UPLOAD_PATH = path + "\\dream_com_front\\public\\images\\reviewImage";
         try {
             for(int i = 0; i < multipartFiles.length; i++) {
                 MultipartFile file = multipartFiles[i];
