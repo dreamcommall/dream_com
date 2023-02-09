@@ -8,6 +8,9 @@ import axios from "axios";
 import ClickPrevent from "../common/ClickPrevent";
 import Loading from "../common/Loading";
 import "./BuyProductList.css";
+import {Outlet, useLocation, useNavigate} from "react-router-dom";
+import ModalFrame from "../reviewModal/ModalFrame";
+import ReviewModalApp from "../reviewModal/ReviewModalApp";
 
 function Mypage() {
     const [loginUserId, setLoginUserId] = useState(); // 로그인 한 유저의 아이디
@@ -15,6 +18,16 @@ function Mypage() {
     const [reviews, setReviews] = useState(); // 유저가 작성한 리뷰 목록
     const [blankHeight, setBlankHeight] = useState("0px"); // 주문내역이 없어서 텅비는 문제를 해결하기위해 선언
     const [isLoad, setIsLoad] = useState(false); // 로딩창
+    const navigate = useNavigate(); // 페이지 이동 네비게이션
+    const pageUrl = useLocation(); // 현재 페이지 경로
+    const [modalIsOpen, setModalIsOpen] = useState(false); // 리뷰 모달창 표시 여부
+    const [selectedProductNumber, setSelectedProductNumber] = useState(0); // 선택한 제품 번호
+    
+    // 선택한 제품의 번호를 가져오는 함수
+    const getSelectedProductNumber = (productNumber) => {
+        setSelectedProductNumber(productNumber);
+        setModalIsOpen(true);
+    }
     
     // 주문내역이 너무 없어서 텅 비는 문제를 해결하기위해 주문내역 개수에 따라 빈 높이값을 조절
     const controlBlankHeight = () => {
@@ -30,10 +43,10 @@ function Mypage() {
     // 주문 내역에 있는 제품번호와 리뷰 내용에 있는 제품번호를 매칭시켜서 해당 제품의 리뷰 내용을 저장한다.
     // 매개변수 : 주문 내역의 리뷰 번호
     const getTargetReview = (productNum) => {
-        let reviewContent = "";
+        let reviewContent = null;
         for (let review in reviews) {
             if (reviews[review].productNum == productNum) {
-                reviewContent = reviews[review].content;
+                reviewContent = reviews[review].content == "" ? "리뷰를 입력하지 않았습니다." : reviews[review].content;
                 break;
             }
         }
@@ -72,6 +85,7 @@ function Mypage() {
             }}).then(response => {
             if (response.data == null || response.data == undefined || response.data == "") {
                 setLoginUserId(null);
+                navigate(`/login?prev=${pageUrl.pathname + pageUrl.search}`); // 미 로그인 상태면 로그인 페이지로 이동시킨다.
             } else {
                 setLoginUserId(response.data);
             }
@@ -159,7 +173,8 @@ function Mypage() {
                         {
                             orderList.map(order => {
                                 return (
-                                    <BuyProductList orderInfo={createOrderInfo(order)} review={getTargetReview(order.productNum)} paymentInfo={createPaymentInfo(order)} />
+                                    <BuyProductList orderInfo={createOrderInfo(order)} review={getTargetReview(order.productNum)}
+                                        paymentInfo={createPaymentInfo(order)} funcGetProductNumber={getSelectedProductNumber} />
                                 );
                             })
                         }
@@ -172,6 +187,13 @@ function Mypage() {
                         orderList.length == 0 ? <p style={{marginTop : "235px"}} className={"nanumSquareR-font-large"}>주문 배송 & 구매내역이 존재하지 않습니다.</p> : ""
                     }
                 </div>
+            </div>
+            <div>
+                {modalIsOpen && (
+                    <ModalFrame setModalIsOpen={setModalIsOpen}>
+                        <ReviewModalApp setModalIsOpen={setModalIsOpen} productNum={selectedProductNumber} userId={loginUserId} />
+                    </ModalFrame>
+                )}
             </div>
             <Footer />
         </div>

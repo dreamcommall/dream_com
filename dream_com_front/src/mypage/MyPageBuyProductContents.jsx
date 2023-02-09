@@ -18,7 +18,7 @@ function MyPageBuyProductContents({orderInfo, review}) {
                                 </button>
                             </p>
                             <div id={`collapse${orderInfo.productNum}`} className="accordion-collapse collapse">
-                                <div className={"ms-2 pt-1 productReview"}>{review}</div>
+                                <div className={"ms-2 pt-1 my-page-product-review"}>{review}</div>
                             </div>
                         </div>
                     </div>
