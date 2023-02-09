@@ -30,13 +30,13 @@ span#selectedPurchaseQuantity {
     height: 20px;
 }
 .tr-shortage-inventory {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
     color: rgba(25, 0, 0, 0.5);
     position: relative;
 }
 
 .shortage-inventory-img {
-    opacity: 50%;
+    opacity: 30%;
 }
 
 .p-purchaseProductInfoTitle, .p-purchaseProductInfoNameSpec {
@@ -50,7 +50,7 @@ span#selectedPurchaseQuantity {
 .div-shortageInventoryMsg {
     position: absolute;
     left: 23%;
-    top: 20%;
+    top: 30%;
     z-index: 1000;
     /*color: red;*/
     color: rgba(255, 0, 0, 1);

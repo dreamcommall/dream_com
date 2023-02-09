@@ -139,22 +139,15 @@ public class UserController {
     }
 
 //    회원 정보 수정
-//    최종 수정일 2023-01-19
+//    최종 수정일 2023-02-09
 //    최종 작성자 : 양민호
     @RequestMapping(value = "updateProfile", method = RequestMethod.PUT)
-    public String updateProfile(UserDto userDto) throws Exception{
-//        임시 데이터 추후 삭제 필요
-        userDto.setUserAddr("11");
-        userDto.setUserEmail("11@naver.com");
-        userDto.setUserName("이름");
-        userDto.setUserPost(123);
-        userDto.setUserAddr("1");
-        userDto.setUserTel("010-0000-0000");
-        userDto.setUserState("N");
-        System.out.println(userDto);
-//        ---------------------
-        userService.updateProfile(userDto);
-        return "수정 완료";
+    public int updateProfile(UserDto userDto) throws Exception{
+        int result = userService.updateProfile(userDto);
+        if(result == 1) {
+            return 1;
+        }
+        return 0;
     }
 
 //    회원 탈퇴
@@ -250,5 +243,40 @@ public class UserController {
     @RequestMapping(value="getUserInfo", method = RequestMethod.GET)
     public Object getUserInfo(@RequestParam("userId") String userId) throws Exception {
         return userService.getUserInfo(userId);
+    }
+
+    /**
+     * 회원가입시 입력한 정보로 아이디를 가져오는 함수입니다.<br>
+     * <b>파라미터로 반드시 userEmail과 userName을 받아야합니다.</b><br>
+     *
+     * @author 양민호
+     * @param userEmail 페이지에서 입력한 이메일 값입니다.
+     * @param userName 페이지에서 입력한 이름 값입니다.
+     * @return user 테이블에서 해당 사용자의 아이디와 가입날짜를 반환합니다.
+     * @apiNote 최종 수정일 2023-02-09
+     */
+    @RequestMapping(value = "getSignedId", method = RequestMethod.POST)
+    public List<UserDto> getSignedId(@RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName) throws Exception {
+        return userService.getSignedId(userEmail, userName);
+    }
+
+//    아이디 이메일로 회원가입한 유저인지 확인
+    /**
+     * 입력한 아이디 이메일로 회원가입한 유저인지 확인하는 함수입니다.<br>
+     * <b>파라미터로 반드시 userEmail과 userName을 받아야합니다.</b><br>
+     *
+     * @author 양민호
+     * @param userEmail 페이지에서 입력한 이메일 값입니다.
+     * @param userName 페이지에서 입력한 이름 값입니다.
+     * @return 가입 정보가 user테이블에 있으면 1, 없으면 0을 반환합니다.
+     * @apiNote 최종 수정일 2023-02-09
+     * */
+    @RequestMapping(value = "checkSignedInfo", method = RequestMethod.POST)
+    public int checkSignedInfo(@RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName) throws Exception {
+        int result =  userService.checkSignedInfo(userEmail, userName);
+        if(result > 0) {
+            return 1;
+        }
+        return 0;
     }
 }

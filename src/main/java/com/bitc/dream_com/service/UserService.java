@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserService {
     UserDto loginChk(String userId, String userPw) throws Exception;
 
-    void updateProfile(UserDto userDto) throws Exception;
+    int updateProfile(UserDto userDto) throws Exception;
 
     int checkInfo(UserDto userDto) throws Exception;
 
@@ -129,4 +129,8 @@ public interface UserService {
      * @apiNote 최종 수정일 2023-02-05
      */
     boolean registerSessionAutoLoginUser(String uniqueId, String userId) throws Exception;
+
+    List<UserDto> getSignedId(String userEmail, String userName) throws Exception;
+
+    int checkSignedInfo(String userEmail, String userName) throws Exception;
 }
