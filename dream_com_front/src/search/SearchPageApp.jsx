@@ -146,6 +146,11 @@ function SearchPageApp() {
             });
     }, [searchParams]);
     
+    // 최초 랜더링 시 가장 최상위로 이동
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+    
     return (
         <div className={"container-fluid"}>
             <ClickPrevent isLoading={isLoad} />
