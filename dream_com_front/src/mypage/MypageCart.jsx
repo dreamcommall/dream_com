@@ -119,7 +119,8 @@ function MypageCart() {
 
     return (
         <div>
-            <h3 className={"mypageCart"}>Cart</h3>
+            <h3 className={"mypageCart nanumSquareB-font-large"}>장바구니</h3>
+            <hr />
             <table className={"table mt-5 nanumSquareR-font-small"}>
                 <thead className={"text-center cartTableTitle"}>
                 <tr>

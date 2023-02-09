@@ -6,3 +6,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.link-my-page-order-product-title {
+    text-decoration: none;
+    color: black;
+}
