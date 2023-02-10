@@ -25,8 +25,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void updateCart(CartDto cartDto) throws Exception {
-        testMapper.updateCart(cartDto);
+    public int updateCart(CartDto cartDto) throws Exception {
+        return testMapper.updateCart(cartDto);
     }
 
     @Override

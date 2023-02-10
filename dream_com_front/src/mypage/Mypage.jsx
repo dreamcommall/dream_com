@@ -154,12 +154,12 @@ function Mypage() {
             <HeaderD />
             <NavigationBar />
             <MyPageNav />
-            <div className={"container mt-5"}>
+            <div className={"container"}>
                 <div className={"row"}>
                     <div className={"col"}>
-                        <h3 className={"mt-5 ms-3 nanumSquareR-font-large"}><strong>주문배송 & 구매내역 조회</strong></h3>
-                        <hr className={"ms-3"}/>
-                        <ul className={"mb-5 deliveryInformation ms-3"}>
+                        <h3 className={"mt-5 nanumSquareR-font-large"}><strong>주문배송 & 구매내역 조회</strong></h3>
+                        <hr />
+                        <ul className={"mb-5 deliveryInformation"}>
                             <li className={"nanumSquareR-font-small"}>일반적으로 소비자는 자신이 체결한 전자상거래 계약에 대해 그 계약의 내용을 불문하고 그 청약철회 및 계약해제의 기간(통상 7일) 내에는 청약철회 등을 자유롭게 할 수 있습니다.</li>
                             <li className={"nanumSquareR-font-small"}>출고 완료 직후 교환 / 환불 요청을 하더라도 상품을 수령하신 후 택배 업체를 통해 보내주셔야
                                 처리 가능합니다.
@@ -167,7 +167,7 @@ function Mypage() {
                         </ul>
                     </div>
                 </div>
-                <table className={"table ms-3 nanumSquareR-font-small my-page-payment-table"}>
+                <table className={"table nanumSquareR-font-small my-page-payment-table"}>
                     <thead className={"buyProductListThead"}>
                         <tr className={"text-center"}>
                             <th className={"col-4"}>상품정보</th>

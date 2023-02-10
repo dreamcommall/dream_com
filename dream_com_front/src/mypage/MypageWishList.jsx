@@ -84,11 +84,11 @@ function MypageWishList() {
             }
         }
 
-        axios.post("http://localhost:8080/insertCart", null,{
+        axios.post("http://localhost:8080/insertCart", null, {
             params: {
                 userId: userId,
                 productNum: productNum.join(),
-                quantity:1
+                quantity: 1
             }
         })
             .then((req) => {
@@ -113,46 +113,59 @@ function MypageWishList() {
     }
 
     return (
-        <div className={"container mypageWishList"}>
-            <h3 className={"ms-3 nanumSquareB-font-large"}>찜목록</h3>
-            <hr className={"ms-3"}/>
-            <table className={"table"}>
-                <tbody>
-                {
-                    wishList.map((item) => {
-                        return (
-                            <tr className={"tableWishList"}>
-                                <div className={"ms-1 nanumSquareR-font-normal wishListSection"}>
-                                    <input className={"float-start wishCheck"} value={item.productNum}
-                                           type={"checkbox"}/>
-                                    <a href={"#"}><img className={"wishImg"} src={item.thumbnailImg}/></a>
-                                    <div className={"wishListProductInfo"}>
-                                        <div className={"mt-2 productDate"}>{item.productCreateDt}</div>
-                                        <div className={"mt-2"}>
-                                            <a href={"#"}>
-                                                <div className={"mt-0"}>{item.productTitle}</div>
-                                            </a>
-                                        </div>
-                                        <div className={"mt-2"}><strong>{item.productPrice} 원</strong></div>
-                                        <div className={"productCompany"}>{item.companyName}</div>
-                                    </div>
-                                </div>
-                            </tr>
-                        )
-                    })
-                }
-                </tbody>
-            </table>
-            <div style={wishList.length < 3 ? {height : blankHeight} : {height : "50px"}} className={"row"}>
-                <div className={"col d-flex justify-content-center"}>
+        <div className={"mypageWishList"}>
+            <div className={"mypageWishList"}>
+                <h3 className={"nanumSquareR-font-large"}><strong>찜 목록</strong></h3>
+                <hr/>
+                <ul className={"mb-5 WishListInformation"}>
+                    <li className={"nanumSquareR-font-small"}>찜목록에는 최대 100개의 상품을 보관할 수 있으며, 찜한 상품은 등록일로부터 최대 1년간
+                        저장됩니다.
+                    </li>
+                    <li className={"nanumSquareR-font-small"}>찜한 상품은 수량이 1개 입니다.</li>
+                </ul>
+                <table className={"table"}>
+                    <tbody>
                     {
-                        wishList.length == 0 ? <p style={{marginTop : "235px"}} className={"nanumSquareR-font-large"}>찜한 상품이 존재하지 않습니다.</p> : ""
+                        wishList.map((item) => {
+                            return (
+                                <tr className={"tableWishList"}>
+                                    <div className={"ms-1 nanumSquareR-font-normal wishListSection"}>
+                                        <input className={"float-start wishCheck"} value={item.productNum}
+                                               type={"checkbox"}/>
+                                        <a href={"#"}><img className={"wishImg"} src={item.thumbnailImg}/></a>
+                                        <div className={"wishListProductInfo"}>
+                                            <div className={"mt-2 productDate"}>{item.productCreateDt}</div>
+                                            <div className={"mt-2"}>
+                                                <a href={"#"}>
+                                                    <div className={"mt-0"}>{item.productTitle}</div>
+                                                </a>
+                                            </div>
+                                            <div className={"mt-2"}>
+                                                <strong>{item.productPrice.toLocaleString()} 원</strong></div>
+                                            <div className={"productCompany"}>{item.companyName}</div>
+                                        </div>
+                                    </div>
+                                </tr>
+                            )
+                        })
                     }
+                    </tbody>
+                </table>
+                
+                <div className={"mb-5"} style={wishList.length == 0 ? {display: "none"} : {display: "block"}}>
+                    <button className={"addWishList"} onClick={insertCart}>장바구니 추가</button>
+                    <button className={"deleteWishList"} onClick={deleteWishList}>찜 해제</button>
                 </div>
-            </div>
-            <div className={"mb-5"} style={wishList.length == 0 ? {display:"none"} : {display: "block"}}>
-                <button className={"addWishList"} onClick={insertCart}>장바구니 추가</button>
-                <button className={"deleteWishList"} onClick={deleteWishList}>찜 해제</button>
+
+                <div style={wishList.length < 3 ? {height: blankHeight} : {height: "50px"}} className={"row"}>
+                    <div className={"col d-flex justify-content-center"}>
+                        {
+                            wishList.length == 0 ?
+                                <p style={{marginTop: "235px"}} className={"nanumSquareR-font-large"}>찜한 상품이 존재하지
+                                    않습니다.</p> : ""
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     )

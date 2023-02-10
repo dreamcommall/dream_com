@@ -5,18 +5,17 @@ import MyPageNav from "./MyPageNav";
 import Footer from "../common/Footer";
 import MypageWishList from "./MypageWishList";
 
-function DreamComWishList(){
-    return(
-
-    <div className={"container-fluid"}>
-        <HeaderD />
-        <NavigationBar />
-        <div className={"container"}>
-            <MyPageNav />
-            <MypageWishList />
+function DreamComWishList() {
+    return (
+        <div className={"container-fluid"}>
+            <HeaderD/>
+            <NavigationBar/>
+            <div className={"container"}>
+                <MyPageNav/>
+                <MypageWishList/>
+            </div>
+            <Footer/>
         </div>
-        <Footer />
-    </div>
     )
 }
 

@@ -26,6 +26,7 @@
 }
 
 .cartTableTitle{
+    border-top: 1px solid black;
     padding: 15px;
 }
 
@@ -110,12 +111,14 @@
 }
 
 .mypageCart{
-    margin-top: 93px;
+    margin-top: 49px;
 }
 
-/*.test{*/
-/*    height: 100vh;*/
-/*}*/
+.cartInformation li{
+    margin-top: 1px;
+    color: gray;
+    font-size: 14px;
+}
 
 
 
