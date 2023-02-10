@@ -122,9 +122,6 @@ public class ReviewController {
         reviewDto.setReviewNum(reviewNum);
 
         reviewService.insertSimpleReview(reviewDto);
-//        리뷰번호가 제대로 받아와 지지 않을 때가 있어서 확인용도
-        System.out.println(reviewNum);
-
         return result;
     }
 
