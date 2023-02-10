@@ -34,6 +34,16 @@ function NavigationBar() {
             console.log("유저 아이디 취득에 실패했습니다.");
         });
     }, []);
+    
+    // 로그인 세션 체크 타이머 설정
+    useEffect(() => {
+        clearTimeout(Number.parseInt(sessionStorage.getItem("loginSessionCheckTimer")));
+        sessionStorage.removeItem("loginSessionCheckTimer");
+        let loginSessionCheckTimer = setTimeout(() => {
+            window.location.reload();
+        }, 600000);
+        sessionStorage.setItem("loginSessionCheckTimer", loginSessionCheckTimer.toString());
+    }, []);
 
     // 로그아웃 후 정상적으로 로그아웃이 진행되었다면 세션,로컬 스토리지에 있는 UUID를 제거한다.
     const logout = () => {
