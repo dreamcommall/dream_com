@@ -4,7 +4,7 @@ import "../../fonts/fontStyle.css"
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 // 제품의 가격정보등을 보여주는 컴포넌트
 function DetailBodyProductSubInfo({productInfo, loginUserId, func}) {
@@ -18,12 +18,12 @@ function DetailBodyProductSubInfo({productInfo, loginUserId, func}) {
     const [totalPrice, setTotalPrice] = useState(0); // 총 합계 금액
     const [quantity, setQuantity] = useState(0); // 제품의 재고 수량
     const [productCount, setProductCount] = useState(0); // 제품 개수 선택에 사용되는 값
+    const navigate = useNavigate();
     
     // 찜 목록 클릭시 저장
     const addWishList = () => {
         if (loginUserId == null) {
-            const linker = document.querySelector("#link-hidden-detail-product-login-linker");
-            linker.click();
+            navigate(`/login?prev=/detail?productNum=${productNum}&pageNum=1`);
         } else {
             func.addWishList(loginUserId, productNum);
         }
@@ -37,8 +37,7 @@ function DetailBodyProductSubInfo({productInfo, loginUserId, func}) {
         }
 
         if (loginUserId == null) {
-            const linker = document.querySelector("#link-hidden-detail-product-login-linker");
-            linker.click();
+            navigate(`/login?prev=/detail?productNum=${productNum}&pageNum=1`);
         } else {
             func.addShoppingCart(loginUserId, productNum, productCount);
         }
@@ -47,13 +46,11 @@ function DetailBodyProductSubInfo({productInfo, loginUserId, func}) {
     // 구매하기 클릭시 페이지 이동
     const purchaseProduct = () => {
         if (loginUserId == null) {
-            const linker = document.querySelector("#link-hidden-detail-product-login-linker");
-            linker.click();
+            navigate(`/login?prev=/detail?productNum=${productNum}&pageNum=1`);
         } else if (productCount == 0) {
             alert("제품 개수는 0일수 없습니다.");
         } else {
-            const linker = document.querySelector("#link-hidden-detail-product-purchase-linker");
-            linker.click();
+            navigate(`/purchase?productNum=${productNum}&quantity=${productCount}`);
         }
     }
     
@@ -149,8 +146,6 @@ function DetailBodyProductSubInfo({productInfo, loginUserId, func}) {
                 <div onClick={addWishList}><img src={"images/heart.png"} /></div>
                 <div onClick={addShoppingCart}><img src={"images/shopping-cart.png"} /></div>
                 <div onClick={purchaseProduct}><p className={"mb-0 nanumSquareB-font-normal"}>구매하기</p></div>
-                <Link to={`/login?prev=/detail?productNum=${productNum}&pageNum=1`} id={"link-hidden-detail-product-login-linker"}><button hidden={true}/></Link>
-                <Link to={`/purchase?productNum=${productNum}&quantity=${productCount}`} id={"link-hidden-detail-product-purchase-linker"}><button hidden={true}/></Link>
             </div>
         </div>
     );

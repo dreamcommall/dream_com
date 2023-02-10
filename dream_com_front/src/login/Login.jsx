@@ -2,10 +2,9 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import "../fonts/fontStyle.css"
 import "./Login.css"
-import {Link, useLocation, useSearchParams} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import ClickPrevent from "../common/ClickPrevent";
 import Loading from "../common/Loading";
-import loginChk from "../LoginChk";
 
 // 작성자 : YMKJJ
 // 기능 : 로그인 UI / 로그인 기능
@@ -51,11 +50,11 @@ function Login(){
     const [isAutoLogin, setIsAutoLogin] = useState(false); // 자동 로그인
     const [prevUrl, setPrevUrl] = useState(""); // 이전 경로
     const useLocationPrevUrl = useLocation();
+    const navigate = useNavigate();
 
     // 로그인 성공후 이전 링크로 이동한다.
     const moveDestination = () => {
-        const link = document.querySelector("#link-hidden-user-login");
-        link.click();
+        navigate(prevUrl);
     }
 
     const handleInputId = (e) => {
@@ -173,12 +172,11 @@ function Login(){
                         </div>
                         <div>
                             <input placeholder={"비밀번호는 8~20자"} value={userPw} onChange={handleInputPw} type={"password"}
-                                   style={inputSize} onKeyPress={enterKey} />
+                                   style={inputSize} onKeyDown={enterKey} />
                         </div>
                         {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 2*/}
                         <div>
                             <button id={"loginBtn"} style={loginBtn} onClick={DataReceive} className={"nanumSquareR-font-normal border-0 mt-3"}>로그인</button>
-                            <Link id={"link-hidden-user-login"} to={prevUrl}><button hidden={true}/></Link>
                         </div>
                         <div>
                             {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 1*/}
@@ -195,7 +193,7 @@ function Login(){
                                 </div>
                             </div>
                             <div className={"mt-2"}>
-                                <Link to={"/sign"} className={"text-decoration-none text-dark nanumSquareR-font-Normal"} href={"http://localhost:3000"}><b>회원가입</b> ></Link>
+                                <Link to={"/sign"} className={"text-decoration-none text-dark nanumSquareR-font-Normal"}><b>회원가입</b> ></Link>
                             </div>
                             <p className={"nanumSquareR-font-small"} style={loginFooter}>
                                 Copyright © 2023 <b>DreamComputer</b> Co.,Ltd. All Rights Reserved.</p>

@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import "../fonts/fontStyle.css";
 import Form from "react-bootstrap/Form";
 import "./NavigationBar.css";
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 function NavigationBar() {
@@ -17,6 +17,7 @@ function NavigationBar() {
     const [gLine, setGLine] = useState(1);
     const [loginUserId, setLoginUserId] = useState(null); // 로그인 한 유저의 아이디
     const pageUrl = useLocation();
+    const navigate = useNavigate(); // 페이지 이동
 
     // 서버에게 현재 로그인한 유저를 요청합니다.
     // 없는경우 null이 반환됩니다.
@@ -64,8 +65,7 @@ function NavigationBar() {
     
     // 로그아웃 성공시 로그아웃 완료 페이지로 이동
     const moveLogoutPage = () => {
-        const button = document.querySelector("#link-logout-complete");
-        button.click();
+        navigate("/clearTitle/logOutClear");
     }
 
     return (
@@ -138,7 +138,6 @@ function NavigationBar() {
                                             : <Link onClick={logout} style={textLine ? {textDecorationLine: "none", color: "gray"}
                                                 : {textDecorationLine: "underline", color: "black"}} className={"nanumSquareB-font-normal"}>로그아웃</Link>
                                     }
-                                    <Link id={"link-logout-complete"} to={"/clearTitle/logOutClear"}><button hidden={true}/></Link>
                                 </li>
                             </a>
                             <a>
