@@ -23,6 +23,19 @@ function Mypage() {
     const [modalIsOpen, setModalIsOpen] = useState(false); // 리뷰 모달창 표시 여부
     const [selectedProductNumber, setSelectedProductNumber] = useState(0); // 선택한 제품 번호
     
+    // 로그인 페이지에서 중복으로 넘어오는지 체크합니다.
+    // 로그인 페이지에서 뒤로가기 누르면 못 벗어나는 문제를 해결하기위해 선언
+    const inviteFirstMyPageNotLogin = () => {
+        // 미 로그인 상태에서 마이페이지에 접속한경우 세션 스토리지에 중복체크를 판단할 수 있는 값을 저장
+        if (sessionStorage.getItem("isFirstLogin") == null) {
+            sessionStorage.setItem("isFirstLogin", "true");
+            return true;
+        } else { // 미 로그인 상태에서 마이페이지에 또 다시 접속된경우 세션 스토리지에 중복체크 값 제거하고 메인으로 이동시킴
+            sessionStorage.removeItem("isFirstLogin");
+            return false;
+        }
+    }
+    
     // 선택한 제품의 번호를 가져오는 함수
     const getSelectedProductNumber = (productNumber) => {
         setSelectedProductNumber(productNumber);
@@ -85,8 +98,13 @@ function Mypage() {
             }}).then(response => {
             if (response.data == null || response.data == undefined || response.data == "") {
                 setLoginUserId(null);
-                navigate(`/login?prev=${pageUrl.pathname + pageUrl.search}`); // 미 로그인 상태면 로그인 페이지로 이동시킨다.
+                if(inviteFirstMyPageNotLogin()) { // 미 로그인 상태로 마이페이지에 처음으로 접속했었다면
+                    navigate(`/login?prev=${pageUrl.pathname + pageUrl.search}`); // 미 로그인 상태면 로그인 페이지로 이동시킨다.
+                } else { // 미 로그인 상태로 마이페이지에 처음 접속한게 아니라면
+                    navigate("/"); // 메인으로 이동
+                }
             } else {
+                sessionStorage.removeItem("isFirstLogin"); // 로그인 성공하면 마이페이지에 중복 접속하는 체크 값 제거
                 setLoginUserId(response.data);
             }
         }).catch(err => {
