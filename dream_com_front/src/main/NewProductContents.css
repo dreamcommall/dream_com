@@ -32,10 +32,13 @@
 /* 신상품 글 안넘치도록 스타일 조정 */
 .div-new-product-contents > p {
     margin-left : 35px;
-    width : 235px;
-    overflow : hidden;
-    text-overflow : ellipsis;
-    white-space : nowrap;
+    width: 235px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: black;
 }
 
 /* 신상품 가격정보 */

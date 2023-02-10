@@ -27,7 +27,7 @@ function NewProductContents({src, company, content, price, discountPercent, prod
                     </Link>
                 }
                 <Link to={`/detail?productNum=${productNum}&pageNum=1`}>
-                    <p className={"nanumSquareR-font-normal p-main-new-product-price"}>{price - ((price / 100) * discountPercent)}원</p>
+                    <p className={"nanumSquareR-font-normal p-main-new-product-price"}>{(price - ((price / 100) * discountPercent)).toLocaleString()}원</p>
                 </Link>
             </div>
         </div>

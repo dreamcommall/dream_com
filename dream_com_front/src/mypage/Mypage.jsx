@@ -8,7 +8,7 @@ import axios from "axios";
 import ClickPrevent from "../common/ClickPrevent";
 import Loading from "../common/Loading";
 import "./BuyProductList.css";
-import {Outlet, useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import ModalFrame from "../reviewModal/ModalFrame";
 import ReviewModalApp from "../reviewModal/ReviewModalApp";
 
@@ -22,6 +22,19 @@ function Mypage() {
     const pageUrl = useLocation(); // 현재 페이지 경로
     const [modalIsOpen, setModalIsOpen] = useState(false); // 리뷰 모달창 표시 여부
     const [selectedProductNumber, setSelectedProductNumber] = useState(0); // 선택한 제품 번호
+    
+    // 로그인 페이지에서 중복으로 넘어오는지 체크합니다.
+    // 로그인 페이지에서 뒤로가기 누르면 못 벗어나는 문제를 해결하기위해 선언
+    const inviteFirstMyPageNotLogin = () => {
+        // 미 로그인 상태에서 마이페이지에 접속한경우 세션 스토리지에 중복체크를 판단할 수 있는 값을 저장
+        if (sessionStorage.getItem("isFirstLogin") == null) {
+            sessionStorage.setItem("isFirstLogin", "true");
+            return true;
+        } else { // 미 로그인 상태에서 마이페이지에 또 다시 접속된경우 세션 스토리지에 중복체크 값 제거하고 메인으로 이동시킴
+            sessionStorage.removeItem("isFirstLogin");
+            return false;
+        }
+    }
     
     // 선택한 제품의 번호를 가져오는 함수
     const getSelectedProductNumber = (productNumber) => {
@@ -85,8 +98,13 @@ function Mypage() {
             }}).then(response => {
             if (response.data == null || response.data == undefined || response.data == "") {
                 setLoginUserId(null);
-                navigate(`/login?prev=${pageUrl.pathname + pageUrl.search}`); // 미 로그인 상태면 로그인 페이지로 이동시킨다.
+                if(inviteFirstMyPageNotLogin()) { // 미 로그인 상태로 마이페이지에 처음으로 접속했었다면
+                    navigate(`/login?prev=${pageUrl.pathname + pageUrl.search}`); // 미 로그인 상태면 로그인 페이지로 이동시킨다.
+                } else { // 미 로그인 상태로 마이페이지에 처음 접속한게 아니라면
+                    navigate("/"); // 메인으로 이동
+                }
             } else {
+                sessionStorage.removeItem("isFirstLogin"); // 로그인 성공하면 마이페이지에 중복 접속하는 체크 값 제거
                 setLoginUserId(response.data);
             }
         }).catch(err => {
@@ -138,6 +156,15 @@ function Mypage() {
         controlBlankHeight();
     }, [orderList]);
     
+    // 댓글을 작성한 경우 데이터 재 로딩
+    useEffect(() => {
+        if (modalIsOpen == false && loginUserId != undefined) {
+            setIsLoad(true);
+            getOrderList();
+            getUserReview();
+        }
+    }, [modalIsOpen]);
+    
     return(
         <div className={"container-fluid"}>
             <ClickPrevent isLoading={isLoad}/>
@@ -145,12 +172,12 @@ function Mypage() {
             <HeaderD />
             <NavigationBar />
             <MyPageNav />
-            <div className={"container mt-5"}>
+            <div className={"container"}>
                 <div className={"row"}>
                     <div className={"col"}>
-                        <h3 className={"mt-5 ms-3 nanumSquareR-font-large"}><strong>주문배송 & 구매내역 조회</strong></h3>
-                        <hr className={"ms-3"}/>
-                        <ul className={"mb-5 deliveryInformation ms-3"}>
+                        <h3 className={"mt-5 nanumSquareR-font-large"}><strong>주문배송 & 구매내역 조회</strong></h3>
+                        <hr />
+                        <ul className={"mb-5 deliveryInformation"}>
                             <li className={"nanumSquareR-font-small"}>일반적으로 소비자는 자신이 체결한 전자상거래 계약에 대해 그 계약의 내용을 불문하고 그 청약철회 및 계약해제의 기간(통상 7일) 내에는 청약철회 등을 자유롭게 할 수 있습니다.</li>
                             <li className={"nanumSquareR-font-small"}>출고 완료 직후 교환 / 환불 요청을 하더라도 상품을 수령하신 후 택배 업체를 통해 보내주셔야
                                 처리 가능합니다.
@@ -158,7 +185,7 @@ function Mypage() {
                         </ul>
                     </div>
                 </div>
-                <table className={"table ms-3 nanumSquareR-font-small my-page-payment-table"}>
+                <table className={"table nanumSquareR-font-small my-page-payment-table"}>
                     <thead className={"buyProductListThead"}>
                         <tr className={"text-center"}>
                             <th className={"col-4"}>상품정보</th>

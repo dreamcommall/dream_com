@@ -17,7 +17,7 @@ function PopularProductContents({name, price, discountPercent, productNum}) {
                         </Link>
                 }
                 <Link to={`/detail?productNum=${productNum}&pageNum=1`}>
-                    <p className={"nanumSquareR-font-normal mx-2 p-main-popular-content-price"}>{price - ((price / 100) * discountPercent)}원</p>
+                    <p className={"nanumSquareR-font-normal mx-2 p-main-popular-content-price"}>{(price - ((price / 100) * discountPercent)).toLocaleString()}원</p>
                 </Link>
             </div>
         </div>

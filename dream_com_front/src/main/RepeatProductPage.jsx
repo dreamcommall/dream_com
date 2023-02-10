@@ -14,7 +14,7 @@ function RepeatProductPage({categoryName, companyList, mainProductInfoList, subP
                 <div id={"div-repeat-product-page-wrapper"} className={"col d-flex"}>
                     <div style={{width : "22%"}}>
                         <h3 className={"mx-4 mt-3 mb-4 nanumSquareB-font-XLarge"}>{categoryName}</h3>
-                        <p className={"mx-4 nanumSquareR-font-XNormal"}>전체보기 ></p>
+                        <Link to={`/search?keyword=${""}`} className={"link-main-repeat-category-move-search"}><p className={"mx-4 nanumSquareR-font-XNormal"}>전체보기 ></p></Link>
                         <div id={"div-repeat-company-wrapper"}>
                             <p style={{color : "red"}} className={"mx-4 nanumSquareB-font-normal"}>제조사 목록</p>
                             {

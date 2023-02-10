@@ -13,7 +13,7 @@ public interface CartMapper {
 
       List<CartDto> selectCart(String userId) throws Exception;
 
-      void updateCart(CartDto cartDto) throws Exception;
+      int updateCart(CartDto cartDto) throws Exception;
 
       void deleteCart(String userId, int productNum) throws Exception;
 

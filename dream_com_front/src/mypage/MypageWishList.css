@@ -69,10 +69,15 @@
 }
 
 .mypageWishList{
-    margin-top: 93px;
+   margin-top: 49px;
 }
 .productCompany{
     margin-top: 3px;
     font-size: 15px;
     color: gray;
+}
+.WishListInformation li{
+    margin-top: 1px;
+    color: gray;
+    font-size: 14px;
 }

@@ -25,3 +25,9 @@
 #div-repeat-product-page-wrapper a {
     text-decoration: none;
 }
+
+/* 카테고리 전체보기 링크 */
+.link-main-repeat-category-move-search {
+    text-decoration: none;
+    color: black;
+}

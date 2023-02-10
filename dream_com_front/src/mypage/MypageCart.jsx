@@ -40,7 +40,9 @@ function MypageCart() {
                 setCartList(req.data);
             })
 
-        // if(cartList.inventory)
+        // if(cartList.inventory == 0){
+        //     alert('재고가 0인 제품이 존재합니다.')
+        // }
     }, [userId]);
 
     // 총 가격 계산해주는 Effect
@@ -62,27 +64,39 @@ function MypageCart() {
 
     // 수량 +1
     const plusQuantity = (id, productNum) => {
-        document.getElementById(id).value = parseInt(document.getElementById(id).value) + 1
-        axios.post("http://localhost:8080/updateCart", null, {
-            params: {
-                userId: userId,
-                quantity: parseInt(document.getElementById(id).value),
-                productNum: productNum
-            }
-        })
-            .then((req) => {
-                alert('수량이 변경되었습니다.')
-                window.location.reload();
+        if (document.getElementById(id).value == 0) {
+            alert('해당 상품의 재고가 존재하지 않습니다.')
+        } else {
+
+            document.getElementById(id).value = parseInt(document.getElementById(id).value) + 1
+
+
+            axios.post("http://localhost:8080/updateCart", null, {
+                params: {
+                    userId: userId,
+                    quantity: parseInt(document.getElementById(id).value),
+                    productNum: productNum
+                }
             })
+                .then((req) => {
+                    console.log(req.data)
+                    if (req.data == -1) {
+                        alert('선택한 수량이 재고량보다 많습니다.')
+                        window.location.reload();
+                    } else {
+                        alert('수량이 변경되었습니다.')
+                        window.location.reload();
+                    }
+                })
+
+        }
     }
     // 수량 - 1
     const minusQuantity = (id, productNum) => {
-        if(document.getElementById(id).value <= 1){
+        if (document.getElementById(id).value <= 1) {
             alert('수량을 1개 이하로 선택하실수 없습니다.')
             return document.getElementById(id).value
-        }
-
-        else{
+        } else {
             document.getElementById(id).value = parseInt(document.getElementById(id).value) - 1
 
             axios.post("http://localhost:8080/updateCart", null, {
@@ -139,8 +153,15 @@ function MypageCart() {
 
     return (
         <div>
-            <h3 className={"mypageCart nanumSquareB-font-large"}>장바구니</h3>
-            <hr />
+            <h3 className={"mypageCart nanumSquareR-font-large"}><strong>장바구니</strong></h3>
+            <hr/>
+            <ul className={"mb-5 cartInformation"}>
+                <li className={"nanumSquareR-font-small"}>장바구니에는 최대 100개의 상품을 보관할 수 있으며, 주문당 한번에 주문 가능한 상품수는 100개로
+                    제한됩니다.
+                </li>
+                <li className={"nanumSquareR-font-small"}>수량이 0인 상품은 재고가 없는 상품 입니다.</li>
+            </ul>
+
             <table className={"table mt-5 nanumSquareR-font-small"}>
                 <thead className={"text-center cartTableTitle"}>
                 <tr>
@@ -172,7 +193,7 @@ function MypageCart() {
                                 </td>
                                 <td>
                                     <div className={"py-5 productPrice"}
-                                         id={`ProductPrice${item.key}`}>{item.productPrice}</div>
+                                         id={`ProductPrice${item.key}`}>{item.productPrice.toLocaleString()}</div>
                                 </td>
                                 <td>
                                     <div className={"py-5"}>{item.productDiscount}%</div>
@@ -189,7 +210,7 @@ function MypageCart() {
                                 </td>
                                 <td>
                                     <div
-                                        className={"py-5"}>{(Number(item.productPrice) * item.inventoryQuantity) - item.productPrice * ((item.productDiscount / 100)) * item.inventoryQuantity}</div>
+                                        className={"py-5"}>{((Number(item.productPrice) * item.inventoryQuantity) - item.productPrice * ((item.productDiscount / 100)) * item.inventoryQuantity).toLocaleString()}</div>
                                 </td>
                                 <td>
                                     <div className={"py-5"}>{item.deliveryInfo}</div>
@@ -200,23 +221,28 @@ function MypageCart() {
                 }
                 </tbody>
             </table>
-            <div className={"text-center nanumSquareR-font-normal"} style={cartList.length == 0 ? {display:"none"} : {display: "block"}}>
-                <div className={"totalPrice"}>총 상품금액: {price}</div>
+            <div className={"text-center nanumSquareR-font-normal"}
+                 style={cartList.length == 0 ? {display: "none"} : {display: "block"}}>
+                <div className={"totalPrice"}>총 상품금액: {price.toLocaleString()}</div>
                 <div className={"float-start ms-4 mt-3"}>-</div>
-                <div className={"totalSale"}>총 할인금액 : {discountMoney}</div>
+                <div className={"totalSale"}>총 할인금액 : {discountMoney.toLocaleString()}</div>
                 <div className={"float-start ms-4 mt-3"}>=</div>
-                <div className={"totalMoney ms-4"}>총 금액 : {totalPrice}</div>
+                <div className={"totalMoney ms-4"}>총 금액 : {totalPrice.toLocaleString()}</div>
             </div>
             <br/>
             <br/>
-            <div className={"mb-5"} style={cartList.length == 0 ? {display:"none"} : {display: "block"}}>
+            <div className={"mb-5"} style={cartList.length == 0 ? {display: "none"} : {display: "block"}}>
                 <button className={"deleteCart"} onClick={deleteCart}>장바구니 비우기</button>
-                <Link to={"/purchase"}><button className={"buyCart"}>구매하기</button></Link>
+                <Link to={"/purchase"}>
+                    <button className={"buyCart"}>구매하기</button>
+                </Link>
             </div>
-            <div style={cartList.length < 3 ? {height : blankHeight} : {height : "50px"}} className={"row"}>
+            <div style={cartList.length < 3 ? {height: blankHeight} : {height: "50px"}} className={"row"}>
                 <div className={"col d-flex justify-content-center"}>
                     {
-                        cartList.length == 0 ? <p style={{marginTop : "235px"}} className={"nanumSquareR-font-large"}>장바구니에 상품이 존재하지 않습니다.</p> : ""
+                        cartList.length == 0 ?
+                            <p style={{marginTop: "235px"}} className={"nanumSquareR-font-large"}>장바구니에 상품이 존재하지
+                                않습니다.</p> : ""
                     }
                 </div>
             </div>

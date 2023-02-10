@@ -23,7 +23,7 @@ function PopularProduct({popularProductList}) {
             <div className={"d-flex justify-content-between"}>
                 <h2 className={"mb-4 nanumSquareB-font-XLarge"}>현시간 인기상품</h2>
                 <div className={"d-flex align-items-center"}>
-                    <h5 className={"nanumSquareB-font-large"}>전체보기 ></h5>
+                    {/*<h5 className={"nanumSquareB-font-large"}>전체보기 ></h5>*/}
                 </div>
             </div>
             <div style={{width : "97%"}} className={"ms-4"}>
@@ -34,8 +34,7 @@ function PopularProduct({popularProductList}) {
                             return (
                                 <div title={item.productTitle} key={item.key} className={"div-main-popular-product-wrapper"}>
                                     <PopularProductImg src={item.thumbnailImg} productNum={item.productNum} />
-                                    <PopularProductContents name={item.productTitle} price={item.productPrice} discountPercent={item.productDiscount}
-                                        productNum={item.productNum}/>
+                                    <PopularProductContents name={item.productTitle} price={item.productPrice} discountPercent={item.productDiscount} productNum={item.productNum}/>
                                 </div>
                             );
                         })
