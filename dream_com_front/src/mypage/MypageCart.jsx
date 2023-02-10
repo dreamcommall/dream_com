@@ -79,12 +79,11 @@ function MypageCart() {
                 }
             })
                 .then((req) => {
-                     console.log(req.data)
-                    if(req.data == -1){
+                    console.log(req.data)
+                    if (req.data == -1) {
                         alert('선택한 수량이 재고량보다 많습니다.')
                         window.location.reload();
-                    }
-                    else{
+                    } else {
                         alert('수량이 변경되었습니다.')
                         window.location.reload();
                     }
@@ -154,12 +153,15 @@ function MypageCart() {
 
     return (
         <div>
-            <h3 className={"mypageCart ms-3"}>장바구니</h3>
-            <hr className={"ms-3"} />
-            <ul className={"mb-5 cartInformation ms-3"}>
-                <li className={"nanumSquareR-font-small"}>장바구니에는 최대 100개의 상품을 보관할 수 있으며, 주문당 한번에 주문 가능한 상품수는 100개로 제한됩니다.</li>
+            <h3 className={"mypageCart nanumSquareR-font-large"}><strong>장바구니</strong></h3>
+            <hr/>
+            <ul className={"mb-5 cartInformation"}>
+                <li className={"nanumSquareR-font-small"}>장바구니에는 최대 100개의 상품을 보관할 수 있으며, 주문당 한번에 주문 가능한 상품수는 100개로
+                    제한됩니다.
+                </li>
                 <li className={"nanumSquareR-font-small"}>수량이 0인 상품은 재고가 없는 상품 입니다.</li>
             </ul>
+
             <table className={"table mt-5 nanumSquareR-font-small"}>
                 <thead className={"text-center cartTableTitle"}>
                 <tr>

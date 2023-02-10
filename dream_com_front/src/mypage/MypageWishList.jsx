@@ -113,14 +113,13 @@ function MypageWishList() {
     }
 
     return (
-        <div className={"container mypageWishList"}>
-            <h3 className={"ms-3"}>찜 목록</h3>
-            <hr className={"ms-3"}/>
-            <ul className={"mb-5 cartInformation ms-3"}>
+        <div className={"mypageWishList"}>
+            <h3 className={"nanumSquareR-font-large"}><strong>찜 목록</strong></h3>
+            <hr/>
+            <ul className={"mb-5 WishListInformation"}>
                 <li className={"nanumSquareR-font-small"}>찜목록에는 최대 100개의 상품을 보관할 수 있으며, 찜한 상품은 등록일로부터 최대 1년간 저장됩니다.</li>
                 <li className={"nanumSquareR-font-small"}>찜한 상품은 수량이 1개 입니다.</li>
             </ul>
-            {/*<hr className={"ms-3 mb-5"}/>*/}
             <table className={"table"}>
                 <tbody>
                 {
