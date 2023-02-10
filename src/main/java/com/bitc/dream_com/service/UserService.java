@@ -130,7 +130,13 @@ public interface UserService {
 
     List<UserDto> getSignedId(String userEmail, String userName) throws Exception;
 
-    int checkSignedInfo(String userEmail, String userName) throws Exception;
+    int findIdPageCheckSignedInfo(String userEmail, String userName) throws Exception;
 
-    void sendUrlEmail(String email, String userId) throws Exception;
+    int findPwPageCheckSignedInfo(String userEmail, String userName, String userId) throws Exception;
+
+    int sendUrlEmail(String email, String userId) throws Exception;
+
+    void checkExpiredUrl() throws Exception;
+
+    String checkFindPwUrl(String url) throws Exception;
 }

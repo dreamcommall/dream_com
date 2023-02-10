@@ -114,10 +114,17 @@
         select user_id, user_sign_date from user where user_email = #{userEmail} and user_name = #{userName}
     </select>
 
-<!--    아이디 이메일로 회원가입한 유저인지 확인-->
+<!--    [아이디 찾기 페이지] 이름과 이메일로 회원가입한 유저인지 확인-->
 <!--    최종 수정일 2023-02-09-->
 <!--    최종 작성자 : 양민호-->
-    <select id="checkSignedInfo" resultType="int">
+    <select id="findIdPageCheckSignedInfo" resultType="int">
         select count(*) from user where user_email = #{userEmail} and user_name = #{userName}
+    </select>
+
+<!--    [비밀번호 찾기 페이지] 아이디와 이름, 이메일로 회원가입한 유저인지 확인-->
+<!--    최종 수정일 2023-02-10-->
+<!--    최종 작성자 : 양민호-->
+    <select id="findPwPageCheckSignedInfo" resultType="int">
+        select count(*) from user where user_email = #{userEmail} and user_name = #{userName} and user_id = #{userId}
     </select>
 </mapper>

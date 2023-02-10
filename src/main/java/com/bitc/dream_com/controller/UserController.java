@@ -250,9 +250,9 @@ public class UserController {
         return userService.getSignedId(userEmail, userName);
     }
 
-//    아이디 이메일로 회원가입한 유저인지 확인
+
     /**
-     * 입력한 아이디 이메일로 회원가입한 유저인지 확인하는 함수입니다.<br>
+     * 아이디 찾기 페이지에서 입력한 이름 이메일로 회원가입한 유저인지 확인하는 함수입니다.<br>
      * <b>파라미터로 반드시 userEmail과 userName을 받아야합니다.</b><br>
      *
      * @author 양민호
@@ -261,18 +261,51 @@ public class UserController {
      * @return 가입 정보가 user테이블에 있으면 1, 없으면 0을 반환합니다.
      * @apiNote 최종 수정일 2023-02-09
      * */
-    @RequestMapping(value = "checkSignedInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "findIdPageCheckSignedInfo", method = RequestMethod.POST)
     public int checkSignedInfo(@RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName) throws Exception {
-        int result =  userService.checkSignedInfo(userEmail, userName);
+        int result =  userService.findIdPageCheckSignedInfo(userEmail, userName);
         if(result > 0) {
             return 1;
         }
         return 0;
     }
 
+    /**
+     * 비밀번호 찾기 페이지에서 입력한 이름 이메일로 회원가입한 유저인지 확인하는 함수입니다.<br>
+     * <b>파라미터로 반드시 userEmail과 userName을 받아야합니다.</b><br>
+     *
+     * @author 양민호
+     * @param userEmail 페이지에서 입력한 이메일 값입니다.
+     * @param userName 페이지에서 입력한 이름 값입니다.
+     * @return 가입 정보가 user테이블에 있으면 1, 없으면 0을 반환합니다.
+     * @apiNote 최종 수정일 2023-02-09
+     * */
+    @RequestMapping(value = "findPwPageCheckSignedInfo", method = RequestMethod.POST)
+    public int checkSignedInfo(@RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName,
+                               @RequestParam("userId") String userId) throws Exception {
+        int result =  userService.findPwPageCheckSignedInfo(userEmail, userName, userId);
+        if(result > 0) {
+            return 1;
+        }
+        return 0;
+    }
+
+    /**
+     * 비밀번호 찾기 시 유효한 url을 이메일로 보내냅니다.
+     *
+     * @author  양민호
+     * @param email 찾기 페이지에서 입력한 이메일입니다.
+     * @param userId 찾기 페이지에서 입력한 비밀번호를 찾을 id입니다.
+     * @return 메일이 정상적으로 전송되면 1, 실패시 0을 반환합니다.
+     * @apiNote 최종 수정일 2023-02-10
+     */
     @RequestMapping(value = "sendChangePwdUrl", method = RequestMethod.POST)
-    public  Object sendChangePwdUrl(@RequestParam("email") String email, @RequestParam("userId") String userId) throws Exception {
-        userService.sendUrlEmail(email, userId);
-        return "";
+    public Object sendChangePwdUrl(@RequestParam("email") String email, @RequestParam("userId") String userId) throws Exception {
+        return userService.sendUrlEmail(email, userId);
+    }
+
+    @RequestMapping(value = "checkFindPwUrl", method = RequestMethod.POST)
+    public String checkFindPwUrl(@RequestParam("url") String url) throws Exception {
+        return userService.checkFindPwUrl(url);
     }
 }

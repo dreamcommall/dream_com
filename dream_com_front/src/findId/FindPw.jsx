@@ -64,7 +64,8 @@ function FindPw(){
         }
         else {
             setIsLoad(true);
-            await axios.post("http://localhost:8080/checkSignedInfo", null, {params: {userEmail: email, userName: userName}})
+            await axios.post("http://localhost:8080/findPwPageCheckSignedInfo", null,
+                {params: {userEmail: email, userName: userName, userId: userId}})
                 .then(req => {
                     if(req.data === 0) {
                         alert("회원가입 정보가 일치하지 않습니다.");
@@ -94,7 +95,7 @@ function FindPw(){
             })
     }
 
-    // 인증번호 후 아이디 확인 페이지로
+    // 인증번호 확인
     const authCheck = async () => {
         if(chkNumber === "") {
             alert("인증코드를 입력하세요")
@@ -118,8 +119,25 @@ function FindPw(){
         if(!check) {
             return;
         }
-        alert("인증이 완료되었습니다.")
-    }, [check])
+        setIsLoad(true);
+        pageChange().then(() => {
+            setIsLoad(false);
+        });
+    }, [check]);
+
+    // 모든 과정 완료 후 페이지 이동
+    const pageChange = async () => {
+        await axios.post("http://localhost:8080/sendChangePwdUrl", null,
+            {params: {email: email, userId: userId}})
+            .then(req => {
+                if(req.data === 1) {
+                    console.log("완료");
+                }
+            })
+            .catch(err => {
+                console.log("통신 에러");
+            })
+    }
 
     // 입력한 아이디 저장
     const enteredUserId = (e) => {

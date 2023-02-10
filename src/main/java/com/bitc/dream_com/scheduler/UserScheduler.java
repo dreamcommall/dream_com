@@ -41,4 +41,14 @@ public class UserScheduler {
             userService.deleteDbUserUUID((new StringBuffer(key).reverse().toString()));
         }
     }
+
+    /**
+     * 매 1분마다 비밀번호 찾기 url 만료시간을 체크합니다.
+     * @author  양민호
+     * @apiNote 최종 수정일 2023-02-10
+     */
+    @Scheduled(fixedDelay = 60000)
+    private void checkFindPwUrl() throws Exception {
+        userService.checkExpiredUrl();
+    }
 }

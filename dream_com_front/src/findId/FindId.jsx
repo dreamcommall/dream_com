@@ -65,7 +65,8 @@ function FindId(){
         }
         else {
             setIsLoad(true);
-            await axios.post("http://localhost:8080/checkSignedInfo", null, {params: {userEmail: email, userName: userName}})
+            await axios.post("http://localhost:8080/findIdPageCheckSignedInfo", null,
+                {params: {userEmail: email, userName: userName}})
                 .then(req => {
                     if(req.data === 0) {
                         alert("회원가입 정보가 일치하지 않습니다.");

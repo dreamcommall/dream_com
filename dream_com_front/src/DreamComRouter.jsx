@@ -17,7 +17,7 @@ import ProcessClear from "./common/ProcessClear";
 import Mypage from "./mypage/Mypage";
 import DreamComCart from "./mypage/DreamComCart";
 import DreamComWishList from "./mypage/DreamComWishList";
-import FindPwSuccess from "./findId/FindPwSuccess";
+import ChangePwPage from "./findId/ChangePwPage";
 
 // 작성자 : MoonNight285
 // 라우터 관리 컴포넌트
@@ -40,7 +40,8 @@ function DreamComRouter() {
                 <Route path={"/login?"} element={<Login />}></Route>
                 <Route path={"/findId"} element={<FindId />}></Route>
                 <Route path={"/findPw"} element={<FindPw />}></Route>
-                <Route path={"/findPwSuccess"} element={<FindPwSuccess />}></Route>
+                <Route path={"/changePw/:url"} element={<ChangePwPage />}></Route>
+                <Route path={"/findPwSuccess"} element={<ChangePwPage />}></Route>
                 <Route path={"/idchk"} element={<LoginChk />}></Route>
                 {/* 리뷰 작성 모달 적용 방법*/}
                 {/*모달 사용 할 페이지에 적용*/}

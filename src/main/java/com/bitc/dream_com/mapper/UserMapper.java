@@ -4,7 +4,6 @@ import com.bitc.dream_com.dto.AutoLoginDto;
 import com.bitc.dream_com.dto.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -83,5 +82,7 @@ public interface UserMapper {
 
     List<UserDto> getSignedId(String userEmail, String userName) throws Exception;
 
-    int checkSignedInfo(String userEmail, String userName) throws Exception;
+    int findIdPageCheckSignedInfo(String userEmail, String userName) throws Exception;
+
+    int findPwPageCheckSignedInfo(String userEmail, String userName, String userId) throws Exception;
 }
