@@ -40,6 +40,18 @@ public class UserServiceImpl implements UserService {
      */
     private static final ConcurrentHashMap<String, String> userSessionsCreateDt = new ConcurrentHashMap<>();
 
+    /**
+     * 비밀번호 변경 url을 저장하기 위한 저장소입니다.<br>
+     * 스케줄러를 담당하는 클래스에서도 사용하기 때문에 static으로 선언되었습니다.
+     */
+    private static final ConcurrentHashMap<String, String> urlSessions = new ConcurrentHashMap<>();
+
+    /**
+     * 비밀번호 변경 url 저장 시점을 저장하기 위한 저장소입니다.<br>
+     * 스케줄러를 담당하는 클래스에서도 사용하기 때문에 static으로 선언되었습니다.
+     */
+    private static final ConcurrentHashMap<String, String> urlSessionsCreateDt = new ConcurrentHashMap<>();
+
     @Override
     public UserDto loginChk(String userId, String userPw) throws Exception {
         return userMapper.loginChk(userId, userPw);
@@ -304,14 +316,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int checkSignedInfo(String userEmail, String userName) throws Exception {
-        return userMapper.checkSignedInfo(userEmail, userName);
+    public int findIdPageCheckSignedInfo(String userEmail, String userName) throws Exception {
+        return userMapper.findIdPageCheckSignedInfo(userEmail, userName);
     }
 
     @Override
-    public void sendUrlEmail(String email, String userId) throws Exception {
-        String url = createUserUUID();
-
+    public int findPwPageCheckSignedInfo(String userEmail, String userName, String userId) throws Exception {
+        return userMapper.findPwPageCheckSignedInfo(userEmail, userName, userId);
     }
 
     @Override
@@ -354,6 +365,45 @@ public class UserServiceImpl implements UserService {
         msg+= "<div style='font-size:130%'>";
         msg+= "CODE : <strong>";
         msg+= ePw+"</strong><div><br/> ";
+        msg+= "</div>";
+        message.setText(msg, "utf-8", "html");//내용
+        message.setFrom(new InternetAddress(email,"DreamComputer"));//보내는 사람
+
+        return message;
+    }
+
+
+    /**
+     * 비밀번호 찾기 시 유효한 url을 이메일로 보내냅니다.
+     *
+     * @author  양민호
+     * @param email 찾기 페이지에서 입력한 이메일입니다.
+     * @param url 임의로 생성된 createKey 값입니다.
+     * @return 해당 메세지를 반환합니다.
+     * @apiNote 최종 수정일 2023-02-10
+     */
+    private MimeMessage findPwUrlMessage(String email, String url)throws Exception{
+        MimeMessage message = emailSender.createMimeMessage();
+
+        message.addRecipients(RecipientType.TO, email);//보내는 대상
+        message.setSubject("[DreamComputer]비밀번호 찾기를 위한 인증번호를 안내 드립니다.");//제목
+
+        String msg="";
+        msg+= "<div style='margin:20px;'>";
+        msg+= "<h1> 안녕하세요 고객님 DreamComputer 입니다. </h1>";
+        msg+= "<br>";
+        msg+="<strong>'비밀번호 찾기'</strong>를 위한 url을 보내드립니다.";
+        msg+= "<p>아래 입력된 주소로 이동하여 주시기 바랍니다.</p>";
+        msg+= "<br>";
+        msg+= "<h3 style='color:red;'>개인정보 보호를 위해 인증번호는 10분 간 유효합니다.</h3>";
+        msg+= "<br>";
+        msg+= "<div style='font-family:verdana';>";
+        msg+= "<h3 style='color:blue;'>비밀번호 찾기 링크입니다.</h3>";
+        msg+= "<div style='font-size:130%'>";
+        msg+= "url : <strong>";
+        String findUrl = "http://localhost:3000/changePw/" + url;
+        msg+= "<a href='" + findUrl + "'>" +  findUrl + "</a>";
+        msg+= "</strong></div><br/> ";
         msg+= "</div>";
         message.setText(msg, "utf-8", "html");//내용
         message.setFrom(new InternetAddress(email,"DreamComputer"));//보내는 사람
@@ -419,5 +469,61 @@ public class UserServiceImpl implements UserService {
         return userMapper.addAddress(userDto);
     }
 
+    /**
+     * 비밀번호 찾기 시 유효한 url을 이메일로 보내냅니다.
+     *
+     * @author  양민호
+     * @param email 찾기 페이지에서 입력한 이메일입니다.
+     * @param userId 찾기 페이지에서 입력한 비밀번호를 찾을 id입니다.
+     * @return 메일이 정상적으로 전송되면 1, 실패시 0을 반환합니다.
+     * @apiNote 최종 수정일 2023-02-10
+     */
+    @Override
+    public int sendUrlEmail(String email, String userId) throws Exception {
+        String url = createKey();
+        urlSessions.put(url, userId);
+        urlSessionsCreateDt.put(url, LocalDateTime.now().toString());
+        // TODO Auto-generated method stub
+        MimeMessage message = findPwUrlMessage(email, url);
+        try {//예외처리
+            emailSender.send(message);
+            return 1;
+        } catch (MailException es) {
+            es.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
+    /**
+     * 비밀번호 찾기 url 만료시간 체크합니다.
+     * @author  양민호
+     * @apiNote 최종 수정일 2023-02-10
+     */
+    @Override
+    public void checkExpiredUrl() throws Exception {
+        if(urlSessionsCreateDt.size() == 0) {
+            return;
+        }
+
+        for(String url: urlSessionsCreateDt.keySet()) {
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime targetDt = LocalDateTime.parse(urlSessionsCreateDt.get(url));
+            targetDt = targetDt.plusMinutes(10);
+            if (now.isBefore(targetDt) == false) {
+                urlSessions.remove(url);
+                urlSessionsCreateDt.remove(url);
+            }
+        }
+    }
+
+    @Override
+    public String checkFindPwUrl(String url) throws Exception {
+        String userId = urlSessions.get(url);
+        if(userId == null) {
+            return null;
+        }
+
+        return userId;
+    }
 
 }
