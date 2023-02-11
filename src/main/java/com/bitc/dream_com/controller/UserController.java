@@ -304,8 +304,31 @@ public class UserController {
         return userService.sendUrlEmail(email, userId);
     }
 
+    /**
+     * 비밀번호 변경 페이지 url 확인 용도입니다.
+     *
+     * @author  양민호
+     * @param url 페이지 '/'이후 url입니다.
+     * @return url 값이 있으면 userId를 반환합니다.
+     * @apiNote 최종 수정일 2023-02-10
+     */
     @RequestMapping(value = "checkFindPwUrl", method = RequestMethod.POST)
-    public String checkFindPwUrl(@RequestParam("url") String url) throws Exception {
+    public int checkFindPwUrl(@RequestParam("url") String url) throws Exception {
         return userService.checkFindPwUrl(url);
+    }
+
+    /**
+     * 비밀번호 변경 페이지 url 확인하여 유효하면 비밀번호를 변경합니다.
+     *
+     * @author  양민호
+     * @param url 페이지 '/'이후 url입니다.
+     * @param userPw 페이지 내에서 입력한 비밀번호입니다.
+     * @return url이 만료되면 -1, 변경 완료시 1, 실패 시 0을 반환합니다.
+     * @apiNote 최종 수정일 2023-02-11
+     */
+    @RequestMapping(value = "changePw", method = RequestMethod.PUT)
+    public int changePw(@RequestParam("userPw") String userPw,
+                        @RequestParam("url") String url) throws Exception {
+        return userService.changePw(userPw, url);
     }
 }

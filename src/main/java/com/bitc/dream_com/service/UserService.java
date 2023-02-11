@@ -138,5 +138,7 @@ public interface UserService {
 
     void checkExpiredUrl() throws Exception;
 
-    String checkFindPwUrl(String url) throws Exception;
+    int checkFindPwUrl(String url) throws Exception;
+
+    int changePw(String userPw, String url) throws Exception;
 }

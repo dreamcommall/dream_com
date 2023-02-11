@@ -131,7 +131,8 @@ function FindPw(){
             {params: {email: email, userId: userId}})
             .then(req => {
                 if(req.data === 1) {
-                    console.log("완료");
+                    alert("인증이 완료되었습니다. 이메일을 확인해 주세요.")
+                    window.location = "/";
                 }
             })
             .catch(err => {

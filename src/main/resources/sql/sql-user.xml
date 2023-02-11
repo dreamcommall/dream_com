@@ -127,4 +127,11 @@
     <select id="findPwPageCheckSignedInfo" resultType="int">
         select count(*) from user where user_email = #{userEmail} and user_name = #{userName} and user_id = #{userId}
     </select>
+
+<!--    비밀번호 변경-->
+<!--    최종 수정일 2023-02-11-->
+<!--    최종 작성자 : 양민호-->
+    <update id="changePw">
+        update user set user_pw = #{userPw} where user_id = #{userId}
+    </update>
 </mapper>

@@ -355,16 +355,16 @@ public class UserServiceImpl implements UserService {
         msg+= "<div style='margin:20px;'>";
         msg+= "<h1> 안녕하세요 고객님 DreamComputer 입니다. </h1>";
         msg+= "<br>";
-        msg+="<strong>'회원가입'</strong>을 위해 이메일 인증을 진행합니다.";
         msg+= "<p>아래 발급된 이메일 인증번호를 복사하거나 직접 입력하여 인증을 완료해주세요.<p>";
         msg+= "<br>";
-        msg+= "<p>개인정보 보호를 위해 인증번호는 3분 간 유효합니다.<p>";
+        msg+= "<p style='color:red;'>개인정보 보호를 위해 인증번호는";
+        msg+= "<span style='font-size:130%'><strong>3분</strong></span> 간 유효합니다.</p>";
         msg+= "<br>";
         msg+= "<div style='font-family:verdana';>";
-        msg+= "<h3 style='color:blue;'>회원가입 인증 코드입니다.</h3>";
+        msg+= "<h3 style='color:blue;'>인증 코드입니다.</h3>";
         msg+= "<div style='font-size:130%'>";
         msg+= "CODE : <strong>";
-        msg+= ePw+"</strong><div><br/> ";
+        msg+= ePw+"</strong></div><br/> ";
         msg+= "</div>";
         message.setText(msg, "utf-8", "html");//내용
         message.setFrom(new InternetAddress(email,"DreamComputer"));//보내는 사람
@@ -395,7 +395,8 @@ public class UserServiceImpl implements UserService {
         msg+="<strong>'비밀번호 찾기'</strong>를 위한 url을 보내드립니다.";
         msg+= "<p>아래 입력된 주소로 이동하여 주시기 바랍니다.</p>";
         msg+= "<br>";
-        msg+= "<h3 style='color:red;'>개인정보 보호를 위해 인증번호는 10분 간 유효합니다.</h3>";
+        msg+= "<p style='color:red;'>개인정보 보호를 위해 인증번호는";
+        msg+= "<span style='font-size:130%'><strong>10분</strong></span> 간 유효합니다.</p>";
         msg+= "<br>";
         msg+= "<div style='font-family:verdana';>";
         msg+= "<h3 style='color:blue;'>비밀번호 찾기 링크입니다.</h3>";
@@ -517,13 +518,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String checkFindPwUrl(String url) throws Exception {
+    public int checkFindPwUrl(String url) throws Exception {
         String userId = urlSessions.get(url);
         if(userId == null) {
-            return null;
+            return 0;
         }
 
-        return userId;
+        return 1;
+    }
+
+    @Override
+    public int changePw(String userPw, String url) throws Exception {
+        String userId = urlSessions.get(url);
+        if(userId == null) {
+            return -1;
+        }
+        urlSessions.remove(url);
+        return userMapper.changePw(userId, userPw);
     }
 
 }

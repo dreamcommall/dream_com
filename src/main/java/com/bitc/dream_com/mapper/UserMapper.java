@@ -85,4 +85,6 @@ public interface UserMapper {
     int findIdPageCheckSignedInfo(String userEmail, String userName) throws Exception;
 
     int findPwPageCheckSignedInfo(String userEmail, String userName, String userId) throws Exception;
+
+    int changePw(String userId, String userPw) throws Exception;
 }
