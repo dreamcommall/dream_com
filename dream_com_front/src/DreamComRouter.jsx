@@ -18,6 +18,10 @@ import Mypage from "./mypage/Mypage";
 import DreamComCart from "./mypage/DreamComCart";
 import DreamComWishList from "./mypage/DreamComWishList";
 import ChangePwPage from "./findId/ChangePwPage";
+import Admin from "./admin/Admin";
+import NewProduct from "./admin/NewProduct";
+import ModifyProduct from "./admin/ModifyProduct";
+import RemoveProduct from "./admin/RemoveProduct";
 
 // 작성자 : MoonNight285
 // 라우터 관리 컴포넌트
@@ -73,6 +77,11 @@ function DreamComRouter() {
                 <Route path={"/mypage/order"} element={<Mypage />}></Route>
                 <Route path={"/mypageCart"} element={<DreamComCart />}></Route>
                 <Route path={"/myPageWishList"} element={<DreamComWishList />}></Route>
+                <Route path={"/admin/product/"} element={<Admin />}>
+                    <Route path={"registration"} element={<NewProduct />}/>
+                    <Route path={"modification"} element={<ModifyProduct />}/>
+                    <Route path={"removal"} element={<RemoveProduct />}/>
+                </Route>
             </Routes>
         </BrowserRouter>
     )
