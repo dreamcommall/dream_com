@@ -6,6 +6,95 @@ import Button from "react-bootstrap/Button";
 function NewProduct() {
     const [specList, setSpecList] = useState([]); // 상품의 사양 목록
 
+    // 설정 초기화
+    const initValue = () => {
+        if (window.confirm("정말로 초기화하시겠습니까?")) {
+            const category = document.querySelector("#select-admin-category-menu");
+            const company = document.querySelector("#select-admin-company-menu");
+            const title = document.querySelector("#input-admin-product-title");
+            const price = document.querySelector("#input-admin-product-price");
+            const discountPrice = document.querySelector("#input-admin-product-discount-price");
+            const stack = document.querySelector("#input-admin-product-stack-count");
+            const thumbnailFile = document.querySelector("#input-admin-upload-thumbnail-img-file");
+            const mainImgFile = document.querySelector("#input-admin-upload-main-img-file");
+            const specList = document.querySelector("#textarea-admin-product-spec-list");
+            const thumbnailImg = document.querySelector("#img-admin-upload-thumbnail-img-file");
+            const mainImg = document.querySelector("#img-admin-upload-main-img-file");
+
+            category.value = "";
+            company.value = "";
+            title.value = "";
+            price.value = "";
+            discountPrice.value = "";
+            stack.value = "";
+            thumbnailFile.value = "";
+            mainImgFile.value = "";
+            specList.value = "";
+            thumbnailImg.src = "";
+            mainImg.src = "";
+            setSpecList([]);
+        }
+    }
+
+    // 선택하지 않은 값이 있는지 확인
+    const checkBlank = () => {
+        const category = document.querySelector("#select-admin-category-menu");
+        const company = document.querySelector("#select-admin-company-menu");
+        const title = document.querySelector("#input-admin-product-title");
+        const price = document.querySelector("#input-admin-product-price");
+        const discountPrice = document.querySelector("#input-admin-product-discount-price");
+        const stack = document.querySelector("#input-admin-product-stack-count");
+        const thumbnail = document.querySelector("#input-admin-upload-thumbnail-img-file");
+        const mainImg = document.querySelector("#input-admin-upload-main-img-file");
+
+        if (category.value == "none") {
+            alert("상품 카테고리를 선택해주세요!");
+            return;
+        }
+
+        if (company.value == "none") {
+            alert("상품 제조사를 선택해주세요!");
+            return;
+        }
+
+        if (title.value == "") {
+            alert("상품명을 입력해주세요!");
+            return;
+        }
+
+        if (specList.length == 0) {
+            alert("상품 사양을 입력해주세요!");
+            return;
+        }
+
+        if (price.value == "") {
+            alert("상품 판매가를 입력해주세요!");
+            return;
+        }
+
+        if (discountPrice.value == "") {
+            alert("상품 할인금액을 입력해주세요!");
+            return;
+        }
+
+        if (stack.value == "") {
+            alert("상품 재고수량을 입력해주세요!");
+            return;
+        }
+
+        if (thumbnail.value == "") {
+            alert("섬네일 이미지를 등록해주세요!");
+            return;
+        }
+
+        if (mainImg.value == "") {
+            alert("메인 이미지를 등록해주세요!");
+            return;
+        }
+
+        return true;
+    }
+
     // 등록한 상품의 사양 삭제
     const removeProductSpec = () => {
         const viewSpecs = document.querySelector("#textarea-admin-product-spec-list");
@@ -137,7 +226,7 @@ function NewProduct() {
                 <div className={"d-flex"}>
                     <div className={"div-admin-product-information-title-name"}>
                         <p className={"mt-2 me-3 nanumSquareR-font-normal"}>상품 사양 : </p>
-                        <p className={"mt-2 me-3 nanumSquareR-font-normal"}>현재 입력한 상품 목록 : </p>
+                        <p className={"mt-2 me-3 nanumSquareR-font-normal"}>현재 입력한 사양 목록 : </p>
                         <p className={"mt-2 me-3 nanumSquareR-font-normal"}>현재 입력한 상품 사양 : </p>
                     </div>
                     <div>
@@ -174,13 +263,13 @@ function NewProduct() {
                     </div>
                     <div id={"div-admin-product-price-and-stack-wrapper"}>
                         <div className={"mb-3"}>
-                            <input type={"text"} name={"productPrice"} maxLength={9}/><span className={"nanumSquareR-font-normal"}> 원</span>
+                            <input type={"text"} id={"input-admin-product-price"} name={"productPrice"} maxLength={9}/><span className={"nanumSquareR-font-normal"}> 원</span>
                         </div>
                         <div className={"mb-3"}>
-                            <input type={"text"} name={"productDiscountPrice"} maxLength={9}/><span className={"nanumSquareR-font-normal"}> 원</span>
+                            <input type={"text"} id={"input-admin-product-discount-price"} name={"productDiscountPrice"} maxLength={9}/><span className={"nanumSquareR-font-normal"}> 원</span>
                         </div>
                         <div>
-                            <input type={"text"} name={"productStackCount"} maxLength={9}/><span className={"nanumSquareR-font-normal"}> 개</span>
+                            <input type={"text"} id={"input-admin-product-stack-count"} name={"productStackCount"} maxLength={9}/><span className={"nanumSquareR-font-normal"}> 개</span>
                         </div>
                     </div>
                 </div>
@@ -205,8 +294,8 @@ function NewProduct() {
                     </div>
                 </div>
                 <div className={"d-flex justify-content-end"}>
-                    <Button variant={"outline-danger"} className={"me-2"}>초기화</Button>
-                    <Button variant={"outline-dark"}>등록하기</Button>
+                    <Button variant={"outline-danger"} className={"me-2"} onClick={initValue}>초기화</Button>
+                    <Button variant={"outline-dark"} onClick={checkBlank}>등록하기</Button>
                 </div>
             </form>
         </div>
