@@ -102,12 +102,12 @@ function NewProduct() {
 
         viewSpecs.value = "";
         let temp = [];
-        specList.forEach(item => {
-            if (item != selectedSpecName) {
-                viewSpecs.value += item;
-                temp.push(item);
+        for (let i = 0; i < specList.length; ++i) {
+            if (specList[i].value != selectedSpecName) {
+                viewSpecs.value += specList[i].value + "\n";
+                temp.push({key : i, value : specList[i].value});
             }
-        });
+        }
         setSpecList(temp);
     }
 
@@ -118,10 +118,10 @@ function NewProduct() {
         viewSpecs.value += `${spec.value}\n`;
 
         let temp = [];
-        specList.forEach(item => {
-            temp.push(item);
-        });
-        temp.push(spec.value);
+        for (let i = 0; i < specList.length; ++i) {
+            temp.push({key : i, value : specList[i].value});
+        }
+        temp.push({key : specList.length, value : spec.value});
         setSpecList(temp);
 
         spec.value = "";
@@ -238,7 +238,7 @@ function NewProduct() {
                                 {
                                     specList.map(item => {
                                         return (
-                                            <option>{item}</option>
+                                            <option key={item.key}>{item.value}</option>
                                         )
                                     })
                                 }
