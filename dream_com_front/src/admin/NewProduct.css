@@ -14,9 +14,16 @@
     margin-top: 15px;
 }
 
+#select-admin-add-spec-list {
+    height: 40px;
+    width: 188px;
+    margin-bottom: 18px;
+}
+
 #textarea-admin-product-spec-list {
     resize : none;
     width: 400px;
+    height: 150px;
 }
 
 #input-admin-product-title {
@@ -27,6 +34,7 @@
 
 #div-admin-product-spec-wrapper {
     margin-top: 3px;
+    margin-bottom: 12px;
 }
 
 #input-admin-product-spec {

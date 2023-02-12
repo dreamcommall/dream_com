@@ -1,10 +1,44 @@
-import React from "react";
+import React, {useState} from "react";
 import "./NewProduct.css";
 import "../fonts/fontStyle.css";
 import Button from "react-bootstrap/Button";
 
 function NewProduct() {
-    // 얼로드 한 파일이 지원하는 확장자가 아닐경우 값 초기화
+    const [specList, setSpecList] = useState([]); // 상품의 사양 목록
+
+    // 등록한 상품의 사양 삭제
+    const removeProductSpec = () => {
+        const viewSpecs = document.querySelector("#textarea-admin-product-spec-list");
+        const selectedSpecName = document.querySelector("#select-admin-add-spec-list").value;
+
+        viewSpecs.value = "";
+        let temp = [];
+        specList.forEach(item => {
+            if (item != selectedSpecName) {
+                viewSpecs.value += item;
+                temp.push(item);
+            }
+        });
+        setSpecList(temp);
+    }
+
+    // 상품 사양 추가
+    const addProductSpec = () => {
+        const spec = document.querySelector("#input-admin-product-spec");
+        const viewSpecs = document.querySelector("#textarea-admin-product-spec-list");
+        viewSpecs.value += `${spec.value}\n`;
+
+        let temp = [];
+        specList.forEach(item => {
+            temp.push(item);
+        });
+        temp.push(spec.value);
+        setSpecList(temp);
+
+        spec.value = "";
+    }
+
+    // 업로드 한 파일이 지원하는 확장자가 아닐경우 값 초기화
     const clearImgPath = (inputTagName) => {
         const img = document.getElementById(inputTagName);
         img.value = "";
@@ -94,7 +128,7 @@ function NewProduct() {
                             </select>
                         </div>
                         <div className={"d-flex align-items-center mb-3"}>
-                            <input id={"input-admin-product-title"} type={"text"} name={"productTitle"} />
+                            <input id={"input-admin-product-title"} type={"text"} name={"productTitle"} maxLength={100} />
                         </div>
                     </div>
                 </div>
@@ -103,12 +137,27 @@ function NewProduct() {
                 <div className={"d-flex"}>
                     <div className={"div-admin-product-information-title-name"}>
                         <p className={"mt-2 me-3 nanumSquareR-font-normal"}>상품 사양 : </p>
+                        <p className={"mt-2 me-3 nanumSquareR-font-normal"}>현재 입력한 상품 목록 : </p>
                         <p className={"mt-2 me-3 nanumSquareR-font-normal"}>현재 입력한 상품 사양 : </p>
                     </div>
                     <div>
-                        <div id={"div-admin-product-spec-wrapper"} className={"d-flex mb-3"}>
-                            <input id={"input-admin-product-spec"} type={"text"}/>
-                            <Button variant={"outline-dark"} className={"ms-3"}>추가</Button>
+                        <div id={"div-admin-product-spec-wrapper"} className={"d-flex"}>
+                            <input id={"input-admin-product-spec"} type={"text"} maxLength={50} />
+                            <Button variant={"outline-dark"} className={"ms-3"} onClick={addProductSpec}>추가</Button>
+                        </div>
+                        <div className={"d-flex"}>
+                            <select id={"select-admin-add-spec-list"}>
+                                {
+                                    specList.map(item => {
+                                        return (
+                                            <option>{item}</option>
+                                        )
+                                    })
+                                }
+                            </select>
+                            <div className={"ms-3"}>
+                                <Button variant={"outline-danger"} onClick={removeProductSpec}>삭제</Button>
+                            </div>
                         </div>
                         <div className={"d-flex"}>
                             <textarea id={"textarea-admin-product-spec-list"} readOnly={true} name={"productSpecs"}></textarea>
@@ -125,13 +174,13 @@ function NewProduct() {
                     </div>
                     <div id={"div-admin-product-price-and-stack-wrapper"}>
                         <div className={"mb-3"}>
-                            <input type={"text"} name={"productPrice"}/><span className={"nanumSquareR-font-normal"}> 원</span>
+                            <input type={"text"} name={"productPrice"} maxLength={9}/><span className={"nanumSquareR-font-normal"}> 원</span>
                         </div>
                         <div className={"mb-3"}>
-                            <input type={"text"} name={"productDiscountPrice"}/><span className={"nanumSquareR-font-normal"}> 원</span>
+                            <input type={"text"} name={"productDiscountPrice"} maxLength={9}/><span className={"nanumSquareR-font-normal"}> 원</span>
                         </div>
                         <div>
-                            <input type={"text"} name={"productStackCount"}/><span className={"nanumSquareR-font-normal"}> 개</span>
+                            <input type={"text"} name={"productStackCount"} maxLength={9}/><span className={"nanumSquareR-font-normal"}> 개</span>
                         </div>
                     </div>
                 </div>

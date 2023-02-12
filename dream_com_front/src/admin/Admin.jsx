@@ -10,7 +10,7 @@ function Admin() {
     }, []);
 
     return (
-        <div>
+        <div className={"container-fluid"}>
             <AdminNav />
             <Outlet />
         </div>
