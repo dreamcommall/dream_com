@@ -69,30 +69,32 @@ function NewProduct() {
                     </div>
                     <div>
                         <div>
-                            <select id={"select-admin-category-menu"} className={"nanumSquareR-font-normal"}>
-                                <option>선택안함</option>
-                                <option>데스크탑(PC)</option>
-                                <option>노트북</option>
-                                <option>키보드</option>
-                                <option>마우스</option>
-                                <option>모니터</option>
+                            <select id={"select-admin-category-menu"} className={"nanumSquareR-font-normal"}
+                                    name={"categoryMenu"}>
+                                <option value={"none"}>선택안함</option>
+                                <option value={"desktop"}>데스크탑(PC)</option>
+                                <option value={"laptop"}>노트북</option>
+                                <option value={"keyboard"}>키보드</option>
+                                <option value={"mouse"}>마우스</option>
+                                <option value={"monitor"}>모니터</option>
                             </select>
                         </div>
                         <div>
-                            <select id={"select-admin-company-menu"} className={"nanumSquareR-font-normal"}>
-                                <option>선택안함</option>
-                                <option>DreamComputer</option>
-                                <option>DELL</option>
-                                <option>HP</option>
-                                <option>LENOVO</option>
-                                <option>LG</option>
-                                <option>SAMSUNG</option>
-                                <option>LOGITECH</option>
-                                <option>RAZER</option>
+                            <select id={"select-admin-company-menu"} className={"nanumSquareR-font-normal"}
+                                    name={"companyName"}>
+                                <option value={"none"}>선택안함</option>
+                                <option value={"dreamCom"}>DreamComputer</option>
+                                <option value={"dell"}>DELL</option>
+                                <option value={"hp"}>HP</option>
+                                <option value={"lenovo"}>LENOVO</option>
+                                <option value={"lg"}>LG</option>
+                                <option value={"samsung"}>SAMSUNG</option>
+                                <option value={"logitech"}>LOGITECH</option>
+                                <option value={"razer"}>RAZER</option>
                             </select>
                         </div>
                         <div className={"d-flex align-items-center mb-3"}>
-                            <input id={"input-admin-product-title"} type={"text"}/>
+                            <input id={"input-admin-product-title"} type={"text"} name={"productTitle"} />
                         </div>
                     </div>
                 </div>
@@ -109,7 +111,7 @@ function NewProduct() {
                             <Button variant={"outline-dark"} className={"ms-3"}>추가</Button>
                         </div>
                         <div className={"d-flex"}>
-                            <textarea id={"textarea-admin-product-spec-list"} readOnly={true}></textarea>
+                            <textarea id={"textarea-admin-product-spec-list"} readOnly={true} name={"productSpecs"}></textarea>
                         </div>
                     </div>
                 </div>
@@ -123,13 +125,13 @@ function NewProduct() {
                     </div>
                     <div id={"div-admin-product-price-and-stack-wrapper"}>
                         <div className={"mb-3"}>
-                            <input type={"text"}/><span className={"nanumSquareR-font-normal"}> 원</span>
+                            <input type={"text"} name={"productPrice"}/><span className={"nanumSquareR-font-normal"}> 원</span>
                         </div>
                         <div className={"mb-3"}>
-                            <input type={"text"}/><span className={"nanumSquareR-font-normal"}> 원</span>
+                            <input type={"text"} name={"productDiscountPrice"}/><span className={"nanumSquareR-font-normal"}> 원</span>
                         </div>
                         <div>
-                            <input type={"text"}/><span className={"nanumSquareR-font-normal"}> 개</span>
+                            <input type={"text"} name={"productStackCount"}/><span className={"nanumSquareR-font-normal"}> 개</span>
                         </div>
                     </div>
                 </div>
@@ -141,7 +143,7 @@ function NewProduct() {
                     <div>
                         <input id={"input-admin-upload-thumbnail-img-file"} className={"nanumSquareR-font-normal"}
                             type={"file"} onChange={() => {processUploadImage("input-admin-upload-thumbnail-img-file",
-                            "img-admin-upload-thumbnail-img-file")}} />
+                            "img-admin-upload-thumbnail-img-file")}} name={"productThumbnailImg"} />
                     </div>
                 </div>
                 <div className={"mb-3"}>
@@ -150,7 +152,7 @@ function NewProduct() {
                     <div>
                         <input id={"input-admin-upload-main-img-file"} className={"nanumSquareR-font-normal"}
                                type={"file"} onChange={() => {processUploadImage("input-admin-upload-main-img-file" ,
-                            "img-admin-upload-main-img-file")}} />
+                            "img-admin-upload-main-img-file")}} name={"productMainImg"} />
                     </div>
                 </div>
                 <div className={"d-flex justify-content-end"}>
