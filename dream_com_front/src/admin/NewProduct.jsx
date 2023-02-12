@@ -169,7 +169,6 @@ function NewProduct() {
     // 이미지 업로드에 관련된 함수를 묶어서 처리
     const processUploadImage = (inputTagName, imgTagName) => {
         const imgPath = getImgPath(inputTagName);
-        console.log(imgPath);
         if (checkFileExtension(imgPath)) {
             previewImg(inputTagName, imgTagName);
         } else {
