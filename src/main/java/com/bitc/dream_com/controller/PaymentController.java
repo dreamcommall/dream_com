@@ -24,20 +24,21 @@ public class PaymentController {
     private ProductController productController;
 
 //    결제내역 불러오기
-//    최종 수정일 2023-02-02
+//    최종 수정일 2023-02-13
 //    최종 작성자 : 양민호
     @RequestMapping(value = "paymentData", method = RequestMethod.GET)
     public Object paymentData(@RequestParam("userId") String userId) throws Exception {
         List<PaymentDto> paymentData = paymentService.paymentData(userId);
         List<PaymentAndProductDto> paymentDataList = new ArrayList<>();
-        for(PaymentDto item: paymentData) {
-            int productNum = item.getProductNum();
+        for(int i = 0; i < paymentData.size(); i++) {
+            int productNum = paymentData.get(i).getProductNum();
             ProductDto paymentProductInfo =productService.productData(productNum);
             ProductDetail data = productController.getFullData(paymentProductInfo).get(0);
             PaymentAndProductDto paymentAndProduct = new PaymentAndProductDto(paymentProductInfo, data.getCompanyName(),
                     data.getPartName(), data.getThumbnailImg(), data.getCarouselImg(), data.getMainPageImg(),
                     data.getDetailImg(), data.getScore(), data.getReviewCount());
-            paymentAndProduct.setPaymentDto(item);
+            paymentAndProduct.setPaymentDto(paymentData.get(i));
+            paymentAndProduct.setKey(i);
             paymentDataList.add(paymentAndProduct);
         }
 
