@@ -39,7 +39,7 @@
     font-size: 17px;
 }
 
-#button-sing-up-user-id-check:hover {
+#button-sing-up-user-id-check:hover, .button-sing-up-button:hover {
     background-color: #c2c2c2;
 }
 
@@ -47,4 +47,8 @@
     border-bottom: 2px solid black;
     padding-bottom: 5px;
     margin-left: 75px;
+}
+
+.input-sign-up-address {
+    width: 100%;
 }

@@ -36,10 +36,10 @@ function SignUpMain() {
                 <div className={"div-sign-up-contents-firstDiv"}>주소</div>
                 <div id={"div-sign-up-email-content"} className={"row"}>
                     <div className={"pb-2"}>
-                        <input type={"text"} placeholder={"주소"} />
+                        <input className={"input-sign-up-address"} type={"text"} placeholder={"주소"} />
                     </div>
                     <div>
-                        <input type={"text"} placeholder={"상세주소"} />
+                        <input className={"input-sign-up-address"} type={"text"} placeholder={"상세주소"} />
                     </div>
                 </div>
             </div>
