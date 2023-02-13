@@ -6,6 +6,16 @@ import Button from "react-bootstrap/Button";
 function NewProduct() {
     const [specList, setSpecList] = useState([]); // 상품의 사양 목록
 
+    // 신규 상품 등록
+    const registerProduct = () => {
+        if (isBlank() == false) {
+            const form = document.querySelector("#form-admin-register-product");
+            form.action = "http://localhost:8080/product";
+            form.method = "post";
+            form.submit();
+        }
+    }
+    
     // 설정 초기화
     const initValue = () => {
         if (window.confirm("정말로 초기화하시겠습니까?")) {
@@ -20,9 +30,10 @@ function NewProduct() {
             const specList = document.querySelector("#textarea-admin-product-spec-list");
             const thumbnailImg = document.querySelector("#img-admin-upload-thumbnail-img-file");
             const mainImg = document.querySelector("#img-admin-upload-main-img-file");
+            const delivery = document.querySelector("#select-admin-product-delivery");
 
-            category.value = "";
-            company.value = "";
+            category.value = "none";
+            company.value = "none";
             title.value = "";
             price.value = "";
             discountPrice.value = "";
@@ -32,12 +43,13 @@ function NewProduct() {
             specList.value = "";
             thumbnailImg.src = "";
             mainImg.src = "";
+            delivery.value = "none";
             setSpecList([]);
         }
     }
 
     // 선택하지 않은 값이 있는지 확인
-    const checkBlank = () => {
+    const isBlank = () => {
         const category = document.querySelector("#select-admin-category-menu");
         const company = document.querySelector("#select-admin-company-menu");
         const title = document.querySelector("#input-admin-product-title");
@@ -46,53 +58,59 @@ function NewProduct() {
         const stack = document.querySelector("#input-admin-product-stack-count");
         const thumbnail = document.querySelector("#input-admin-upload-thumbnail-img-file");
         const mainImg = document.querySelector("#input-admin-upload-main-img-file");
+        const delivery = document.querySelector("#select-admin-product-delivery");
 
         if (category.value == "none") {
             alert("상품 카테고리를 선택해주세요!");
-            return;
+            return true;
         }
 
         if (company.value == "none") {
             alert("상품 제조사를 선택해주세요!");
-            return;
+            return true;
         }
 
         if (title.value == "") {
             alert("상품명을 입력해주세요!");
-            return;
+            return true;
         }
 
         if (specList.length == 0) {
             alert("상품 사양을 입력해주세요!");
-            return;
+            return true;
         }
 
         if (price.value == "") {
             alert("상품 판매가를 입력해주세요!");
-            return;
+            return true;
         }
 
         if (discountPrice.value == "") {
             alert("상품 할인금액을 입력해주세요!");
-            return;
+            return true;
         }
 
         if (stack.value == "") {
             alert("상품 재고수량을 입력해주세요!");
-            return;
+            return true;
+        }
+        
+        if (delivery.value == "none") {
+            alert("상품 배송일을 선택해주세요!");
+            return true;
         }
 
         if (thumbnail.value == "") {
             alert("섬네일 이미지를 등록해주세요!");
-            return;
+            return true;
         }
 
         if (mainImg.value == "") {
             alert("메인 이미지를 등록해주세요!");
-            return;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     // 등록한 상품의 사양 삭제
@@ -181,7 +199,7 @@ function NewProduct() {
         <div className={"container my-5"}>
             <h3 className={"nanumSquareB-font-XLarge"}>상품등록</h3>
             <hr/>
-            <form>
+            <form id={"form-admin-register-product"}>
                 <h5 className={"nanumSquareB-font-large mb-3"}># 상품 기본 정보 입력</h5>
                 <div className={"d-flex"}>
                     <div className={"div-admin-product-information-title-name"}>
@@ -259,6 +277,7 @@ function NewProduct() {
                         <p className={"mt-2 me-3 nanumSquareR-font-normal"}>상품 판매가 : </p>
                         <p className={"mt-2 me-3 nanumSquareR-font-normal"}>상품 할인금액 : </p>
                         <p className={"mt-0 me-3 nanumSquareR-font-normal"}>상품 재고수량 : </p>
+                        <p className={"mt-0 me-3 nanumSquareR-font-normal"}>상품 배송시간 : </p>
                     </div>
                     <div id={"div-admin-product-price-and-stack-wrapper"}>
                         <div className={"mb-3"}>
@@ -269,6 +288,13 @@ function NewProduct() {
                         </div>
                         <div>
                             <input type={"text"} id={"input-admin-product-stack-count"} name={"productStackCount"} maxLength={9}/><span className={"nanumSquareR-font-normal"}> 개</span>
+                        </div>
+                        <div>
+                            <select id={"select-admin-product-delivery"} className={"nanumSquareR-font-normal"} name={"deliveryDays"}>
+                                <option value={"none"}>선택안함</option>
+                                <option value={"today"}>당일배송</option>
+                                <option value={"fewDay"}>2 ~ 3일 배송</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -294,7 +320,7 @@ function NewProduct() {
                 </div>
                 <div className={"d-flex justify-content-end"}>
                     <Button variant={"outline-danger"} className={"me-2"} onClick={initValue}>초기화</Button>
-                    <Button variant={"outline-dark"} onClick={checkBlank}>등록하기</Button>
+                    <Button variant={"outline-dark"} onClick={registerProduct}>등록하기</Button>
                 </div>
             </form>
         </div>
