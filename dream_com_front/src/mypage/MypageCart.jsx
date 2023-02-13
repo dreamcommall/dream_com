@@ -31,6 +31,7 @@ function MypageCart() {
                 }
             } else {
                 setUserId(response.data);
+                sessionStorage.removeItem("isFirstLogin")
             }
         }).catch(err => {
             console.log(`에러메세지 : ${err}`);
