@@ -75,8 +75,8 @@ function DreamComRouter() {
                 <Route path={"/error"} element={<ErrorPageApp />} />
                 <Route path={"/purchase"} element={<PurchaseApp />}></Route>
                 <Route path={"/mypage/order"} element={<Mypage />}></Route>
-                <Route path={"/mypageCart"} element={<DreamComCart />}></Route>
-                <Route path={"/myPageWishList"} element={<DreamComWishList />}></Route>
+                <Route path={"/mypage/cart"} element={<DreamComCart />}></Route>
+                <Route path={"/mypage/wishList"} element={<DreamComWishList />}></Route>
                 <Route path={"/admin/product/"} element={<Admin />}>
                     <Route path={"registration"} element={<NewProduct />}/>
                     <Route path={"modification"} element={<ModifyProduct />}/>

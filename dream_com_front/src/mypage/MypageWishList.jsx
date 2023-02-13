@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from "react";
 import "./MypageWishList.css"
 import axios from "axios";
+import {useLocation, useNavigate} from "react-router-dom";
 
 
 function MypageWishList() {
     const [userId, setUserId] = useState(null);
     const [wishList, setWishList] = useState([]);
     const [blankHeight, setBlankHeight] = useState("0px");
+    const pageUrl = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.post("http://localhost:8080/loginUserId", null, {
@@ -17,8 +20,15 @@ function MypageWishList() {
         }).then(response => {
             if (response.data == null || response.data == undefined || response.data == "") {
                 setUserId(null);
+
+                if (inviteFirstMyPageNotLogin()) {
+                    navigate(`/login?prev=${pageUrl.pathname + pageUrl.search}`);
+                } else {
+                    navigate("/")
+                }
             } else {
                 setUserId(response.data);
+                sessionStorage.removeItem("isFirstLogin")
             }
         }).catch(err => {
             console.log(`에러메세지 : ${err}`);
@@ -112,6 +122,17 @@ function MypageWishList() {
         }
     }
 
+    const inviteFirstMyPageNotLogin = () => {
+        // 미 로그인 상태에서 마이페이지에 접속한경우 세션 스토리지에 중복체크를 판단할 수 있는 값을 저장
+        if (sessionStorage.getItem("isFirstLogin") == null) {
+            sessionStorage.setItem("isFirstLogin", "true");
+            return true;
+        } else { // 미 로그인 상태에서 마이페이지에 또 다시 접속된경우 세션 스토리지에 중복체크 값 제거하고 메인으로 이동시킴
+            sessionStorage.removeItem("isFirstLogin");
+            return false;
+        }
+    }
+
     return (
         <div className={"mypageWishList"}>
             <div className={"mypageWishList"}>
@@ -151,7 +172,7 @@ function MypageWishList() {
                     }
                     </tbody>
                 </table>
-                
+
                 <div className={"mb-5"} style={wishList.length == 0 ? {display: "none"} : {display: "block"}}>
                     <button className={"addWishList"} onClick={insertCart}>장바구니 추가</button>
                     <button className={"deleteWishList"} onClick={deleteWishList}>찜 해제</button>
