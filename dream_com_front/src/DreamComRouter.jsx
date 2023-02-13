@@ -5,14 +5,12 @@ import SearchPageApp from "./search/SearchPageApp";
 import PurchaseApp from "./purchase/PurchaseApp";
 import DetailApp from "./detail/DetailApp";
 import SignInfomation from "./common/SignInfomation";
-import EmailTest from "./EmailTest";
 import Clause from "./SignUp/Clause";
 import LoginChk from "./LoginChk";
 import Login from "./login/Login";
 import FindId from "./findId/FindId";
 import FindPw from "./findId/FindPw";
 import ErrorPageApp from "./common/ErrorPage/ErrorPageApp";
-import ModalFrameTest from "./reviewModal/ModalFrameTest";
 import ProcessClear from "./common/ProcessClear";
 import Mypage from "./mypage/Mypage";
 import DreamComCart from "./mypage/DreamComCart";
@@ -22,7 +20,7 @@ import Admin from "./admin/Admin";
 import NewProduct from "./admin/NewProduct";
 import ModifyProduct from "./admin/ModifyProduct";
 import RemoveProduct from "./admin/RemoveProduct";
-import SignUpMain from "./SignUp/SignUpMain";
+import SignUpApp from "./SignUp/SignUpApp";
 
 // 작성자 : MoonNight285
 // 라우터 관리 컴포넌트
@@ -57,7 +55,7 @@ function DreamComRouter() {
                     <Route path={"removal"} element={<RemoveProduct />}/>
                 </Route>
 
-                <Route path={"/testSign"} element={<SignUpMain />}></Route>
+                <Route path={"/testSign"} element={<SignUpApp />}></Route>
             </Routes>
         </BrowserRouter>
     )

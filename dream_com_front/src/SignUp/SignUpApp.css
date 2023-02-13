@@ -2,26 +2,35 @@
     margin-left: 75px;
     display: flex;
     border-bottom: 1px solid lightgrey;
+    padding: 10px 0px;
 }
 
 .div-sign-up-contents-wrapper div {
-    height: 55px;
     display: flex;
     align-items: center;
 }
 
-.div-sign-up-contents-wrapper div:first-child {
+.div-sign-up-contents-firstDiv {
     font-family: NanumSquareR;
     font-size: 18px;
     width: 200px;
     margin-left: 75px;
 }
 
-.div-sign-up-contents-wrapper div:last-child {
+.div-sign-up-contents-secondDiv {
     width: 300px;
 }
 
 #button-sing-up-user-id-check {
+    width: 100px;
+    margin-left: 10px;
+    border: none;
+    padding: 3px;
+    font-family: NanumSquareR;
+    font-size: 17px;
+}
+
+.button-sing-up-button {
     width: 100px;
     margin-left: 10px;
     border: none;
