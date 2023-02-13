@@ -44,7 +44,6 @@ public class AdminController {
         // UUID를 이용해 현재 로그인한 세션에서 아이디 값을 조회하고 해당 유저의 권한을 반환
         String userId = userService.isUserUUID(targetUUID);
         String authorization = adminService.getAuthorization(userId);
-        System.out.println(authorization);
         return authorization;
     }
     
