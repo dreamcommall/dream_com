@@ -48,8 +48,12 @@ function ProcessClear() {
     const profile = ClearPages[titleNames];
 
     const location = useLocation();
-    console.log(location);
     const {pathname} = location;
+
+    const handleClear =()=>{
+        setClearBtn((prevState)=>prevState)
+
+    }
 
     return (
         <div>
@@ -78,10 +82,10 @@ function ProcessClear() {
                             {clearBtn ?(
                             <Link to={profile.url}>
                             <button style={{marginLeft: "60%", backgroundColor: "black", color: "white"}}
-                                    id={"btnClear"} onClick={()=>handleClear}>{profile.buttonName}</button></Link>):
+                                    id={"btnClear"} onClick={handleClear}>{profile.buttonName}</button></Link>):
                                 (<Link to={profile.url}>
                                     <button style={{marginLeft: "60%", backgroundColor: "black", color: "white"}}
-                                            id={"btnClear"} onClick={()=>handleClear}>{profile.buttonName}</button></Link>)
+                                            id={"btnClear"} onClick={handleClear}>{profile.buttonName}</button></Link>)
                             }
                         </div>
                         <div className={"col"}>
@@ -99,12 +103,6 @@ function ProcessClear() {
             </div>
         </div>
     );
-
-    const handleClear =()=>{
-        setClearBtn((prevState)=>prevState)
-
-    }
-
 
 }
 
