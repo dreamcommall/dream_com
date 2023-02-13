@@ -5,4 +5,11 @@
     <select id="getAuthorization" parameterType="String" resultType="String">
         SELECT user_state FROM user WHERE user_id = #{userId}
     </select>
+
+    <!-- 상품 테이블에 클라이언트로 부터 받은 값을 입력합니다.-->
+    <insert id="setNewProduct" parameterType="com.bitc.dream_com.dto.ProductDto">
+--         INSERT INTO product(product_num, product_title, product_name, product_price,
+--                             product_discount, inventory_quantity, product_createDt, delivery_info, click_count)
+--         VALUES(230213001, 'test_title', 'test_name', 50000, 5, 10, NOW(), '당일배송', 0)
+    </insert>
 </mapper>

@@ -1,5 +1,6 @@
 package com.bitc.dream_com.service;
 
+import com.bitc.dream_com.dto.ProductDto;
 import com.bitc.dream_com.mapper.AdminMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,17 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public String getAuthorization(String userId) throws Exception {
         return adminMapper.getAuthorization(userId);
+    }
+    
+    /**
+     * 신규 상품을 등록합니다.
+     *
+     * @author 김준영
+     * @param productDto 신규 상품으로 등록할 정보가 들어있는 DTO
+     * @apiNote 최종 수정일 2023-02-13
+     */
+    @Override
+    public void setNewProduct(ProductDto productDto) throws Exception {
+    
     }
 }

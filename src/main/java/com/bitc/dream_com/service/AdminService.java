@@ -1,5 +1,7 @@
 package com.bitc.dream_com.service;
 
+import com.bitc.dream_com.dto.ProductDto;
+
 public interface AdminService {
     /**
      * 관리자 페이지에 접속할때 해당 유저의 권한을 얻어옵니다.
@@ -11,4 +13,13 @@ public interface AdminService {
      * @apiNote 최종 수정일 2023-02-13
      */
     String getAuthorization(String userId) throws Exception;
+    
+    /**
+     * 신규 상품을 등록합니다.
+     *
+     * @author 김준영
+     * @param productDto 신규 상품으로 등록할 정보가 들어있는 DTO
+     * @apiNote 최종 수정일 2023-02-13
+     */
+    void setNewProduct(ProductDto productDto) throws Exception;
 }

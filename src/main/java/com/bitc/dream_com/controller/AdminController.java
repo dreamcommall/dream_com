@@ -5,6 +5,8 @@ import com.bitc.dream_com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class AdminController {
@@ -44,5 +46,21 @@ public class AdminController {
         String authorization = adminService.getAuthorization(userId);
         System.out.println(authorization);
         return authorization;
+    }
+    
+    @RequestMapping(value = "/product", method = RequestMethod.POST)
+    public String registerProduct(HttpServletRequest request) throws Exception {
+        request.setCharacterEncoding("UTF-8");
+        String category = request.getParameter("categoryMenu");
+        String company = request.getParameter("companyName");
+        String productTitle = request.getParameter("productTitle");
+        String productSpecs = request.getParameter("productSpecs");
+        String productPrice = request.getParameter("productPrice");
+        String productDiscount = request.getParameter("productDiscountPrice");
+        String productStack = request.getParameter("productStackCount");
+        String deliveryDays = request.getParameter("deliveryDays");
+        String thumbnailImgFile = request.getParameter("productThumbnailImg");
+        String mainImgFile = request.getParameter("productMainImg");
+        return "success";
     }
 }

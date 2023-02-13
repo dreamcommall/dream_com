@@ -48,3 +48,9 @@
 #div-admin-product-price-and-stack-wrapper input {
     height: 40px;
 }
+
+#div-admin-product-price-and-stack-wrapper select {
+    height: 40px;
+    margin-top: 12px;
+    width: 189px;
+}

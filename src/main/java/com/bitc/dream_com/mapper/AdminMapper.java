@@ -1,5 +1,6 @@
 package com.bitc.dream_com.mapper;
 
+import com.bitc.dream_com.dto.ProductDto;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -14,4 +15,13 @@ public interface AdminMapper {
      * @apiNote 최종 수정일 2023-02-13
      */
     String getAuthorization(String userId) throws Exception;
+    
+    /**
+     * 신규 상품을 등록합니다.
+     *
+     * @author 김준영
+     * @param productDto 신규 상품으로 등록할 정보가 들어있는 DTO
+     * @apiNote 최종 수정일 2023-02-13
+     */
+    void setNewProduct(ProductDto productDto) throws Exception;
 }
