@@ -1,0 +1,41 @@
+.div-sign-up-contents-wrapper {
+    margin-left: 75px;
+    display: flex;
+    border-bottom: 1px solid lightgrey;
+}
+
+.div-sign-up-contents-wrapper div {
+    height: 55px;
+    display: flex;
+    align-items: center;
+}
+
+.div-sign-up-contents-wrapper div:first-child {
+    font-family: NanumSquareR;
+    font-size: 18px;
+    width: 200px;
+    margin-left: 75px;
+}
+
+.div-sign-up-contents-wrapper div:last-child {
+    width: 300px;
+}
+
+#button-sing-up-user-id-check {
+    width: 100px;
+    margin-left: 10px;
+    border: none;
+    padding: 3px;
+    font-family: NanumSquareR;
+    font-size: 17px;
+}
+
+#button-sing-up-user-id-check:hover {
+    background-color: #c2c2c2;
+}
+
+#h4-sing-up-header-title {
+    border-bottom: 2px solid black;
+    padding-bottom: 5px;
+    margin-left: 75px;
+}
