@@ -159,47 +159,49 @@ function Login(){
             <ClickPrevent isLoading={isLoad} />
             <Loading loadStatus={isLoad} />
             <div className={"container text-center"} style={commonStyle}>
-                <div className={"row"}>
-                    <div className={"col-4"}>
-                    </div>
-                    <div className={"col-4"}>
-                        <div>
-                            <Link to={"/"}><img src={"/images/mainLogo2.png"} style={imgSize}></img></Link>
+                <form>
+                    <div className={"row"}>
+                        <div className={"col-4"}>
                         </div>
-                        <div>
-                            <input placeholder={"아이디"} value={userId} onChange={handleInputId} type={"text"}
-                                   className={"border-1 border-bottom-0 nanumSquareR-font-small"} style={inputSize} onKeyDown={(e)=>{enterKey(e)}}/>
-                        </div>
-                        <form>
-                            <input placeholder={"비밀번호는 8~2  0자"} value={userPw} onChange={handleInputPw} type={"password"}
-                                   autoComplete={"off"} style={inputSize} onKeyDown={enterKey} />
-                        </form>
-                        {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 2*/}
-                        <div>
-                            <button id={"loginBtn"} style={loginBtn} onClick={DataReceive} className={"nanumSquareR-font-normal border-0 mt-3"}>로그인</button>
-                        </div>
-                        <div>
-                            {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 1*/}
-                            <div className={"d-flex justify-content-between mb-5"}>
-                                <div>
-                                    <input className={"form-check-input ms-1 me-1"} style={{marginTop:"5px"}}
-                                            checked={isAutoLogin} onChange={() => {setIsAutoLogin(!isAutoLogin)}} type={"checkbox"} />
-                                    <label onClick={() => {setIsAutoLogin(!isAutoLogin)}} className={"ms-1 nanumSquareR-font-small"} style={fontSize}>자동로그인</label>
-                                </div>
-                                <div>
-                                    <Link to={"/findId"} className={"text-decoration-none text-dark nanumSquareR-font-small"} style={fontSize}>아이디 찾기</Link>
-                                    <span className={"ms-2"}>|</span>
-                                    <Link to={"/findPw"} className={"text-decoration-none ms-2 text-dark nanumSquareR-font-small"} style={fontSize}>비밀번호 찾기</Link>
-                                </div>
+                        <div className={"col-4"}>
+                            <div>
+                                <Link to={"/"}><img src={"/images/mainLogo2.png"} style={imgSize}></img></Link>
                             </div>
-                            <div className={"mt-2"}>
-                                <Link to={"/sign"} className={"text-decoration-none text-dark nanumSquareR-font-Normal"}><b>회원가입</b> ></Link>
+                            <div>
+                                <input placeholder={"아이디"} value={userId} onChange={handleInputId} type={"text"}
+                                       className={"border-1 border-bottom-0 nanumSquareR-font-small"} style={inputSize} onKeyDown={(e)=>{enterKey(e)}}/>
                             </div>
-                            <p className={"nanumSquareR-font-small"} style={loginFooter}>
-                                Copyright © 2023 <b>DreamComputer</b> Co.,Ltd. All Rights Reserved.</p>
+                            <div>
+                                <input placeholder={"비밀번호는 8~2  0자"} value={userPw} onChange={handleInputPw} type={"password"}
+                                       autoComplete={"off"} style={inputSize} onKeyDown={enterKey} />
+                            </div>
+                            {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 2*/}
+                            <div>
+                                <button id={"loginBtn"} type={"button"} style={loginBtn} onClick={DataReceive} className={"nanumSquareR-font-normal border-0 mt-3"}>로그인</button>
+                            </div>
+                            <div>
+                                {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 1*/}
+                                <div className={"d-flex justify-content-between mb-5"}>
+                                    <div>
+                                        <input className={"form-check-input ms-1 me-1"} style={{marginTop:"5px"}}
+                                                checked={isAutoLogin} onChange={() => {setIsAutoLogin(!isAutoLogin)}} type={"checkbox"} />
+                                        <label onClick={() => {setIsAutoLogin(!isAutoLogin)}} className={"ms-1 nanumSquareR-font-small"} style={fontSize}>자동로그인</label>
+                                    </div>
+                                    <div>
+                                        <Link to={"/findId"} className={"text-decoration-none text-dark nanumSquareR-font-small"} style={fontSize}>아이디 찾기</Link>
+                                        <span className={"ms-2"}>|</span>
+                                        <Link to={"/findPw"} className={"text-decoration-none ms-2 text-dark nanumSquareR-font-small"} style={fontSize}>비밀번호 찾기</Link>
+                                    </div>
+                                </div>
+                                <div className={"mt-2"}>
+                                    <Link to={"/sign"} className={"text-decoration-none text-dark nanumSquareR-font-Normal"}><b>회원가입</b> ></Link>
+                                </div>
+                                <p className={"nanumSquareR-font-small"} style={loginFooter}>
+                                    Copyright © 2023 <b>DreamComputer</b> Co.,Ltd. All Rights Reserved.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     )
