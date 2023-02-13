@@ -23,15 +23,36 @@ function Mypage() {
     const [modalIsOpen, setModalIsOpen] = useState(false); // 리뷰 모달창 표시 여부
     const [selectedProductNumber, setSelectedProductNumber] = useState(0); // 선택한 제품 번호
     
-    // 서버에게 구매확정을 요청후 새로고침
-    const updatePurchaseConfirm = (paymentNumber) => {
+    // 서버에게 환불요청을 한 후 데이터 재 로딩
+    const requestCancel = (paymentNumber) => {
         setIsLoad(true);
-        console.log(paymentNumber);
-        axios.post("http://localhost:8080/confirmPurchase", null, {params : {paymentNum : paymentNumber}})
-            .then(response => {
-                alert("구매확정 처리되었습니다.");
+        axios.put("http://localhost:8080/cancelPayment", null, {params : {
+                userId : loginUserId, paymentNum : paymentNumber
+            }}).then(response => {
+            if (response.data == "취소 완료") {
+                alert("환불 요청이 완료되었습니다.");
                 getOrderList();
                 getUserReview();
+            }
+        }).catch(err => {
+            setIsLoad(false);
+            console.log(`에러메세지 : ${err}`);
+            console.log("환불요청에 실패했습니다.");
+        });
+    }
+    
+    // 서버에게 구매확정을 요청후 데이터 재 로딩
+    const updatePurchaseConfirm = (paymentNumber) => {
+        setIsLoad(true);
+        axios.post("http://localhost:8080/confirmPurchase", null, {params : {paymentNum : paymentNumber}})
+            .then(response => {
+                if (response.data == 1) {
+                    alert("구매확정 처리되었습니다.");
+                    getOrderList();
+                    getUserReview();
+                } else {
+                    alert("구매확정이 정상적으로 되지 않았습니다.");
+                }
             })
             .catch(err => {
                 setIsLoad(false);
@@ -218,9 +239,9 @@ function Mypage() {
                         {
                             orderList.map(order => {
                                 return (
-                                    <BuyProductList orderInfo={createOrderInfo(order)} review={getTargetReview(order.productNum)}
+                                    <BuyProductList key={order.key} orderInfo={createOrderInfo(order)} review={getTargetReview(order.productNum)}
                                         paymentInfo={createPaymentInfo(order)} funcGetProductNumber={getSelectedProductNumber}
-                                        funcUpdatePurchaseConfirm={updatePurchaseConfirm}/>
+                                        funcUpdatePurchaseConfirm={updatePurchaseConfirm} funcRequestCancel={requestCancel}/>
                                 );
                             })
                         }

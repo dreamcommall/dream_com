@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import MyPageBuyProductContents from "./MyPageBuyProductContents";
 
-function BuyProductList({orderInfo, review, paymentInfo, funcGetProductNumber, funcUpdatePurchaseConfirm}) {
+function BuyProductList({orderInfo, review, paymentInfo, funcGetProductNumber, funcUpdatePurchaseConfirm, funcRequestCancel}) {
     // 배송 상태가 배송완료가 아닌경우 환불, 리뷰, 구매확정을 못하게 하기위해 선언
     const [purchaseEnable, setPurchaseEnable] = useState(false); // 구매가 사용가능한 상태인가?
     const [refundEnable, setRefundEnable] = useState(false); // 환불이 가능한 상태인가?
@@ -27,7 +27,12 @@ function BuyProductList({orderInfo, review, paymentInfo, funcGetProductNumber, f
         if (paymentInfo == undefined) {
             return;
         }
-        if (paymentInfo.state == 1 || paymentInfo.state == 2) {
+        if (paymentInfo.state == 0) {
+            setPurchaseEnable(false);
+            setRefundEnable(false);
+            setReviewEnable(false);
+        }
+        else if (paymentInfo.state == 1 || paymentInfo.state == 2) {
             setPurchaseEnable(false);
             setRefundEnable(true);
             setReviewEnable(false);
@@ -81,7 +86,7 @@ function BuyProductList({orderInfo, review, paymentInfo, funcGetProductNumber, f
             <td className={"listStyle"}>
                 <div>
                     <div className={"orderState"}>
-                        <button disabled={!refundEnable}>환불요청</button>
+                        <button disabled={!refundEnable} onClick={() => {funcRequestCancel(paymentInfo.paymentNum)}}>환불요청</button>
                     </div>
                     <div className={"orderState"}>
                         <button disabled={!(reviewEnable && (review == null))} className={"mt-2"} onClick={() => {funcGetProductNumber(orderInfo.productNum)}}>리뷰쓰기</button>
