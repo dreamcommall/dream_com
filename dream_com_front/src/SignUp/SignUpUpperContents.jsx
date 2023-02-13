@@ -1,6 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 
-function SignUpUpperContents() {
+function SignUpUpperContents({funcSendSignUserId}) {
+    const sendUserId = () => {
+        const input = document.querySelector("#input-sing-up-user-id");
+        funcSendSignUserId(input.value);
+    }
+    
     return (
         <div className={"mt-5"}>
             <h4 id={"h4-sing-up-header-title"} className={"mb-0 nanumSquareB-font-large"}>정보 입력</h4>
@@ -13,8 +18,8 @@ function SignUpUpperContents() {
             <div className={"div-sign-up-contents-wrapper"}>
                 <div className={"div-sign-up-contents-firstDiv"}>아이디</div>
                 <div className={"div-sign-up-contents-secondDiv"}>
-                    <input type={"text"}/>
-                    <button id={"button-sing-up-user-id-check"}>중복체크</button>
+                    <input id={"input-sing-up-user-id"} type={"text"} />
+                    <button id={"button-sing-up-user-id-check"} onClick={sendUserId}>중복체크</button>
                 </div>
             </div>
             <div className={"div-sign-up-contents-wrapper"}>
