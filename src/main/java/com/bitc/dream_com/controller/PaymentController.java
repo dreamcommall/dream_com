@@ -50,8 +50,9 @@ public class PaymentController {
 //    최종 수정일 2023-01-19
 //    최종 작성자 : 양민호
     @RequestMapping(value = "cancelPayment", method = RequestMethod.PUT)
-    public String cancelPayment(@RequestParam("userId") String userId, @RequestParam("paymentNum") int paymentNum) throws Exception {
-        paymentService.cancelPayment(userId, paymentNum);
+    public String cancelPayment(@RequestParam("userId") String userId, @RequestParam("paymentNum") int paymentNum,
+                                @RequestParam("productNum") int productNum) throws Exception {
+        paymentService.cancelPayment(userId, paymentNum, productNum);
 
         return "취소 완료";
     }
@@ -134,8 +135,8 @@ public class PaymentController {
  * @apiNote 최종 수정일 2023-02-13
 **/
     @RequestMapping(value = "confirmPurchase", method = RequestMethod.POST)
-    public int confirmPurchase(@RequestParam("paymentNum") int paymentNum) throws Exception {
-        int result = paymentService.confirmPurchase(paymentNum);
+    public int confirmPurchase(@RequestParam("paymentNum") int paymentNum, @RequestParam("productNum") int productNum) throws Exception {
+        int result = paymentService.confirmPurchase(paymentNum, productNum);
         if(result == 1) {
             return 1;
         }

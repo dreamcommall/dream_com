@@ -11,7 +11,7 @@ public interface PaymentMapper {
     List<PaymentDto> paymentData(String userId) throws Exception;
 
 //    결제취소
-    void cancelPayment(String userId, int paymentNum) throws Exception;
+    void cancelPayment(String userId, int paymentNum, int productNum) throws Exception;
 
 //    구매 / 결제완료 (결제내역 추가)
     int buy(PaymentDto paymentDto) throws Exception;
@@ -27,9 +27,9 @@ public interface PaymentMapper {
 
     List<PaymentDto> getLaterDelivery() throws Exception;
 
-    void changeState(int paymentNum) throws Exception;
+    void changeState(int paymentNum, int productNum) throws Exception;
 
     List<PaymentDto> getTodayDelivery() throws Exception;
 
-    int confirmPurchase(int paymentNum) throws Exception;
+    int confirmPurchase(int paymentNum, int productNum) throws Exception;
 }

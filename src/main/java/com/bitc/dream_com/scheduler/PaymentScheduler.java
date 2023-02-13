@@ -27,7 +27,7 @@ public class PaymentScheduler {
         List<PaymentDto> paymentInfo = paymentService.getLaterDelivery();
         for(PaymentDto item: paymentInfo) {
             if(item.getState() != 0 && item.getState() < 3) {
-                paymentService.changeState(item.getPaymentNum());
+                paymentService.changeState(item.getPaymentNum(), item.getProductNum());
             }
         }
     }
@@ -43,7 +43,7 @@ public class PaymentScheduler {
         List<PaymentDto> paymentInfo = paymentService.getTodayDelivery();
         for(PaymentDto item: paymentInfo) {
             if(item.getState() == 1) {
-                paymentService.changeState(item.getPaymentNum());
+                paymentService.changeState(item.getPaymentNum(), item.getProductNum());
             }
         }
     }
@@ -59,7 +59,7 @@ public class PaymentScheduler {
         List<PaymentDto> paymentInfo = paymentService.getTodayDelivery();
         for(PaymentDto item: paymentInfo) {
             if(item.getState() == 2) {
-                paymentService.changeState(item.getPaymentNum());
+                paymentService.changeState(item.getPaymentNum(), item.getProductNum());
             }
         }
     }
