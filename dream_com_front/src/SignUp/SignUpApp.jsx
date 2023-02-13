@@ -11,6 +11,24 @@ import Loading from "../common/Loading";
 function SignUpApp() {
     const [signUserId, setSignUserId] = useState(""); // 새로 가입하는 유저 아이디
     const [isLoad, setIsLoad] = useState(false); // 로딩창
+
+    // 휴대전화 번호
+    const [userTel, setUserTel] = useState("");
+    // 이메일
+    const [userEmail, setUserEmail] = useState("");
+    // 우편번호
+    const [userPost, setUserPost] = useState("");
+    // 주소
+    const [userAddr, setUserAddr] = useState("");
+    // 상세주소
+    const [userEctAddr, setUserEctAddr] = useState("");
+    // 인증 완료 state
+    const [emailAuth, setEmailAuth] = useState(false);
+
+    // SignUpMain
+    const signUpMainProps = {setUserTel: setUserTel, setUserEmail: setUserEmail, setUserPost: setUserPost,
+        setUserAddr:setUserAddr, setUserEctAddr:setUserEctAddr, userEmail:userEmail, setEmailAuth: setEmailAuth}
+
     
     // 하위 컴포넌트에서 사용
     const sendSignUserId = (targetId) => {
@@ -35,6 +53,32 @@ function SignUpApp() {
                 setIsLoad(false);
         });
     }
+
+    // 회원가입
+    const clickJoin = () => {
+        const post = parseInt(userPost);
+        if(userTel === "" || userEmail === "" || userPost === 0 || userAddr === "") {
+            alert("빈 칸을 모두 입력해 주세요")
+        } else {
+            axios.put("http://localhost:8080/join", null,
+                {params: {
+                        userId: 'qwer',
+                        userName: "양민호",
+                        userPw: 1234,
+                        userGender: "M",
+                        userTel: userTel,
+                        userEmail: userEmail,
+                        userPost: post,
+                        userAddr: userAddr + " " + userEctAddr
+                    }})
+                .then(req => {
+                    console.log(req.data);
+                })
+                .catch(err => {
+                    console.log("통신에러");
+                })
+        }
+    }
     
     return (
         <div className={"container-fluid"}>
@@ -43,7 +87,10 @@ function SignUpApp() {
             <NewSignUpHeader pageName={"SignUp"} />
             <div className={"container"}>
                 <SignUpUpperContents funcSendSignUserId={sendSignUserId} />
-                <SignUpMain />
+                <SignUpMain signUpMainProps={signUpMainProps}  />
+            </div>
+            <div id={"div-sing-up-SignUpButton"}>
+                <button id={"button-sing-up-SignUpButton"} disabled={!emailAuth} onClick={clickJoin}>회원가입</button>
             </div>
         </div>
     )

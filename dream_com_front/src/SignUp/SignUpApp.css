@@ -48,3 +48,21 @@
     padding-bottom: 5px;
     margin-left: 75px;
 }
+
+#div-sing-up-SignUpButton {
+    text-align: end;
+    padding-right: 30px;
+    margin-top: 20px;
+}
+
+#button-sing-up-SignUpButton {
+    width: 150px;
+    height: 40px;
+    font-family: NanumSquareR;
+    font-size: 20px;
+    border: none;
+}
+
+.input-sign-up-address {
+    width: 300px;
+}
