@@ -38,18 +38,21 @@ function MypageCart() {
             console.log("유저 아이디 취득에 실패했습니다.");
         });
 
+    }, []);
 
+    useEffect(() => {
+        if(userId == null){
+            return ;
+        }
         axios.get("http://localhost:8080/selectCart", {
             params: {
                 userId: userId
             }
         })
             .then((req) => {
-                console.log(req.data)
                 setCartList(req.data);
             })
-
-    }, [userId]);
+    },[userId])
 
     // 총 가격 계산해주는 Effect
     useEffect(() => {
@@ -86,7 +89,6 @@ function MypageCart() {
                 }
             })
                 .then((req) => {
-                    console.log(req.data)
                     if (req.data == -1) {
                         alert('선택한 수량이 재고량보다 많습니다.')
                         window.location.reload();
@@ -144,7 +146,6 @@ function MypageCart() {
             })
             .catch((err) => {
                 alert('선택된 상품이 없습니다.')
-                console.log(err)
             })
     }
 
@@ -196,10 +197,10 @@ function MypageCart() {
                 {
                     cartList.map((item) => {
                         return (
-                            <tr className={"tableCart"}>
+                            <tr className={"tableCart"} key={item.key}>
                                 <td>
                                     <div className={"cartList"}>
-                                        <input className={"productNum"} type={"checkbox"} value={item.productNum}
+                                        <input className={"productNum"} type={"checkbox"} defaultValue={item.productNum}
                                                id={`checked${item.key}`} key={item.key}/>
                                         <a href={"#"}><img src={item.thumbnailImg}/></a>
                                         <div className={"productTitle"}>
@@ -222,7 +223,7 @@ function MypageCart() {
                                     </button>
                                     <input className={"productQuantity text-center nanumSquareR-font-normal"}
                                            id={`quantity${item.key}`}
-                                           value={item.inventoryQuantity}/>
+                                           defaultValue={item.inventoryQuantity}/>
                                     <button onClick={() => plusQuantity(`quantity${item.key}`, item.productNum)}>+
                                     </button>
                                 </td>

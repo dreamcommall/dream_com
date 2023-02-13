@@ -35,23 +35,21 @@ function MypageWishList() {
             console.log("유저 아이디 취득에 실패했습니다.");
         });
 
-        console.log(userId);
+    }, []);
 
+    useEffect(() => {
+        if(userId == null){
+            return ;
+        }
         axios.get("http://localhost:8080/getWishList", {
             params: {
                 userId: userId
             }
         })
             .then((req) => {
-                console.log(req.data);
                 setWishList(req.data);
             })
-            .catch((err) => {
-                console.log(userId)
-            })
-
-    }, [userId]);
-
+    },[userId])
     useEffect(() => {
         controlBlankHeight();
     }, [wishList]);
@@ -74,7 +72,6 @@ function MypageWishList() {
             }
         })
             .then((req) => {
-                console.log(req);
                 alert('해당 찜한 상품을 삭제하였습니다.')
                 window.location.reload();
             })
@@ -102,7 +99,6 @@ function MypageWishList() {
             }
         })
             .then((req) => {
-                console.log(req);
                 alert('해당 찜한 상품을 장바구니에 담았습니다.')
                 deleteWishList();
                 window.location.reload();
@@ -149,9 +145,9 @@ function MypageWishList() {
                     {
                         wishList.map((item) => {
                             return (
-                                <tr className={"tableWishList"}>
-                                    <div className={"ms-1 nanumSquareR-font-normal wishListSection"}>
-                                        <input className={"float-start wishCheck"} value={item.productNum}
+                                <tr className={"tableWishList"} key={item.key}>
+                                    <td className={"ms-1 nanumSquareR-font-normal wishListSection"}>
+                                        <input className={"float-start wishCheck"} defaultValue={item.productNum}
                                                type={"checkbox"}/>
                                         <a href={"#"}><img className={"wishImg"} src={item.thumbnailImg}/></a>
                                         <div className={"wishListProductInfo"}>
@@ -165,7 +161,7 @@ function MypageWishList() {
                                                 <strong>{item.productPrice.toLocaleString()} 원</strong></div>
                                             <div className={"productCompany"}>{item.companyName}</div>
                                         </div>
-                                    </div>
+                                    </td>
                                 </tr>
                             )
                         })
