@@ -196,7 +196,7 @@ function MypageCart() {
                 {
                     cartList.map((item) => {
                         return (
-                            <tr className={"tableCart"}>
+                            <tr className={"tableCart"} key={item.key}>
                                 <td>
                                     <div className={"cartList"}>
                                         <input className={"productNum"} type={"checkbox"} value={item.productNum}
