@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {useDaumPostcodePopup} from 'react-daum-postcode';
 import axios from "axios";
 
-function SignUpMain({signUpMainProps}) {
+function SignUpMain({signUpMainProps, setIsLoad}) {
     // 이메일 전송 시 내려받는 sessionId
     const [uniqueId, setUniqueId] = useState("");
     // 이메일 인증 번호
@@ -43,26 +43,37 @@ function SignUpMain({signUpMainProps}) {
 
 
     // 인증번호 전송
-    const sendEmail = () => {
-        axios.post("http://localhost:8080/sendEmail", null, {params: {email: signUpMainProps.userEmail}})
-            .then(req => {
-                alert("메일이 발송되었습니다.");
-                setUniqueId(req.data);
-            })
-            .catch(err => {
-                console.log("통신 오류");
-            })
+    const sendEmail = async () => {
+        setIsLoad(true);
+        let exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+        if(!exptext.test(signUpMainProps.userEmail)) {
+            alert("이메일 형식이 아닙니다.");
+            setIsLoad(false);
+        } else {
+            await axios.post("http://localhost:8080/sendEmail", null, {params: {email: signUpMainProps.userEmail}})
+                .then(req => {
+                    alert("메일이 발송되었습니다.");
+                    setUniqueId(req.data);
+                    setIsLoad(false);
+                })
+                .catch(err => {
+                    console.log("통신 오류");
+                })
+        }
     }
 
     // 인증번호 확인
     const EmailChk = () => {
+        setIsLoad(true);
         axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: chkNumber, uniqueId: uniqueId}})
             .then(req => {
                 if(req.data === 1) {
                     alert("인증이 완료되었습니다.");
                     signUpMainProps.setEmailAuth(true);
+                    setIsLoad(false);
                 } else {
                     alert("인증번호가 틀렸습니다.");
+                    setIsLoad(false);
                 }
             })
             .catch(err => {

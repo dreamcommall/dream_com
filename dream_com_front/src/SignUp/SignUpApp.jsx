@@ -7,27 +7,39 @@ import NewSignUpHeader from "./NewSignUpHeader";
 import axios from "axios";
 import ClickPrevent from "../common/ClickPrevent";
 import Loading from "../common/Loading";
+import {Link} from "react-router-dom";
 
 function SignUpApp() {
-    const [signUserId, setSignUserId] = useState(""); // 새로 가입하는 유저 아이디
     const [isLoad, setIsLoad] = useState(false); // 로딩창
-
+    const [signUserId, setSignUserId] = useState(""); // 새로 가입하는 유저 아이디
+    // 이름
+    const [signUserName, setSignUserName] = useState("");
+    // 비밀번호
+    const [signUserPw, setSignUserPw] = useState("");
+    // 비밀번호 확인
+    const [pwdChk, setPwdChk] = useState("");
+    // 성별
+    const[signUserGender, setSignUserGender] = useState("");
     // 휴대전화 번호
-    const [userTel, setUserTel] = useState("");
+    const [signUserTel, setSignUserTel] = useState("");
     // 이메일
-    const [userEmail, setUserEmail] = useState("");
+    const [signUserEmail, setSignUserEmail] = useState("");
     // 우편번호
-    const [userPost, setUserPost] = useState("");
+    const [signUserPost, setSignUserPost] = useState("");
     // 주소
-    const [userAddr, setUserAddr] = useState("");
+    const [signUserAddr, setSignUserAddr] = useState("");
     // 상세주소
-    const [userEctAddr, setUserEctAddr] = useState("");
+    const [signUserEctAddr, setSignUserEctAddr] = useState("");
     // 인증 완료 state
     const [emailAuth, setEmailAuth] = useState(false);
 
-    // SignUpMain
-    const signUpMainProps = {setUserTel: setUserTel, setUserEmail: setUserEmail, setUserPost: setUserPost,
-        setUserAddr:setUserAddr, setUserEctAddr:setUserEctAddr, userEmail:userEmail, setEmailAuth: setEmailAuth}
+    // SignUpUpperContent 컴포넌트 props
+    const signUpUpperContentProps = {setSignUserName: setSignUserName, setSignUserPw: setSignUserPw,
+        setPwdChk: setPwdChk, setSignUserGender: setSignUserGender}
+
+    // SignUpMain 컴포넌트 props
+    const signUpMainProps = {setUserTel: setSignUserTel, setUserEmail: setSignUserEmail, setUserPost: setSignUserPost,
+        setUserAddr:setSignUserAddr, setUserEctAddr:setSignUserEctAddr, userEmail:signUserEmail, setEmailAuth: setEmailAuth}
 
     
     // 하위 컴포넌트에서 사용
@@ -56,23 +68,28 @@ function SignUpApp() {
 
     // 회원가입
     const clickJoin = () => {
-        const post = parseInt(userPost);
-        if(userTel === "" || userEmail === "" || userPost === 0 || userAddr === "") {
-            alert("빈 칸을 모두 입력해 주세요")
+        const post = parseInt(signUserPost);
+        if(signUserTel === "" || signUserEmail === "" || signUserPost === 0 || signUserAddr === "" ||
+        signUserName === "" || signUserPw === "" || signUserGender === "") {
+            alert("빈 칸을 모두 입력해 주세요");
+        } else if (signUserPw !== pwdChk) {
+            alert("비밀번호가 일치하지 않습니다.");
         } else {
             axios.put("http://localhost:8080/join", null,
                 {params: {
-                        userId: 'qwer',
-                        userName: "양민호",
-                        userPw: 1234,
-                        userGender: "M",
-                        userTel: userTel,
-                        userEmail: userEmail,
+                        userId: signUserId,
+                        userName: signUserName,
+                        userPw: signUserPw,
+                        userGender: signUserGender,
+                        userTel: signUserTel,
+                        userEmail: signUserEmail,
                         userPost: post,
-                        userAddr: userAddr + " " + userEctAddr
+                        userAddr: signUserAddr + " " + signUserEctAddr
                     }})
                 .then(req => {
-                    console.log(req.data);
+                    if(req.data === 1) {
+                        document.getElementById("link-signUpApp-Link").click();
+                    }
                 })
                 .catch(err => {
                     console.log("통신에러");
@@ -86,11 +103,12 @@ function SignUpApp() {
             <Loading loadStatus={isLoad} />
             <NewSignUpHeader pageName={"SignUp"} />
             <div className={"container"}>
-                <SignUpUpperContents funcSendSignUserId={sendSignUserId} />
-                <SignUpMain signUpMainProps={signUpMainProps}  />
+                <SignUpUpperContents funcSendSignUserId={sendSignUserId} signUpUpperContentProps={signUpUpperContentProps} />
+                <SignUpMain signUpMainProps={signUpMainProps} setIsLoad={setIsLoad}  />
                 <div id={"div-sing-up-SignUpButton"}>
                     <button id={"button-sing-up-SignUpButton"} disabled={!emailAuth} onClick={clickJoin}>회원가입</button>
                 </div>
+                <Link to={"/clearTitle/signClear"} id={"link-signUpApp-Link"} style={{display:"none"}}>/clearTitle/signClear</Link>
             </div>
         </div>
     )
