@@ -50,4 +50,24 @@ public class PaymentServiceImpl implements PaymentService {
     public int deleteCart(String userId, List<Object> details) throws Exception {
         return paymentMapper.deleteCart(userId, details);
     }
+
+    @Override
+    public List<PaymentDto> getLaterDelivery() throws Exception {
+        return paymentMapper.getLaterDelivery();
+    }
+
+    @Override
+    public void changeState(int paymentNum) throws Exception {
+        paymentMapper.changeState(paymentNum);
+    }
+
+    @Override
+    public List<PaymentDto> getTodayDelivery() throws Exception {
+        return paymentMapper.getTodayDelivery();
+    }
+
+    @Override
+    public int confirmPurchase(int paymentNum) throws Exception {
+        return paymentMapper.confirmPurchase(paymentNum);
+    }
 }

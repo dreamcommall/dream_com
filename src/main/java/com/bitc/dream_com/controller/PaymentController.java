@@ -125,4 +125,19 @@ public class PaymentController {
 
         return false;
     }
+
+/** 구매확정하는 함수입니다.
+ * @author 양민호
+ * @param paymentNum 결제번호를 파라미터로 받습니다.
+ * @return 성공적으로 작업이 수행된 경우 1, 아닌 경우 0을 반환합니다.
+ * @apiNote 최종 수정일 2023-02-13
+**/
+    @RequestMapping(value = "confirmPurchase", method = RequestMethod.POST)
+    public int confirmPurchase(@RequestParam("paymentNum") int paymentNum) throws Exception {
+        int result = paymentService.confirmPurchase(paymentNum);
+        if(result == 1) {
+            return 1;
+        }
+        return 0;
+    }
 }
