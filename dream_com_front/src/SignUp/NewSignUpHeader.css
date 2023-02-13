@@ -1,0 +1,29 @@
+#div-sing-up-header {
+    width: 70%;
+    margin-top: 35px;
+    border-bottom: 2px solid black;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#div-sing-up-header div:first-child {
+    margin-left: 100px;
+}
+
+#div-sing-up-header #p-sing-up-header-information {
+    font-family: NanumSquareB;
+    font-size: 40px;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+#div-sing-up-header .p-sing-up-header-page-information {
+    font-family: NanumSquareR;
+    font-size: 20px;
+    margin-left: 50px;
+}
+
+#div-sing-up-header .p-sing-up-header-page-information.active {
+    color: red;
+    font-weight: bold;
+}
