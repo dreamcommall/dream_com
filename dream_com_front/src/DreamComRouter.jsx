@@ -21,6 +21,8 @@ import NewProduct from "./admin/NewProduct";
 import ModifyProduct from "./admin/ModifyProduct";
 import RemoveProduct from "./admin/RemoveProduct";
 import SignUpApp from "./SignUp/SignUpApp";
+import MyPageUserInfoUpdateMain from "./mypage/MyPageUserInfoUpdateMain";
+import MyPageUserInfoUpdate from "./mypage/MyPageUserInfoUpdate";
 
 // 작성자 : MoonNight285
 // 라우터 관리 컴포넌트
@@ -56,6 +58,7 @@ function DreamComRouter() {
                 </Route>
 
                 <Route path={"/testSign"} element={<SignUpApp />}></Route>
+                <Route path={"/testUpdate"} element={<MyPageUserInfoUpdate />}></Route>
             </Routes>
         </BrowserRouter>
     )
