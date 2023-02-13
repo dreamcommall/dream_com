@@ -3,10 +3,12 @@ import axios from "axios";
 import ClickPrevent from "../common/ClickPrevent";
 import Loading from "../common/Loading";
 import NewSignUpHeader from "../SignUp/NewSignUpHeader";
-import SignUpUpperContents from "../SignUp/SignUpUpperContents";
-import SignUpMain from "../SignUp/SignUpMain";
 import MyPageUserInfoUpdateMain2 from "./MyPageUserInfoUpdateMain2";
 import MyPageUserInfoUpdateMain from "./MyPageUserInfoUpdateMain";
+import NewMypageHeader from "./NewMypageHeader";
+import MyPageNav from "./MyPageNav";
+import HeaderD from "../common/HeaderD";
+import NavigationBar from "../common/NavigationBar";
 
 function MyPageUserInfoUpdate() {
     const [isLoad, setIsLoad] = useState(false); // 로딩창
@@ -108,7 +110,9 @@ function MyPageUserInfoUpdate() {
         <div className={"container-fluid"}>
             <ClickPrevent isLoading={isLoad}/>
             <Loading loadStatus={isLoad}/>
-            <NewSignUpHeader pageName={"SignUp"}/>
+            <HeaderD />
+            <NavigationBar />
+            <MyPageNav />
             <div className={"container"}>
                 <MyPageUserInfoUpdateMain2 userInfo={userInfo} setUserInfo={setUserInfo}/>
                 <MyPageUserInfoUpdateMain userInfo={userInfo} setUserInfo={setUserInfo}/>

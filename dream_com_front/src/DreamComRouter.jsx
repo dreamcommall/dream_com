@@ -58,7 +58,7 @@ function DreamComRouter() {
                 </Route>
 
                 <Route path={"/testSign"} element={<SignUpApp />}></Route>
-                <Route path={"/testUpdate"} element={<MyPageUserInfoUpdate />}></Route>
+                <Route path={"/mypage/updateUserInfo"} element={<MyPageUserInfoUpdate />}></Route>
             </Routes>
         </BrowserRouter>
     )
