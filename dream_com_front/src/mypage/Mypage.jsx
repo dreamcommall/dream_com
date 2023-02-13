@@ -23,6 +23,22 @@ function Mypage() {
     const [modalIsOpen, setModalIsOpen] = useState(false); // 리뷰 모달창 표시 여부
     const [selectedProductNumber, setSelectedProductNumber] = useState(0); // 선택한 제품 번호
     
+    // 서버에게 구매확정을 요청후 새로고침
+    const updatePurchaseConfirm = (paymentNumber) => {
+        setIsLoad(true);
+        axios.post("http://localhost:8080/comfirmPurchase", null, {params : {paymentNum : paymentNumber}})
+            .then(response => {
+                alert("구매확정 처리되었습니다.");
+                getOrderList();
+                getUserReview();
+            })
+            .catch(err => {
+                setIsLoad(false);
+                console.log(`에러메세지 : ${err}`);
+                console.log("구매확정에 실패했습니다.");
+            });
+    }
+    
     // 로그인 페이지에서 중복으로 넘어오는지 체크합니다.
     // 로그인 페이지에서 뒤로가기 누르면 못 벗어나는 문제를 해결하기위해 선언
     const inviteFirstMyPageNotLogin = () => {
@@ -81,6 +97,7 @@ function Mypage() {
     // 매개변수 : 한 제품의 주문 내용(모든 데이터)
     const createPaymentInfo = (order) => {
         let tempObj = {};
+        tempObj.paymentNum = order.paymentNum;
         tempObj.paymentDate = order.paymentDate;
         tempObj.methodName = order.methodName;
         tempObj.price = order.price;
@@ -201,7 +218,8 @@ function Mypage() {
                             orderList.map(order => {
                                 return (
                                     <BuyProductList orderInfo={createOrderInfo(order)} review={getTargetReview(order.productNum)}
-                                        paymentInfo={createPaymentInfo(order)} funcGetProductNumber={getSelectedProductNumber} />
+                                        paymentInfo={createPaymentInfo(order)} funcGetProductNumber={getSelectedProductNumber}
+                                        funcUpdatePurchaseConfirm={updatePurchaseConfirm}/>
                                 );
                             })
                         }
