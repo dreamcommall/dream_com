@@ -7,6 +7,8 @@ import axios from "axios";
 import ClickPrevent from "./ClickPrevent";
 import Loading from "./Loading";
 import {useLocation, useParams} from "react-router-dom";
+import data from "bootstrap/js/src/dom/data";
+
 
 
 // var regExp = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
@@ -17,7 +19,7 @@ import {useLocation, useParams} from "react-router-dom";
 const inforPage = {
     informationMyPage: {
         upDateBtnName: "수정 완료",
-        // url: "/clearTitle/basicInformation",
+        url: "/clearTitle/basicInformation",
 
     },
 
@@ -40,7 +42,7 @@ function SignInfomation() {
 
     const {pathname} = inforLocation
 
-    const [informationHandleBtn, setInformationHandleBtn] = useState(true)
+
 
 
     // 초기값 세팅
@@ -85,7 +87,7 @@ function SignInfomation() {
     //이메일 인증코드 버튼 타이머
     const [emailCodeTimerMin, setEmailCodeTimerMin] = useState(2);
     const [emailCodeTimerSec, setEmailCodeTimerSec] = useState(59);
-
+    const [info,setInfo] = useState({});
 
     // Daum 우편번호찾기 URL
     const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
@@ -181,12 +183,11 @@ function SignInfomation() {
             setIsPhone(true);
         }
     };
+
     //정보 수정 버튼
-
-
     const signUpDataBtn = () => {
-
-        axios.put("http://localhost:8080/updateProfile", {
+        //"{"params":{"userId":"","userName":"","userPw":"","userGender":"","userPost":"","userAddr":"","userTel":"","userEmail":""}}"
+        axios.put("http://localhost:8080/updateProfile",null,{
             params: {
                 userId: id,
                 userName: name,
@@ -199,38 +200,36 @@ function SignInfomation() {
             }
         })
             .then((req) => {
-                console.log(req.data);
+
                 //수정 완료 시 / db 저장 완료 시
                 if (req.data == 1) {
-
 
                     window.location.href = "/clearTitle/basicInformation"
 
                 } else {
-
+                    console.log("실패")
                 }
             })
             .catch(err => {
                 console.log("가입 완료 오류");
                 console.log("에러메세지 : " + err);
             })
-
-
+            .catch((e) => {
+                console.log(e);
+            })
     };
 
 
     //회원가입완료 버튼시 빈 칸 검사
     const signUpBtn = () => {
-        console.log(isId)
+        console.log(" 회원가입 버튼");
         if (isId && isName && isEmail && isPhone && isPassword && isPasswordConfirm) {
-
             axios.put("http://localhost:8080/join", null,
                 {
                     params: {
                         userId: id,
                         userName: name,
                         userPw: password,
-                        userGender: gender,
                         userPost: enroll_company.zonecode,
                         userAddr: enroll_company.address,
                         userTel: phone,
@@ -245,7 +244,6 @@ function SignInfomation() {
                         window.location.href = "/clearTitle/signClear"
                         // 가입 실패 시 / db 저장 실패 시
                     } else {
-
                     }
                 })
                 .catch(err => {
@@ -253,8 +251,6 @@ function SignInfomation() {
                     console.log("에러메세지 : " + err);
 
                 })
-
-
         } else {
             if (!isId) {
                 setIdMessage("빈 칸 채워주세요");
@@ -281,8 +277,6 @@ function SignInfomation() {
                 setIsPasswordConfirm(false);
             }
         }
-
-
     };
 
 
@@ -293,6 +287,7 @@ function SignInfomation() {
         setEnroll_company({
             enroll_company, [e.target.name]: e.target.value,
         })
+        console.log(`dddddd${enroll_company}`);
     }
 
     const handleComplete = (data) => {
@@ -425,27 +420,59 @@ function SignInfomation() {
     }
 
 
-    const [info, setInfo] = useState({});
+
+    // const [info, setInfo] = useState({});
+
+    const loginUUID = sessionStorage.getItem("loginUUID");
+    const autoLoginUUID = sessionStorage.getItem("autoLoginUUID")
+    axios.post("http://localhost:8080/loginUserId", null, {params: {userUUID: loginUUID, autoUserUUID: autoLoginUUID}})
+        .then(req => {
+            if(req.data != null || req.data !== "" || req.data !== "undefined") {
+                setId(req.data)
+            }
+        })
+        .catch(err => {
+            console.log("통신 오류");
+        })
 
 
     const signMyPageData = () => {
-        axios.get("http://localhost:8080/getUserInfo", {params: {userId: "gudeh112"}})
+        if(id === "") {
+            return;
+        }
+
+        axios.get("http://localhost:8080/getUserInfo", {params: {userId: id}})
 
             .then((req) => {
-
+                console.log(req.data[0]);
                 const [data] = req.data;
-
                 setInfo(data);
-
+                // setName(req.data[0].userName)
+                // setPassword(req.data[0].userPw)
+                // setId(req.data[0].userId)
+                // setGender(req.data[0].userGender)
+                // setMail(req.data[0].userEmail)
+                // setEnroll_company({req.data[0],})
             })
             .catch((err) => {
                 console.log(`마이페이지 에러`);
                 console.log(`에러메세지 : ${err}`);
             })
     }
+
+    useEffect(() => {
+        setName(info.userName);
+        setPassword(info.userPw);
+        setId(info.userId);
+        setGender(info.userGender);
+        setEmail(info.userEmail);
+        setEnroll_company({address: info.userAddr, zonecode: info.userPost, company: ''});
+        setPhone(info.userTel)
+    }, [info]);
+
     useEffect(() => {
         signMyPageData();
-    }, []);
+    }, [id]);
 
     return (
         <div className={"container-fluid"}>
@@ -464,8 +491,8 @@ function SignInfomation() {
                         </div>
                         <div className={"col-5"}>
                             {pathname == "/informationSign" ?
-                                <input type={"text"} maxLength={20} id="name" value={name} onChange={onChangeName}/> :
-                                <input type={"text"} maxLength={20} id="name" value={info.userName} onChange={""}/>}
+                                <input type={"text"} maxLength={20} id="name" defaultValue={name} onChange={onChangeName}/> :
+                                <input type={"text"} maxLength={20} id="name" value={name} onChange={(e)=>{setName(e.target.value)}}/>}
                         </div>
                         <div className={"col-5"}>
                             {isName ?
@@ -481,9 +508,9 @@ function SignInfomation() {
                         </div>
                         <div className={"col-5"}>
                             {pathname == "/informationSign" ?
-                                <input type={"text"} maxLength={15} value={id} onChange={onChangeId}/> :
-                                <input type={"text"} maxLength={15} value={info.userId} onChange={onChangeId}
-                                       disabled={true}/>}
+                                <input type={"text"} maxLength={15} defaultValue={id} onChange={onChangeId}/> :
+                                <input type={"text"} maxLength={15} value={id} onChange={(e) =>{setId(e.target.value)}} readOnly={true}
+                                       />}
                             {pathname == "/informationSign" ?
                                 <button className={"userBtn nanumSquareR-font-normal"} onClick={SignUpIdChkBtn}>중복
                                     체크</button> : null}
@@ -504,9 +531,8 @@ function SignInfomation() {
                         </div>
                         <div className={"col-5"}>
                             {pathname == "/informationSign" ?
-                                <input type={"password"} maxLength={15} value={password} onChange={onChangePassword}/> :
-                                <input type={"password"} maxLength={15} value={info.userPw}
-                                       onChange={onChangePassword}/>}
+                                <input type={"password"} maxLength={15} defaultValue={password} onChange={onChangePassword}/> :
+                                <input type={"password"} maxLength={15} value={password} onChange={onChangePassword}/>}
                         </div>
                         <div className={"col-5"}>
                             {isPassword ? <p id={"p-SignInfo"} className={"message"}
@@ -523,9 +549,9 @@ function SignInfomation() {
                         </div>
                         <div className={"col-5"}>
                             {pathname == "/informationSign" ?
-                                <input type={"password"} maxLength={15} value={passwordConfirm}
+                                <input type={"password"} maxLength={15} defaultValue={passwordConfirm}
                                        onChange={onChangePasswordConfirm}/> :
-                                <input type={"password"} maxLength={15} value={info.userPw}
+                                <input type={"password"} maxLength={15} value={passwordConfirm}
                                        onChange={onChangePasswordConfirm}/>}
                         </div>
                         <div className={"col-5"}>
@@ -545,14 +571,14 @@ function SignInfomation() {
                             <p id={"p-SignInfo"} className={"nanumSquareR-font-normal"}>성 별</p>
                         </div>
                         {pathname == "/informationSign" ? <div className={"col-5"}>
-                            <input name={"gender"} type={"radio"} onChange={onGender} value={"M"}/> 남성
+                            <input name={"gender"} type={"radio"} onChange={onGender} defaultValue={"M"}/> 남성
                             <input name={"gender"} style={{marginLeft: "10px"}} type={"radio"} onChange={onGender}
                                    value={"F"}/> 여성
                         </div> : <div className={"col-5"}>
-                            <input name={"gender"} type={"radio"} onChange={onGender} value={info.userGender}
-                                   disabled={true}/> 남성
+                            <input name={"gender"} type={"radio"} onChange={onGender} value={"M"}
+                                   disabled={true} checked={gender === "M"} /> 남성
                             <input name={"gender"} style={{marginLeft: "10px"}} type={"radio"} onChange={onGender}
-                                   value={info.userGender} disabled={true}/> 여성
+                                   value={"F"} disabled={true} checked={gender === "F"} /> 여성
                         </div>}
 
                     </div>
@@ -565,8 +591,8 @@ function SignInfomation() {
                         </div>
                         <div className={"col-5"}>
                             {pathname == "/informationSign" ?
-                                <input type={"text"} maxLength={13} value={phone} onChange={onChangePhone}/> :
-                                <input type={"text"} maxLength={13} value={info.userTel} onChange={onChangePhone}/>}
+                                <input type={"text"} maxLength={13} defaultValue={phone} onChange={onChangePhone}/> :
+                                <input type={"text"} maxLength={13} value={phone}  onChange={onChangePhone}/>}
                         </div>
                         <div className={"col-5"}>
                             {isPhone ?
@@ -585,9 +611,9 @@ function SignInfomation() {
                             <div id={"div-SignUpInformationUserAdd"}>
                                 <div>
                                     {pathname == "/informationSign" ?
-                                        <input type={"email"} maxLength={50} value={email} onChange={onChangeEmail}/> :
-                                        <input type={"email"} maxLength={50} value={info.userEmail}
-                                               onChange={onChangeEmail} disabled={true}/>}
+                                        <input type={"email"} maxLength={50} defaultValue={email} onChange={onChangeEmail}/> :
+                                        <input type={"email"} maxLength={50} value={email}
+                                               onChange={onChangeEmail} readOnly={true}/>}
                                     {pathname == "/informationSign" ?
                                         <button id={"emailButton"} className={"userBtn nanumSquareR-font-normal"}
                                                 onClick={() => {
@@ -625,10 +651,10 @@ function SignInfomation() {
                             {pathname == "/informationSign" ?
                                 <input type={"text"} id={"postCode"} readOnly={true} name={"address"}
                                        onChange={handleInput}
-                                       value={enroll_company.zonecode}/> :
-                                <input type={"text"} id={"postCode"} readOnly={true} name={"address"}
+                                       defaultValue={enroll_company.zonecode}/> :
+                                <input type={"text"} id={"postCode"} name={"address"}
                                        onChange={handleInput}
-                                       value={info.userPost}/>}
+                                       value={enroll_company.zonecode} />}
 
                             <button className={"userBtn nanumSquareR-font-normal"} onClick={handleClick}>우편번호검색
                             </button>
@@ -647,11 +673,11 @@ function SignInfomation() {
                                 <div>
                                     {pathname == "/informationSign" ?
                                         <input type={"text"} id={"address"} placeholder={"주소"} style={{width: "45%"}}
-                                               maxLength={50} onChange={handleInput} readOnly={true}
-                                               value={enroll_company.address}/> :
+                                               maxLength={50} onChange={handleInput}
+                                               defaultValue={enroll_company.address}/> :
                                         <input type={"text"} id={"address"} placeholder={"주소"} style={{width: "45%"}}
-                                               maxLength={50} onChange={handleInput} readOnly={true}
-                                               value={info.userAddr}/>}
+                                               maxLength={50} onChange={handleInput}
+                                               value={enroll_company.address}/>}
                                 </div>
                                 <div style={{marginTop: "10px"}}>
                                     <input type={"text"} id={"detailAddress"} placeholder={"상세주소"}
@@ -665,7 +691,7 @@ function SignInfomation() {
                         <div className={"col-10"}></div>
 
                         <div className={"col-2"}>
-                            {informationHandleBtn ?
+                            {pathname == "/informationSign" ?
                                 <button id={"SignUpInformationClearBtn"} className={"nanumSquareR-font-normal"}
                                         onClick={signUpBtn}>
                                     {informationPage.upDateBtnName}</button>
