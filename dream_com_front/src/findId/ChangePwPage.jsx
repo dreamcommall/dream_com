@@ -99,11 +99,11 @@ function ChangePwPage() {
                                 <div id={"changePwPageMain"}>
                                     <div className={"d-flex justify-content-around mb-4"}>
                                         <label id={"changePwLabel"} className={"nanumSquareR-font-normal"}>비밀번호 입력</label>
-                                        <input type={"password"} onChange={enteredPw} />
+                                        <input type={"password"} onChange={enteredPw} autoComplete={"off"} />
                                     </div>
                                     <div className={"d-flex justify-content-around mb-4"}>
                                         <label id={"changePwChkLabel"} className={"nanumSquareR-font-normal"}>비밀번호 확인</label>
-                                        <input type={"password"} onChange={enteredPwChk} />
+                                        <input type={"password"} onChange={enteredPwChk} autoComplete={"off"} />
                                     </div>
                                     <div>
                                         <p id={"failMatchPwChk"} className={"nanumSquareR-font-normal"}>비밀번호가 일치하지 않습니다.</p>

@@ -172,7 +172,7 @@ function Login(){
                         </div>
                         <div>
                             <input placeholder={"비밀번호는 8~20자"} value={userPw} onChange={handleInputPw} type={"password"}
-                                   style={inputSize} onKeyDown={enterKey} />
+                                   autoComplete={"off"} style={inputSize} onKeyDown={enterKey} />
                         </div>
                         {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 2*/}
                         <div>
