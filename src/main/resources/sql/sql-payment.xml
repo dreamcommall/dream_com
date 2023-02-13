@@ -17,8 +17,8 @@
 <!--    최종 수정일 2023-01-19-->
 <!--    최종 작성자 : 양민호-->
     <update id="cancelPayment" parameterType="com.bitc.dream_com.dto.PaymentDto">
-        update payment set state = 0
-        where user_id = #{userId} and payment_num = #{paymentNum}
+        update payment p join payment_detail pd on p.payment_num = pd.payment_num set p.state = 0
+            where p.payment_num = #{paymentNum} and pd.product_num = #{productNum};
     </update>
 
 <!--    구매 / 결제완료 (결제내역 추가)-->
@@ -85,13 +85,14 @@
 <!--    최종 수정일 2023-02-13-->
 <!--    최종 작성자 : 양민호-->
     <update id="changeState">
-        update payment set state = state + 1 where payment_num = #{paymentNum}
+        update payment set state = state + 1 where payment_num = #{paymentNum} and product_num = #{productNum}
     </update>
 
 <!--    구매확정-->
 <!--    최종 수정일 2023-02-13-->
 <!--    최종 작성자 : 양민호-->
     <update id="confirmPurchase">
-        update payment set state = 4 where payment_num = #{paymentNum}
+        update payment p join payment_detail pd on p.payment_num = pd.payment_num set p.state = 4
+        where p.payment_num = #{paymentNum} and pd.product_num = #{productNum};
     </update>
 </mapper>

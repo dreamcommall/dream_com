@@ -20,8 +20,8 @@ public class PaymentServiceImpl implements PaymentService {
 
 //    결제취소
     @Override
-    public void cancelPayment(String userId, int paymentNum) throws Exception {
-        paymentMapper.cancelPayment(userId, paymentNum);
+    public void cancelPayment(String userId, int paymentNum, int productNum) throws Exception {
+        paymentMapper.cancelPayment(userId, paymentNum, productNum);
     }
 
 //    구매 / 결제완료 (결제내역 추가)
@@ -57,8 +57,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void changeState(int paymentNum) throws Exception {
-        paymentMapper.changeState(paymentNum);
+    public void changeState(int paymentNum, int productNum) throws Exception {
+        paymentMapper.changeState(paymentNum, productNum);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public int confirmPurchase(int paymentNum) throws Exception {
-        return paymentMapper.confirmPurchase(paymentNum);
+    public int confirmPurchase(int paymentNum, int productNum) throws Exception {
+        return paymentMapper.confirmPurchase(paymentNum, productNum);
     }
 }
