@@ -170,10 +170,10 @@ function Login(){
                             <input placeholder={"아이디"} value={userId} onChange={handleInputId} type={"text"}
                                    className={"border-1 border-bottom-0 nanumSquareR-font-small"} style={inputSize} onKeyDown={(e)=>{enterKey(e)}}/>
                         </div>
-                        <div>
-                            <input placeholder={"비밀번호는 8~20자"} value={userPw} onChange={handleInputPw} type={"password"}
+                        <form>
+                            <input placeholder={"비밀번호는 8~2  0자"} value={userPw} onChange={handleInputPw} type={"password"}
                                    autoComplete={"off"} style={inputSize} onKeyDown={enterKey} />
-                        </div>
+                        </form>
                         {/* 아이디 비밀번호 확인 글자 들어갈부분 후보 2*/}
                         <div>
                             <button id={"loginBtn"} style={loginBtn} onClick={DataReceive} className={"nanumSquareR-font-normal border-0 mt-3"}>로그인</button>
