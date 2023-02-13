@@ -357,8 +357,8 @@ public class UserServiceImpl implements UserService {
         msg+= "<br>";
         msg+= "<p>아래 발급된 이메일 인증번호를 복사하거나 직접 입력하여 인증을 완료해주세요.<p>";
         msg+= "<br>";
-        msg+= "<p style='color:red;'>개인정보 보호를 위해 인증번호는";
-        msg+= "<span style='font-size:130%'><strong>3분</strong></span> 간 유효합니다.</p>";
+        msg+= "<p>개인정보 보호를 위해 인증번호는";
+        msg+= "<span style='font-size:130%, color:red'><strong>3분</strong></span> 간 유효합니다.</p>";
         msg+= "<br>";
         msg+= "<div style='font-family:verdana';>";
         msg+= "<h3 style='color:blue;'>인증 코드입니다.</h3>";
@@ -395,8 +395,8 @@ public class UserServiceImpl implements UserService {
         msg+="<strong>'비밀번호 찾기'</strong>를 위한 url을 보내드립니다.";
         msg+= "<p>아래 입력된 주소로 이동하여 주시기 바랍니다.</p>";
         msg+= "<br>";
-        msg+= "<p style='color:red;'>개인정보 보호를 위해 인증번호는";
-        msg+= "<span style='font-size:130%'><strong>10분</strong></span> 간 유효합니다.</p>";
+        msg+= "<p>개인정보 보호를 위해 인증번호는";
+        msg+= "<span style='font-size:130%, color:red'><strong>10분</strong></span> 간 유효합니다.</p>";
         msg+= "<br>";
         msg+= "<div style='font-family:verdana';>";
         msg+= "<h3 style='color:blue;'>비밀번호 찾기 링크입니다.</h3>";
