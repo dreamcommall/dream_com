@@ -24,10 +24,10 @@ function Mypage() {
     const [selectedProductNumber, setSelectedProductNumber] = useState(0); // 선택한 제품 번호
     
     // 서버에게 환불요청을 한 후 데이터 재 로딩
-    const requestCancel = (paymentNumber) => {
+    const requestCancel = (paymentNumber, productNumber) => {
         setIsLoad(true);
         axios.put("http://localhost:8080/cancelPayment", null, {params : {
-                userId : loginUserId, paymentNum : paymentNumber
+                userId : loginUserId, paymentNum : paymentNumber, productNum : productNumber
             }}).then(response => {
             if (response.data == "취소 완료") {
                 alert("환불 요청이 완료되었습니다.");
@@ -42,9 +42,10 @@ function Mypage() {
     }
     
     // 서버에게 구매확정을 요청후 데이터 재 로딩
-    const updatePurchaseConfirm = (paymentNumber) => {
+    const updatePurchaseConfirm = (paymentNumber, productNumber) => {
         setIsLoad(true);
-        axios.post("http://localhost:8080/confirmPurchase", null, {params : {paymentNum : paymentNumber}})
+        axios.post("http://localhost:8080/confirmPurchase", null, {params : {paymentNum : paymentNumber,
+            productNum : productNumber}})
             .then(response => {
                 if (response.data == 1) {
                     alert("구매확정 처리되었습니다.");

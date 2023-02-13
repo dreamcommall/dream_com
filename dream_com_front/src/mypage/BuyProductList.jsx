@@ -86,13 +86,13 @@ function BuyProductList({orderInfo, review, paymentInfo, funcGetProductNumber, f
             <td className={"listStyle"}>
                 <div>
                     <div className={"orderState"}>
-                        <button disabled={!refundEnable} onClick={() => {funcRequestCancel(paymentInfo.paymentNum)}}>환불요청</button>
+                        <button disabled={!refundEnable} onClick={() => {funcRequestCancel(paymentInfo.paymentNum, orderInfo.productNum)}}>환불요청</button>
                     </div>
                     <div className={"orderState"}>
                         <button disabled={!(reviewEnable && (review == null))} className={"mt-2"} onClick={() => {funcGetProductNumber(orderInfo.productNum)}}>리뷰쓰기</button>
                     </div>
                     <div className={"orderState"}>
-                        <button disabled={!purchaseEnable} className={"mt-2"} onClick={() => {funcUpdatePurchaseConfirm(paymentInfo.paymentNum)}}>구매확정</button>
+                        <button disabled={!purchaseEnable} className={"mt-2"} onClick={() => {funcUpdatePurchaseConfirm(paymentInfo.paymentNum, orderInfo.productNum)}}>구매확정</button>
                     </div>
                 </div>
             </td>
