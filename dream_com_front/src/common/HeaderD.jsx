@@ -55,7 +55,7 @@ function HeaderD({keyword}) {
                                     <img style={{width: "45px"}} src={isUseHover ? useIcon : useHover}/>
                                 </li>
                             </Link>
-                            <Link to={"/myPageCart"}>
+                            <Link to={"/mypage/cart"}>
                                 <li style={{listStyle: "none"}}
                                     onMouseOver={() => setShopHover(0)}
                                     onMouseOut={() => setShopHover(1)}
@@ -65,7 +65,7 @@ function HeaderD({keyword}) {
                                          src={isShopHover ? shopping : shoppingHover}/>
                                 </li>
                             </Link>
-                            <Link to={"/myPageWishList"}>
+                            <Link to={"/mypage/wishList"}>
                                 <li style={{listStyle: "none"}}
                                     onMouseOver={() => setHeartHover(0)}
                                     onMouseOut={() => setHeartHover(1)}

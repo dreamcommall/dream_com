@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "./MypageCart.css"
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 
 
 function MypageCart() {
@@ -11,7 +11,8 @@ function MypageCart() {
     const [discountMoney, setDiscountMoney] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0);
     const [blankHeight, setBlankHeight] = useState("0px");
-
+    const pageUrl = useLocation();
+    const navigate = useNavigate();
     // userId 별로 장바구니 불러오기
     useEffect(() => {
         axios.post("http://localhost:8080/loginUserId", null, {
@@ -22,6 +23,12 @@ function MypageCart() {
         }).then(response => {
             if (response.data == null || response.data == undefined || response.data == "") {
                 setUserId(null);
+                if(inviteFirstMyPageNotLogin()){
+                    navigate(`/login?prev=${pageUrl.pathname + pageUrl.search}`);
+                }
+                else{
+                    navigate("/")
+                }
             } else {
                 setUserId(response.data);
             }
@@ -29,6 +36,7 @@ function MypageCart() {
             console.log(`에러메세지 : ${err}`);
             console.log("유저 아이디 취득에 실패했습니다.");
         });
+
 
         axios.get("http://localhost:8080/selectCart", {
             params: {
@@ -40,13 +48,11 @@ function MypageCart() {
                 setCartList(req.data);
             })
 
-        // if(cartList.inventory == 0){
-        //     alert('재고가 0인 제품이 존재합니다.')
-        // }
     }, [userId]);
 
     // 총 가격 계산해주는 Effect
     useEffect(() => {
+
         let productPriceSum = 0;
         let productDiscount = 0;
         cartList.map((item) => {
@@ -148,6 +154,17 @@ function MypageCart() {
             setBlankHeight("325px");
         } else if (cartList.length == 2) {
             setBlankHeight("125px");
+        }
+    }
+
+    const inviteFirstMyPageNotLogin = () => {
+        // 미 로그인 상태에서 마이페이지에 접속한경우 세션 스토리지에 중복체크를 판단할 수 있는 값을 저장
+        if (sessionStorage.getItem("isFirstLogin") == null) {
+            sessionStorage.setItem("isFirstLogin", "true");
+            return true;
+        } else { // 미 로그인 상태에서 마이페이지에 또 다시 접속된경우 세션 스토리지에 중복체크 값 제거하고 메인으로 이동시킴
+            sessionStorage.removeItem("isFirstLogin");
+            return false;
         }
     }
 
