@@ -96,19 +96,19 @@ function ChangePwPage() {
                                 <div className={"nanumSquareB-font-XLarge mt-5 mb-3"}>
                                     <span id={"changePwPageTitle"}>비밀번호 변경</span>
                                 </div>
-                                <div id={"changePwPageMain"}>
-                                    <form className={"d-flex justify-content-around mb-4"}>
+                                <form id={"changePwPageMain"}>
+                                    <div className={"d-flex justify-content-around mb-4"}>
                                         <label id={"changePwLabel"} className={"nanumSquareR-font-normal"}>비밀번호 입력</label>
                                         <input type={"password"} onChange={enteredPw} autoComplete={"off"} />
-                                    </form>
-                                    <form className={"d-flex justify-content-around mb-4"}>
+                                    </div>
+                                    <div className={"d-flex justify-content-around mb-4"}>
                                         <label id={"changePwChkLabel"} className={"nanumSquareR-font-normal"}>비밀번호 확인</label>
                                         <input type={"password"} onChange={enteredPwChk} autoComplete={"off"} />
-                                    </form>
+                                    </div>
                                     <div>
                                         <p id={"failMatchPwChk"} className={"nanumSquareR-font-normal"}>비밀번호가 일치하지 않습니다.</p>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                             <div className={"text-center mt-3 nanumSquareR-font-normal"}>
                                 <button id={"ChangePwButton"} onClick={changePw}>비밀번호 변경</button>
