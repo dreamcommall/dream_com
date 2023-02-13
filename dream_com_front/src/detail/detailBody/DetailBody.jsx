@@ -17,6 +17,7 @@ function DetailBody({productInfo, reviewRate, reviewInfo, loginUserId, func}) {
     const [reviews, setReviews] = useState([]); // 상품의 리뷰내용
     const [productNum, setProductNum] = useState(0); // 상품번호
     
+    
     // 서버로부터 값 받아오기
     useEffect(() => {
         if (reviewInfo == undefined) {
@@ -47,7 +48,7 @@ function DetailBody({productInfo, reviewRate, reviewInfo, loginUserId, func}) {
             <DetailBodyProductReview />
             {
                 reviews.map(item => {
-                    return <DetailBodyProductReviewContents key={item.key} reviewData={item} funcPlusReviewLikeCount={func.plusReviewLikeCount}/>
+                    return <DetailBodyProductReviewContents key={item.reviewNum} reviewData={item} funcPlusReviewLikeCount={func.plusReviewLikeCount}/>
                 })
             }
             <DetailBodyReviewPagination firstPageNumber={firstPage} lastPageNumber={lastPage} currentPageNumber={currentPage} productNumber={productNum} />

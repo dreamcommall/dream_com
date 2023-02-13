@@ -7,11 +7,11 @@ function DetailBodyProductReviewSummary({productInfo, reviewRate, reviews}) {
     const [reviewCount, setReviewCount] = useState(0); // 리뷰 개수
     const [stars, setStars] = useState([]); // 별점
     const [defaultStars, setDefaultStars] = useState([]); // 빈 별점
-    const [reviewRateObj, setReviewRateObj] = useState(); // 전체 평점비율을 담은 객체
+    const [reviewRateObj, setReviewRateObj] = useState({}); // 전체 평점비율을 담은 객체
     const [maxDreviewMsg, setMaxDreviewMsg] = useState({}); // 가장 높은 평점 개수를 가진 배송 리뷰
     const [maxPreviewMsg, setMaxPreviewMsg] = useState({}); // 가장 높은 평점 개수를 가진 성능 리뷰
     const [maxNreviewMsg, setMaxNreviewMsg] = useState({}); // 가장 높은 평점 개수를 가진 소음 리뷰
-
+    
     // 리뷰를 모아 종합적인 리뷰를 생성
     const createTotalReviewSummary = () => {
         const tempDreviewMsg = {};
@@ -99,7 +99,7 @@ function DetailBodyProductReviewSummary({productInfo, reviewRate, reviews}) {
             return;
         }
         setReviewRateObj(reviewRate);
-    }, [reviewRate])
+    }, [reviewRate]);
     
     // 점수가 변동되면 별 개수 생성
     useEffect(() => {
@@ -134,11 +134,11 @@ function DetailBodyProductReviewSummary({productInfo, reviewRate, reviews}) {
                 <div className={"div-detail-review-summary-contents"}>
                     <p className={"mt-4"}>전체 평점비율</p>
                     <div id={"div-detail-review-progress-wrapper"}>
-                        <div><progress value={reviewRateObj != undefined ? reviewRateObj["5점"] / reviewCount : 0} /></div>
-                        <div><progress value={reviewRateObj != undefined ? reviewRateObj["4점"] / reviewCount : 0} /></div>
-                        <div><progress value={reviewRateObj != undefined ? reviewRateObj["3점"] / reviewCount : 0} /></div>
-                        <div><progress value={reviewRateObj != undefined ? reviewRateObj["2점"] / reviewCount : 0} /></div>
-                        <div><progress value={reviewRateObj != undefined ? reviewRateObj["1점"] / reviewCount : 0} /></div>
+                        <div><progress value={reviewRateObj != undefined && reviewCount != 0 ? (reviewRateObj["5점"] / reviewCount).toFixed(1) : 0} /></div>
+                        <div><progress value={reviewRateObj != undefined && reviewCount != 0 ? (reviewRateObj["4점"] / reviewCount).toFixed(1) : 0} /></div>
+                        <div><progress value={reviewRateObj != undefined && reviewCount != 0 ? (reviewRateObj["3점"] / reviewCount).toFixed(1) : 0} /></div>
+                        <div><progress value={reviewRateObj != undefined && reviewCount != 0 ? (reviewRateObj["2점"] / reviewCount).toFixed(1) : 0} /></div>
+                        <div><progress value={reviewRateObj != undefined && reviewCount != 0 ? (reviewRateObj["1점"] / reviewCount).toFixed(1) : 0} /></div>
                     </div>
                     <div id={"div-detail-review-progress-score"}>
                         <p>5점({reviewRateObj != undefined ? reviewRateObj["5점"] : 0}명)</p>

@@ -17,7 +17,7 @@ function RandomSpec({randomSpec, partNames}) {
     const [randomComment, setRandomComment] = useState("");
     const [thumbnailImg, setThumbnailImg] = useState(""); // 섬네일 이미지 경로
     const [productNum, setProductNum] = useState(0); // 제품 번호
-
+    
     useEffect(() => {
         const randomIdx = Number.parseInt(((Math.random() - 0.1) * (randomSpecComment.length)).toString());
         setRandomComment(randomSpecComment[randomIdx].title);
@@ -52,7 +52,7 @@ function RandomSpec({randomSpec, partNames}) {
                             // 추천 제품 스펙부분
                             partNames.map(item => {
                                 return (
-                                    <li>
+                                    <li key={item}>
                                         <div title={item} className={"d-flex align-items-center justify-content-center mb-2 nanumSquareR-font-normal"}>
                                             <p className={"p-random-spec-value"}>{item}</p>
                                         </div>
