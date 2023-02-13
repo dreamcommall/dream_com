@@ -54,7 +54,6 @@ function DreamComRouter() {
                     <Route path={"modification"} element={<ModifyProduct />}/>
                     <Route path={"removal"} element={<RemoveProduct />}/>
                 </Route>
-
                 <Route path={"/testSign"} element={<SignUpApp />}></Route>
             </Routes>
         </BrowserRouter>
