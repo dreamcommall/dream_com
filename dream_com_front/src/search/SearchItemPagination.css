@@ -4,7 +4,7 @@
     margin: 0px;
 }
 
-.page-link div {
+#div-search-pagination-wrapper div {
     width: 40px;
     height: 100%;
     padding: 6px 12px;
@@ -14,7 +14,7 @@
     align-items: center;
 }
 
-.page-link div.active {
+#div-search-pagination-wrapper div.active {
     background-color: #e26e6e;
     color: white;
 }
@@ -22,4 +22,18 @@
 .link-search-pagination {
     color: black;
     text-decoration: none;
+}
+
+.div-search-prev-pagination {
+    border: 1px solid lightgrey;
+    border-right: none;
+}
+
+.div-search-next-pagination {
+    border: 1px solid lightgrey;
+}
+
+.div-search-page-number {
+    border: 1px solid lightgrey;
+    border-right: none;
 }
