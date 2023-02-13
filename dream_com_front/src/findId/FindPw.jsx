@@ -183,7 +183,7 @@ function FindPw(){
 
                         <div id={"findPhone"} style={{display:'none'}}>
                             <div>
-                                <input type="radio" className={"mt-5 ms-5"} checked={true} id={"radio"}/>
+                                <input type="radio" className={"mt-5 ms-5"} defaultChecked={true} id={"radio"}/>
                                 <label className={"ms-2 nanumSquareR-font-normal"} style={{color:"#e26e6e"}}><b>휴대폰 번호로 찾기</b></label>
                                 <p className={"mt-2 ms-5 nanumSquareR-font-normal"}>가입 당시 입력한 휴대전화 번호를 통해 아이디를 찾을 수 있습니다.</p>
                                 <p className={"ms-5 nanumSquareR-font-normal"}>비밀번호는 고객님의 소중한 개인정보로
@@ -212,7 +212,7 @@ function FindPw(){
 
                         <div id={"findEmail"}>
                             <div>
-                                <input type="radio" className={"mt-5 ms-5"} checked={true} id={"radio"}/>
+                                <input type="radio" className={"mt-5 ms-5"} defaultChecked={true} id={"radio"}/>
                                 <label className={"ms-2 nanumSquareR-font-normal"} style={{color:"#e26e6e"}}><b>이메일로 찾기</b></label>
                                 <p className={"mt-2 ms-5 nanumSquareR-font-normal"}>가입 당시 입력한 이메일 주소를 통해 아이디를 찾을 수 있습니다.</p>
                                 <p className={"ms-5 nanumSquareR-font-normal"}>비밀번호는 고객님의 소중한 개인정보로

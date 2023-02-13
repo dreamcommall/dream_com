@@ -30,7 +30,6 @@ public class AddressController {
     @RequestMapping(value = "/insertAddress", method = RequestMethod.POST)
     public String insertAddress(AddressDto addressDto) throws Exception{
         addressService.insertAddress(addressDto);
-        System.out.println(addressDto);
         return "수정완료";
     }
 

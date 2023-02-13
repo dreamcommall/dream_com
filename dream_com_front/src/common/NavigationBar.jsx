@@ -121,27 +121,23 @@ function NavigationBar() {
                     </Nav>
                     <Form className={"container-fluid"}>
                         <Nav style={{marginLeft: "71%"}}>
-                            <a>
-                                <li style={{height: "100%"}} className={"d-flex align-items-center me-2"}
-                                    onMouseOver={() => setTextLine(0)} onMouseOut={() => setTextLine(1)}>
-                                    {
-                                        loginUserId == null ? <Link to={`/login?prev=${pageUrl.pathname + pageUrl.search}`} style={textLine ? {textDecorationLine: "none", color: "gray"}
+                            <li style={{height: "100%"}} className={"d-flex align-items-center me-2"}
+                                onMouseOver={() => setTextLine(0)} onMouseOut={() => setTextLine(1)}>
+                                {
+                                    loginUserId == null ? <Link to={`/login?prev=${pageUrl.pathname + pageUrl.search}`} style={textLine ? {textDecorationLine: "none", color: "gray"}
                                             : {textDecorationLine: "underline", color: "black"}} className={"nanumSquareB-font-normal"}>로그인</Link>
-                                            : <Link onClick={logout} style={textLine ? {textDecorationLine: "none", color: "gray"}
-                                                : {textDecorationLine: "underline", color: "black"}} className={"nanumSquareB-font-normal"}>로그아웃</Link>
-                                    }
-                                </li>
-                            </a>
-                            <a>
-                                <li
-                                    onMouseOver={() => setUserLine(0)} onMouseOut={() => setUserLine(1)}>
-                                    {
-                                        loginUserId == null ? <Link to={"/sign"} style={userLine ? {textDecorationLine: "none", color: "gray"}
+                                        : <Link onClick={logout} style={textLine ? {textDecorationLine: "none", color: "gray"}
+                                            : {textDecorationLine: "underline", color: "black"}} className={"nanumSquareB-font-normal"}>로그아웃</Link>
+                                }
+                            </li>
+                            <li
+                                onMouseOver={() => setUserLine(0)} onMouseOut={() => setUserLine(1)}>
+                                {
+                                    loginUserId == null ? <Link to={"/sign"} style={userLine ? {textDecorationLine: "none", color: "gray"}
                                             : {textDecorationLine: "underline", color: "black"}} className={"nanumSquareB-font-normal"}>회원가입</Link>
-                                            : <span id={"span-header-welcome"} className={"nanumSquareB-font-normal"}>{loginUserId}님 환영합니다!</span>
-                                    }
-                                </li>
-                            </a>
+                                        : <span id={"span-header-welcome"} className={"nanumSquareB-font-normal"}>{loginUserId}님 환영합니다!</span>
+                                }
+                            </li>
                         </Nav>
                     </Form>
                 </Navbar>
