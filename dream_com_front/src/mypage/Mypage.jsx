@@ -26,7 +26,8 @@ function Mypage() {
     // 서버에게 구매확정을 요청후 새로고침
     const updatePurchaseConfirm = (paymentNumber) => {
         setIsLoad(true);
-        axios.post("http://localhost:8080/comfirmPurchase", null, {params : {paymentNum : paymentNumber}})
+        console.log(paymentNumber);
+        axios.post("http://localhost:8080/confirmPurchase", null, {params : {paymentNum : paymentNumber}})
             .then(response => {
                 alert("구매확정 처리되었습니다.");
                 getOrderList();
