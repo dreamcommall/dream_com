@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import "./Clause.css"
 import "../fonts/fontStyle.css"
 
-import SignUpHeader from "./SignUpHeader";
+import NewSignUpHeader from "./NewSignUpHeader";
 
 
 function clause() {
@@ -70,7 +70,7 @@ function clause() {
 
     return (
         <div>
-            <SignUpHeader/>
+            <NewSignUpHeader pageName={"Clause"}/>
         <div className="container">
             <div className="logo nanumSquareB-font-normal"><h1>회원 약관 동의</h1></div>
             <div className="contents">
@@ -159,7 +159,7 @@ function clause() {
                         </li>
                     </ul>
 
-                        <Link to={"/informationSign"}>
+                        <Link to={"/signUp"}>
                             <button className="next-button" style={{fontFamily: "nanumSquareB-font-normal"}}
                                     disabled={ageCheck == true && useCheck == true ? false : true}>확인</button>
                         </Link>

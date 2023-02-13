@@ -6,6 +6,7 @@ import NavigationBar from "../common/NavigationBar";
 import ClickPrevent from "../common/ClickPrevent";
 import Loading from "../common/Loading";
 import Footer from "../common/Footer";
+import {Link} from "react-router-dom";
 
 const ChangeCss = () => {
     document.getElementById("HandPhone").style.color = '#e26e6e';
@@ -132,7 +133,9 @@ function FindPw(){
             .then(req => {
                 if(req.data === 1) {
                     alert("인증이 완료되었습니다. 이메일을 확인해 주세요.")
-                    window.location = "/";
+                    document.getElementById('link-findPw-Link').click();
+                } else {
+                    alert("결제 실패");
                 }
             })
             .catch(err => {
@@ -242,6 +245,7 @@ function FindPw(){
                         <div className={"text-center mt-4"}>
                             <button className={"nanumSquareR-font-large"} id={"nextBtn"} onClick={authCheck} disabled={!successSendEmail}>다음</button>
                         </div>
+                        <Link to={"/"} id={"link-findPw-Link"} style={{display:"none"}}></Link>
                     </div>
                 </div>
             </div>

@@ -133,7 +133,7 @@ function NavigationBar() {
                             <li
                                 onMouseOver={() => setUserLine(0)} onMouseOut={() => setUserLine(1)}>
                                 {
-                                    loginUserId == null ? <Link to={"/sign"} style={userLine ? {textDecorationLine: "none", color: "gray"}
+                                    loginUserId == null ? <Link to={"/clause"} style={userLine ? {textDecorationLine: "none", color: "gray"}
                                             : {textDecorationLine: "underline", color: "black"}} className={"nanumSquareB-font-normal"}>회원가입</Link>
                                         : <span id={"span-header-welcome"} className={"nanumSquareB-font-normal"}>{loginUserId}님 환영합니다!</span>
                                 }

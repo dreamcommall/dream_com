@@ -36,7 +36,7 @@ const ClearPages = {
         mainText: '정보 수정이 완료되었습니다',
         subText: '',
         buttonName: '마이페이지',
-        url:'/signinfomation'
+        url:'/mypage/order'
     },
     //마이페이지 로
     //결제완료 창
@@ -44,7 +44,7 @@ const ClearPages = {
         mainText: '결제가 완료되었습니다',
         subText: '',
         buttonName: '마이페이지',
-        url: '/signinfomation'
+        url: '/mypage/order'
     }
     //마이페이지로
 }

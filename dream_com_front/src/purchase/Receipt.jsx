@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "./Receipt.css";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 function Receipt({method, receipt, userInfo, purchaseProductList}) {
     // 체크박스 클릭 시 값 저장 / 체크박스 연속 클릭 방지
@@ -92,9 +93,9 @@ function Receipt({method, receipt, userInfo, purchaseProductList}) {
             axios.put("http://localhost:8080/buy", formData)
                 .then(req => {
                     if(req.data) {
-                        window.location = "/clearTitle/paymentClear";
+                        document.getElementById("link-receipt-Link").click();
                     } else {
-
+                        alert("DB 저장 실패");
                     }
                 })
                 .catch(err => {
@@ -208,6 +209,7 @@ function Receipt({method, receipt, userInfo, purchaseProductList}) {
                             {(receipt.price - receipt.discount + receipt.deliveryPrice).toLocaleString("ko-KR")}원 결제하기
                         </button>}
                     </div>
+                    <Link to={"/clearTitle/paymentClear"} id={"link-receipt-Link"} style={{display:"none"}}></Link>
                 </div>
             </div>
         </div>

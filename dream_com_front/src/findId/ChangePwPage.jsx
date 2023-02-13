@@ -60,12 +60,12 @@ function ChangePwPage() {
             .then(req => {
                 if(req.data === -1) {
                     alert("세션이 만료되었습니다.");
-                    window.location = "/findPw";
+                    document.getElementById("link-changePwPageToFindPw-Link").click();
                 } else if (req.data === 0) {
                     alert("비밀번호 변경에 실패하였습니다.");
                 } else {
                     alert("비밀번호 변경에 성공하였습니다.");
-                    window.location = "/login";
+                    document.getElementById("link-changePwPageToLogin-Link").click();
                 }
             })
             .catch(err => {
@@ -113,6 +113,8 @@ function ChangePwPage() {
                             <div className={"text-center mt-3 nanumSquareR-font-normal"}>
                                 <button id={"ChangePwButton"} onClick={changePw}>비밀번호 변경</button>
                             </div>
+                            <Link to={"/findPw"} id={"link-changePwPageToFindPw-Link"} style={{display:"none"}}></Link>
+                            <Link to={"/login"} id={"link-changePwPageToLogin-Link"} style={{display:"none"}}></Link>
                         </div>
                     </div>
                 </div>

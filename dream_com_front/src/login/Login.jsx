@@ -212,7 +212,7 @@ function Login(){
                                     </div>
                                 </div>
                                 <div className={"mt-2"}>
-                                    <Link to={"/sign"} className={"text-decoration-none text-dark nanumSquareR-font-Normal"}><b>회원가입</b> ></Link>
+                                    <Link to={"/clause"} className={"text-decoration-none text-dark nanumSquareR-font-Normal"}><b>회원가입</b> ></Link>
                                 </div>
                                 <p className={"nanumSquareR-font-small"} style={loginFooter}>
                                     Copyright © 2023 <b>DreamComputer</b> Co.,Ltd. All Rights Reserved.</p>

@@ -35,7 +35,7 @@ function DreamComRouter() {
                 <Route path={"/detail?"} element={<DetailApp />} />
                 <Route path={"/error?"} element={<ErrorPageApp />} />
                 <Route path={"/purchase?"} element={<PurchaseApp />}></Route>
-                <Route path={"/sign"} element={<Clause />}></Route>
+                <Route path={"/clause"} element={<Clause />}></Route>
                 <Route path={":informationName"} element={<SignInfomation />}></Route>
                 <Route path={"/clearTitle/:titleNames"} element={<ProcessClear />}></Route>
                 <Route path={"/login?"} element={<Login />}></Route>
@@ -54,7 +54,7 @@ function DreamComRouter() {
                     <Route path={"modification"} element={<ModifyProduct />}/>
                     <Route path={"removal"} element={<RemoveProduct />}/>
                 </Route>
-                <Route path={"/testSign"} element={<SignUpApp />}></Route>
+                <Route path={"/signUp"} element={<SignUpApp />}></Route>
             </Routes>
         </BrowserRouter>
     )
