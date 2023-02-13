@@ -24,4 +24,12 @@ public interface PaymentMapper {
     int minusInventoryQuantity(List<Object> details) throws Exception;
 
     int deleteCart(String userId, List<Object> details) throws Exception;
+
+    List<PaymentDto> getLaterDelivery() throws Exception;
+
+    void changeState(int paymentNum) throws Exception;
+
+    List<PaymentDto> getTodayDelivery() throws Exception;
+
+    int confirmPurchase(int paymentNum) throws Exception;
 }

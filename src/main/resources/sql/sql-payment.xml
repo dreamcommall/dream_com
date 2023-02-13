@@ -62,4 +62,36 @@
             delete from cart where user_id = #{userId} and product_num = #{item.productNum}
         </foreach>
     </delete>
+
+<!--    구매 목록 중 배송 2~3일 걸리는 제품-->
+<!--    최종 수정일 2023-02-13-->
+<!--    최종 작성자 : 양민호-->
+    <select id="getLaterDelivery" resultType="com.bitc.dream_com.dto.PaymentDto">
+        select pay.*, p.delivery_info, pd.product_num from payment pay
+            join payment_detail pd on pay.payment_num = pd.payment_num
+            join product p on p.product_num = pd.product_num where p.delivery_info = '2~3일 소요'
+    </select>
+
+<!--    구매 목록 중 당일배송 제품-->
+<!--    최종 수정일 2023-02-13-->
+<!--    최종 작성자 : 양민호-->
+    <select id="getTodayDelivery" resultType="com.bitc.dream_com.dto.PaymentDto">
+        select pay.*, p.delivery_info, pd.product_num from payment pay
+            join payment_detail pd on pay.payment_num = pd.payment_num
+            join product p on p.product_num = pd.product_num where p.delivery_info = '당일배송'
+    </select>
+
+<!--    구매 목록 제품 state 업데이트-->
+<!--    최종 수정일 2023-02-13-->
+<!--    최종 작성자 : 양민호-->
+    <update id="changeState">
+        update payment set state = state + 1 where payment_num = #{paymentNum}
+    </update>
+
+<!--    구매확정-->
+<!--    최종 수정일 2023-02-13-->
+<!--    최종 작성자 : 양민호-->
+    <update id="confirmPurchase">
+        update payment set state = 4 where payment_num = #{paymentNum}
+    </update>
 </mapper>
