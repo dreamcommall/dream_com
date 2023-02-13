@@ -59,6 +59,10 @@
     width: 25%;
 }
 
+#inputGroup-detail-product-calculator input {
+    background-color: white;
+}
+
 #inputGroup-detail-product-calculator button {
     width: 40px;
 }

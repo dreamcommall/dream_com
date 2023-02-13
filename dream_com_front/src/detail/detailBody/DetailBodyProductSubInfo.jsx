@@ -133,7 +133,7 @@ function DetailBodyProductSubInfo({productInfo, loginUserId, func}) {
                 <div className={"d-flex justify-content-between align-items-center p-3"}>
                     <InputGroup id={"inputGroup-detail-product-calculator"}>
                         <Button variant="outline-secondary" onClick={minusProductCount}>-</Button>
-                        <Form.Control value={productCount == undefined ? 0 : productCount}/>
+                        <Form.Control value={productCount == undefined ? 0 : productCount} readOnly={true}/>
                         <Button variant="outline-secondary" onClick={plusProductCount}>+</Button>
                     </InputGroup>
                     <p className={"mb-0 nanumSquareB-font-XNormal"}>{totalPrice.toLocaleString()}원</p>

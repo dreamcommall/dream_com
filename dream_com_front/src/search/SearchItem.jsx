@@ -104,7 +104,7 @@ function SearchItem({searchItemInfo}) {
                             {
                                 productDiscount == 0 ? null : <p style={{color : "red"}} className={"my-0 nanumSquareB-font-normal"}>{productDiscount}% 할인</p>
                             }
-                            <p className={"my-0 nanumSquareR-font-normal"}><b>{productPrice}원</b></p>
+                            <p className={"my-0 nanumSquareR-font-normal"}><b>{(productPrice - (productPrice / 100 * productDiscount)).toLocaleString()}원</b></p>
                         </div>
                     </div>
                 </div>

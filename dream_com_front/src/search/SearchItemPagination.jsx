@@ -35,7 +35,7 @@ function SearchItemPagination({currentPageNumber, firstPageNumber, lastPageNumbe
                             </Pagination.Item>
                         {
                             pageNumberList.map(item => {
-                                return <Pagination.Item>
+                                return <Pagination.Item key={item}>
                                     <Link className={"link-search-pagination"} to={`/search?keyword=${keyword}&pageNum=${item}`}>
                                         <div className={`red${currentPageNumber}` == `red${item}` ? `red${item} active` : `red${item}`}>
                                             {item}
