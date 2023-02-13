@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import MyPageBuyProductContents from "./MyPageBuyProductContents";
 
-function BuyProductList({orderInfo, review, paymentInfo, funcGetProductNumber}) {
+function BuyProductList({orderInfo, review, paymentInfo, funcGetProductNumber, funcUpdatePurchaseConfirm, funcRequestCancel}) {
     // 배송 상태가 배송완료가 아닌경우 환불, 리뷰, 구매확정을 못하게 하기위해 선언
     const [purchaseEnable, setPurchaseEnable] = useState(false); // 구매가 사용가능한 상태인가?
     const [refundEnable, setRefundEnable] = useState(false); // 환불이 가능한 상태인가?
@@ -27,10 +27,19 @@ function BuyProductList({orderInfo, review, paymentInfo, funcGetProductNumber}) 
         if (paymentInfo == undefined) {
             return;
         }
-
-        if (paymentInfo.state == 3) {
-            setPurchaseEnable(true);
+        if (paymentInfo.state == 0) {
+            setPurchaseEnable(false);
             setRefundEnable(false);
+            setReviewEnable(false);
+        }
+        else if (paymentInfo.state == 1 || paymentInfo.state == 2) {
+            setPurchaseEnable(false);
+            setRefundEnable(true);
+            setReviewEnable(false);
+        }
+        else if (paymentInfo.state == 3) {
+            setPurchaseEnable(true);
+            setRefundEnable(true);
             setReviewEnable(false);
         } else if (paymentInfo.state == 4) {
             setPurchaseEnable(false);
@@ -77,13 +86,13 @@ function BuyProductList({orderInfo, review, paymentInfo, funcGetProductNumber}) 
             <td className={"listStyle"}>
                 <div>
                     <div className={"orderState"}>
-                        <button disabled={!refundEnable}>환불요청</button>
+                        <button disabled={!refundEnable} onClick={() => {funcRequestCancel(paymentInfo.paymentNum)}}>환불요청</button>
                     </div>
                     <div className={"orderState"}>
                         <button disabled={!(reviewEnable && (review == null))} className={"mt-2"} onClick={() => {funcGetProductNumber(orderInfo.productNum)}}>리뷰쓰기</button>
                     </div>
                     <div className={"orderState"}>
-                        <button disabled={!purchaseEnable} className={"mt-2"}>구매확정</button>
+                        <button disabled={!purchaseEnable} className={"mt-2"} onClick={() => {funcUpdatePurchaseConfirm(paymentInfo.paymentNum)}}>구매확정</button>
                     </div>
                 </div>
             </td>
