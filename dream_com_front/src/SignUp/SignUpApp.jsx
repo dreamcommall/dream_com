@@ -88,9 +88,9 @@ function SignUpApp() {
             <div className={"container"}>
                 <SignUpUpperContents funcSendSignUserId={sendSignUserId} />
                 <SignUpMain signUpMainProps={signUpMainProps}  />
-            </div>
-            <div id={"div-sing-up-SignUpButton"}>
-                <button id={"button-sing-up-SignUpButton"} disabled={!emailAuth} onClick={clickJoin}>회원가입</button>
+                <div id={"div-sing-up-SignUpButton"}>
+                    <button id={"button-sing-up-SignUpButton"} disabled={!emailAuth} onClick={clickJoin}>회원가입</button>
+                </div>
             </div>
         </div>
     )
