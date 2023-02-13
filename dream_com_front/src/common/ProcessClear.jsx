@@ -13,6 +13,7 @@ const ClearPages = {
         buttonName: '로그인',
         url: "/login"
     },
+    
     //로그아웃 완료창
     logOutClear: {
         mainText: '로그아웃이 되었습니다',
@@ -21,6 +22,15 @@ const ClearPages = {
         url: "/login"
 
     },
+
+    //메일 전송 완료 창
+    emailDataClear:{
+        mainText: '이메일에 전송 되었습니다',
+        subText: '만료 시간 전에 입력하시오',
+        buttonName: '로그인',
+        url: "/login"
+    },
+
     // 기본정보 수정 완료창
     basicInformation: {
         mainText: '정보 수정이 완료되었습니다',
