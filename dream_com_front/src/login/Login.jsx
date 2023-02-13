@@ -53,8 +53,13 @@ function Login(){
     const navigate = useNavigate();
 
     // 로그인 성공후 이전 링크로 이동한다.
-    const moveDestination = () => {
-        navigate(prevUrl);
+    // 만약 관리자라면 관리자 페이지로 이동한다.
+    const moveDestination = (authorization) => {
+        if (authorization == "A") {
+            navigate("/admin/product");
+        } else {
+            navigate(prevUrl);
+        }
     }
 
     const handleInputId = (e) => {
@@ -81,7 +86,7 @@ function Login(){
                 getUserId().then(getResult => {
                     setIsLoad(false);
                     if (getResult == true) {
-                        moveDestination();
+                        getAuthorization();
                     }
                 }).catch(err => {
                     setIsLoad(false);
@@ -142,6 +147,19 @@ function Login(){
                 flag = false;
             });
         return flag;
+    }
+    
+    // 로그인 후 유저의 권한을 얻어오고 만약 관리자라면 관리자 페이지로 이동시킨다.
+    const getAuthorization = () => {
+        axios.get("http://localhost:8080/user/authorization", {params : {userUUID : sessionStorage.getItem("loginUUID"),
+                autoUserUUID : localStorage.getItem("autoLoginUUID")}})
+            .then(response => {
+                moveDestination(response.data);
+            })
+            .catch(err => {
+                console.log(`에러메세지 : ${err}`);
+                console.log("로그인 한 유저의 권한 취득에 실패했습니다.");
+            });
     }
     
     // 이전 페이지 경로 가져오기
