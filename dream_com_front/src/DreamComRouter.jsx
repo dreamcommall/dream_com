@@ -22,6 +22,7 @@ import Admin from "./admin/Admin";
 import NewProduct from "./admin/NewProduct";
 import ModifyProduct from "./admin/ModifyProduct";
 import RemoveProduct from "./admin/RemoveProduct";
+import SignUpMain from "./SignUp/SignUpMain";
 
 // 작성자 : MoonNight285
 // 라우터 관리 컴포넌트
@@ -55,6 +56,8 @@ function DreamComRouter() {
                     <Route path={"modification"} element={<ModifyProduct />}/>
                     <Route path={"removal"} element={<RemoveProduct />}/>
                 </Route>
+
+                <Route path={"/testSign"} element={<SignUpMain />}></Route>
             </Routes>
         </BrowserRouter>
     )

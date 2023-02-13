@@ -1,0 +1,28 @@
+/*<div>
+    <div>
+    </div>
+  </div>*/
+
+.signUpMainForm {
+    border-bottom: 1px lightgrey solid;
+    padding: 20px 0px;
+}
+
+.signUpMainLabel {
+    width: 100px;
+}
+
+.signUpMainInput {
+    width: 190px;
+}
+
+#signUpMainEmailLabel, #signUpMainAddrLabel {
+    display: flex;
+    align-items: center;
+}
+
+.signUpMainButton {
+    margin-left: 10px;
+    height: 30px;
+    border: none;
+}
