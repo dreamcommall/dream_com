@@ -105,6 +105,7 @@ function MainPageApp() {
         dataReceive().then(() => {
             setIsLoad(false);
         })
+        sessionStorage.removeItem("isFirstLogin");
 
         // scroll event listener 등록
         window.addEventListener("scroll", handleScroll);
