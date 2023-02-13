@@ -25,7 +25,7 @@
 <!--    최종 수정일 2023-02-03-->
 <!--    최종 작성자 : 양민호-->
     <insert id="buy" parameterType="com.bitc.dream_com.dto.PaymentDto">
-        insert into payment values(#{paymentNum}, now(), #{deliveryAddr}, #{methodNum}, #{userId}, #{request}, 1)
+        insert into payment values(#{paymentNum}, now(), #{deliveryAddr}, #{methodNum}, #{userId}, #{request})
     </insert>
 
 <!--    전체 결제번호 데이터-->
@@ -40,8 +40,8 @@
 <!--    최종 작성자 : 양민호-->
     <insert id="insertPaymentDetail">
         <foreach collection="details" item="item" separator=";">
-            insert into payment_detail(payment_num, product_num, quantity, price)
-            values (#{paymentNum}, #{item.productNum}, #{item.quantity}, #{item.price})
+            insert into payment_detail(payment_num, product_num, quantity, price, state)
+            values (#{paymentNum}, #{item.productNum}, #{item.quantity}, #{item.price}, 1)
         </foreach>
     </insert>
 
