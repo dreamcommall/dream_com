@@ -62,7 +62,6 @@ public class WishlistController {
         String[] productNum = productNumArray.split(",");
 
         for(int i = 0; i < productNum.length; i++){
-            System.out.println(productNum[i]);
             wishlistService.deleteWishList(userId,Integer.parseInt(productNum[i]));
         }
 

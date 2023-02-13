@@ -222,8 +222,6 @@ public class UserController {
     @RequestMapping(value = "/idChk",method = RequestMethod.POST)
     public int idChk(@RequestParam("userId") String userId) throws Exception{
         int result = userService.idChk(userId);
-
-        System.out.println(result);
         return result;
     }
 
