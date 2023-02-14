@@ -69,9 +69,10 @@ function SignUpMain({signUpMainProps, setIsLoad}) {
         setIsLoad(true);
         if(chkNumber === "") {
             alert("인증번호를 입력해주세요");
-            setIsLoad(false)
+            setIsLoad(false);
         } else if (uniqueId === "") {
             alert("메일 전송 과정 중 문제가 발생했습니다.");
+            setIsLoad(false);
         } else {
             axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: chkNumber, uniqueId: uniqueId}})
                 .then(req => {
