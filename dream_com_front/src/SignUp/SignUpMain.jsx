@@ -11,7 +11,8 @@ function SignUpMain({signUpMainProps, setIsLoad}) {
     const [postNum, setPostNum] = useState("");
     // 주소
     const [address, setAddress] = useState("");
-
+    // 메일 전송 여부
+    const [sendAuth, setSendAuth] = useState(false);
 
     // 다음 주소 찾기 api
     const daumPostPopUp = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
@@ -55,6 +56,7 @@ function SignUpMain({signUpMainProps, setIsLoad}) {
                     alert("메일이 발송되었습니다.");
                     setUniqueId(req.data);
                     setIsLoad(false);
+                    setSendAuth(true);
                 })
                 .catch(err => {
                     console.log("통신 오류");
@@ -65,20 +67,27 @@ function SignUpMain({signUpMainProps, setIsLoad}) {
     // 인증번호 확인
     const EmailChk = () => {
         setIsLoad(true);
-        axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: chkNumber, uniqueId: uniqueId}})
-            .then(req => {
-                if(req.data === 1) {
-                    alert("인증이 완료되었습니다.");
-                    signUpMainProps.setEmailAuth(true);
-                    setIsLoad(false);
-                } else {
-                    alert("인증번호가 틀렸습니다.");
-                    setIsLoad(false);
-                }
-            })
-            .catch(err => {
-                console.log("통신 오류");
-            })
+        if(chkNumber === "") {
+            alert("인증번호를 입력해주세요");
+            setIsLoad(false)
+        } else if (uniqueId === "") {
+            alert("메일 전송 과정 중 문제가 발생했습니다.");
+        } else {
+            axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: chkNumber, uniqueId: uniqueId}})
+                .then(req => {
+                    if(req.data === 1) {
+                        alert("인증이 완료되었습니다.");
+                        signUpMainProps.setEmailAuth(true);
+                        setIsLoad(false);
+                    } else {
+                        alert("인증번호가 틀렸습니다.");
+                        setIsLoad(false);
+                    }
+                })
+                .catch(err => {
+                    console.log("통신 오류");
+                })
+        }
     }
 
     // 휴대전화 번호 입력값 변경 시
@@ -117,7 +126,7 @@ function SignUpMain({signUpMainProps, setIsLoad}) {
                     </div>
                     <div>
                         <input type={"text"} onChange={changeChkNumber} />
-                        <button className={"button-sing-up-button"} onClick={EmailChk}>인증 확인</button>
+                        <button className={"button-sing-up-button"} onClick={EmailChk} disabled={!sendAuth}>인증 확인</button>
                     </div>
                 </div>
             </div>
