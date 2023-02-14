@@ -70,4 +70,14 @@ public class PaymentServiceImpl implements PaymentService {
     public int confirmPurchase(int paymentNum, int productNum) throws Exception {
         return paymentMapper.confirmPurchase(paymentNum, productNum);
     }
+
+    @Override
+    public int paymentDataQuantity(int paymentNum, int productNum) throws Exception {
+        return paymentMapper.paymentDataQuantity(paymentNum, productNum);
+    }
+
+    @Override
+    public void plusInventoryQuantity(int productNum, int quantity) throws Exception {
+        paymentMapper.plusInventoryQuantity(productNum, quantity);
+    }
 }

@@ -30,4 +30,8 @@ public interface PaymentService {
     List<PaymentDto> getTodayDelivery() throws Exception;
 
     int confirmPurchase(int paymentNum, int productNum) throws Exception;
+
+    int paymentDataQuantity(int paymentNum, int productNum) throws Exception;
+
+    void plusInventoryQuantity(int productNum, int quantity) throws Exception;
 }

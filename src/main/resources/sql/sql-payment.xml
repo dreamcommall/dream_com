@@ -54,6 +54,13 @@
         </foreach>
     </update>
 
+<!--    제품 재고량 결제 취소 수만큼 증가-->
+<!--    최종 수정일 2023-02-05-->
+<!--    최종 작성자 : 양민호-->
+    <update id="plusInventoryQuantity">
+        update product set inventory_quantity = inventory_quantity + #{quantity} where product_num = #{productNum}
+    </update>
+
 <!--    결제한 상품만 장바구니에서 삭제-->
 <!--    최종 수정일 2023-02-05-->
 <!--    최종 작성자 : 양민호-->
@@ -95,4 +102,11 @@
         update payment p join payment_detail pd on p.payment_num = pd.payment_num set pd.state = 4
         where p.payment_num = #{paymentNum} and pd.product_num = #{productNum};
     </update>
+
+<!--    결제 취소 시 해당 제품 구매 수량 가져오기-->
+<!--    최종 수정일 2023-02-14-->
+<!--    최종 작성자 : 양민호-->
+    <select id="paymentDataQuantity" resultType="int">
+        select quantity from payment_detail where payment_num = #{paymentNum} and product_num = #{productNum}
+    </select>
 </mapper>

@@ -52,7 +52,9 @@ public class PaymentController {
     @RequestMapping(value = "cancelPayment", method = RequestMethod.PUT)
     public String cancelPayment(@RequestParam("userId") String userId, @RequestParam("paymentNum") int paymentNum,
                                 @RequestParam("productNum") int productNum) throws Exception {
+        int quantity = paymentService.paymentDataQuantity(paymentNum, productNum);
         paymentService.cancelPayment(userId, paymentNum, productNum);
+        paymentService.plusInventoryQuantity(productNum, quantity);
 
         return "취소 완료";
     }
