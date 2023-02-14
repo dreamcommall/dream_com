@@ -3,29 +3,29 @@
 <mapper namespace="com.bitc.dream_com.mapper.PaymentMapper">
 
 <!--    결제내역 불러오기-->
-<!--    최종 수정일 2023-01-19-->
+<!--    최종 수정일 2023-02-03-->
 <!--    최종 작성자 : 양민호-->
     <select id="paymentData" resultType="com.bitc.dream_com.dto.PaymentDto">
-        select p.*, pi.img_path, pr.product_title, pr.product_name, pr.product_discount, pm.method_name from payment p
-            join product_img pi on p.product_num = pi.product_num
-            join product pr on pr.product_num = p.product_num
-            join payment_method pm on p.method_num = pm.method_num
-        where p.user_id = #{userId} and pi.img_path like '%thumbnail'
+        select * from payment p
+            join payment_detail pd on p.payment_num = pd.payment_num
+            join user u on u.user_id = p.user_id
+            join payment_method pm on pm.method_num = p.method_num
+        where p.user_id = #{userId}
     </select>
 
 <!--    결제취소-->
 <!--    최종 수정일 2023-01-19-->
 <!--    최종 작성자 : 양민호-->
     <update id="cancelPayment" parameterType="com.bitc.dream_com.dto.PaymentDto">
-        update payment set state = 0
-        where user_id = #{userId} and payment_num = #{paymentNum}
+        update payment p join payment_detail pd on p.payment_num = pd.payment_num set pd.state = 0
+            where p.payment_num = #{paymentNum} and pd.product_num = #{productNum};
     </update>
 
 <!--    구매 / 결제완료 (결제내역 추가)-->
-<!--    최종 수정일 2023-01-19-->
+<!--    최종 수정일 2023-02-03-->
 <!--    최종 작성자 : 양민호-->
     <insert id="buy" parameterType="com.bitc.dream_com.dto.PaymentDto">
-        insert into payment values(#{paymentNum}, #{paymentDate}, #{deliveryAddr}, #{methodNum}, #{userId}, #{productNum}, #{quantity}, #{price}, #{request}, 1)
+        insert into payment values(#{paymentNum}, now(), #{deliveryAddr}, #{methodNum}, #{userId}, #{request})
     </insert>
 
 <!--    전체 결제번호 데이터-->
@@ -33,5 +33,80 @@
 <!--    최종 작성자 : 양민호-->
     <select id="usedNum" resultType="com.bitc.dream_com.dto.PaymentDto">
         select payment_num from payment
+    </select>
+
+<!--    구매 / 결제 완료 (결제 상세 테이블에 내용 추가)-->
+<!--    최종 수정일 2023-02-03-->
+<!--    최종 작성자 : 양민호-->
+    <insert id="insertPaymentDetail">
+        <foreach collection="details" item="item" separator=";">
+            insert into payment_detail(payment_num, product_num, quantity, price, state)
+            values (#{paymentNum}, #{item.productNum}, #{item.quantity}, #{item.price}, 1)
+        </foreach>
+    </insert>
+
+<!--    제품 재고량 결제 수만큼 감소-->
+<!--    최종 수정일 2023-02-05-->
+<!--    최종 작성자 : 양민호-->
+    <update id="minusInventoryQuantity">
+        <foreach collection="details" item="item" separator=";">
+            update product set inventory_quantity = inventory_quantity - #{item.quantity} where product_num = #{item.productNum}
+        </foreach>
+    </update>
+
+<!--    제품 재고량 결제 취소 수만큼 증가-->
+<!--    최종 수정일 2023-02-05-->
+<!--    최종 작성자 : 양민호-->
+    <update id="plusInventoryQuantity">
+        update product set inventory_quantity = inventory_quantity + #{quantity} where product_num = #{productNum}
+    </update>
+
+<!--    결제한 상품만 장바구니에서 삭제-->
+<!--    최종 수정일 2023-02-05-->
+<!--    최종 작성자 : 양민호-->
+    <delete id="deleteCart">
+        <foreach collection="details" item="item" separator=";">
+            delete from cart where user_id = #{userId} and product_num = #{item.productNum}
+        </foreach>
+    </delete>
+
+<!--    구매 목록 중 배송 2~3일 걸리는 제품-->
+<!--    최종 수정일 2023-02-13-->
+<!--    최종 작성자 : 양민호-->
+    <select id="getLaterDelivery" resultType="com.bitc.dream_com.dto.PaymentDto">
+        select pay.*, p.delivery_info, pd.product_num from payment pay
+            join payment_detail pd on pay.payment_num = pd.payment_num
+            join product p on p.product_num = pd.product_num where p.delivery_info = '2~3일 소요'
+    </select>
+
+<!--    구매 목록 중 당일배송 제품-->
+<!--    최종 수정일 2023-02-13-->
+<!--    최종 작성자 : 양민호-->
+    <select id="getTodayDelivery" resultType="com.bitc.dream_com.dto.PaymentDto">
+        select pay.*, p.delivery_info, pd.product_num from payment pay
+            join payment_detail pd on pay.payment_num = pd.payment_num
+            join product p on p.product_num = pd.product_num where p.delivery_info = '당일배송'
+    </select>
+
+<!--    구매 목록 제품 state 업데이트-->
+<!--    최종 수정일 2023-02-13-->
+<!--    최종 작성자 : 양민호-->
+    <update id="changeState">
+        update payment set state = state + 1 where payment_num = #{paymentNum} and product_num = #{productNum}
+    </update>
+
+<!--    구매확정-->
+<!--    최종 수정일 2023-02-13-->
+<!--    최종 작성자 : 양민호-->
+    <update id="confirmPurchase">
+        update payment p join payment_detail pd on p.payment_num = pd.payment_num set pd.state = 4
+        where p.payment_num = #{paymentNum} and pd.product_num = #{productNum};
+    </update>
+
+<!--    결제 취소 시 해당 제품 구매 수량 가져오기-->
+<!--    최종 수정일 2023-02-14-->
+<!--    최종 작성자 : 양민호-->
+    <select id="paymentDataQuantity" resultType="int">
+        select quantity from payment_detail where payment_num = #{paymentNum} and product_num = #{productNum}
     </select>
 </mapper>

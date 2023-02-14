@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bitc.dream_com.mapper.UserMapper">
     <!--    기능 : 로그인
-            최종 수정일 : 2023.01.19
+            최종 수정일 : 2023.02.13
             최종 작성자 : 김영민 -->
     <select id="loginChk" resultType="com.bitc.dream_com.dto.UserDto">
         SELECT user_id, user_pw
         FROM user
-        WHERE user_id = #{userId} AND user_pw = #{userPw} AND user_state = 'N'
+        WHERE user_id = #{userId} AND user_pw = #{userPw} AND (user_state = 'N' or user_state = 'A')
     </select>
 
 <!--    회원 정보 수정-->
@@ -38,6 +38,100 @@
 <!--    최종 작성자 : 양민호-->
     <insert id="join" parameterType="com.bitc.dream_com.dto.UserDto">
         insert into user values (#{userId}, #{userPw}, #{userName}, #{userGender}, #{userPost}, #{userAddr}, #{userTel},
-                                 #{userEmail}, 'N')
+                                 #{userEmail}, 'N', now())
     </insert>
+
+    <select id="idChk" resultType="int" parameterType="com.bitc.dream_com.dto.UserDto">
+        select count(user_id)
+        from user
+        where user_id = #{userId}
+    </select>
+
+<!--    유저 정보 가져오기-->
+<!--    최종 수정일 2023-02-02-->
+<!--    최종 작성자 : 양민호-->
+    <select id="getUserInfo" resultType="com.bitc.dream_com.dto.UserDto">
+        select * from user where user_id = #{userId}
+    </select>
+
+<!--    회원 가입 시 기본 배송지 저장-->
+<!--    최종 수정일 2023-02-03-->
+<!--    최종 작성자 : 양민호-->
+    <insert id="addAddress" parameterType="com.bitc.dream_com.dto.UserDto">
+        insert into address(user_id, addr) values (#{userId}, #{userAddr})
+    </insert>
+
+<!--    파라미터로 받은 UUID가 사용중인지 확인한다.-->
+<!--    최종 수정일 : 2023-02-03-->
+<!--    최종 작성자 : 김준영-->
+    <select id="isDbUserUUID" resultType="String" parameterType="String">
+        select token_key from auto_login_key where token_key = #{key}
+    </select>
+
+<!--    파라미터로 받은 UUID와 ID값을 이용해 DB에 저장-->
+<!--    최종 수정일 : 2023-02-03-->
+<!--    최종 작성자 : 김준영-->
+    <insert id="createDbUserUUID" parameterType="com.bitc.dream_com.dto.AutoLoginDto">
+        insert into auto_login_key(user_id, token_key, create_time)
+        values(#{userId}, #{tokenKey}, NOW());
+    </insert>
+
+<!--    파라미터로 받은 UUID를 사용하는 유저 아이디를 반환합니다.-->
+<!--    최종 수정일 : 2023-02-03-->
+<!--    최종 작성자 : 김준영-->
+    <select id="isAutoUserId" parameterType="String" resultType="String">
+        select user_id from auto_login_key where token_key = #{key}
+    </select>
+
+<!--    파라미터로 받은 UUID와 일치하는 값을 삭제-->
+<!--    최종 수정일 : 2023-02-03-->
+<!--    최종 작성자 : 김준영-->
+    <delete id="deleteDbUserUUID" parameterType="String">
+        delete from auto_login_key where token_key = #{key}
+    </delete>
+
+<!--    파라미터로 받은 기준 날짜를 넘긴 키들을 반환한다.-->
+<!--    만료기간 검사-->
+<!--    최종 수정일 : 2023-02-04-->
+<!--    최종 작성자 : 김준영-->
+    <select id="searchUUIDExpire" parameterType="String" resultType="String">
+        <![CDATA[
+            select token_key from auto_login_key where create_time <= #{time}
+        ]]>
+    </select>
+
+<!--    파라미터로 받은 유저 아이디를 가지는 UUID를 반환합니다.-->
+<!--    최종 수정일 : 2023-02-05-->
+<!--    최종 작성자 : 김준영-->
+    <select id="searchDbUserUUID" parameterType="String" resultType="String">
+        select token_key from auto_login_key where user_id = #{id}
+    </select>
+
+<!--    이메일로 아이디 찾기-->
+<!--    최종 수정일 2023-02-09-->
+<!--    최종 작성자 : 양민호-->
+    <select id="getSignedId" resultType="com.bitc.dream_com.dto.UserDto">
+        select user_id, user_sign_date from user where user_email = #{userEmail} and user_name = #{userName}
+    </select>
+
+<!--    [아이디 찾기 페이지] 이름과 이메일로 회원가입한 유저인지 확인-->
+<!--    최종 수정일 2023-02-09-->
+<!--    최종 작성자 : 양민호-->
+    <select id="findIdPageCheckSignedInfo" resultType="int">
+        select count(*) from user where user_email = #{userEmail} and user_name = #{userName}
+    </select>
+
+<!--    [비밀번호 찾기 페이지] 아이디와 이름, 이메일로 회원가입한 유저인지 확인-->
+<!--    최종 수정일 2023-02-10-->
+<!--    최종 작성자 : 양민호-->
+    <select id="findPwPageCheckSignedInfo" resultType="int">
+        select count(*) from user where user_email = #{userEmail} and user_name = #{userName} and user_id = #{userId}
+    </select>
+
+<!--    비밀번호 변경-->
+<!--    최종 수정일 2023-02-11-->
+<!--    최종 작성자 : 양민호-->
+    <update id="changePw">
+        update user set user_pw = #{userPw} where user_id = #{userId}
+    </update>
 </mapper>

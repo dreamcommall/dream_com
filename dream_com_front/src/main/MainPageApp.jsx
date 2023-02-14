@@ -87,6 +87,16 @@ function MainPageApp() {
                 console.log("신상품 목록을 가져오는데 실패하였습니다.");
                 console.log("에러내용 : " + err);
             });
+
+        // 자동 로그인을 실행합니다.
+        await axios.post("http://localhost:8080/autoLogin", null, {params : {
+                autoUserUUID : localStorage.getItem("autoLoginUUID")
+            }}).then(response => {
+                console.log(response.data);
+        }).catch(err => {
+            console.log("자동 로그인에 실패하였습니다.");
+            console.log("에러내용 : " + err);
+        })
     }
 
     // 필요한 데이터를 불러오고 스크롤 이벤트를 등록
@@ -95,6 +105,7 @@ function MainPageApp() {
         dataReceive().then(() => {
             setIsLoad(false);
         })
+        sessionStorage.removeItem("isFirstLogin");
 
         // scroll event listener 등록
         window.addEventListener("scroll", handleScroll);

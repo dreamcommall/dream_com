@@ -1,5 +1,5 @@
 import React from "react";
-import "./DetailHeaderErrorMsg.css"
+import "../detailCss/DetailHeaderErrorMsg.css"
 
 // 이 컴포넌트는 사용되지않습니다.
 // 제품을 구매할때 유의사항을 알려주는 컴포넌트

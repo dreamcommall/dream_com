@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "./ClickPrevent.css"
+import "./commonCss/ClickPrevent.css"
 
 // 로딩시 클릭을 방지하기 위한 컴포넌트
 function ClickPrevent({isLoading}) {

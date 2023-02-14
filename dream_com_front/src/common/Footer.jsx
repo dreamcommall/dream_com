@@ -7,7 +7,7 @@ function Footer() {
 <div className={"container-fluid"}>
         <footer className={""} style={{fontSize:"10px", textAlign: "center", bottom: "0", backgroundColor:"rgb(250,250,250)"}}>
             <div  style={{display:"flex", paddingTop:"20px"}}>
-                <section style={{width: "160%", textAlign:"left", padding: "1px",lineHeight:"5px",fontSize:"15px", paddingLeft:"100px"}}>
+                <section style={{width: "190%", textAlign:"left", padding: "1px",lineHeight:"5px",fontSize:"15px", paddingLeft:"100px", marginLeft:"100px"}}>
                     <p>DreamComputer(주) 대표강사 : 최 수 열 | 사업자등록번호 : 412 - 19 - 08342</p>
                     <p>부산광역시 부산진구 중앙대로 708 ｜ E-mail : gudeh880@naver.co.kr ｜ 호스팅 제공자 : (주)DreamComputer ｜ 개인정보보호책임자 : 김 준 영</p>
                     <p>통신판매업신고 : 용산 제 00417호 ｜ 분쟁조정기관 : 소비자보호원, 전자거래분쟁중재위원회｜ 에스크로 구매안전 서비스 이용가능 </p>

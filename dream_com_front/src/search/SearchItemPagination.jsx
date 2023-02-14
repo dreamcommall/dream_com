@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Pagination from 'react-bootstrap/Pagination';
-import "./SearchItemPagination.css"
+import "./searchCss/SearchItemPagination.css"
 import {Link} from "react-router-dom";
 
 function SearchItemPagination({currentPageNumber, firstPageNumber, lastPageNumber, keyword}) {
@@ -15,43 +15,39 @@ function SearchItemPagination({currentPageNumber, firstPageNumber, lastPageNumbe
     }, [firstPageNumber, lastPageNumber]);
     
     return (
-        <div className={"d-flex justify-content-center my-3"}>
+        <div id={"div-search-pagination-wrapper"} className={"d-flex justify-content-center my-3"}>
             {
                 // 첫페이지와 마지막 페이지가 일치하면 1 페이지밖에 존재하지않는다.
                 firstPageNumber == lastPageNumber ? <Pagination>
-                        <Pagination.Item><div>{"<"}</div></Pagination.Item>
-                        <Pagination.Item><div className={"active"}>{1}</div></Pagination.Item>
-                        <Pagination.Item><div>{">"}</div></Pagination.Item>
+                        <Pagination.Item><div className={"div-search-prev-pagination"}>{"<"}</div></Pagination.Item>
+                        <Pagination.Item><div className={"active div-search-page-number"}>{1}</div></Pagination.Item>
+                        <Pagination.Item><div className={"div-search-next-pagination"}>{">"}</div></Pagination.Item>
                 </Pagination> :
                     // 페이지 개수가 2개 이상일때
                     <Pagination>
-                            <Pagination.Item>
-                                {
-                                    currentPageNumber == firstPageNumber ? <div>{"<"}</div> :
-                                        <Link className={"link-search-pagination"} to={`/search?keyword=${keyword}&pageNum=${currentPageNumber - 1}`}>
-                                            <div>{"<"}</div>
-                                        </Link>
-                                }
-                            </Pagination.Item>
+                        {
+                            currentPageNumber == firstPageNumber ? <div className={"div-search-prev-pagination"}>{"<"}</div> :
+                                <Link className={"link-search-pagination"} to={`/search?keyword=${keyword}&pageNum=${currentPageNumber - 1}`}>
+                                    <div className={"div-search-prev-pagination"}>{"<"}</div>
+                                </Link>
+                        }
                         {
                             pageNumberList.map(item => {
-                                return <Pagination.Item>
-                                    <Link className={"link-search-pagination"} to={`/search?keyword=${keyword}&pageNum=${item}`}>
-                                        <div className={`red${currentPageNumber}` == `red${item}` ? `red${item} active` : `red${item}`}>
+                                return (
+                                    <Link key={item} className={"link-search-pagination"} to={`/search?keyword=${keyword}&pageNum=${item}`}>
+                                        <div className={`red${currentPageNumber}` == `red${item}` ? `red${item} active div-search-page-number` : `red${item} div-search-page-number`}>
                                             {item}
                                         </div>
                                     </Link>
-                                </Pagination.Item>
+                                );
                             })
                         }
-                            <Pagination.Item>
-                                {
-                                    currentPageNumber == lastPageNumber ? <div>{">"}</div> :
-                                        <Link className={"link-search-pagination"} to={`/search?keyword=${keyword}&pageNum=${currentPageNumber + 1}`}>
-                                            <div>{">"}</div>
-                                        </Link>
-                                }
-                            </Pagination.Item>
+                        {
+                            currentPageNumber == lastPageNumber ? <div className={"div-search-next-pagination"}>{">"}</div> :
+                                <Link className={"link-search-pagination"} to={`/search?keyword=${keyword}&pageNum=${currentPageNumber + 1}`}>
+                                    <div className={"div-search-next-pagination"}>{">"}</div>
+                                </Link>
+                        }
                     </Pagination>
             }
         </div>

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import "./SearchOption.css"
+import "./searchCss/SearchOption.css"
 import "../fonts/fontStyle.css"
 
 function SearchOption({funcSearchOption}) {

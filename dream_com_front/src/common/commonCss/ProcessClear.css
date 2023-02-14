@@ -1,0 +1,36 @@
+.signClear{
+    border: 1px solid lightgray;
+    width: 1000px;
+    margin: 50px auto;
+    height: 600px;
+    border-radius: 10px;
+    box-shadow: 1px 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+#signCMain {
+
+    width: 800px;
+    height: 700px;
+    border-top: 1px solid lightgray;
+    margin: 100px auto;
+
+}
+
+.signClearMain {
+    text-align: center;
+
+}
+
+.btnChk {
+
+    margin-top: 70px;
+    display: flex;
+}
+.btnChk :hover{
+
+}
+
+#btnClear {
+    border: none;
+    width: 120px;
+    height: 40px;
+}

@@ -35,8 +35,6 @@ function SearchPageApp() {
         const coms = {
             com: selectedCompanies.join(",")
         }
-        console.log(`minPrice : ${minPrice}`);
-        console.log(`maxPrice : ${maxPrice}`);
         
         let productSearchUrl;
         // 검색옵션에 따라 url 주소값 변경
@@ -148,6 +146,11 @@ function SearchPageApp() {
             });
     }, [searchParams]);
     
+    // 최초 랜더링 시 가장 최상위로 이동
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+    
     return (
         <div className={"container-fluid"}>
             <ClickPrevent isLoading={isLoad} />
@@ -160,7 +163,7 @@ function SearchPageApp() {
                 <SearchMenu keyword={searchParams.get("keyword")} categoryMenu={categoryMenus} companyList={companies}
                             funcUpdateCategory={updateSelectedCategory} funcUpdateCompanies={updateSelectedCompanies}
                             funcUpdateMinPrice={updateMinPrice} funcUpdateMaxPrice={updateMaxPrice}/>
-                <SearchItems searchItemInfo={productInfoList}/>
+                <SearchItems searchItemInfo={productInfoList} />
                 <SearchItemPagination currentPageNumber={currentPageNumber} firstPageNumber={firstPageNumber}
                     lastPageNumber={lastPageNumber} keyword={searchParams.get("keyword")}/>
             </div>

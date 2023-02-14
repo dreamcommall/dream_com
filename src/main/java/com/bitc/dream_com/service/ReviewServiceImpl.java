@@ -26,8 +26,8 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public void insertDetailReview(ReviewDto reviewDto) throws Exception {
-        reviewMapper.insertDetailReview(reviewDto);
+    public int insertDetailReview(ReviewDto reviewDto) throws Exception {
+        return reviewMapper.insertDetailReview(reviewDto);
     }
 
     @Override
@@ -74,5 +74,25 @@ public class ReviewServiceImpl implements ReviewService{
     public Page<ReviewDto> getReviewPaging(int productNum, int pageNum) throws Exception {
         PageHelper.startPage(pageNum, 5);
         return reviewMapper.getReviewPaging(productNum);
+    }
+
+    @Override
+    public List<ReviewDto> noiseMsg() throws Exception {
+        return reviewMapper.noiseMsg();
+    }
+
+    @Override
+    public List<ReviewDto> specMsg() throws Exception {
+        return reviewMapper.specMsg();
+    }
+
+    @Override
+    public List<ReviewDto> packagingMsg() throws Exception {
+        return reviewMapper.packagingMsg();
+    }
+
+    @Override
+    public List<ReviewDto> deliveryMsg() throws Exception {
+        return reviewMapper.deliveryMsg();
     }
 }

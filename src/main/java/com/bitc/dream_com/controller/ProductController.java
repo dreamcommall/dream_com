@@ -44,14 +44,18 @@ public class ProductController {
     }
 
 
-//    상세페이지 상품 정보 불러오기
-//    최종 수정일 2023-01-20
+//    상세페이지 제품 정보 불러오기 / 특정 제품 정보 불러오기
+//    최종 수정일 2023-02-02
 //    최종 작성자 : 양민호
     @RequestMapping(value = "/fullProductInfo", method = RequestMethod.GET)
     public Object fullProductInfo(@RequestParam("productNum") int productNum) throws Exception {
         ProductDto products = productService.productData(productNum);
-
-        return getFullData(products);
+        if(products == null) {
+            return null;
+        }
+        else {
+            return getFullData(products);
+        }
     }
 
 //    클릭 수가 높은 제품 정보 불러오기
@@ -388,7 +392,7 @@ public class ProductController {
     ProductDetail productDetail;
 
     // 제품리스트의 모든 정보 취합 함수
-    public Object getFullData(List<ProductDto> dtoList) throws Exception {
+    public List<ProductDetail> getFullData(List<ProductDto> dtoList) throws Exception {
         List<ProductDetail> fullData = new ArrayList<>();
 
 //        상세 정보 저장
@@ -476,7 +480,7 @@ public class ProductController {
 
 
 //    하나의 제품데이터의 모든 정보 취합 함수 (매개변수만 달라짐)
-    public Object getFullData(ProductDto productDto) throws Exception {
+    public List<ProductDetail> getFullData(ProductDto productDto) throws Exception {
         List<ProductDetail> fullData = new ArrayList<>();
 
 //        상세 정보 저장

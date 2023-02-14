@@ -6,6 +6,9 @@ function Search({keyword}) {
     const [searchKeyword, setSearchKeyword] = useState(""); // 검색키워드
     
     useEffect(() => {
+        if (keyword == undefined) {
+            return;
+        }
         setSearchKeyword(keyword);
     }, [keyword])
     

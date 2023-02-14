@@ -1,7 +1,0 @@
-/* 카테고리별 오른쪽 바둑판 배열에 표시되는 상품명 */
-#p-repeat-category-item-title {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    width: 175px;
-}

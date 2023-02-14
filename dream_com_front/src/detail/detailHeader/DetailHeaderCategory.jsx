@@ -1,5 +1,5 @@
 import React from "react";
-import "./DetailHeaderCategory.css"
+import "../detailCss/DetailHeaderCategory.css"
 import "../../fonts/fontStyle.css"
 
 // 제품의 카테고리를 보여주는 컴포넌트

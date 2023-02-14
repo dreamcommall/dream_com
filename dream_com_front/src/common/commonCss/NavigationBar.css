@@ -1,0 +1,16 @@
+#nav {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 5000;
+}
+
+#span-header-welcome {
+    color: gray;
+}
+
+/* 외부 페이지 이동 링크 */
+.span-header-move-out-link {
+    cursor: pointer;
+}

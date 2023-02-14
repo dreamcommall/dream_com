@@ -1,0 +1,56 @@
+#img-admin-upload-thumbnail-img-file, #img-admin-upload-main-img-file {
+    border: 1px solid lightgrey;
+    margin-bottom: 10px;
+}
+
+#select-admin-category-menu {
+    height: 40px;
+    width: 150px;
+}
+
+#select-admin-company-menu {
+    height: 40px;
+    width: 188px;
+    margin-top: 15px;
+}
+
+#select-admin-add-spec-list {
+    height: 40px;
+    width: 188px;
+    margin-bottom: 18px;
+}
+
+#textarea-admin-product-spec-list {
+    resize : none;
+    width: 400px;
+    height: 150px;
+}
+
+#input-admin-product-title {
+    height: 40px;
+    width: 460px;
+    margin-top: 13px;
+}
+
+#div-admin-product-spec-wrapper {
+    margin-top: 3px;
+    margin-bottom: 12px;
+}
+
+#input-admin-product-spec {
+    height: 40px;
+}
+
+.div-admin-product-information-title-name p {
+    margin-bottom: 27px;
+}
+
+#div-admin-product-price-and-stack-wrapper input {
+    height: 40px;
+}
+
+#div-admin-product-price-and-stack-wrapper select {
+    height: 40px;
+    margin-top: 12px;
+    width: 189px;
+}

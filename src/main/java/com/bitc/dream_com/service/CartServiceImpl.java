@@ -14,25 +14,25 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public void insertCart(CartDto cartDto) throws Exception {
-        testMapper.insertCart(cartDto);
+    public void insertCart(String userId, int productNum, int quantity) throws Exception {
+        testMapper.deleteCart(userId, productNum);
+        testMapper.insertCart(userId, productNum, quantity);
     }
 
     @Override
-    public List<CartDto> selectCart() throws Exception {
-        return testMapper.selectCart();
+    public List<CartDto> selectCart(String userId) throws Exception {
+        return testMapper.selectCart(userId);
     }
 
     @Override
-    public void updateCart(CartDto cartDto) throws Exception {
-        testMapper.updateCart(cartDto);
+    public int updateCart(CartDto cartDto) throws Exception {
+        return testMapper.updateCart(cartDto);
     }
 
     @Override
-    public void deleteCart(CartDto cartdto) throws Exception {
-        testMapper.deleteCart(cartdto);
+    public void deleteCart(String userId, int productNum) throws Exception {
+        testMapper.deleteCart(userId,productNum);
     }
-
 
 
     @Override

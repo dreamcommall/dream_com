@@ -1,0 +1,68 @@
+.div-sign-up-contents-wrapper {
+    margin-left: 75px;
+    display: flex;
+    border-bottom: 1px solid lightgrey;
+    padding: 10px 0px;
+}
+
+.div-sign-up-contents-wrapper div {
+    display: flex;
+    align-items: center;
+}
+
+.div-sign-up-contents-firstDiv {
+    font-family: NanumSquareR;
+    font-size: 18px;
+    width: 200px;
+    margin-left: 75px;
+}
+
+.div-sign-up-contents-secondDiv {
+    width: 300px;
+}
+
+#button-sing-up-user-id-check {
+    width: 100px;
+    margin-left: 10px;
+    border: none;
+    padding: 3px;
+    font-family: NanumSquareR;
+    font-size: 17px;
+}
+
+.button-sing-up-button {
+    width: 100px;
+    margin-left: 10px;
+    border: none;
+    padding: 3px;
+    font-family: NanumSquareR;
+    font-size: 17px;
+}
+
+#button-sing-up-user-id-check:hover, .button-sing-up-button:hover {
+    background-color: #c2c2c2;
+}
+
+#h4-sing-up-header-title {
+    border-bottom: 2px solid black;
+    padding-bottom: 5px;
+    margin-left: 75px;
+}
+
+#div-sing-up-SignUpButton {
+    text-align: end;
+    padding-right: 30px;
+    margin-top: 20px;
+}
+
+#button-sing-up-SignUpButton {
+    width: 150px;
+    height: 40px;
+    font-family: NanumSquareR;
+    font-size: 20px;
+    border: none;
+}
+
+.input-sign-up-address {
+    width: 100%;
+}

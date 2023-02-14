@@ -1,0 +1,81 @@
+.deliveryInformation li{
+    font-size: 14px;
+    color: gray;
+}
+
+.buyProductListThead tr th{
+    font-size: 16px;
+    border: 1px solid gray;
+    border-left: 0;
+    border-right: 0;
+}
+
+.buyProductListTbody tr > td{
+    border: none;
+    height: 175px;
+}
+
+.tableHover:hover{
+    background: #f7f9fa;
+}
+
+.buyProductListTbody img{
+    display: flex;
+    position: absolute;
+    width: 100px;
+    height: 120px;
+    margin-left: 0;
+}
+
+.productInfo{
+    display: block;
+    margin-left: 110px;
+}
+
+.buyProductListTbody ul{
+    list-style: none;
+}
+
+.listStyle{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.orderState button{
+    font-size: 15px;
+    width: 100px;
+    height: 32px;
+    background: white;
+    border: 1px solid #d3d3d3;
+}
+
+.orderState button:hover {
+    background: #e26e6e;
+    color: white;
+}
+
+.accordionButton{
+    width: 100%;
+    height: 30px;
+    background: white;
+    border: 1px solid #d3d3d3;
+    font-size: 15px;
+}
+
+.accordionExample{
+    font-size: 15px;
+}
+
+.accordionButton:hover{
+    background: #e26e6e;
+    color: white;
+}
+.productReview{
+    padding: 5px 5px;
+    overflow: auto;
+    height: 70px;
+}

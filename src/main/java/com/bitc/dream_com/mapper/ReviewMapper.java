@@ -13,7 +13,7 @@ public interface ReviewMapper {
 
     List<ReviewDto> getScore(int productNum) throws Exception;
 
-    void insertDetailReview(ReviewDto reviewDto) throws Exception;
+    int insertDetailReview(ReviewDto reviewDto) throws Exception;
 
     void insertSimpleReview(ReviewDto reviewDto) throws Exception;
 
@@ -31,4 +31,12 @@ public interface ReviewMapper {
     int addLikeCount(int reviewNum) throws Exception;
 
     Page<ReviewDto> getReviewPaging(int productNum) throws Exception;
+
+    List<ReviewDto> noiseMsg() throws Exception;
+
+    List<ReviewDto> specMsg() throws Exception;
+
+    List<ReviewDto> packagingMsg() throws Exception;
+
+    List<ReviewDto> deliveryMsg() throws Exception;
 }

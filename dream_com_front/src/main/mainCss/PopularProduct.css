@@ -1,0 +1,35 @@
+/* 현시간 인기상품 기본 사이즈 및 애니메이션 */
+.div-main-popular-product-wrapper img {
+    scale: 0.9;
+    animation-duration: 0.5s;
+    animation-name: reduceImg;
+}
+
+/* 현시간 인기상품 마우스 올렸을때 애니메이션 */
+.div-main-popular-product-wrapper img:hover {
+    scale: 1.0;
+    animation-duration: 0.5s;
+    animation-name: expandImg;
+}
+
+/* 이미지 확대 애니메이션 */
+@keyframes expandImg {
+    from {
+        scale: 0.9;
+    }
+
+    to {
+        scale: 1.0;
+    }
+}
+
+/* 이미지 축소 애니메이션 */
+@keyframes reduceImg {
+    from {
+        scale: 1.0;
+    }
+
+    to {
+        scale: 0.9;
+    }
+}

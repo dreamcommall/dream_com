@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "../fonts/fontStyle.css"
-import "./RandomSpec.css"
+import "./mainCss/RandomSpec.css"
+import {Link} from "react-router-dom";
 
 // 작성자 : MoonNight285
 // 랜덤으로 추천해줄때 사용되는 문구설정
@@ -14,12 +15,23 @@ const randomSpecComment = [
 // 랜덤으로 견적을 추천해주는 컴포넌트
 function RandomSpec({randomSpec, partNames}) {
     const [randomComment, setRandomComment] = useState("");
-    console.log(randomSpec);
-
+    const [thumbnailImg, setThumbnailImg] = useState(""); // 섬네일 이미지 경로
+    const [productNum, setProductNum] = useState(0); // 제품 번호
+    
     useEffect(() => {
         const randomIdx = Number.parseInt(((Math.random() - 0.1) * (randomSpecComment.length)).toString());
         setRandomComment(randomSpecComment[randomIdx].title);
-    }, [])
+    }, []);
+
+    // 섬네일 이미지 상태 저장
+    useEffect(() => {
+        if (randomSpec[0] == undefined) {
+            return;
+        }
+
+        setThumbnailImg(randomSpec[0].thumbnailImg);
+        setProductNum(randomSpec[0].productNum);
+    }, [randomSpec[0]]);
 
     return (
         <div id={"div-random-spec-wrapper"} className={"me-3"}>
@@ -31,14 +43,16 @@ function RandomSpec({randomSpec, partNames}) {
             </div>
             <h5 className={"text-center mb-4 nanumSquareB-font-XNormal"}>{randomComment} 제품</h5>
             <div className={"d-flex mb-0"}>
-                <img width={225} height={225} className={"ms-4 pe-2"} src={randomSpec.thumbnailImg} />
+                <Link to={`/detail?productNum=${productNum}&pageNum=1`}>
+                    <img width={225} height={225} className={"ms-4 pe-2"} src={thumbnailImg} alt={"이미지를 표시할수 없습니다."} />
+                </Link>
                 <div>
                     <ul className={"mt-2 ps-4"}>
                         {
                             // 추천 제품 스펙부분
                             partNames.map(item => {
                                 return (
-                                    <li>
+                                    <li key={item}>
                                         <div title={item} className={"d-flex align-items-center justify-content-center mb-2 nanumSquareR-font-normal"}>
                                             <p className={"p-random-spec-value"}>{item}</p>
                                         </div>
@@ -54,12 +68,19 @@ function RandomSpec({randomSpec, partNames}) {
                 randomSpec.map(item => {
                     return (
                         <div title={item.productTitle} key={item.key}>
-                            <p id={"p-random-spec-product-title"} className={"mx-4 mt-2 mb-1 nanumSquareR-font-normal"}>{item.productTitle}</p>
+                            <Link to={`/detail?productNum=${productNum}&pageNum=1`}>
+                                <p id={"p-random-spec-product-title"} className={"mx-4 mt-2 mb-1 nanumSquareR-font-normal"}>{item.productTitle}</p>
+                            </Link>
                             <div className={"d-flex mx-4"}>
                                 {
-                                    item.productDiscount == 0 ? <p/> : <p id={"p-random-spec-sale"} className={"me-3 nanumSquareB-font-normal"}>{item.productDiscount}% 할인</p>
+                                    item.productDiscount == 0 ? <p/> : <Link to={`/detail?productNum=${productNum}&pageNum=1`}>
+                                        <p id={"p-random-spec-sale"} className={"me-3 nanumSquareB-font-normal"}>{item.productDiscount}% 할인</p>
+                                    </Link>
                                 }
-                                <p className={"nanumSquareR-font-normal"}>{item.productPrice - ((item.productPrice / 100) * item.productDiscount)}원</p>
+                                <Link to={`/detail?productNum=${productNum}&pageNum=1`}>
+                                    <p id={"p-random-spec-price"} className={"nanumSquareR-font-normal"}>
+                                        {(item.productPrice - ((item.productPrice / 100) * item.productDiscount)).toLocaleString()}원</p>
+                                </Link>
                             </div>
                         </div>
                     );

@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import "../../fonts/fontStyle.css"
-import "./DetailBodyProductReviewContents.css"
+import "../detailCss/DetailBodyProductReviewContents.css"
 
 // 리뷰의 내용을 표시하는 컴포넌트
 function DetailBodyProductReviewContents({reviewData, funcPlusReviewLikeCount}) {
     const [stars, setStars] = useState([]); // 별점
     const [defaultStars, setDefaultStars] = useState([]); // 빈 별점
-    
+
     // 평점을 기반으로 별 개수 생성
     const createStars = () => {
         let temp = [];
@@ -35,6 +35,7 @@ function DetailBodyProductReviewContents({reviewData, funcPlusReviewLikeCount}) 
     }
     
     useEffect(() => {
+        setStars([]);
         createStars();
         createRemindStars();
     }, [reviewData.score]);
@@ -69,7 +70,9 @@ function DetailBodyProductReviewContents({reviewData, funcPlusReviewLikeCount}) 
                 <p className={"nanumSquareR-font-normal"}>{reviewData.content}</p>
             </div>
             <div id={"div-detail-review-photo"}>
-                <p>{reviewData.imgPath}</p>
+                {
+                    reviewData.imgPath.length < 5 ? null : <img width={"20%"} height={"85%"} src={reviewData.imgPath} alt={"이미지를 표시할 수 없습니다."}></img>
+                }
             </div>
             <div className={"d-flex align-items-center mb-3"}>
                 <div onClick={(e) => {funcPlusReviewLikeCount(e.target)}}

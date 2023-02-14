@@ -1,0 +1,90 @@
+#div-detail-product-sub-info {
+    width: 50%;
+    padding: 10px;
+}
+
+#div-detail-product-price-info {
+    background-color: #f2f1f1;
+}
+#div-detail-product-price-info * {
+    margin : 0px;
+}
+
+.div-detail-product-info-underline {
+    border-bottom: 1px solid lightgrey;
+    height: 70px;
+}
+
+.div-detail-product-info-underline * {
+    margin: 0px;
+}
+
+.div-detail-product-info-title {
+    width: 15%;
+}
+
+#div-detail-product-purchase-option {
+    display: flex;
+    border-left: 1px solid lightgray;
+    width: 96%;
+    margin-left: 15px;
+}
+
+#div-detail-product-purchase-option div {
+    width: 33.3%;
+    height: 50px;
+    display: flex;
+    border-width: 1px 1px 1px 0px;
+    border-style: solid;
+    border-color: lightgray;
+    justify-content: center;
+    align-items: center;
+}
+
+#div-detail-product-purchase-option div:hover {
+    cursor: pointer;
+}
+
+#div-detail-product-purchase-option p {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: black;
+}
+
+#inputGroup-detail-product-calculator {
+    width: 25%;
+}
+
+#inputGroup-detail-product-calculator input {
+    background-color: white;
+}
+
+#inputGroup-detail-product-calculator button {
+    width: 40px;
+}
+
+#inputGroup-detail-product-calculator * {
+    font-family: NanumSquareR;
+    font-size: 20px;
+    text-align: center;
+}
+
+#inputGroup-detail-product-calculator button:hover {
+    background-color: #e26e6e;
+}
+
+#span-detail-product-price {
+    color: #e26e6e;
+}
+
+#p-detail-product-sub-discount {
+    color: red;
+}
+
+#p-detail-product-sub-price {
+    text-decoration: line-through;
+}

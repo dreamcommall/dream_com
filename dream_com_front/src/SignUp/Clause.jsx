@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import { Link } from 'react-router-dom'
 
-import "./Clause.css"
+import "./signCss/Clause.css"
 import "../fonts/fontStyle.css"
 
-import SignUpHeader from "./SignUpHeader";
+import NewSignUpHeader from "./NewSignUpHeader";
 
 
 function clause() {
@@ -36,7 +36,6 @@ function clause() {
     };
 
     const ageBtnEvent = () => {
-        console.log(`ageCheck : ${ageCheck}`)
         if (ageCheck === false) {
             setAgeCheck(true)
         } else {
@@ -45,7 +44,6 @@ function clause() {
     };
 
     const useBtnEvent = () => {
-        console.log(`useCheck : ${useCheck}`)
         if (useCheck === false) {
             setUseCheck(true)
         } else {
@@ -54,7 +52,6 @@ function clause() {
     };
 
     const marketingBtnEvent = () => {
-        console.log(`marketingCheck : ${marketingCheck}`)
         if (marketingCheck === false) {
             setMarketingCheck(true)
         } else {
@@ -64,9 +61,6 @@ function clause() {
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        console.log(`ageCheck : ${ageCheck}`)
-        console.log(`useCheck : ${useCheck}`)
-        console.log(`marketingCheck : ${marketingCheck}`)
         if (ageCheck === true && useCheck === true && marketingCheck === true) {
             setAllCheck(true)
         } else {
@@ -76,26 +70,31 @@ function clause() {
 
     return (
         <div>
-            <SignUpHeader/>
+            <NewSignUpHeader pageName={"Clause"}/>
         <div className="container">
             <div className="logo nanumSquareB-font-normal"><h1>회원 약관 동의</h1></div>
             <div className="contents">
                 <div id="div__wrap">
                     <div className="terms__check__all nanumSquareB-font-normal">
                         <input type="checkbox" name="checkAll" id="checkAll" checked={allCheck} onChange={allBtnEvent}/>
-                        <label style={{marginLeft: "10px"}} for=" checkAll">
+                        <label style={{marginLeft: "10px"}} htmlFor=" checkAll">
                             Dream computer 이용약관, 개인정보 수집 및 이용, 프로모션 정보
                             수신(선택)에 모두 동의합니다.</label>
                     </div>
-                    <ul class="terms__list">
-                        <li class="terms__box">
-                            <div class="input__check">
+                    <ul className
+                            ="terms__list">
+                        <li className
+                                ="terms__box">
+                            <div className
+                                     ="input__check">
                                 <input type="checkbox" name="agreement" id="termsOfService" value="termsOfService"
                                        required checked={ageCheck} onChange={ageBtnEvent}/>
-                                <label for="termsOfService" class="required nanumSquareB-font-normal">Dream computer
+                                <label htmlFor="termsOfService" className
+                                    ="required nanumSquareB-font-normal">Dream computer
                                     이용약관 동의</label>
                             </div>
-                            <div class="terms__content">
+                            <div className
+                                     ="terms__content">
                                 여러분을 환영합니다. Dream computer 서비스 및 제품(이하 ‘서비스’)을 이용해
                                 주셔서 감사합니다. 본 약관은 다양한 Dream computer 서비스의 이용과 관련하여
                                 Dream computer 서비스를 제공하는 Dream computer 주식회사(이하 ‘Dream computer ’)와 이를 이용하는
@@ -107,8 +106,10 @@ function clause() {
                                 주시기 바랍니다.
                             </div>
                         </li>
-                        <li class="terms__box">
-                            <div class="input__check">
+                        <li className
+                                ="terms__box">
+                            <div className
+                                     ="input__check">
                                 <input
                                     type="checkbox"
                                     name="agreement"
@@ -116,10 +117,11 @@ function clause() {
                                     value="privacyPolicy"
                                     required
                                     checked={useCheck} onChange={useBtnEvent}/>
-                                <label for="privacyPolicy" className="required nanumSquareB-font-normal">개인정보 수집 및 이용
+                                <label htmlFor="privacyPolicy" className="required nanumSquareB-font-normal">개인정보 수집 및 이용
                                     동의</label>
                             </div>
-                            <div class="terms__content">
+                            <div className
+                                     ="terms__content">
                                 개인정보보호법에 따라 Dream computer에 회원가입 신청하시는 분께 수집하는
                                 개인정보의 항목, 개인정보의 수집 및 이용목적, 개인정보의 보유 및
                                 이용기간, 동의 거부권 및 동의 거부 시 불이익에 관한 사항을 안내
@@ -132,8 +134,10 @@ function clause() {
                             </div>
                         </li>
 
-                        <li class="terms__box">
-                            <div class="input__check">
+                        <li className
+                                ="terms__box">
+                            <div className
+                                     ="input__check">
                                 <input
                                     type="checkbox"
                                     name="agreement"
@@ -141,10 +145,10 @@ function clause() {
                                     value="allowPromotions"
                                     checked={marketingCheck} onChange={marketingBtnEvent}
                                 />
-                                <label for="allowPromotions" className={"nanumSquareB-font-normal"}>프로모션 정보 수신
+                                <label htmlFor="allowPromotions" className={"nanumSquareB-font-normal"}>프로모션 정보 수신
                                     동의</label>
                             </div>
-                            <div class="terms__content">
+                            <div className="terms__content">
                                 Dream computer 에서 제공하는 이벤트/혜택 등 다양한 정보를 휴대전화(Dream computer
                                 알림 또는 문자), 이메일로 받아보실 수 있습니다. 일부 서비스(별도
                                 회원 체계로 운영하거나 Dream computer 가입 이후 추가 가입하여 이용하는
@@ -155,7 +159,7 @@ function clause() {
                         </li>
                     </ul>
 
-                        <Link to={"/signInfomation"}>
+                        <Link to={"/signUp"}>
                             <button className="next-button" style={{fontFamily: "nanumSquareB-font-normal"}}
                                     disabled={ageCheck == true && useCheck == true ? false : true}>확인</button>
                         </Link>

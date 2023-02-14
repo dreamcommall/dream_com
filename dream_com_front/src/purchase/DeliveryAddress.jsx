@@ -8,14 +8,9 @@ const style = {
     form: {width: "700px", marginBottom: "20px"},
 }
 
-function DeliveryAddress(props) {
-    const [addr, setAddr] = useState("");
+function DeliveryAddress({addressList, userInfo}) {
+    const [addr, setAddr] = useState([]);
     const [request, setRequest] = useState("요청사항 없음");
-
-    // 페이지 로딩 시 기본 배송지를 저장
-    useEffect(() => {
-        setAddr(props.item[0].addr);
-    }, []);
 
     // 배송지 설정
     const setAddress = (e) => {
@@ -36,18 +31,25 @@ function DeliveryAddress(props) {
                 <div style={style.padding}>
                     <p><img src={"/images/placeholder.png"} style={{width: "40px"}} />배송지</p>
                     <div style={{paddingLeft: "5px"}}>
-                        <select className={"form-select nanumSquareR-font-normal"} defaultValue={props.item.addr} onChange={setAddress}
-                                style={style.form}>
-                            {props.item.map((item) => {
-                                return (
-                                    <option value={item.addr} key={item.key}>{item.addr}</option>
-                                )
-                            })}
-                        </select>
-                        <p>홍길동 : <span>010-1111-1111</span></p>
+                        {addressList.map(select => {
+                            return (
+                                select.defaultYn == "Y" && (<select className={"form-select nanumSquareR-font-normal"} defaultValue={select.addr} onChange={setAddress} style={style.form} key={select.idx}>
+                                    {addressList.map(option => {
+                                        return (
+                                            option.defaultYn == "Y" ?
+                                                <option value={option.addr} key={option.idx} className={"nanumSquareB-font-normal"}>
+                                                    {option.addr}
+                                                </option>
+                                                : <option value={option.addr} key={option.idx}>{option.addr}</option>
+                                        )
+                                    })}
+                                </select>)
+                            )
+                        })}
+                        <p>{userInfo.userName} : <span>{userInfo.userTel}</span></p>
                         <label htmlFor={"request"} className={"form-label"}>요청사항</label>
-                        <select className={"form-select nanumSquareR-font-normal"} onChange={setReq}
-                                style={style.form}>
+                        <select className={"form-select nanumSquareR-font-normal"} onChange={setReq} id={"select-purchaseRequest"}
+                                style={style.form} defaultValue={"없음"}>
                             <option value={"없음"}>요청사항을 선택해 주세요.</option>
                             <option value={"부재시 문앞에 놓아주세요."}>부재시 문앞에 놓아주세요.</option>
                             <option value={"부재시 경비실에 맡겨주세요."}>부재시 경비실에 맡겨주세요.</option>

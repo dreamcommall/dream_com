@@ -1,5 +1,5 @@
 import React from "react";
-import "./DetailFooterCancelInfo.css"
+import "../detailCss/DetailFooterCancelInfo.css"
 import "../../fonts/fontStyle.css"
 
 // 제품 취소 규정을 테이블로 만들어 보여주는 컴포넌트

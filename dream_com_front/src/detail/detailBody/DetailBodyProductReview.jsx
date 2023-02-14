@@ -1,5 +1,5 @@
 import React from "react";
-import "./DetailBodyProductReview.css"
+import "../detailCss/DetailBodyProductReview.css"
 import Form from 'react-bootstrap/Form';
 import "../../fonts/fontStyle.css"
 

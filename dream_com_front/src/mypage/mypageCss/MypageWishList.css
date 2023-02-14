@@ -1,0 +1,83 @@
+.wishListProductInfo{
+    margin-left: 130px;
+}
+
+.wishListProductInfo a{
+    text-decoration: none;
+    color: black;
+}
+
+.wishListProductInfo a:hover{
+    text-decoration: underline;
+    color: black;
+}
+
+.productDate{
+    color: gray;
+    font-size: 15px;
+}
+
+.wishCheck{
+    width: 15px;
+    height: 15px;
+    accent-color: #e26e6e;
+}
+
+.addWishList{
+    font-weight: bold;
+    width: 150px;
+    height: 50px;
+    border: 1px solid lightgrey;
+    background: white;
+    margin-top: 50px;
+    margin-left: 450px;
+}
+
+.deleteWishList{
+    font-weight: bold;
+    width: 150px;
+    height: 50px;
+    border: 1px solid lightgrey;
+    background: white;
+    margin-left: 40px;
+}
+
+.addWishList:hover{
+    background: #e26e6e;
+    color: white;
+}
+
+.deleteWishList:hover{
+    background: #e26e6e;
+    color: white;
+}
+
+.wishListSection{
+    margin-bottom: 30px;
+}
+
+.tableWishList:hover{
+    background: #f7f9fa;
+}
+
+.tableWishList .wishListSection .wishImg{
+    display: flex;
+    position: absolute;
+    width: 100px;
+    height: 120px;
+    margin-left: 20px;
+}
+
+.mypageWishList{
+   margin-top: 49px;
+}
+.productCompany{
+    margin-top: 3px;
+    font-size: 15px;
+    color: gray;
+}
+.WishListInformation li{
+    margin-top: 1px;
+    color: gray;
+    font-size: 14px;
+}

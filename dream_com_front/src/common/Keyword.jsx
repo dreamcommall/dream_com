@@ -78,10 +78,10 @@ function Keyword() {
     <input type={"text"} style={{paddingRight:"10px", marginLeft:"15px"}} readOnly={true}/>
     </div>
     <div id={"dropList"} className={"col-2 "} style={{marginRight:"20px" , marginTop:"8px", zIndex:"5001"}} >
-            <DropdownButton id="dropdown-basic-button" variant="white" style={{border:"none"}}>
+            <DropdownButton id="dropdown-basic-button" variant="white" style={{border:"none"}} title={"live"}>
 
                 <Dropdown.Header><h6 style={{width : 300}}>실시간 키워드</h6></Dropdown.Header>
-                {listSearch.map(item=> <Dropdown.Item>{item.id} : {item.itemName} <img src={item.image} style={{float:"right"}}/></Dropdown.Item>)}
+                {listSearch.map(item=> <Dropdown.Item key={item.id}> {item.id} : {item.itemName} <img src={item.image} style={{float:"right"}}/></Dropdown.Item>)}
 
 
 

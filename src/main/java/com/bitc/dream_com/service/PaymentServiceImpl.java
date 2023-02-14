@@ -20,19 +20,64 @@ public class PaymentServiceImpl implements PaymentService {
 
 //    결제취소
     @Override
-    public void cancelPayment(String userId, int paymentNum) throws Exception {
-        paymentMapper.cancelPayment(userId, paymentNum);
+    public void cancelPayment(String userId, int paymentNum, int productNum) throws Exception {
+        paymentMapper.cancelPayment(userId, paymentNum, productNum);
     }
 
 //    구매 / 결제완료 (결제내역 추가)
     @Override
-    public void buy(PaymentDto paymentDto) throws Exception {
-        paymentMapper.buy(paymentDto);
+    public int buy(PaymentDto paymentDto) throws Exception {
+        return paymentMapper.buy(paymentDto);
     }
 
 //    전체 결제번호 데이터
     @Override
     public List<PaymentDto> usedNum() throws Exception {
         return paymentMapper.usedNum();
+    }
+
+    @Override
+    public int insertPaymentDetail(int paymentNum, List<Object> details) throws Exception {
+        return paymentMapper.insertPaymentDetail(paymentNum, details);
+    }
+
+    @Override
+    public int minusInventoryQuantity(List<Object> details) throws Exception{
+        return paymentMapper.minusInventoryQuantity(details);
+    }
+
+    @Override
+    public int deleteCart(String userId, List<Object> details) throws Exception {
+        return paymentMapper.deleteCart(userId, details);
+    }
+
+    @Override
+    public List<PaymentDto> getLaterDelivery() throws Exception {
+        return paymentMapper.getLaterDelivery();
+    }
+
+    @Override
+    public void changeState(int paymentNum, int productNum) throws Exception {
+        paymentMapper.changeState(paymentNum, productNum);
+    }
+
+    @Override
+    public List<PaymentDto> getTodayDelivery() throws Exception {
+        return paymentMapper.getTodayDelivery();
+    }
+
+    @Override
+    public int confirmPurchase(int paymentNum, int productNum) throws Exception {
+        return paymentMapper.confirmPurchase(paymentNum, productNum);
+    }
+
+    @Override
+    public int paymentDataQuantity(int paymentNum, int productNum) throws Exception {
+        return paymentMapper.paymentDataQuantity(paymentNum, productNum);
+    }
+
+    @Override
+    public void plusInventoryQuantity(int productNum, int quantity) throws Exception {
+        paymentMapper.plusInventoryQuantity(productNum, quantity);
     }
 }

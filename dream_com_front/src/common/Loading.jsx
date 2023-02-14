@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "./Loading.css"
+import "./commonCss/Loading.css"
 
 // 작성자 : MoonNight285
 // 로딩 이미지를 보여주는 컴포넌트
