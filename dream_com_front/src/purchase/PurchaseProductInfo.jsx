@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "./PurchaseProductInfo.css"
+import "./purchaseCss/PurchaseProductInfo.css"
 
 
 function PurchaseProductInfo(props) {

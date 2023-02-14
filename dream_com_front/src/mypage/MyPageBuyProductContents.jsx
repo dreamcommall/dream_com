@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import "./MyPageBuyProductContents.css";
+import "./mypageCss/MyPageBuyProductContents.css";
 
 function MyPageBuyProductContents({orderInfo, review}) {
     return (

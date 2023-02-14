@@ -1,5 +1,5 @@
 import React from "react";
-import "./MyPageNav.css"
+import "./mypageCss/MyPageNav.css"
 import "../fonts/fontStyle.css"
 import {Link} from "react-router-dom";
 

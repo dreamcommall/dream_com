@@ -7,7 +7,7 @@ import MyPageNav from "./MyPageNav";
 import axios from "axios";
 import ClickPrevent from "../common/ClickPrevent";
 import Loading from "../common/Loading";
-import "./BuyProductList.css";
+import "./mypageCss/BuyProductList.css";
 import {useLocation, useNavigate} from "react-router-dom";
 import ModalFrame from "../reviewModal/ModalFrame";
 import ReviewModalApp from "../reviewModal/ReviewModalApp";

@@ -1,11 +1,11 @@
 import React from "react";
 import Slider from "react-slick";
-import "./slick.css"
-import "./slick-theme.css"
+import "./mainCss/slick.css"
+import "./mainCss/slick-theme.css"
 import PopularProductImg from "./PopularProductImg";
 import PopularProductContents from "./PopularProductContents";
 import "../fonts/fontStyle.css"
-import "./PopularProduct.css"
+import "./mainCss/PopularProduct.css"
 
 // slick 캐러셀 옵션 설정
 const settings = {

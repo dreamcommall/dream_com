@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Link } from 'react-router-dom'
 
-import "./Clause.css"
+import "./signCss/Clause.css"
 import "../fonts/fontStyle.css"
 
 import NewSignUpHeader from "./NewSignUpHeader";

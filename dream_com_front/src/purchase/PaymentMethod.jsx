@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import "./PaymentMethod.css";
+import "./purchaseCss/PaymentMethod.css";
 
 function PaymentMethod({setMethod}) {
     const [box, setBox] = useState(0);

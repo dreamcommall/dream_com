@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import "./TotalScore.css";
+import "./reviewModalCss/TotalScore.css";
 
 function TotalScore(props) {
     // 별 개수

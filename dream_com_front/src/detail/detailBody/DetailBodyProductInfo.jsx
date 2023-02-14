@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import DetailBodyMiniThumbnail from "./DetailBodyMiniThumbnail";
-import "./DetailBodyProductInfo.css"
+import "../detailCss/DetailBodyProductInfo.css"
 import DetailBodyProductSubInfo from "./DetailBodyProductSubInfo";
 
 // 상품의 이미지나 가격정보를 보여주는 컴포넌트

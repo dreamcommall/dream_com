@@ -1,6 +1,6 @@
 import React from "react";
 import "../fonts/fontStyle.css"
-import "./ToTopButton.css"
+import "./commonCss/ToTopButton.css"
 
 // 작성자 : MoonNight285
 // 화면의 최상단으로 올라가는 버튼을 그려주는 컴포넌트

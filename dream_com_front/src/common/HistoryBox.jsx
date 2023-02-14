@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "../fonts/fontStyle.css";
-import "./HistoryBox.css";
+import "./commonCss/HistoryBox.css";
 import {getAllHistory} from "./js/sessionStorageManager";
 import {Link} from "react-router-dom";
 

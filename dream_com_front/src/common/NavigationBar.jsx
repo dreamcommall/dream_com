@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import "../fonts/fontStyle.css";
 import Form from "react-bootstrap/Form";
-import "./NavigationBar.css";
+import "./commonCss/NavigationBar.css";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 

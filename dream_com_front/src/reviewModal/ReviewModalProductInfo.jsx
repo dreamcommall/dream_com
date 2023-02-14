@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import "./ReviewModalProductInfo.css";
+import "./reviewModalCss/ReviewModalProductInfo.css";
 import axios from "axios";
 
 function ReviewModalProductInfo({productInfo}) {

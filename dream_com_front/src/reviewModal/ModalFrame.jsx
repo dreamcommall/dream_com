@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import "./ModalFrame.css";
+import "./reviewModalCss/ModalFrame.css";
 
 function ModalFrame(props) {
     // 모달창 열고난 후 외부 스크롤 작동 막기

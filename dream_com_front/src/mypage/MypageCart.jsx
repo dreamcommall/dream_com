@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "./MypageCart.css"
+import "./mypageCss/MypageCart.css"
 import axios from "axios";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 

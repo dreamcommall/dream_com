@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import "./FindId.css";
-import "./FindIdSuccess.css";
+import "./findIdCss/FindId.css";
+import "./findIdCss/FindIdSuccess.css";
 import ClickPrevent from "../common/ClickPrevent";
 import Loading from "../common/Loading";
 import axios from "axios";

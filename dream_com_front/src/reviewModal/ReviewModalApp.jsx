@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "./ReviewModalApp.css";
+import "./reviewModalCss/ReviewModalApp.css";
 import ReviewModalProductInfo from "./ReviewModalProductInfo";
 import TotalScore from "./TotalScore";
 import SimpleReview from "./SimpleReview";

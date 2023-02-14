@@ -1,5 +1,5 @@
 import React from "react";
-import "./SignUpHeader.css";
+import "./signCss/SignUpHeader.css";
 import SignMainLogo from "../SignMainLogo.png"
 import "../fonts/fontStyle.css";
 import {useLocation} from "react-router-dom";

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "./SimpleReview.css";
+import "./reviewModalCss/SimpleReview.css";
 import axios from "axios";
 
 function SimpleReview(props) {

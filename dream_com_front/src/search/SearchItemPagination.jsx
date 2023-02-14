@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Pagination from 'react-bootstrap/Pagination';
-import "./SearchItemPagination.css"
+import "./searchCss/SearchItemPagination.css"
 import {Link} from "react-router-dom";
 
 function SearchItemPagination({currentPageNumber, firstPageNumber, lastPageNumber, keyword}) {

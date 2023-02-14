@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import "./ReviewDetailContent.css";
+import "./reviewModalCss/ReviewDetailContent.css";
 
 function ReviewDetailContent(props) {
     // 입력한 길이 저장할 state

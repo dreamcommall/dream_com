@@ -1,6 +1,6 @@
 import React from "react";
 import "../fonts/fontStyle.css"
-import "./NewMypageHeader.css"
+import "./mypageCss/NewMypageHeader.css"
 import {Link} from "react-router-dom";
 
 function NewMypageHeader() {

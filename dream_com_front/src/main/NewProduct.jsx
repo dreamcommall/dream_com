@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import Slider from "react-slick";
-import "./slick.css"
-import "./slick-theme.css"
+import "./mainCss/slick.css"
+import "./mainCss/slick-theme.css"
 import NewProductContents from "./NewProductContents";
 import "../fonts/fontStyle.css"
-import "./NewProduct.css"
+import "./mainCss/NewProduct.css"
 
 // 작성자 : MoonNight285
 // slick 캐러셀 옵션 설정

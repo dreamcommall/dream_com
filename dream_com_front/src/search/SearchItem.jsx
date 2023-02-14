@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "../fonts/fontStyle.css"
 import {Link, useLocation} from "react-router-dom";
-import "./SearchItem.css"
+import "./searchCss/SearchItem.css"
 
 function SearchItem({searchItemInfo}) {
     const [stars, setStars] = useState([]);

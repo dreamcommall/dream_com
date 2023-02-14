@@ -1,6 +1,6 @@
 import React from "react";
 import "../fonts/fontStyle.css"
-import "./PopularProductContents.css"
+import "./mainCss/PopularProductContents.css"
 import {Link} from "react-router-dom";
 
 // 작성자 : MoonNight285

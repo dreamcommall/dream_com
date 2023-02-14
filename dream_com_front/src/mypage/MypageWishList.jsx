@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "./MypageWishList.css"
+import "./mypageCss/MypageWishList.css"
 import axios from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
 

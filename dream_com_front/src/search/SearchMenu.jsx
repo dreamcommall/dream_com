@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "../fonts/fontStyle.css"
 import Button from 'react-bootstrap/Button'
-import "./SearchMenu.css"
+import "./searchCss/SearchMenu.css"
 import {Link, useNavigate} from "react-router-dom";
 
 // 제조사 체크박스 선택부분에 버그가 존재

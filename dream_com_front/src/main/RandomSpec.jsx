@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "../fonts/fontStyle.css"
-import "./RandomSpec.css"
+import "./mainCss/RandomSpec.css"
 import {Link} from "react-router-dom";
 
 // 작성자 : MoonNight285

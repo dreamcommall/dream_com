@@ -1,6 +1,6 @@
 import React from "react";
 import "../fonts/fontStyle.css"
-import "./NewSignUpHeader.css"
+import "./signCss/NewSignUpHeader.css"
 import {Link} from "react-router-dom";
 
 function NewSignUpHeader({pageName}) {

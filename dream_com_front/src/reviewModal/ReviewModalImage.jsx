@@ -1,5 +1,5 @@
 import React from "react";
-import "./ReviewModalImage.css";
+import "./reviewModalCss/ReviewModalImage.css";
 
 function ReviewModalImage({setImgPath, previewImg}) {
     return (

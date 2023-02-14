@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "./DetailBodyProductInfoSummary.css"
+import "../detailCss/DetailBodyProductInfoSummary.css"
 
 // 제품의 정보를 표시해주는 컴포넌트(하단에 위치)
 function DetailBodyProductInfoSummary({productInfo}) {

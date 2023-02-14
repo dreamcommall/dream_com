@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "./FindPw.css"
+import "./findIdCss/FindPw.css"
 import axios from "axios";
 import HeaderD from "../common/HeaderD";
 import NavigationBar from "../common/NavigationBar";

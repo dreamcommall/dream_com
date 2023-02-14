@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "./DetailBodyProductSubInfo.css"
+import "../detailCss/DetailBodyProductSubInfo.css"
 import "../../fonts/fontStyle.css"
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';

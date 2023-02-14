@@ -4,9 +4,7 @@ import MainPageApp from "./main/MainPageApp";
 import SearchPageApp from "./search/SearchPageApp";
 import PurchaseApp from "./purchase/PurchaseApp";
 import DetailApp from "./detail/DetailApp";
-import SignInfomation from "./common/SignInfomation";
 import Clause from "./SignUp/Clause";
-import LoginChk from "./LoginChk";
 import Login from "./login/Login";
 import FindId from "./findId/FindId";
 import FindPw from "./findId/FindPw";
@@ -37,14 +35,12 @@ function DreamComRouter() {
                 <Route path={"/error?"} element={<ErrorPageApp />} />
                 <Route path={"/purchase?"} element={<PurchaseApp />}></Route>
                 <Route path={"/clause"} element={<Clause />}></Route>
-                <Route path={":informationName"} element={<SignInfomation />}></Route>
                 <Route path={"/clearTitle/:titleNames"} element={<ProcessClear />}></Route>
                 <Route path={"/login?"} element={<Login />}></Route>
                 <Route path={"/findId"} element={<FindId />}></Route>
                 <Route path={"/findPw"} element={<FindPw />}></Route>
                 <Route path={"/changePw/:url"} element={<ChangePwPage />}></Route>
                 <Route path={"/findPwSuccess"} element={<ChangePwPage />}></Route>
-                <Route path={"/idchk"} element={<LoginChk />}></Route>
                 <Route path={"/detail"} element={<DetailApp />} />
                 <Route path={"/error"} element={<ErrorPageApp />} />
                 <Route path={"/mypage/order"} element={<Mypage />}></Route>

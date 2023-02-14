@@ -7,7 +7,7 @@ import Footer from "../common/Footer";
 import {Link, useParams} from "react-router-dom";
 import axios from "axios";
 import ErrorPageApp from "../common/ErrorPage/ErrorPageApp";
-import "./ChangePwPage.css";
+import "./findIdCss/ChangePwPage.css";
 
 function ChangePwPage() {
     // 로딩창

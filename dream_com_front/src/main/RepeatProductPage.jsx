@@ -2,7 +2,7 @@ import React from "react";
 import {Carousel} from "react-bootstrap";
 import "../fonts/fontStyle.css"
 import RepeatProductContents from "./RepeatProductContents";
-import "./RepeatProductPage.css"
+import "./mainCss/RepeatProductPage.css"
 import {Link} from "react-router-dom";
 
 // 작성자 : MoonNight285

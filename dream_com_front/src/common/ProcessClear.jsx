@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import "./ProcessClear.css"
+import "./commonCss/ProcessClear.css"
 import imgChk from "../chk240.png"
 import "../fonts/fontStyle.css"
 import SignUpHeader from "../SignUp/SignUpHeader";
@@ -79,11 +79,6 @@ function ProcessClear() {
                         </div>
                         <h1>{profile.mainText}</h1>
                         <h6>{profile.subText}</h6>
-
-                        {/*<h1 className={"nanumSquareR-font-XXLarge"}>회원가입이<span*/}
-                        {/*    style={{color: "#e26e6e"}}> 완료</span> 되었습니다</h1>*/}
-                        {/*<h6 className={"nanumSquareR-font-small"}>Dream Computer 홈페이지에 가입해 주셔서 감사합니다</h6>*/}
-                        {/*<h6 className={"nanumSquareR-font-small"}>로그인 후 다양한 서비스를 사용하실 수 있습니다</h6>*/}
                     </div>
                     <div style={{borderTop: "1px solid lightgray", marginTop: "30px"}}></div>
                     <div className={"btnChk"}>

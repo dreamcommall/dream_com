@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Pagination from 'react-bootstrap/Pagination';
-import "./DetailBodyReviewPagination.css"
+import "../detailCss/DetailBodyReviewPagination.css"
 import {Link} from "react-router-dom";
 
 function DetailBodyReviewPagination({currentPageNumber, firstPageNumber, lastPageNumber, productNumber}) {

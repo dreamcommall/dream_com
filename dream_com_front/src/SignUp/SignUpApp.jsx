@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import SignUpMain from "./SignUpMain";
 import SignUpUpperContents from "./SignUpUpperContents";
-import "./SignUpApp.css";
+import "./signCss/SignUpApp.css";
 import "../fonts/fontStyle.css"
 import NewSignUpHeader from "./NewSignUpHeader";
 import axios from "axios";

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import UnderLine from "./UnderLine";
-import "./ErrorPageApp.css"
+import "../commonCss/ErrorPageApp.css"
 import Button from "react-bootstrap/Button";
 import {useSearchParams} from "react-router-dom";
 

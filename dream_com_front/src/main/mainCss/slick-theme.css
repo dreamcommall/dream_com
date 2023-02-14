@@ -33,24 +33,24 @@
 }
 
 .slick-prev {
-    background: url("../images/arrow-left.png") no-repeat;
+    background: url("../../images/arrow-left.png") no-repeat;
     opacity: .4;
 }
 
 .slick-next {
-    background: url("../images/arrow-right.png") no-repeat;
+    background: url("../../images/arrow-right.png") no-repeat;
     opacity: .4;
 }
 
 .slick-next:hover,
 .slick-next:focus {
-    background: url("../images/arrow-right-hover.png");
+    background: url("../../images/arrow-right-hover.png");
     opacity: 1;
 }
 
 .slick-prev:hover,
 .slick-prev:focus {
-    background: url("../images/arrow-left-hover.png");
+    background: url("../../images/arrow-left-hover.png");
     opacity: 1;
 }
 
