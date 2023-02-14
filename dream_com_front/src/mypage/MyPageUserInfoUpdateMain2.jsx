@@ -16,19 +16,19 @@ function MyPageUserInfoUpdateMain2({userInfo,setUserInfo}) {
             <div className={"div-sign-up-contents-wrapper"}>
                 <div className={"div-sign-up-contents-firstDiv"}>이름</div>
                 <div className={"div-sign-up-contents-secondDiv"}>
-                    <input type={"text"} value={userInfo.userName} onChange={nameHandleChange}/>
+                    <input type={"text"} defaultValue={userInfo.userName} onChange={nameHandleChange}/>
                 </div>
             </div>
             <div className={"div-sign-up-contents-wrapper"}>
                 <div className={"div-sign-up-contents-firstDiv"}>아이디</div>
                 <div className={"div-sign-up-contents-secondDiv"}>
-                    <input id={"input-sing-up-user-id"} type={"text"} value={userInfo.userId}/>
+                    <input id={"input-sing-up-user-id"} type={"text"} defaultValue={userInfo.userId}/>
                 </div>
             </div>
             <div className={"div-sign-up-contents-wrapper"}>
                 <div className={"div-sign-up-contents-firstDiv"}>비밀번호</div>
-                <div className={"div-sign-up-contents-secondDiv"} onChange={passwordHandleChange}>
-                    <input type={"password"}/>
+                <div className={"div-sign-up-contents-secondDiv"} >
+                    <input type={"password"} onChange={passwordHandleChange} />
                 </div>
             </div>
             <div className={"div-sign-up-contents-wrapper"}>

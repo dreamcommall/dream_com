@@ -14,7 +14,7 @@ function MyPageUserInfoUpdate() {
     const [isLoad, setIsLoad] = useState(false); // 로딩창
 
     // 유저 아이디
-    const [userId, setUserId] = useState(null);
+    const [userId, setUserId] = useState("");
     // 비밀번호
     const [userPw, setUserPw] = useState("");
     // 이름
@@ -35,7 +35,7 @@ function MyPageUserInfoUpdate() {
     // SignUpMain
     const setUserInfo = {
         setUserTel: setUserTel, setUserPost: setUserPost, setUserPw: setUserPw,
-        setUserAddr: setUserAddr, setUserEctAddr: setUserEctAddr, setUserName: setUserName, setUserPost: setUserPost
+        setUserAddr: setUserAddr, setUserEctAddr: setUserEctAddr, setUserName: setUserName
     }
 
     const userInfo = {
@@ -62,6 +62,9 @@ function MyPageUserInfoUpdate() {
     }, [])
 
     useEffect(() => {
+        if(userId === "") {
+            return;
+        }
         axios.get('http://localhost:8080/getUserInfo', {
             params: {
                 userId: userId
@@ -94,10 +97,9 @@ function MyPageUserInfoUpdate() {
                     userPw: userPw,
                     userName: userName,
                     userPost: userPost,
-                    userAddr: userAddr,
+                    userAddr: userAddr + " "  + userEctAddr,
                     userTel: userTel,
                     userEmail: userEmail,
-                    userEctAddr:userEctAddr
                 }
             }
         )

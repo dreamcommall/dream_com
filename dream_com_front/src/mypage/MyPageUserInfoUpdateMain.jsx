@@ -47,14 +47,14 @@ function MyPageUserInfoUpdateMain({userInfo,setUserInfo}) {
             <div className={"div-sign-up-contents-wrapper"}>
                 <div className={"div-sign-up-contents-firstDiv"}>휴대전화</div>
                 <div className={"div-sign-up-contents-secondDiv"}>
-                    <input type={"text"} value={userInfo.userTel} onChange={telHandleChange}/>
+                    <input type={"text"} defaultValue={userInfo.userTel} onChange={telHandleChange}/>
                 </div>
             </div>
             <div className={"div-sign-up-contents-wrapper"}>
                 <div className={"div-sign-up-contents-firstDiv"}>이메일</div>
                 <div id={"div-sign-up-email-content"} className={"row"}>
                     <div className={"pb-2"}>
-                        <input type={"text"} value={userInfo.userEmail} readOnly={true}/>
+                        <input type={"text"} defaultValue={userInfo.userEmail} readOnly={true}/>
                         <button className={"button-sing-up-button"}>메일 전송</button>
                     </div>
                     <div>
@@ -66,7 +66,7 @@ function MyPageUserInfoUpdateMain({userInfo,setUserInfo}) {
             <div className={"div-sign-up-contents-wrapper"}>
                 <div className={"div-sign-up-contents-firstDiv"}>우편번호</div>
                 <div className={"div-sign-up-contents-secondDiv"}>
-                    <input type={"number"} readOnly={true} value={userInfo.userPost}/>
+                    <input type={"number"} readOnly={true} defaultValue={userInfo.userPost}/>
                     <button className={"button-sing-up-button"} onClick={postPopUpOpen}>우편번호</button>
                 </div>
             </div>
@@ -74,10 +74,11 @@ function MyPageUserInfoUpdateMain({userInfo,setUserInfo}) {
                 <div className={"div-sign-up-contents-firstDiv"}>주소</div>
                 <div id={"div-sign-up-email-content"} className={"row"}>
                     <div className={"pb-2"}>
-                        <input className={"input-sign-up-address"} type={"text"} readOnly={true} value={userInfo.userAddr} placeholder={"주소"} />
+                        <input className={"input-sign-up-address"} type={"text"} readOnly={true} defaultValue={userInfo.userAddr} placeholder={"주소"} />
                     </div>
                     <div>
-                        <input className={"input-sign-up-address"} type={"text"} placeholder={"상세주소"} value={userInfo.userEctAddr}/>
+                        <input className={"input-sign-up-address"} type={"text"} placeholder={"상세주소"}
+                               value={userInfo.userEctAddr} onChange={ectAddrHandleChange}/>
                     </div>
                 </div>
             </div>
