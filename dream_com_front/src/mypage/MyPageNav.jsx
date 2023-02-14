@@ -10,7 +10,7 @@ function MyPageNav({menu}) {
             <Link to={"/mypage/order"}><p className={menu == "order" ? "active" : ""}>주문배송 & 구매내역</p></Link>
             <Link to={"/mypage/wishList"}><p className={menu == "wishList" ? "active" : ""}>찜목록</p></Link>
             <Link to={"/mypage/cart"}><p className={menu == "cart" ? "active" : ""}>장바구니</p></Link>
-            <p className={menu == "userEdit" ? "active" : ""}>개인정보수정</p>
+            <Link to={"/mypage/updateUserInfo"}><p className={menu == "userEdit" ? "active" : ""}>개인정보수정</p></Link>
         </div>
     );
 }
