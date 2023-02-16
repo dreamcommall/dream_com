@@ -20,7 +20,7 @@ function NavigationBar() {
     // 서버에게 현재 로그인한 유저를 요청합니다.
     // 없는경우 null이 반환됩니다.
     useEffect(() => {
-        axios.post("http://localhost:8080/loginUserId", null, {params : {
+        axios.post("/loginUserId", null, {params : {
             userUUID : sessionStorage.getItem("loginUUID"),
             autoUserUUID : localStorage.getItem("autoLoginUUID")
         }}).then(response => {
@@ -47,7 +47,7 @@ function NavigationBar() {
 
     // 로그아웃 후 정상적으로 로그아웃이 진행되었다면 세션,로컬 스토리지에 있는 UUID를 제거한다.
     const logout = () => {
-        axios.post("http://localhost:8080/logout", null, {params : {
+        axios.post("/logout", null, {params : {
             userUUID : sessionStorage.getItem("loginUUID"),
             autoUserUUID : localStorage.getItem("autoLoginUUID")
             }}).then(response => {

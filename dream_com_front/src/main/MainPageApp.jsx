@@ -34,7 +34,7 @@ function MainPageApp() {
 
             setIsLoad(true);
             // 카테고리 별 상품목록을 서버에서 가져오기
-            axios.get("http://localhost:8080/categoryProduct")
+            axios.get("/categoryProduct")
                 .then(response => {
                     temp = response.data;
                     setRepeatContentList(temp);
@@ -55,7 +55,7 @@ function MainPageApp() {
         let tempNewProductList = []; // 신상품 목록 복사본 배열
 
         // 현시간 인기상품 정보를 받아오기
-        await axios.get("http://localhost:8080/topClickedProduct")
+        await axios.get("/topClickedProduct")
             .then(response => {
                 tempPopularProductList = response.data;
                 setPopularProductList(tempPopularProductList);
@@ -66,7 +66,7 @@ function MainPageApp() {
             });
 
         // 랜덤 추천 견적 정보를 불러오기
-        await axios.get("http://localhost:8080/getRandomProduct")
+        await axios.get("/getRandomProduct")
             .then(response => {
                 tempRandomSpec = response.data;
                 setRandomSpec(tempRandomSpec);
@@ -78,7 +78,7 @@ function MainPageApp() {
             });
 
         // 신상품 목록을 조회한다.
-        await axios.get("http://localhost:8080/getRecentProduct")
+        await axios.get("/getRecentProduct")
             .then(response => {
                 tempNewProductList = response.data;
                 setNewProductList(tempNewProductList);
@@ -89,7 +89,7 @@ function MainPageApp() {
             });
 
         // 자동 로그인을 실행합니다.
-        await axios.post("http://localhost:8080/autoLogin", null, {params : {
+        await axios.post("/autoLogin", null, {params : {
                 autoUserUUID : localStorage.getItem("autoLoginUUID")
             }}).then(response => {
                 console.log(response.data);

@@ -15,7 +15,7 @@ function MypageCart() {
     const navigate = useNavigate();
     // userId 별로 장바구니 불러오기
     useEffect(() => {
-        axios.post("http://localhost:8080/loginUserId", null, {
+        axios.post("/loginUserId", null, {
             params: {
                 userUUID: sessionStorage.getItem("loginUUID"),
                 autoUserUUID: localStorage.getItem("autoLoginUUID")
@@ -44,7 +44,7 @@ function MypageCart() {
         if(userId == null){
             return ;
         }
-        axios.get("http://localhost:8080/selectCart", {
+        axios.get("/selectCart", {
             params: {
                 userId: userId
             }
@@ -81,7 +81,7 @@ function MypageCart() {
             document.getElementById(id).value = parseInt(document.getElementById(id).value) + 1
 
 
-            axios.post("http://localhost:8080/updateCart", null, {
+            axios.post("/updateCart", null, {
                 params: {
                     userId: userId,
                     quantity: parseInt(document.getElementById(id).value),
@@ -108,7 +108,7 @@ function MypageCart() {
         } else {
             document.getElementById(id).value = parseInt(document.getElementById(id).value) - 1
 
-            axios.post("http://localhost:8080/updateCart", null, {
+            axios.post("/updateCart", null, {
                 params: {
                     userId: userId,
                     quantity: parseInt(document.getElementById(id).value),
@@ -133,7 +133,7 @@ function MypageCart() {
             }
         }
 
-        axios.post("http://localhost:8080/deleteCart", null, {
+        axios.post("/deleteCart", null, {
             params: {
                 userId: userId,
                 productNum: productNum.join()

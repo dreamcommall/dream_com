@@ -51,7 +51,7 @@ function SignUpMain({signUpMainProps, setIsLoad}) {
             alert("이메일 형식이 아닙니다.");
             setIsLoad(false);
         } else {
-            await axios.post("http://localhost:8080/sendEmail", null, {params: {email: signUpMainProps.userEmail}})
+            await axios.post("/sendEmail", null, {params: {email: signUpMainProps.userEmail}})
                 .then(req => {
                     alert("메일이 발송되었습니다.");
                     setUniqueId(req.data);
@@ -74,7 +74,7 @@ function SignUpMain({signUpMainProps, setIsLoad}) {
             alert("메일 전송 과정 중 문제가 발생했습니다.");
             setIsLoad(false);
         } else {
-            axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: chkNumber, uniqueId: uniqueId}})
+            axios.post("/EmailChk", null, {params: {chkNumber: chkNumber, uniqueId: uniqueId}})
                 .then(req => {
                     if(req.data === 1) {
                         alert("인증이 완료되었습니다.");

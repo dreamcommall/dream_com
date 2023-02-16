@@ -50,7 +50,7 @@ function SignUpApp() {
     
     // 아이디 중복 체크 실행
     const checkIdOverlap = (targetId) => {
-        axios.post("http://localhost:8080/idChk", null, {params : {userId : targetId}})
+        axios.post("/idChk", null, {params : {userId : targetId}})
             .then(response => {
                 if (response.data == 1) {
                     alert("이미 사용중인 아이디입니다.");
@@ -75,7 +75,7 @@ function SignUpApp() {
         } else if (signUserPw !== pwdChk) {
             alert("비밀번호가 일치하지 않습니다.");
         } else {
-            axios.put("http://localhost:8080/join", null,
+            axios.put("/join", null,
                 {params: {
                         userId: signUserId,
                         userName: signUserName,

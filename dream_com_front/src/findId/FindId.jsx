@@ -65,7 +65,7 @@ function FindId(){
         }
         else {
             setIsLoad(true);
-            await axios.post("http://localhost:8080/findIdPageCheckSignedInfo", null,
+            await axios.post("/findIdPageCheckSignedInfo", null,
                 {params: {userEmail: email, userName: userName}})
                 .then(req => {
                     if(req.data === 0) {
@@ -90,7 +90,7 @@ function FindId(){
         if(chkNumber === "") {
             alert("인증코드를 입력하세요")
         } else {
-            await axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: chkNumber, uniqueId: uniqueId}})
+            await axios.post("/EmailChk", null, {params: {chkNumber: chkNumber, uniqueId: uniqueId}})
                 .then(req => {
                     if(req.data === 1) {
                         setCheck(true);
@@ -124,7 +124,7 @@ function FindId(){
 
     // 이메일 보내기
     const sendMailAxios = async () => {
-        await axios.post("http://localhost:8080/sendEmail", null, {params: {email: email}})
+        await axios.post("/sendEmail", null, {params: {email: email}})
             .then(req => {
                 alert("이메일 전송이 완료되었습니다.");
                 setUniqueId(req.data);
@@ -138,7 +138,7 @@ function FindId(){
     // 아이디 정보 가져오기
     const getId = async () => {
         setIsLoad(true);
-        await axios.post("http://localhost:8080/getSignedId", null, {params: {userEmail: email, userName: userName}})
+        await axios.post("/getSignedId", null, {params: {userEmail: email, userName: userName}})
             .then(req => {
                 const temp = req.data;
                 setUserIdList(temp);

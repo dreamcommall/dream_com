@@ -26,7 +26,7 @@ function Mypage() {
     // 서버에게 환불요청을 한 후 데이터 재 로딩
     const requestCancel = (paymentNumber, productNumber) => {
         setIsLoad(true);
-        axios.put("http://localhost:8080/cancelPayment", null, {params : {
+        axios.put("/cancelPayment", null, {params : {
                 userId : loginUserId, paymentNum : paymentNumber, productNum : productNumber
             }}).then(response => {
             if (response.data == "취소 완료") {
@@ -44,7 +44,7 @@ function Mypage() {
     // 서버에게 구매확정을 요청후 데이터 재 로딩
     const updatePurchaseConfirm = (paymentNumber, productNumber) => {
         setIsLoad(true);
-        axios.post("http://localhost:8080/confirmPurchase", null, {params : {paymentNum : paymentNumber,
+        axios.post("/confirmPurchase", null, {params : {paymentNum : paymentNumber,
             productNum : productNumber}})
             .then(response => {
                 if (response.data == 1) {
@@ -132,7 +132,7 @@ function Mypage() {
     
     // 서버에게 현재 로그인 한 유저의 아이디를 요청
     const getLoginUserId = () => {
-        axios.post("http://localhost:8080/loginUserId", null, {params : {
+        axios.post("/loginUserId", null, {params : {
                 userUUID : sessionStorage.getItem("loginUUID"),
                 autoUserUUID : localStorage.getItem("autoLoginUUID")
             }}).then(response => {
@@ -155,7 +155,7 @@ function Mypage() {
     
     // 서버에게 주문내역을 요청
     const getOrderList = () => {
-        axios.get("http://localhost:8080/paymentData", {params : {userId : loginUserId}})
+        axios.get("/paymentData", {params : {userId : loginUserId}})
             .then(response => {
                 setOrderList(response.data);
             }).catch(err => {
@@ -166,7 +166,7 @@ function Mypage() {
     
     // 서버에게 로그인 한 유저가 작성한 리뷰 목록을 요청
     const getUserReview = () => {
-        axios.get("http://localhost:8080/userReview", {params : {userId : loginUserId}})
+        axios.get("/userReview", {params : {userId : loginUserId}})
             .then(response => {
                 setReviews(response.data);
                 setIsLoad(false);

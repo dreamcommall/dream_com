@@ -39,9 +39,9 @@ function SearchPageApp() {
         let productSearchUrl;
         // 검색옵션에 따라 url 주소값 변경
         if (isSearchAll == true) {
-            productSearchUrl = "http://localhost:8080/searchProduct";
+            productSearchUrl = "/searchProduct";
         } else {
-            productSearchUrl = "http://localhost:8080/searchDiscountProduct";
+            productSearchUrl = "/searchDiscountProduct";
         }
         
         // 서버에게 검색한 키워드를 기반으로 데이터를 조회를 요청한다.
@@ -73,7 +73,7 @@ function SearchPageApp() {
             });
         
         // 서버에게 저장된 카테고리를 요청한다.
-        await axios.get("http://localhost:8080/type")
+        await axios.get("/type")
             .then(response => {
                 setCategoryMenus(response.data);
             })
@@ -128,7 +128,7 @@ function SearchPageApp() {
         }
         
         setIsLoad(true);
-        axios.get("http://localhost:8080/company", {params : {type : selectedCategory}})
+        axios.get("/company", {params : {type : selectedCategory}})
             .then(response => {
                 setCompanies(response.data);
                 setIsLoad(false);

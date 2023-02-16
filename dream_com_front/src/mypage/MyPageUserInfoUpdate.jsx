@@ -44,7 +44,7 @@ function MyPageUserInfoUpdate() {
     }
 
     useEffect(() => {
-        axios.post("http://localhost:8080/loginUserId", null, {
+        axios.post("/loginUserId", null, {
             params: {
                 userUUID: sessionStorage.getItem("loginUUID"),
                 autoUserUUID: localStorage.getItem("autoLoginUUID")
@@ -65,7 +65,7 @@ function MyPageUserInfoUpdate() {
         if(userId === "") {
             return;
         }
-        axios.get('http://localhost:8080/getUserInfo', {
+        axios.get('/getUserInfo', {
             params: {
                 userId: userId
             }
@@ -91,7 +91,7 @@ function MyPageUserInfoUpdate() {
         console.log(userPost);
         console.log(userTel)
 
-        axios.put('http://localhost:8080/updateProfile', null, {
+        axios.put('/updateProfile', null, {
                 params: {
                     userId: userId,
                     userPw: userPw,

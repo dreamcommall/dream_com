@@ -102,7 +102,7 @@ function Login(){
     // 로그인 진행
     const LoginChk = async () => {
         let flag = false;
-        await axios.post('http://localhost:8080/loginChk',null,{
+        await axios.post('/loginChk',null,{
             params:{
                 userId:userId,
                 userPw:userPw,
@@ -134,7 +134,7 @@ function Login(){
     // 로그인 후 유저아이디 취득
     const getUserId = async () => {
         let flag = false;
-        await axios.post("http://localhost:8080/loginUserId", null,
+        await axios.post("/loginUserId", null,
             {params : {userUUID : sessionStorage.getItem("loginUUID"),
                     autoUserUUID : localStorage.getItem("autoLoginUUID")}})
             .then(response => {
@@ -151,7 +151,7 @@ function Login(){
     
     // 로그인 후 유저의 권한을 얻어오고 만약 관리자라면 관리자 페이지로 이동시킨다.
     const getAuthorization = () => {
-        axios.get("http://localhost:8080/user/authorization", {params : {userUUID : sessionStorage.getItem("loginUUID"),
+        axios.get("/user/authorization", {params : {userUUID : sessionStorage.getItem("loginUUID"),
                 autoUserUUID : localStorage.getItem("autoLoginUUID")}})
             .then(response => {
                 moveDestination(response.data);

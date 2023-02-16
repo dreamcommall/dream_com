@@ -27,7 +27,7 @@ function DetailApp() {
     // 현재 페이지에서 보고있는 제품을 내 찜목록에 추가한다.
     const addWishList = (userId, productNumber) => {
         setIsLoad(true);
-        axios.put("http://localhost:8080/updateWishList", null, {params : {userId : userId, productNum : productNumber}})
+        axios.put("/updateWishList", null, {params : {userId : userId, productNum : productNumber}})
             .then(response => {
                 if (response.data == "찜목록 업데이트 완료") {
                     setIsLoad(false);
@@ -43,7 +43,7 @@ function DetailApp() {
     // 현재 페이지에서 보고있는 제품을 장바구니에 추가한다.
     const addShoppingCart = (userId, productNumber, quantity) => {
         setIsLoad(true);
-        axios.post("http://localhost:8080/insertCart", null, {params : {
+        axios.post("/insertCart", null, {params : {
             userId : userId, productNum : productNumber, quantity : quantity
             }}).then(response => {
                 console.log(response.data);
@@ -80,7 +80,7 @@ function DetailApp() {
         setIsLoad(true);
         
         // 서버에게 선택한 리뷰번호를 기준으로 좋아요 개수를 증가하도록 요청
-        await axios.put("http://localhost:8080/addLikeCount", [], {params : {reviewNum : reviewNumber}})
+        await axios.put("/addLikeCount", [], {params : {reviewNum : reviewNumber}})
             .then(response => {
                 if (response.data == "success") {
                     success = true;
@@ -92,7 +92,7 @@ function DetailApp() {
             });
     
         // 서버로부터 상품의 리뷰를 불러온다.
-        await axios.get("http://localhost:8080/productReview", {params : {productNum : productNum, pageNum : reviewPageNum}})
+        await axios.get("/productReview", {params : {productNum : productNum, pageNum : reviewPageNum}})
             .then(response => {
                 setReviewInfo(response.data);
             })
@@ -108,7 +108,7 @@ function DetailApp() {
         setIsLoad(true);
     
         // 서버로부터 현재 클릭한 상품의 상세정보를 불러오기
-        await axios.get("http://localhost:8080/fullProductInfo", {params : {productNum : productNum}})
+        await axios.get("/fullProductInfo", {params : {productNum : productNum}})
             .then(response => {
                 setProductInfo(response.data);
             })
@@ -118,7 +118,7 @@ function DetailApp() {
             });
         
         // 서버로부터 전체 평점비율을 불러온다.
-        await axios.get("http://localhost:8080/reviewRate", {params : {productNum : productNum}})
+        await axios.get("/reviewRate", {params : {productNum : productNum}})
             .then(response => {
                 setTotalReviewRate(response.data);
             })
@@ -128,7 +128,7 @@ function DetailApp() {
             });
         
         // 서버로부터 상품의 리뷰를 불러온다.
-        await axios.get("http://localhost:8080/productReview", {params : {productNum : productNum, pageNum : reviewPageNum}})
+        await axios.get("/productReview", {params : {productNum : productNum, pageNum : reviewPageNum}})
             .then(response => {
                 setReviewInfo(response.data);
             })
@@ -138,7 +138,7 @@ function DetailApp() {
             });
         
         // 현재 클릭한 상품의 조회수를 증가시킨다.
-        await axios.put("http://localhost:8080/addClickCount", null, {params : {productNum : productNum}})
+        await axios.put("/addClickCount", null, {params : {productNum : productNum}})
             .then(response => {
             
             }).catch(err => {
@@ -147,7 +147,7 @@ function DetailApp() {
             });
         
         // 현재 로그인한 유저의 아이디를 가져온다.
-        axios.post("http://localhost:8080/loginUserId", null, {params : {
+        axios.post("/loginUserId", null, {params : {
                 userUUID : sessionStorage.getItem("loginUUID"),
                 autoUserUUID : localStorage.getItem("autoLoginUUID")
             }}).then(response => {

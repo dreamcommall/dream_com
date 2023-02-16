@@ -90,7 +90,7 @@ function Receipt({method, receipt, userInfo, purchaseProductList}) {
             // 폼 데이터에 선택한 제품 정보 문자열로 저장
             formData.append("paymentDetail", JSON.stringify(list))
             // 통신
-            axios.put("http://localhost:8080/buy", formData)
+            axios.put("/buy", formData)
                 .then(req => {
                     if(req.data) {
                         document.getElementById("link-receipt-Link").click();

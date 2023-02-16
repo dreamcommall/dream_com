@@ -65,7 +65,7 @@ function FindPw(){
         }
         else {
             setIsLoad(true);
-            await axios.post("http://localhost:8080/findPwPageCheckSignedInfo", null,
+            await axios.post("/findPwPageCheckSignedInfo", null,
                 {params: {userEmail: email, userName: userName, userId: userId}})
                 .then(req => {
                     if(req.data === 0) {
@@ -85,7 +85,7 @@ function FindPw(){
 
     // 이메일 보내기
     const sendMailAxios = async () => {
-        await axios.post("http://localhost:8080/sendEmail", null, {params: {email: email}})
+        await axios.post("/sendEmail", null, {params: {email: email}})
             .then(req => {
                 alert("이메일 전송이 완료되었습니다.");
                 setUniqueId(req.data);
@@ -101,7 +101,7 @@ function FindPw(){
         if(chkNumber === "") {
             alert("인증코드를 입력하세요")
         } else {
-            await axios.post("http://localhost:8080/EmailChk", null, {params: {chkNumber: chkNumber, uniqueId: uniqueId}})
+            await axios.post("/EmailChk", null, {params: {chkNumber: chkNumber, uniqueId: uniqueId}})
                 .then(req => {
                     if(req.data === 1) {
                         setCheck(true);
@@ -128,7 +128,7 @@ function FindPw(){
 
     // 모든 과정 완료 후 페이지 이동
     const pageChange = async () => {
-        await axios.post("http://localhost:8080/sendChangePwdUrl", null,
+        await axios.post("/sendChangePwdUrl", null,
             {params: {email: email, userId: userId}})
             .then(req => {
                 if(req.data === 1) {

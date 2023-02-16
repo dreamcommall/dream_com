@@ -100,7 +100,7 @@ function ReviewModalApp(props) {
     // 리뷰에 쓰일 제품 정보 불러오기
     const productAndReviewMsgInfo = async () => {
     //      간단리뷰 메시지 목록 불러오기
-        await axios.get("http://localhost:8080/simpleReviewMsg")
+        await axios.get("/simpleReviewMsg")
             .then(req => {
                 temp = req.data["delivery"];
                 setDeliveryMsgList(temp);
@@ -116,7 +116,7 @@ function ReviewModalApp(props) {
             })
 
     //     제품 정보 불러오기
-        await axios.get("http://localhost:8080/fullProductInfo", {params: {productNum: props.productNum}})
+        await axios.get("/fullProductInfo", {params: {productNum: props.productNum}})
             .then(req => {
                 const obj = req.data[0];
                 setProductInfo(obj);
@@ -174,7 +174,7 @@ function ReviewModalApp(props) {
         formData.append("userId", JSON.stringify(userId));
 
         // 파일 업로드
-        axios.post("http://localhost:8080/saveUploadImg", formData,
+        axios.post("/saveUploadImg", formData,
             {headers: {"Content-Type": `multipart/form-data; `},
             baseURL: 'http://localhost:8080'
         })
@@ -191,7 +191,7 @@ function ReviewModalApp(props) {
     const axiosInsertReview = async () => {
         const productNum = props.productNum;
         const userId = props.userId;
-        await axios.get("http://localhost:8080/insertDetailReview", {params: {productNum: productNum, userId: userId,
+        await axios.get("/insertDetailReview", {params: {productNum: productNum, userId: userId,
                 dReviewNum: deliveryMsgNum, sReviewNum: specMsgNum, pReviewNum: packagingMsgNum, nReviewNum: noiseMsgNum,
                 score: rate, imgPath: saveImgPath, content: content}})
             .then(req => {

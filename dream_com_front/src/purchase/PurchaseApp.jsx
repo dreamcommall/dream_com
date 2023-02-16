@@ -77,7 +77,7 @@ function PurchaseApp() {
     const getUUIDInfo = () => {
         const loginUUID = sessionStorage.getItem("loginUUID");
         const autoLoginUUID = sessionStorage.getItem("autoLoginUUID")
-        axios.post("http://localhost:8080/loginUserId", null, {params: {userUUID: loginUUID, autoUserUUID: autoLoginUUID}})
+        axios.post("/loginUserId", null, {params: {userUUID: loginUUID, autoUserUUID: autoLoginUUID}})
             .then(req => {
                 if(req.data != null || req.data !== "" || req.data !== "undefined") {
                     setUserId(req.data);
@@ -152,7 +152,7 @@ function PurchaseApp() {
 
         if(!isNaN(productNum)) {
             // 구매버튼 누른 제품 데이터 받아오기
-            await axios.get("http://localhost:8080/fullProductInfo", {params: {productNum: productNum}})
+            await axios.get("/fullProductInfo", {params: {productNum: productNum}})
                 .then(req => {
                     if(req.data == "") {
                         setIsCorrectPage(false);
@@ -174,7 +174,7 @@ function PurchaseApp() {
 
         if(userId != null) {
             // 로그인 되어있는 사용자의 장바구니 목록 가져오기
-            await axios.get("http://localhost:8080/selectCart", {params: {userId: userId}})
+            await axios.get("/selectCart", {params: {userId: userId}})
                 .then(req => {
                     // 장바구니 목록 개수만큼 정보 불러오기 반복, 저장
                     req.data.forEach((item) => {
@@ -192,7 +192,7 @@ function PurchaseApp() {
                 });
 
             // 로그인된 사용자의 배송지 정보 가져오기
-            await axios.post("http://localhost:8080/address", null, {params: {userId: userId}})
+            await axios.post("/address", null, {params: {userId: userId}})
                 .then(req => {
                     // 로그인 정보가 없을 때
                     if(req.data == "") {
@@ -209,7 +209,7 @@ function PurchaseApp() {
 
 
             //     사용자 정보 가져오기
-            await  axios.get("http://localhost:8080/getUserInfo", {params: {userId: userId}})
+            await  axios.get("/getUserInfo", {params: {userId: userId}})
                 .then(req => {
                     tempUserInfo = req.data[0];
                     setUserInfo(tempUserInfo);

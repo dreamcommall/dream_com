@@ -12,7 +12,7 @@ function MypageWishList() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.post("http://localhost:8080/loginUserId", null, {
+        axios.post("/loginUserId", null, {
             params: {
                 userUUID: sessionStorage.getItem("loginUUID"),
                 autoUserUUID: localStorage.getItem("autoLoginUUID")
@@ -41,7 +41,7 @@ function MypageWishList() {
         if(userId == null){
             return ;
         }
-        axios.get("http://localhost:8080/getWishList", {
+        axios.get("/getWishList", {
             params: {
                 userId: userId
             }
@@ -65,7 +65,7 @@ function MypageWishList() {
             }
         }
 
-        axios.delete("http://localhost:8080/deleteWishList", {
+        axios.delete("/deleteWishList", {
             params: {
                 userId: userId,
                 productNum: productNum.join()
@@ -91,7 +91,7 @@ function MypageWishList() {
             }
         }
 
-        axios.post("http://localhost:8080/insertCart", null, {
+        axios.post("/insertCart", null, {
             params: {
                 userId: userId,
                 productNum: productNum.join(),

@@ -29,7 +29,7 @@ function ChangePwPage() {
 
     // 페이지 로딩 시 url이 유효한지 체크
     const urlCheck = async () => {
-        await axios.post("http://localhost:8080/checkFindPwUrl", null, {params: {url: url}})
+        await axios.post("/checkFindPwUrl", null, {params: {url: url}})
             .then(req => {
                 // url이 유효하지 않을 때 페이지 false 처리
                 if(req.data === 0) {
@@ -56,7 +56,7 @@ function ChangePwPage() {
 
     // 비밀번호 변경
     const changePwAxios = async () => {
-        await axios.put("http://localhost:8080/changePw", null, {params: {userPw: userPw, url: url}})
+        await axios.put("/changePw", null, {params: {userPw: userPw, url: url}})
             .then(req => {
                 if(req.data === -1) {
                     alert("세션이 만료되었습니다.");

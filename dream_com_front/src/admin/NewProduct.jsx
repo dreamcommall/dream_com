@@ -10,7 +10,7 @@ function NewProduct() {
     const registerProduct = () => {
         if (isBlank() == false) {
             const form = document.querySelector("#form-admin-register-product");
-            form.action = "http://localhost:8080/product";
+            form.action = "/product";
             form.method = "post";
             form.submit();
         }
